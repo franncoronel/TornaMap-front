@@ -30,7 +30,7 @@ describe('Login Page', () => {
     const passwordInput = screen.getByTestId('password-input')
     expect(passwordInput).toBeInTheDocument()
 
-    expect(screen.getByRole('button', { name: /login/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /ingresar/i })).toBeInTheDocument()
   })
 
   it('Mensaje de error por mail incorrecto o sin llenar', async () => {
@@ -38,7 +38,7 @@ describe('Login Page', () => {
 
     //simulo carga del input y envio el form
     fireEvent.input(screen.getByLabelText(/email/i), {target: { value: 'invalidemail' },})
-    fireEvent.submit(screen.getByRole('button', { name: /login/i }))
+    fireEvent.submit(screen.getByRole('button', { name: /ingresar/i }))
     // verifica que se muestra el mensaje de error para el email
     await waitFor(() => {
       expect(
@@ -46,7 +46,7 @@ describe('Login Page', () => {
     })
 
     fireEvent.input(screen.getByLabelText(/email/i), {target: { value: '' },})
-    fireEvent.submit(screen.getByRole('button', { name: /login/i }))
+    fireEvent.submit(screen.getByRole('button', { name: /ingresar/i }))
     // verifica que se muestra el mensaje de error para el email
     await waitFor(() => {
       expect(
@@ -61,14 +61,14 @@ describe('Login Page', () => {
     //simulo carga del input y envio el form
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: '123' } })
 
-    fireEvent.submit(screen.getByRole('button', { name: /login/i }))
+    fireEvent.submit(screen.getByRole('button', { name: /ingresar/i }))
     // verifica que se muestra el mensaje de error para el email
     await waitFor(() => {
       expect(screen.getByText('La contraseña debe tener al menos 6 caracteres')).toBeInTheDocument()
     })
 
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: '' } })
-    fireEvent.submit(screen.getByRole('button', { name: /login/i }))
+    fireEvent.submit(screen.getByRole('button', { name: /ingresar/i }))
     await waitFor(() => {
       expect(screen.getByText('Debe ingresar una contraseña')).toBeInTheDocument()
     })
@@ -112,7 +112,7 @@ describe('Login Page', () => {
     fireEvent.input(screen.getByLabelText(/email/i), {target: { value: 'test@example.com' },})
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'password123' } })
 
-    fireEvent.submit(screen.getByRole('button', { name: /login/i }))
+    fireEvent.submit(screen.getByRole('button', { name: /ingresar/i }))
 
     // verifico que 'navigate' sea llamado después de enviar el formulario
     await waitFor(() => {expect(mockNavigate).toHaveBeenCalledWith('/')})

@@ -2,7 +2,8 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { Box, TextField, Button, Typography, Container, Link } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { User } from '../../../data/domain/User'
-
+import './register.css'
+import { FingerprintSimple } from '@phosphor-icons/react'
 type FormInputs = {
   name: string
   surname: string
@@ -35,6 +36,7 @@ export default function Register() {
 
   const createAccount = (userData: FormInputs) => {
     const newUser = new User(
+      0,
       userData.name,
       userData.surname,
       userData.username,
@@ -55,7 +57,7 @@ export default function Register() {
        del servicio de autenticación, con algún método como RegistrarUsuario,
        pero es una intuición, nunca trabajé con registro.
       */
-      navigate('/login')
+      navigate('/ingresar')
     } catch (error) {
       setError('root', {
         type: 'server',
@@ -65,21 +67,24 @@ export default function Register() {
   }
 
   return (
+    <main className='register-page'>
       <Container
         sx={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',mb: '1rem',mt: '1rem'
+        justifyContent: 'center', padding: '2rem',
+        backgroundColor: 'white',
+        borderRadius: 2
       }}>
       <Box
         component='img'
         sx={{
-          maxWidth: '70%',
+          maxWidth: '100%',
           height: 'auto',
-          padding: 0,
+          padding: '1rem',
           margin: 0,
           alignSelf:'center',
-          mb: '1rem'
+
         }}
         alt='Logo de la universidad.'
         src='/logo-unsam-largo.png'
@@ -258,13 +263,14 @@ export default function Register() {
               sx={{ mt: "1.5rem", mb: "1.5rem" }}
               disabled={isSubmitting}
             >
-              { isSubmitting ? "Registrando..." : "Registrarse"}
+              <FingerprintSimple size={32} alt='Registrarse' /> { isSubmitting ? "Registrando..." : "Registrarse"}
             </Button>
             <Typography>
-              ¿Ya tenés una cuenta? <Link onClick={() => (navigate('/login'))} tabIndex={0}>Iniciá sesión.</Link>
+              ¿Ya tenés una cuenta? <Link onClick={() => (navigate('/ingresar'))} tabIndex={0}>Iniciá sesión.</Link>
             </Typography>
           </Box>
         </Box>
       </Container>
+      </main>
   )
 }

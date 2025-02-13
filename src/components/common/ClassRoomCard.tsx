@@ -3,20 +3,20 @@ import { MapPin,Clock,User,BookOpenText} from '@phosphor-icons/react'
 
 
 interface ClassRoomCardProps{
-  className : string
+  name : string
   // classroomType : string
   commission : string
   classroom : string
   building : string
-  teacher : string[]    
+  teacher : string[]
   careers : string[]
   schedules : string
   onClick?: () => void
-  viewType: "standard" | "modal"
+  viewType: string//'standard' | 'modal'
 }
 
 
-export default function ClassRoomCard({className,
+export default function ClassRoomCard({name,
                                       commission,
                                       classroom,
                                       building,
@@ -24,8 +24,8 @@ export default function ClassRoomCard({className,
                                       careers,
                                       schedules,
                                       viewType,
-                                      onClick}:ClassRoomCardProps) 
-{                                
+                                      onClick}:ClassRoomCardProps)
+{
   return (
     <Box  sx={{
       display: 'flex',
@@ -46,12 +46,12 @@ export default function ClassRoomCard({className,
         <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
             <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
-             {className}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
+             {name}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
             </Typography>
             <Divider sx={{ mb: 2 }} />
 
             {viewType === "standard" && (
-              <> 
+              <>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <MapPin size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
                   <Typography variant="body2" sx={{ color: '#666' }}>
@@ -59,7 +59,7 @@ export default function ClassRoomCard({className,
                   </Typography>
                 </Box>
                </>
-            )} 
+            )}
 
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
               <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>

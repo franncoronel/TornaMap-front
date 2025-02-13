@@ -40,11 +40,11 @@ describe('Welcome Page', () =>{
 
     const loginButton = screen.getByRole('button', { name: /Iniciá sesión/i })
     fireEvent.click(loginButton)
-    expect(mockNavigate).toHaveBeenCalledWith('/login')
+    expect(mockNavigate).toHaveBeenCalledWith('/ingresar')
 
     const registerButton = screen.getByRole('button', { name: /Registrate/i })
     fireEvent.click(registerButton);
-    expect(mockNavigate).toHaveBeenCalledWith('/register')
+    expect(mockNavigate).toHaveBeenCalledWith('/registrar')
   })
 
 })

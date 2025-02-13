@@ -1,0 +1,42 @@
+
+.footer-nav-bar button{
+    transition: transform 0.3s ease-in-out;
+    border: none;
+    height: 100%;
+    /* Deshabilitar selección con el mouse */
+    user-select: none;
+}
+.footer-nav-bar button svg{
+    transition: transform 0.3s ease-in-out;
+}
+.footer-nav-bar button:hover,
+.footer-nav-bar button:active{
+    border: none;
+    outline: none;
+}
+
+
+.footer-nav-bar .active{
+    position: relative;
+}
+.footer-nav-bar .active::after{
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 3px;
+    background-color: #f5f5f5;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.footer-nav-bar .active svg{
+    transform: scale(1.2);
+}
+
+
+@media (min-width: 1024px){
+    .footer-nav-bar button:hover svg,
+    .footer-nav-bar button:active svg{
+        transform: scale(0.9);
+    }
+}
