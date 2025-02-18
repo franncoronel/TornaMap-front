@@ -13,7 +13,8 @@ export const casoClass: IClass = {
   weekDays: ["Martes","Jueves"],
   startDate: "2024-12-01",
   endDate: "2025-03-01",
-  viewType: 'standard'
+  viewType: 'standard',
+  mode: 'virtual'
 }
 
 export const algo3Class: IClass = {
@@ -31,7 +32,8 @@ export const algo3Class: IClass = {
   weekDays: ["Lunes","Miércoles","Viernes"],
   startDate: "2024-12-01",
   endDate: "2025-03-01",
-  viewType: 'standard'
+  viewType: 'standard',
+  mode: 'presencial'
 }
 
 export interface IClass{
@@ -50,6 +52,7 @@ export interface IClass{
   startDate: string
   endDate: string
   viewType: string//'standard' | 'modal'
+  mode: 'presencial' | 'virtual'
 }
 
 export const classes = [casoClass, algo3Class]

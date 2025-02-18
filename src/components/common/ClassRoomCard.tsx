@@ -1,5 +1,5 @@
 import { CardActionArea, CardContent, Typography, Card, Box, Divider } from "@mui/material";
-import { MapPin,Clock,User,BookOpenText} from '@phosphor-icons/react'
+import { MapPin,Clock,User,BookOpenText, Building, Laptop} from '@phosphor-icons/react'
 
 
 interface ClassRoomCardProps{
@@ -13,6 +13,7 @@ interface ClassRoomCardProps{
   schedules : string
   onClick?: () => void
   viewType: string//'standard' | 'modal'
+  mode: 'presencial' | 'virtual'
 }
 
 
@@ -24,8 +25,11 @@ export default function ClassRoomCard({name,
                                       careers,
                                       schedules,
                                       viewType,
+                                      mode,
                                       onClick}:ClassRoomCardProps)
 {
+  const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
+
   return (
     <Box  sx={{
       display: 'flex',
@@ -65,6 +69,19 @@ export default function ClassRoomCard({name,
               <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
               <Typography variant="body2" sx={{ color: '#666' }}>
                 Profesor: {teacher.join(' - ')}
+              </Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              {mode === 'presencial' ? (
+                <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+              ) : mode === 'virtual' ? (
+                <Laptop size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+              ) : (
+                <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+              )}
+              <Typography variant="body2" sx={{ color: '#666' }}>
+                Modalidad: {formattedMode}
               </Typography>
             </Box>
 

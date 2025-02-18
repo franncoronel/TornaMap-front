@@ -49,6 +49,7 @@ export function Search() {
               careers={c.careers}
               schedules={c.schedules}
               viewType={c.viewType}
+              mode={c.mode}
               onClick={() => handleOpen(c)}
             />
           ))
@@ -76,6 +77,7 @@ export function Search() {
               teacher={currentClass.teacher}
               careers={currentClass.careers}
               schedules={currentClass.schedules}
+              mode={currentClass.mode}
               viewType="modal"
             />
           </section>
