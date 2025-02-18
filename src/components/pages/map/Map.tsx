@@ -193,6 +193,7 @@ export default function Map() {
                     teacher={cls.teacher}
                     careers={cls.careers}
                     schedules={cls.schedules}
+                    mode={cls.mode}   // capaz solo deberia cargar la materia que es presencial 
                     viewType="modal"
                     onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
                   />
