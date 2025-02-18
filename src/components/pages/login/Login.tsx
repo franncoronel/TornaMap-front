@@ -139,7 +139,8 @@ export default function Login() {
                 </Button>
 
                 {/* Register Button */}
-                <Button
+                <Button 
+                    disabled
                     variant="outlined"
                     color="primary"
                     fullWidth
