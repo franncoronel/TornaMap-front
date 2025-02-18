@@ -19,17 +19,28 @@ export default function ClassInfoModal({ children, open, handleClose,classroom,c
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      >
-      <Fade in={open}>
-        <Box sx={{position: 'absolute',
+        sx={{
+          maxHeight: '80vh',
+          minHeight: '85vh',
+          width: '90vw',
+          overflowY: 'auto',
+          borderRadius: '24px',
+          position: 'absolute',
           top: '50%',
           left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: '90%',
           bgcolor: 'background.paper',
           boxShadow: 3,
+          transform: 'translate(-50%, -55%)'
+        }}
+        >
+      <Fade in={open}>
+        <Box sx={{
+
+          bgcolor: 'background.paper',
+          width: '100%',
+          minHeight: '100%',
           p: 4,
-          borderRadius: '24px'}}>
+          }}>
 
           <Box sx={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between'}}>
             <Typography id="modal-modal-title" variant="h6" component="h2" >
@@ -48,9 +59,9 @@ export default function ClassInfoModal({ children, open, handleClose,classroom,c
             {children}
           </>
         </Box>
-      </Fade>    
+      </Fade>
     </Modal>
-    
+
   )
 
 }
