@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { User } from '../../../data/domain/User'
 import './register.css'
 import { FingerprintSimple } from '@phosphor-icons/react'
+import SectionTitle from '@/components/common/SectionTitle'
+
 type FormInputs = {
   name: string
   surname: string
@@ -97,12 +99,13 @@ export default function Register() {
             alignItems: 'center'
           }}
         >
-          <Typography
+          {/* <Typography
             variant='h5'
             fontWeight='bold'
           >
             Registro de Usuario
-          </Typography>
+          </Typography> */}
+          <SectionTitle title="Registro de Usuario" />
 
           <Box component='form' role="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%' }} aria-label="Formulario de registro">
             <Controller

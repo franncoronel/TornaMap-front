@@ -11,6 +11,7 @@ import { useState } from "react"
 import ClassRoomCard from "@/components/common/ClassRoomCard";
 import { buildingData } from "@/data/mock/BuildingData";
 import { classes, IClass } from "@/data/mock/ClassData"
+import SectionTitle from "@/components/common/SectionTitle"
 
 export default function Map() {
   const { control, watch, setValue } = useForm({
@@ -94,6 +95,9 @@ export default function Map() {
 
   return (
     <main className="map-page">
+    
+    <SectionTitle title="Selección del Edificio" />
+
     {/* Select del edificio */}
     <Controller
       name="building"

@@ -7,6 +7,8 @@ import React from 'react';
 import { EyeSlash,Eye, SignIn, FingerprintSimple} from '@phosphor-icons/react'
 import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
+import SectionTitle from '@/components/common/SectionTitle.tsx'
+
 export default function Login() {
     const { control, handleSubmit, formState: { errors } } = useForm<LoginRequest>()
     const { login } = useAuth()
@@ -54,9 +56,10 @@ export default function Login() {
                 <img
                     src={logoUnsam}
                     alt="Logo UNSAM"
-                    style={{width: '100%', marginBottom: '20px'}}
+                    style={{width: '100%', marginBottom: '0.2rem'}} //20px
                 />
-                <h1>Ingresá</h1>
+                {/* <h1>Ingresá</h1> */}
+                <SectionTitle title="Ingresá" />
 
                 {/* Email Field */}
                 <Controller

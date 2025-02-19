@@ -6,6 +6,7 @@ import { useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
+import SectionTitle from "@/components/common/SectionTitle"
 
 export function Search() {
 
@@ -32,7 +33,8 @@ export function Search() {
   return (
     <Box display='flex' flexDirection='column' height='100vh' overflow='hidden'>
       <Box flexShrink='0' paddingTop='2rem'>
-        <Typography variant="h5" fontWeight="bold">Búsqueda</Typography>
+        {/* <Typography variant="h5" fontWeight="bold">Búsqueda</Typography> */}
+        <SectionTitle title="Búsqueda" />
         <SearchBar onSearch={() => search()} />
       </Box>
       <Divider variant='middle' flexItem/>
