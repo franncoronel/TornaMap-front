@@ -1,3 +1,4 @@
+import { Toilet } from "@phosphor-icons/react"
 import { useOutletContext } from "react-router-dom"
 
 interface OutletContextType {
@@ -120,6 +121,12 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
             <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" transform="translate(345.673075 592.013135)" stroke-width="0">
                 <tspan y="0" font-weight="700" stroke-width="0">Baños</tspan>
             </text>
+            <Toilet
+              transform="translate(345.8 592.5)" //transform="translate(345.673075 592.013135)"
+              size={12}
+              weight="regular" 
+              style={{ position: 'absolute', left: '350px', top: '590px' }} // Ajusta la posición del icono
+            />
         </g>
 </svg>
 
