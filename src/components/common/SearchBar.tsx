@@ -26,6 +26,19 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
           <TextField
             {...params}
             label='Clase / Comisión / Profesor / Carrera'
+            sx={{
+              '& .MuiInputLabel-root': {
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                maxWidth: '200px',
+                textOverflow: 'ellipsis',
+              },
+              '& .MuiInputLabel-shrink': {
+                // Estilos cuando el label se eleva (flotante)
+                overflow: 'visible',
+                maxWidth: 'none',
+              }
+            }}
             slotProps={{
               input: {
                 ...params.InputProps,
