@@ -32,6 +32,11 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                 overflow: 'hidden',
                 maxWidth: '200px',
                 textOverflow: 'ellipsis',
+                '@media (min-width: 450px)': {
+                  maxWidth: 'none',
+                  textOverflow: 'unset',
+                  whiteSpace: 'normal',
+                },
               },
               '& .MuiInputLabel-shrink': {
                 // Estilos cuando el label se eleva (flotante)
