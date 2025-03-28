@@ -50,7 +50,7 @@ export default function Register() {
 
   const password = watch('password')
 
-   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     try {
       const newAccount = createAccount(data)
       console.log('Datos del usuario:', newAccount)
@@ -72,25 +72,25 @@ export default function Register() {
     <main className='register-page'>
       <Container
         sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center', padding: '2rem',
-        backgroundColor: 'white',
-        borderRadius: 2
-      }}>
-      <Box
-        component='img'
-        sx={{
-          maxWidth: '100%',
-          height: 'auto',
-          padding: '1rem',
-          margin: 0,
-          alignSelf:'center',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center', padding: '2rem',
+          backgroundColor: 'white',
+          borderRadius: 2
+        }}>
+        <Box
+          component='img'
+          sx={{
+            maxWidth: '100%',
+            height: 'auto',
+            padding: '1rem',
+            margin: 0,
+            alignSelf: 'center',
 
-        }}
-        alt='Logo de la universidad.'
-        src='/logo-unsam-largo.png'
-      />
+          }}
+          alt='Logo de la universidad.'
+          src='/logo-unsam-largo.png'
+        />
         <Box
           sx={{
             display: 'flex',
@@ -99,12 +99,6 @@ export default function Register() {
             alignItems: 'center'
           }}
         >
-          {/* <Typography
-            variant='h5'
-            fontWeight='bold'
-          >
-            Registro de Usuario
-          </Typography> */}
           <SectionTitle title="Registro de Usuario" />
 
           <Box component='form' role="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%' }} aria-label="Formulario de registro">
@@ -267,7 +261,7 @@ export default function Register() {
               sx={{ mt: "1.5rem", mb: "1.5rem" }}
               disabled={isSubmitting}
             >
-              <FingerprintSimple size={32} alt='Registrarse' /> { isSubmitting ? "Registrando..." : "Registrarse"}
+              <FingerprintSimple size={32} alt='Registrarse' /> {isSubmitting ? "Registrando..." : "Registrarse"}
             </Button>
             <Typography>
               ¿Ya tenés una cuenta? <Link onClick={() => (navigate('/ingresar'))} tabIndex={0}>Iniciá sesión.</Link>
@@ -275,6 +269,6 @@ export default function Register() {
           </Box>
         </Box>
       </Container>
-      </main>
+    </main>
   )
 }
