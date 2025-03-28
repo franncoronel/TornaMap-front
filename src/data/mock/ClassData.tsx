@@ -34,6 +34,24 @@ export const algo3Class: IClass = {
   viewType: 'standard'
 }
 
+export const algo2Class: IClass = {
+  id:2,
+  name: "Algoritmos 2",
+  classroomType : "Lab. de Computación",
+  commission: "C-TI10",
+  classroom: "Laboratorio de Computación 1",
+  classRoomId: 9,
+  building: "Tornavías",
+  buildingLevel: 'Subsuelo',
+  teacher: ["Cosme Fulanito","Mr. T"],
+  careers: ["Tecnicatura en Programación Informática", "Tecnicatura en Redes","Ciencia de Datos","Tecnicatura en Programación Informática",],
+  schedules: "18:00 - 22:00",
+  weekDays: ["Martes","Jueves"],
+  startDate: "2024-03-01",
+  endDate: "2025-07-01",
+  viewType: 'standard'
+}
+
 export interface IClass{
   id: number
   name: string
@@ -52,4 +70,4 @@ export interface IClass{
   viewType: string//'standard' | 'modal'
 }
 
-export const classes = [casoClass, algo3Class]
+export const classes = [casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class]
