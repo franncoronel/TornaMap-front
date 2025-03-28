@@ -36,7 +36,7 @@ export default function ClassRoomCard({name,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      mx: 2,p: 2,gap:2
+      p: 2,gap:2
     }}>
 
     <Card sx={{
