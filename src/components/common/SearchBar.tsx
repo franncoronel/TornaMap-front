@@ -15,7 +15,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
   }
 
   return (
-    <Box  sx={{ display: 'flex', alignItems: 'center', mx: 2,p: 2,}}>
+    <Box  sx={{ display: 'flex', alignItems: 'center', mx: 2,p: 1,}}>
       <Autocomplete
         freeSolo
         id="filled-hidden-label-normal"
@@ -48,7 +48,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
               input: {
                 ...params.InputProps,
                 type: 'search',
-                endAdornment: 
+                endAdornment:
                   <InputAdornment position="end">
                     <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                     <IconButton
@@ -63,7 +63,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                         aria-label="Buscar"
                         onClick={handleSearch}>
                     <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>
-                    </IconButton> 
+                    </IconButton>
                   </InputAdornment>
               },
             }}
