@@ -36,7 +36,7 @@ export function Search() {
         <SearchBar onSearch={() => search()} />
       </Box>
       <Divider variant='middle' flexItem/>
-      <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:'column', gap: '1rem'}} padding='2rem'>
+      <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:{xs:'column',sm:'row'}, flexWrap:{xs:'nowrap', sm:'wrap'}, gap: '1rem', justifyContent:'center'}} padding='2rem'>
         {
           classes.map((c: IClass) => (
             <ClassRoomCard
