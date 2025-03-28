@@ -95,8 +95,8 @@ export default function Map() {
 
   return (
     <main className="map-page">
-    
-    <SectionTitle title="Selección del Edificio" />
+
+    <SectionTitle title="Selección del Edificio">
 
     {/* Select del edificio */}
     <Controller
@@ -114,6 +114,7 @@ export default function Map() {
               console.log(e.target.value)
               handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
             }}
+            sx={{mt:'.5rem'}}
           >
             {buildingData.map((building) => (
               <MenuItem key={building.id} value={building.id}>
@@ -124,7 +125,7 @@ export default function Map() {
         </FormControl>
       )}
     />
-
+    </SectionTitle>
     {/* RadioGroup de niveles */}
     {currentBuilding &&
       <Controller
@@ -197,7 +198,7 @@ export default function Map() {
                     teacher={cls.teacher}
                     careers={cls.careers}
                     schedules={cls.schedules}
-                    mode={cls.mode}   // capaz solo deberia cargar la materia que es presencial 
+                    mode={cls.mode}   // capaz solo deberia cargar la materia que es presencial
                     viewType="modal"
                     onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
                   />
@@ -214,4 +215,3 @@ export default function Map() {
   </main>
   )
 }
-
