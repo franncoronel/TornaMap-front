@@ -33,9 +33,9 @@ export function Search() {
   return (
     <Box display='flex' flexDirection='column' height='100vh' overflow='hidden'>
       <Box flexShrink='0' paddingTop='2rem'>
-        {/* <Typography variant="h5" fontWeight="bold">Búsqueda</Typography> */}
-        <SectionTitle title="Búsqueda" />
-        <SearchBar onSearch={() => search()} />
+        <SectionTitle title="Búsqueda">
+          <SearchBar onSearch={() => search()} />
+        </SectionTitle>
       </Box>
       <Divider variant='middle' flexItem/>
       <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:'column', gap: '1rem'}} padding='2rem'>
