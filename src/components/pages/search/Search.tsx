@@ -30,13 +30,29 @@ export function Search() {
 
 
   return (
-    <Box display='flex' flexDirection='column' height='100vh' overflow='hidden'>
-      <Box flexShrink='0' paddingTop='2rem'>
-        <Typography variant="h5" fontWeight="bold">Búsqueda</Typography>
+    <Box
+     display='flex'
+     flexDirection='column'
+     height='100vh'
+     >
+
+      <Box flexShrink='0' position='sticky' top='0' zIndex='10'>
         <SearchBar onSearch={() => search()} />
+        <Divider variant='middle' flexItem/>
       </Box>
-      <Divider variant='middle' flexItem/>
-      <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:{xs:'column',sm:'row'}, flexWrap:{xs:'nowrap', sm:'wrap'}, gap: '1rem', justifyContent:'center'}} padding='2rem'>
+
+      <Box
+        display='flex'
+        flex='1'
+        overflow='auto'
+        flexDirection={{xs:'column', sm:'row'}}
+        flexWrap={{xs:'nowrap', sm:'wrap'}}
+        justifyContent={{xs:'flex-start', sm:'center'}}
+        pt='1rem'
+        mx='2rem'
+        pb='7rem'
+        gap={{xs:'1rem', lg:'1rem 2rem', xl:'1rem 3rem'}}
+      >
         {
           classes.map((c: IClass) => (
             <ClassRoomCard
@@ -53,8 +69,8 @@ export function Search() {
             />
           ))
         }
-
       </Box>
+
       {/* Modal con mapa y detalles */}
       {currentClass && (
         <ClassInfoModal
