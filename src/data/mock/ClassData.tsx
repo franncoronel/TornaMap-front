@@ -70,4 +70,4 @@ export interface IClass{
   viewType: string//'standard' | 'modal'
 }
 
-export const classes = [casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class]
+export const classes = [casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class]
