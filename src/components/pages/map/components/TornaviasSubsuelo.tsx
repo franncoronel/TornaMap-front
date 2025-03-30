@@ -125,7 +125,6 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
               transform="translate(345.8 592.5)" //transform="translate(345.673075 592.013135)"
               size={12}
               weight="regular" 
-              style={{ position: 'absolute', left: '350px', top: '590px' }} // Ajusta la posición del icono
             />
         </g>
 </svg>
