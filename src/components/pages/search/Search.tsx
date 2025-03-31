@@ -1,7 +1,7 @@
 import ClassRoomCard from "@/components/common/ClassRoomCard"
 import SearchBar from "@/components/common/SearchBar"
 import { classes, IClass } from "@/data/mock/ClassData"
-import { Box, Divider, Typography } from "@mui/material"
+import { Box, Divider, Grid2, Typography } from "@mui/material"
 import { useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
@@ -43,32 +43,36 @@ export function Search() {
 
       <Box
         display='flex'
-        flex='1'
         overflow='auto'
-        flexDirection={{xs:'column', sm:'row'}}
-        flexWrap={{xs:'nowrap', sm:'wrap'}}
-        justifyContent={{xs:'flex-start', sm:'center'}}
+        justifyContent='center'
         pt='1rem'
-        mx='2rem'
-        pb='7rem'
-        gap={{xs:'1rem', lg:'1rem 2rem', xl:'1rem 3rem'}}
+        px='2rem'
       >
-        {
-          classes.map((c: IClass) => (
-            <ClassRoomCard
-              key={c.id}
-              name={c.name}
-              commission={c.commission}
-              classroom={c.classroom}
-              building={c.building}
-              teacher={c.teacher}
-              careers={c.careers}
-              schedules={c.schedules}
-              viewType={c.viewType}
-              onClick={() => handleOpen(c)}
-            />
-          ))
-        }
+        <Grid2
+          container
+          rowSpacing='1rem'
+          columnSpacing='2rem'
+          columns={{xs: 1, sm: 2, lg:3}}
+        >
+          {
+            classes.map((c: IClass) => (
+              <Grid2 size={1}>
+                <ClassRoomCard
+                  key={c.id}
+                  name={c.name}
+                  commission={c.commission}
+                  classroom={c.classroom}
+                  building={c.building}
+                  teacher={c.teacher}
+                  careers={c.careers}
+                  schedules={c.schedules}
+                  viewType={c.viewType}
+                  onClick={() => handleOpen(c)}
+                />
+              </Grid2>
+            ))
+          }
+        </Grid2>
       </Box>
 
       {/* Modal con mapa y detalles */}
