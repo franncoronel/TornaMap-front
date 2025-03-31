@@ -30,52 +30,54 @@ export function Search() {
 
 
   return (
+    // Contenedor principal que organiza la disposición de los elementos
     <Box
-     display='flex'
-     flexDirection='column'
-     height='100vh'
-     >
+      display='flex'
+      flexDirection='column'
+      height='100vh'
+      justifyContent='center'
+    >
 
+      {/* Barra de búsqueda fija */}
       <Box flexShrink='0' position='sticky' top='0' zIndex='10'>
         <SearchBar onSearch={() => search()} />
-        <Divider variant='middle' flexItem/>
+        <Divider variant='middle' flexItem />
       </Box>
 
-      <Box
-        display='flex'
-        overflow='auto'
-        justifyContent='center'
-        pt='1rem'
+      {/* Grilla para organizar las tarjetas de las aulas de manera responsive */}
+      <Grid2
+        container
+        rowSpacing='2rem'
+        columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
+        columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
+        maxHeight='90vh'
         px='2rem'
+        pt='1rem'
+        pb='7rem'
+        sx={{ overflowY: 'auto' }}
       >
-        <Grid2
-          container
-          rowSpacing='2rem'
-          columnSpacing='2rem'
-          columns={{xs: 1, sm: 2, lg:3}}
-        >
-          {
-            classes.map((c: IClass) => (
-              <Grid2 size={1}>
-                <ClassRoomCard
-                  key={c.id}
-                  name={c.name}
-                  commission={c.commission}
-                  classroom={c.classroom}
-                  building={c.building}
-                  teacher={c.teacher}
-                  careers={c.careers}
-                  schedules={c.schedules}
-                  viewType={c.viewType}
-                  onClick={() => handleOpen(c)}
-                />
-              </Grid2>
-            ))
-          }
-        </Grid2>
-      </Box>
+        {
+          // Mapeo de las clases para renderizar cada tarjeta de aula
+          classes.map((c: IClass) => (
+            <Grid2 size={1}>
+              <ClassRoomCard
+                key={c.id}
+                name={c.name}
+                commission={c.commission}
+                classroom={c.classroom}
+                building={c.building}
+                teacher={c.teacher}
+                careers={c.careers}
+                schedules={c.schedules}
+                viewType={c.viewType}
+                onClick={() => handleOpen(c)}
+              />
+            </Grid2>
+          ))
+        }
+      </Grid2>
 
-      {/* Modal con mapa y detalles */}
+      {/* Modal que muestra detalles de la clase seleccionada y un mapa */}
       {currentClass && (
         <ClassInfoModal
           open={open}
@@ -84,10 +86,13 @@ export function Search() {
           classroomType="Aula"
         >
           <section className="class-info-container">
+            {/* Título del modal con información del edificio y nivel */}
             <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {currentClass.building} - {currentClass.buildingLevel}
             </Typography>
+            {/* Mapa interactivo del subsuelo */}
             <TornaviasSubsuelo selectedClassRoomId={selectedClass?.classRoomId} onClassRoomClick={() => setSelectedClass(currentClass)} />
+            {/* Tarjeta con detalles adicionales de la clase */}
             <ClassRoomCard
               name={currentClass.name}
               commission={currentClass.commission}
