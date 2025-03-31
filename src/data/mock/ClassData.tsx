@@ -55,4 +55,4 @@ export interface IClass{
   mode: 'presencial' | 'virtual'
 }
 
-export const classes = [casoClass, algo3Class]
+export const classes = [casoClass, algo3Class,casoClass,algo3Class]
