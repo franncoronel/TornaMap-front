@@ -6,7 +6,6 @@ import { useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
-import SectionTitle from "@/components/common/SectionTitle"
 
 export function Search() {
 
@@ -31,13 +30,13 @@ export function Search() {
 
 
   return (
-    <Box display='flex' flexDirection='column' height='100vh' overflow='hidden'>
+    <Box display='flex' flexDirection='column' height='100vh'>
+      
       <Box flexShrink='0' paddingTop='2rem'>
-        <SectionTitle title="Búsqueda">
           <SearchBar onSearch={() => search()} />
-        </SectionTitle>
+          <Divider variant='middle' flexItem/>
       </Box>
-      <Divider variant='middle' flexItem/>
+
       <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:'column', gap: '1rem'}} padding='2rem'>
         {
           classes.map((c: IClass) => (
