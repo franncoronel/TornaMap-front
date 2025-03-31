@@ -38,7 +38,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" 
                 transform="translate(90 505) rotate(180)" //transform="translate(131.444581 427.258449)
                 stroke-width="0">
-            <tspan y="0" font-weight="700" stroke-width="0">Bibloteca</tspan>
+            <tspan y="0" font-weight="700" stroke-width="0">Biblioteca</tspan>
             <tspan x="0" y="5" font-weight="700" stroke-width="0">Central</tspan>
             <tspan x="0" y="10" font-weight="700" stroke-width="0">Subsuelo</tspan>
           </text>
