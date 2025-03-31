@@ -1,4 +1,4 @@
-import { Toilet } from "@phosphor-icons/react"
+import { BookOpenText, Toilet } from "@phosphor-icons/react"
 import { useOutletContext } from "react-router-dom"
 
 interface OutletContextType {
@@ -42,6 +42,11 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
             <tspan x="0" y="5" font-weight="700" stroke-width="0">Central</tspan>
             <tspan x="0" y="10" font-weight="700" stroke-width="0">Subsuelo</tspan>
           </text>
+          <BookOpenText
+              transform="translate(84 494) rotate(180)"
+              size={12}
+              weight="regular" 
+            />
         </g>
         {/* Auditorio Lectura Mundi */}
         <g  onClick={()=>handleOpen?.(0)} className={`classRoom ${isSelected(0) ? "selected" : ""}`}>
