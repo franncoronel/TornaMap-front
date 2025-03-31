@@ -50,7 +50,7 @@ export function Search() {
       >
         <Grid2
           container
-          rowSpacing='1rem'
+          rowSpacing='2rem'
           columnSpacing='2rem'
           columns={{xs: 1, sm: 2, lg:3}}
         >
