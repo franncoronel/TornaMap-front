@@ -31,7 +31,17 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
         {/* Contorno exterior  */}
         <g>
           <path d="M212.143328,347.599413c19.099633,144.497161,213.686862,166.157509,271.658316,44.5419l141.835612,64.711542C508.108976,700.652917,101.945488,683.872221,56.067693,359.168237l156.075635-11.568824Z" transform="translate(-1.314856 0.986144)" fill="none" stroke="#d4d4d4" stroke-width="1.396"/>
-          <path d="M2.826632,337c0,112.621305,58.627761,243.669928,216.740684,311.193148l19.308875-44.63483C83.807214,546.009954,52.979149,386.685276,52.979149,336h-50.152517" transform="translate(.000001 0)" fill="#bc793c" stroke="#505050" stroke-width="0.7"/>
+        </g>
+        {/* Bibloteca Central  */}
+        <g>
+          <path d="M2.826632,337c0,112.621305,58.627761,243.669928,216.740684,311.193148l19.308875-44.63483C83.807214,546.009954,52.979149,386.685276,52.979149,336h-50.152517" transform="translate(.000001 0)" fill="#bc793c" stroke="#000000" stroke-width="0.7"/>
+          <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" 
+                transform="translate(90 505) rotate(180)" //transform="translate(131.444581 427.258449)
+                stroke-width="0">
+            <tspan y="0" font-weight="700" stroke-width="0">Bibloteca</tspan>
+            <tspan x="0" y="5" font-weight="700" stroke-width="0">Central</tspan>
+            <tspan x="0" y="10" font-weight="700" stroke-width="0">Subsuelo</tspan>
+          </text>
         </g>
         {/* Auditorio Lectura Mundi */}
         <g  onClick={()=>handleOpen?.(0)} className={`classRoom ${isSelected(0) ? "selected" : ""}`}>
