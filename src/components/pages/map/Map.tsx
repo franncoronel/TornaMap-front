@@ -96,8 +96,6 @@ export default function Map() {
   return (
     <main className="map-page">
 
-    <SectionTitle title="Selección del Edificio">
-
     {/* Select del edificio */}
     <Controller
       name="building"
@@ -114,7 +112,6 @@ export default function Map() {
               console.log(e.target.value)
               handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
             }}
-            sx={{mt:'.5rem'}}
           >
             {buildingData.map((building) => (
               <MenuItem key={building.id} value={building.id}>
@@ -125,7 +122,6 @@ export default function Map() {
         </FormControl>
       )}
     />
-    </SectionTitle>
     {/* RadioGroup de niveles */}
     {currentBuilding &&
       <Controller
