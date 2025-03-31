@@ -11,6 +11,7 @@ import { useState } from "react"
 import ClassRoomCard from "@/components/common/ClassRoomCard";
 import { buildingData } from "@/data/mock/BuildingData";
 import { classes, IClass } from "@/data/mock/ClassData"
+import SectionTitle from "@/components/common/SectionTitle"
 
 export default function Map() {
   const { control, watch, setValue } = useForm({
@@ -94,6 +95,7 @@ export default function Map() {
 
   return (
     <main className="map-page">
+
     {/* Select del edificio */}
     <Controller
       name="building"
@@ -120,7 +122,6 @@ export default function Map() {
         </FormControl>
       )}
     />
-
     {/* RadioGroup de niveles */}
     {currentBuilding &&
       <Controller
@@ -193,6 +194,7 @@ export default function Map() {
                     teacher={cls.teacher}
                     careers={cls.careers}
                     schedules={cls.schedules}
+                    mode={cls.mode}   // capaz solo deberia cargar la materia que es presencial
                     viewType="modal"
                     onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
                   />
@@ -209,4 +211,3 @@ export default function Map() {
   </main>
   )
 }
-

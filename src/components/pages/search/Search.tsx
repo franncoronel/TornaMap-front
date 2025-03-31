@@ -101,6 +101,7 @@ export function Search() {
               teacher={currentClass.teacher}
               careers={currentClass.careers}
               schedules={currentClass.schedules}
+              mode={currentClass.mode}
               viewType="modal"
             />
           </section>
