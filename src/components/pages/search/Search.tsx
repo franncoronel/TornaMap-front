@@ -69,6 +69,7 @@ export function Search() {
                 teacher={c.teacher}
                 careers={c.careers}
                 schedules={c.schedules}
+                mode={currentClass.mode}
                 viewType={c.viewType}
                 onClick={() => handleOpen(c)}
               />
