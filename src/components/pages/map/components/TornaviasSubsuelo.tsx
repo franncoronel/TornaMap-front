@@ -21,7 +21,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
       <svg className="svg-container" 
            id="eBHsLTiXjpU1" 
            xmlns="http://www.w3.org/2000/svg" 
-           viewBox="0 330 630 320" 
+           viewBox="0 175 625 500" 
            shape-rendering="geometricPrecision" 
            text-rendering="geometricPrecision" 
            project-id="729e4ceae0ad41f0af0203ebbf87e174" 
