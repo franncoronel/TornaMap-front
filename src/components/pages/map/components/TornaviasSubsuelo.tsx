@@ -17,7 +17,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
 
   return (
     <>
-      <svg className="svg-container" id="eBHsLTiXjpU1" xmlns="http://www.w3.org/2000/svg" viewBox="0 330 630 322" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" project-id="729e4ceae0ad41f0af0203ebbf87e174" export-id="66d7fd809be74a5a81a3926e2b015bee" >
+      <svg className="svg-container" id="eBHsLTiXjpU1" xmlns="http://www.w3.org/2000/svg" viewBox="0 300 625 500"  shape-rendering="geometricPrecision" text-rendering="geometricPrecision" project-id="729e4ceae0ad41f0af0203ebbf87e174" export-id="66d7fd809be74a5a81a3926e2b015bee" >
         {/* Contorno exterior  */}
         <g>
           <path d="M2.826632,337c0,112.621305,58.627761,243.669928,216.740684,311.193148l19.308875-44.63483C83.807214,546.009954,52.979149,386.685276,52.979149,336h-50.152517" transform="translate(.000001 0)" fill="#bc793c" stroke="#bc793c" stroke-width="1.396"/>
