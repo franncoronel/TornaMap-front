@@ -30,12 +30,13 @@ export function Search() {
 
 
   return (
-    <Box display='flex' flexDirection='column' height='100vh' overflow='hidden'>
+    <Box display='flex' flexDirection='column' height='100vh'>
+      
       <Box flexShrink='0' paddingTop='2rem'>
-        <Typography variant="h5" fontWeight="bold">Búsqueda</Typography>
-        <SearchBar onSearch={() => search()} />
+          <SearchBar onSearch={() => search()} />
+          <Divider variant='middle' flexItem/>
       </Box>
-      <Divider variant='middle' flexItem/>
+
       <Box sx={{overflowY: 'auto', display: 'flex', flexDirection:'column', gap: '1rem'}} padding='2rem'>
         {
           classes.map((c: IClass) => (
@@ -49,6 +50,7 @@ export function Search() {
               careers={c.careers}
               schedules={c.schedules}
               viewType={c.viewType}
+              mode={c.mode}
               onClick={() => handleOpen(c)}
             />
           ))
@@ -76,6 +78,7 @@ export function Search() {
               teacher={currentClass.teacher}
               careers={currentClass.careers}
               schedules={currentClass.schedules}
+              mode={currentClass.mode}
               viewType="modal"
             />
           </section>
