@@ -7,6 +7,7 @@ export default function Nav() {
   const navigate = useNavigate()
   const {isAuthenticated} = useAuth()
   const location = useLocation()
+
   // Función para detectar rutas parciales o múltiples coincidencias
   const isActive = (paths: string | string[]) => {
     if (typeof paths === "string") {
