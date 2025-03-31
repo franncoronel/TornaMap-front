@@ -1,16 +1,15 @@
 .map-page {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 2rem;
-    min-height: 90vh;
-    gap: 2rem;
-
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-content:center;
+    margin-top:1rem;
+    padding:0 2rem 5rem;
 }
 .map-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height:90vh;
+    display:flex;
+    justify-content:center;
 }
 .svg-container{
     width: 100%;
