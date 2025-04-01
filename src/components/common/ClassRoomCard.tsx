@@ -64,11 +64,16 @@ export default function ClassRoomCard({name,
               {viewType === "standard" && (
                 <>
                   <Grid2 >
-                    <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                    <Box sx={{ display: 'flex', alignItems: 'center',flexDirection: 'row'}}>
                       <MapPin size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px'}}/>
-                      <Typography variant="body2" sx={{ color: '#666' }}>
-                        Aula: {classroom} - Edificio: {building}
-                      </Typography>
+                      <Box sx={{ display: 'flex', flexDirection: 'column',alignItems: 'flex-start'}}>
+                        <Typography variant="body2" sx={{ color: '#666' }}>
+                          Aula: {classroom}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: '#666' }}>
+                          Edificio: {building}
+                        </Typography>
+                      </Box>
                     </Box>
                   </Grid2>
                 </>
