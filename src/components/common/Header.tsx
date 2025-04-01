@@ -1,4 +1,3 @@
-import React from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
@@ -28,20 +27,27 @@ export default function Header() {
 
     return (
         <AppBar
+            position='sticky'
+            color='primary'
             sx={{
-
+                height:'7vh' //Particular al header. Es un número medio raro.
             }}
+            enableColorOnDark
         >
-            <Toolbar>
+            <Toolbar
+                sx={{
+                    height:'100%' //No parece necesitar más que esto.
+                }}
+            >
                 <IconButton
                     onClick={() => navigate("/")}
                     color='secondary'
                     className={isActive('/') ? 'active' : ''}
                     aria-label='Inicio'
                 >
-                    <Typography flexGrow='1'>UNSAM</Typography>
+                    <Typography flexGrow='1'>UNSAM</Typography> {/*Reemplazar por logo*/}
                 </IconButton>
-                <Box flexGrow='1' />
+                <Box flexGrow='1' /> {/*Necesario para posicionar al logo a la izquierda y los iconos a la derecha*/}
                 <IconButton
                     onClick={() => navigate("/buscar")}
                     color='secondary'
