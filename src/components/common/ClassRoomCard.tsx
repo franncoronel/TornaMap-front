@@ -1,4 +1,4 @@
-import { CardActionArea, CardContent, Typography, Card, Box, Divider } from "@mui/material";
+import { CardActionArea, CardContent, Typography, Card, Box, Divider} from "@mui/material";
 import { MapPin,Clock,User,BookOpenText, Building, Laptop} from '@phosphor-icons/react'
 
 
@@ -86,30 +86,22 @@ export default function ClassRoomCard({name,
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Clock size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
+              <Clock size={24} color='#1976d2' style={{ marginRight:'8px', }}/>
               <Typography variant="body2" sx={{ color: '#666' }}>
                 Horario: {schedules} {/*Hay que ver como viene del back*/}
               </Typography>
             </Box>
 
-            <Box sx={{ display: 'flex', alignItems: 'flex-start', mb: 1,flexWrap: 'wrap', }}>
-              <BookOpenText size={24} color='#1976d2' style={{ alignSelf: 'flex-start' }} />{/*,alignSelf: 'flex-start'*/}
-              <Typography
-                variant="body2"
-                sx={{
-                  color: '#1976d2',
-                  maxWidth: 'calc(100% - 32px)',
-                  //flex: 1,
-                  wordBreak: 'break-word',
-                  whiteSpace: 'normal',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  WebkitLineClamp: 2, // número de lineas que se deben mostrar
-                  WebkitBoxOrient: 'vertical',
-                  display: '-webkit-box',
-                }}>
-                Carreras: {careers.join(', ')}
-              </Typography>
+            <Box sx={{ display: 'flex', lignItems: 'center'}}>
+              <BookOpenText size={24} color='#1976d2' style={{ marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
+                <Typography variant="body2" 
+                            sx={{ color: '#1976d2',
+                                  whiteSpace: 'nowrap',
+                                  overflow: 'hidden',
+                                  textOverflow: 'ellipsis',
+                            }}>
+                  Carreras: {careers.join(', ')}
+                </Typography>
             </Box>
           </CardContent>
         </CardActionArea>
