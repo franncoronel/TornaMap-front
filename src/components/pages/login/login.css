@@ -6,4 +6,5 @@
     justify-content: center;
     background-image: url('@/assets/fondos/fondo-tornavias.jpg');
     background-size: cover;
+    background-position: center;
 }
