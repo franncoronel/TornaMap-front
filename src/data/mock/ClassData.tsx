@@ -26,7 +26,7 @@ export const algo3Class: IClass = {
   classRoomId: 8,
   building: "Tornavías",
   buildingLevel: 'Subsuelo',
-  teacher: ["Cosme Fulanito","Mr. X"],
+  teacher: ["Cosme Fulanito","Mr. X","El Barto","Krusty"],
   careers: ["Tecnicatura en Programación Informática", "Tecnicatura en Redes","Ciencia de Datos","Tecnicatura en Programación Informática",],
   schedules: "08:00 - 10:00",
   weekDays: ["Lunes","Miércoles","Viernes"],
