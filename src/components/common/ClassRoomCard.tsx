@@ -1,4 +1,4 @@
-import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip } from "@mui/material";
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip, Grid2 } from "@mui/material";
 import { MapPin,Clock,User,BookOpenText, Building, Laptop} from '@phosphor-icons/react'
 
 
@@ -49,62 +49,85 @@ export default function ClassRoomCard({name,
       }}>
         <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
+            {/* Nombre de la Materia y Comisión */}
             <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
              {name}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
             </Typography>
             <Divider sx={{ mb: 2 }} />
 
-            {viewType === "standard" && (
-              <>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                  <MapPin size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
+            <Grid2  container
+                    rowSpacing={1}
+                    columnSpacing={{ xs: '1rem', sm: '1.5rem' }}
+                    columns={{ xs: 1, sm: 1, lg:1 }}
+                    sx={{ maxHeight: '90vh', overflowY: 'auto' }}>
+              {/* Aula y Edificio */}
+              {viewType === "standard" && (
+                <>
+                  <Grid2 >
+                    <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                      <MapPin size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
+                      <Typography variant="body2" sx={{ color: '#666' }}>
+                        Aula: {classroom} - Edificio: {building}
+                      </Typography>
+                    </Box>
+                  </Grid2>
+                </>
+              )}
+
+              {/* Profesor */}
+              <Grid2 >
+                <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                  <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
                   <Typography variant="body2" sx={{ color: '#666' }}>
-                    Aula: {classroom} - Edificio: {building}
+                    Profesor: {teacher.join(' - ')}
                   </Typography>
                 </Box>
-               </>
-            )}
+              </Grid2>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
-              <Typography variant="body2" sx={{ color: '#666' }}>
-                Profesor: {teacher.join(' - ')}
-              </Typography>
-            </Box>
+              {/* Modalidad */}
+              <Grid2 >
+                <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                  {mode === 'presencial' ? (
+                    <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+                  ) : mode === 'virtual' ? (
+                    <Laptop size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+                  ) : (
+                    <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
+                  )}
+                  <Typography variant="body2" sx={{ color: '#666' }}>
+                    Modalidad: {formattedMode}
+                  </Typography>
+                </Box>
+              </Grid2>
+                  
+                
+              {/* Horario */}
+              <Grid2 >
+                <Box sx={{ display: 'flex', alignItems: 'center'}}>
+                  <Clock size={24} color='#1976d2' style={{ marginRight:'8px', }}/>
+                  <Typography variant="body2" sx={{ color: '#666' }}>
+                    Horario: {schedules} {/*Hay que ver como viene del back*/}
+                  </Typography>
+                </Box>
+              </Grid2>
 
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              {mode === 'presencial' ? (
-                <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-              ) : mode === 'virtual' ? (
-                <Laptop size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-              ) : (
-                <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-              )}
-              <Typography variant="body2" sx={{ color: '#666' }}>
-                Modalidad: {formattedMode}
-              </Typography>
-            </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Clock size={24} color='#1976d2' style={{ marginRight:'8px', }}/>
-              <Typography variant="body2" sx={{ color: '#666' }}>
-                Horario: {schedules} {/*Hay que ver como viene del back*/}
-              </Typography>
-            </Box>
-
-            <Box sx={{ display: 'flex', lignItems: 'center'}}>
-              <BookOpenText size={24} color='#1976d2' style={{ marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
-              <Tooltip title={careers.join(', ')} arrow>
-                <Typography variant="body2" 
-                            sx={{ color: '#1976d2',
-                                  whiteSpace: 'nowrap',
-                                  overflow: 'hidden',
-                                  textOverflow: 'ellipsis',
-                            }}>
-                  Carreras: {careers.join(', ')}
-                </Typography>
-              </Tooltip>
-            </Box>
+              {/* Carreras */}
+              <Grid2 >
+                <Box sx={{ display: 'flex', lignItems: 'center'}}>
+                  <BookOpenText size={24} color='#1976d2' style={{ marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
+                  <Tooltip title={careers.join(', ')} arrow>
+                    <Typography variant="body2" 
+                                sx={{ color: '#1976d2',
+                                      whiteSpace: 'nowrap',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis',
+                                }}>
+                      Carreras: {careers.join(', ')}
+                    </Typography>
+                  </Tooltip>
+                </Box>
+              </Grid2>
+            </Grid2>
           </CardContent>
         </CardActionArea>
       </Card>
