@@ -47,7 +47,7 @@ export function Search() {
       {/* Grilla para organizar las tarjetas de las aulas de manera responsive */}
       <Grid2
         container
-        rowSpacing='2rem'
+        rowSpacing='1rem'
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
         maxHeight='90vh'

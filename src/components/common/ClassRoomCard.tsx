@@ -30,6 +30,9 @@ export default function ClassRoomCard({name,
 {
   const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
 
+  // Si la modalidad es 'virtual', no se debe ejecutar el onClick
+  const handleClick = onClick && mode !== 'virtual' ? onClick : undefined
+
   return (
     <Box  sx={{
       display: 'flex',
@@ -47,13 +50,13 @@ export default function ClassRoomCard({name,
         border: '1px solid #e0e0e0',
         '@media (max-width: 600px)': {maxWidth: '90%'}
       }}>
-        <CardActionArea onClick={onClick}>
+        <CardActionArea onClick={handleClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
             {/* Nombre de la Materia y Comisión */}
             <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
              {name}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
             </Typography>
-            <Divider sx={{ mb: 2 }} />
+            <Divider sx={{ mb: .5 }} />
 
             <Grid2  container
                     rowSpacing={1}
@@ -109,8 +112,7 @@ export default function ClassRoomCard({name,
                     Modalidad: {formattedMode}
                   </Typography>
                 </Box>
-              </Grid2>
-                  
+              </Grid2>                  
                 
               {/* Horario */}
               <Grid2 >
