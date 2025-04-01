@@ -1,4 +1,4 @@
-import { CardActionArea, CardContent, Typography, Card, Box, Divider} from "@mui/material";
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip } from "@mui/material";
 import { MapPin,Clock,User,BookOpenText, Building, Laptop} from '@phosphor-icons/react'
 
 
@@ -94,6 +94,7 @@ export default function ClassRoomCard({name,
 
             <Box sx={{ display: 'flex', lignItems: 'center'}}>
               <BookOpenText size={24} color='#1976d2' style={{ marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
+              <Tooltip title={careers.join(', ')} arrow>
                 <Typography variant="body2" 
                             sx={{ color: '#1976d2',
                                   whiteSpace: 'nowrap',
@@ -102,6 +103,7 @@ export default function ClassRoomCard({name,
                             }}>
                   Carreras: {careers.join(', ')}
                 </Typography>
+              </Tooltip>
             </Box>
           </CardContent>
         </CardActionArea>
