@@ -58,14 +58,14 @@ export default function ClassRoomCard({name,
             <Grid2  container
                     rowSpacing={1}
                     columnSpacing={{ xs: '1rem', sm: '1.5rem' }}
-                    columns={{ xs: 1, sm: 1, lg:1 }}
+                    columns={{ xs: 1, sm: 2, lg:2 }}
                     sx={{ maxHeight: '90vh', overflowY: 'auto' }}>
               {/* Aula y Edificio */}
               {viewType === "standard" && (
                 <>
                   <Grid2 >
                     <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                      <MapPin size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
+                      <MapPin size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px'}}/>
                       <Typography variant="body2" sx={{ color: '#666' }}>
                         Aula: {classroom} - Edificio: {building}
                       </Typography>
@@ -77,7 +77,7 @@ export default function ClassRoomCard({name,
               {/* Profesor */}
               <Grid2 >
                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                  <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
+                  <User size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px'}}/>
                   <Tooltip title={teacher.join(' - ')} arrow>
                     <Typography variant="body2" 
                                 sx={{ color: '#666',
@@ -110,7 +110,7 @@ export default function ClassRoomCard({name,
               {/* Horario */}
               <Grid2 >
                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                  <Clock size={24} color='#1976d2' style={{ marginRight:'8px', }}/>
+                  <Clock size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px', }}/>
                   <Typography variant="body2" sx={{ color: '#666' }}>
                     Horario: {schedules} {/*Hay que ver como viene del back*/}
                   </Typography>
@@ -120,7 +120,7 @@ export default function ClassRoomCard({name,
               {/* Carreras */}
               <Grid2 >
                 <Box sx={{ display: 'flex', lignItems: 'center'}}>
-                  <BookOpenText size={24} color='#1976d2' style={{ marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
+                  <BookOpenText size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
                   <Tooltip title={careers.join(', ')} arrow>
                     <Typography variant="body2" 
                                 sx={{ color: '#1976d2',
