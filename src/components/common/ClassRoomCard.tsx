@@ -79,7 +79,11 @@ export default function ClassRoomCard({name,
                 <Box sx={{ display: 'flex', alignItems: 'center'}}>
                   <User size={24} color='#1976d2' style={{ marginRight:'8px'}}/>
                   <Tooltip title={teacher.join(' - ')} arrow>
-                    <Typography variant="body2" sx={{ color: '#666' }}>
+                    <Typography variant="body2" 
+                                sx={{ color: '#666',
+                                      whiteSpace: 'nowrap',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis', }}>
                       Profesor: {teacher.join(' - ')}
                     </Typography>
                   </Tooltip>
