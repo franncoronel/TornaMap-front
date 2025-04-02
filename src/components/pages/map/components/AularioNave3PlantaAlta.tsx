@@ -1,4 +1,4 @@
-export default function AularioNave3PlantaBaja() {
+export default function AularioNave3PlantaAlta() {
   return (
     <>
       <svg  className="svg-container"

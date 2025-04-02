@@ -9,6 +9,8 @@ import Profile from '@/components/pages/main/profile/Profile'
 import TornaviasSubsuelo from '@/components/pages/map/components/TornaviasSubsuelo'
 import { Search } from './components/pages/search/Search'
 import { Welcome } from './components/pages/welcome/Welcome'
+import AularioNave3PlantaAlta from './components/pages/map/components/AularioNave3PlantaAlta'
+import AularioNave3PlantaBaja from './components/pages/map/components/AularioNave3PlantaBaja'
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -23,6 +25,8 @@ export const routes: RouteObject[] = [
       { path: 'tornavias-subsuelo', element: <TornaviasSubsuelo /> },
       { path: 'tornavias-primer-piso', element: <TornaviasSubsuelo /> },
       { path: 'tornavias-planta-baja', element: <TornaviasSubsuelo /> },
+      { path: 'aulario-nave-3-planta-baja', element: <AularioNave3PlantaBaja /> },
+      { path: 'aulario-nave-3-planta-alta', element: <AularioNave3PlantaAlta /> },
     ]
   },
   {
