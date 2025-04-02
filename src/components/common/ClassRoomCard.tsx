@@ -33,6 +33,19 @@ export default function ClassRoomCard({name,
   // Si la modalidad es 'virtual', no se debe ejecutar el onClick
   const handleClick = onClick && mode !== 'virtual' ? onClick : undefined
 
+{/* //TODO: COMENTARIOS DE MEJORAS
+// * - Cambiar el formato de horario
+// *     Horario:
+// *        Lunes: 08:00 - 10:00 
+// *        Martes: 18:00 - 22:00
+
+// * - Si la modalidad es 'virtual' el aula y edificio deben aparecer vacías o no mostrar ese campo
+// * - Agregar el botón de edición (SpeedDialEditActions)
+// * - Corregir la proporcionalidad del títuto para que todas las cards tengan el mismo tamaño
+// * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
+// * - Crear el modal para editar la materia
+*/}
+
   return (
     <Box  sx={{
       display: 'flex',
