@@ -101,9 +101,6 @@ export default function NavigationButtons() {
     )
 
     return (
-        <>
-            {isMobile && mobileButtons()}
-            {!isMobile && wideViewportButtons()}
-        </>
+        wideViewportButtons()
     )
 }
