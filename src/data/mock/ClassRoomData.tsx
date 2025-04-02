@@ -94,3 +94,49 @@ export const iamkDecanato = {
   building: "Tornavías",
   level: 'Primer Piso'
 }
+
+// ..............................: Aulario Nave 3:..................................................//
+//                                 : Planta baja :                                                 //
+export const a17_N3 = {
+  id: 0,
+  classroom: "A17",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Baja'
+}
+export const a16_N3 = {
+  id: 1,
+  classroom: "A16",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Baja'
+}
+export const a15_N3 = {
+  id: 2,
+  classroom: "A15",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Baja'
+}
+//                                 : Planta alta :                                                 //
+export const a20_N3 = {
+  id: 0,
+  classroom: "A20",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Alta'
+}
+export const a19_N3 = {
+  id: 1,
+  classroom: "A19",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Alta'
+}
+export const a18_N3 = {
+  id: 2,
+  classroom: "A22",
+  classroomType: "Aula",
+  building: "Aulario - Nave 3",
+  level: 'Planta Alta'
+}
