@@ -1,3 +1,4 @@
+import UnsamIcon from "@/assets/logos/logo-unsam"
 import { useAuth } from "@/context/AuthContext"
 import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material"
 import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from "@phosphor-icons/react"
@@ -41,7 +42,7 @@ export default function NavigationButtons() {
                         className={isActive('/') ? 'active' : ''}
                         aria-label='Inicio'
                     >
-                        <Typography flexGrow='1'>UNSAM</Typography> {/*Reemplazar por logo*/}
+                        <UnsamIcon size={48} />
                     </IconButton>
                     <Box flexGrow='1' />
                 </>
