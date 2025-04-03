@@ -1,42 +1,46 @@
-.appbar {
-    height: 7vh
+.outer-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    min-height: 8vh;
 }
 
-.toolbar {
+.inner-container {
     height: 100%
 }
 
 @Media (max-width:600px){
-    .appbar {
+    .outer-container {
         height:10vh;
     }
 
-    .toolbar {
+    .inner-container  {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
-    .appbar button{
+    .outer-container button{
         transition: transform 0.3s ease-in-out;
         border: none;
         height: 100%;
         /* Deshabilitar selección con el mouse */
         user-select: none;
     }
-    .appbar button svg{
+    .outer-container button svg{
         transition: transform 0.3s ease-in-out;
     }
-    .appbar button:hover,
-    .appbar button:active{
+    .outer-container button:hover,
+    .outer-container button:active{
         border: none;
         outline: none;
     }
 
 
-    .appbar .active{
+    .outer-container .active{
         position: relative;
     }
-    .appbar .active::after{
+    .outer-container .active::after{
         content: '';
         position: absolute;
         width: 150%;
@@ -46,14 +50,20 @@
         left: 50%;
         transform: translateX(-50%);
     }
-    .appbar .active svg{
+    .outer-container .active svg{
         transform: scale(1.2);
     }
 }
 
-@media (min-width: 1024px){
-    .appbar button:hover svg,
-    .appbar button:active svg{
+@Media (min-width: 601px) and (max-width:1200px) {
+    .outer-container {
+        min-height: 7vh
+    }
+}
+
+@media (min-width: 1200px){
+    .outer-container button:hover svg,
+    .outer-container button:active svg{
         transform: scale(0.9);
     }
 }

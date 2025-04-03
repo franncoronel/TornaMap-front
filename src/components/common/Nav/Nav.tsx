@@ -5,13 +5,13 @@ export default function Nav() {
 
   return (
     <AppBar
-      className="appbar" // Particular al footer
+      className="outer-container"
       position="sticky"
       color="primary"
       enableColorOnDark
     >
       <Toolbar
-        className="toolbar"
+        className="inner-container"
       >
         <NavigationButtons />
       </Toolbar>
