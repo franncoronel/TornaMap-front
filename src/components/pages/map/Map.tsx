@@ -8,10 +8,9 @@ import ClassInfoModal from "@/components/common/Modal"
 import { Box, InputBase, Typography } from "@mui/material"
 
 import { useState } from "react"
-import ClassRoomCard from "@/components/common/ClassRoomCard";
-import { buildingData } from "@/data/mock/BuildingData";
+import ClassRoomCard from "@/components/common/ClassRoomCard"
+import { buildingData } from "@/data/mock/BuildingData"
 import { classes, IClass } from "@/data/mock/ClassData"
-import SectionTitle from "@/components/common/SectionTitle"
 
 export default function Map() {
   const { control, watch, setValue } = useForm({
