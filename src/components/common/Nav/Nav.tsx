@@ -1,6 +1,6 @@
 import { AppBar, Toolbar } from "@mui/material"
 import './nav.css'
-import NavigationButtons from "../NavigationButtons"
+import NavigationButtons from "./NavigationButtons"
 export default function Nav() {
 
   return (
