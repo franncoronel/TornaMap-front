@@ -51,7 +51,7 @@ export function Search() {
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
         maxHeight='90vh'
-        px='2rem'
+        px={{ xs: '1rem', sm: '2rem' }}
         pt='1rem'
         pb='7rem'
         sx={{ overflowY: 'auto' }}

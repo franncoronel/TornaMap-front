@@ -52,7 +52,7 @@ export default function ClassRoomCard({name,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'column',
-      p: 2,gap:2
+      py: 2, gap:2
     }}>
 
     <Card sx={{
