@@ -11,7 +11,7 @@ import { Search } from './components/pages/search/Search'
 import { Welcome } from './components/pages/welcome/Welcome'
 import AularioNave3PlantaAlta from './components/pages/map/components/AularioNave3PlantaAlta'
 import AularioNave3PlantaBaja from './components/pages/map/components/AularioNave3PlantaBaja'
-import TornaviasPrimerPiso from './components/pages/map/components/TornabiasPrimerPiso'
+import TornaviasPrimerPiso from './components/pages/map/components/TornaviasPrimerPiso'
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
