@@ -1,14 +1,14 @@
 import { useAuth } from "@/context/AuthContext"
-import { Box, IconButton, Typography } from "@mui/material"
+import { Box, IconButton, Typography, useMediaQuery, useTheme } from "@mui/material"
 import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from "@phosphor-icons/react"
-import { useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
-import { W } from "vitest/dist/chunks/reporters.D7Jzd9GS.js"
 
 export default function NavigationButtons() {
     const navigate = useNavigate()
     const { isAuthenticated } = useAuth()
     const location = useLocation()
+    const theme = useTheme()
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
     const isActive = (paths: string | string[]) => {
         if (typeof paths === "string") {
@@ -23,8 +23,9 @@ export default function NavigationButtons() {
         )
     }
 
-    const mobileButtons = () => (
-            <>
+    return (
+        <>
+            {isMobile ?
                 <IconButton
                     onClick={() => navigate("/")}
                     color='secondary'
@@ -32,46 +33,19 @@ export default function NavigationButtons() {
                     aria-label='Buscar'
                 >
                     <HouseSimple size={32} alt='Inicio' />
-                </IconButton>
-                <IconButton
-                    onClick={() => navigate("/buscar")}
-                    color='secondary'
-                    className={isActive('/buscar') ? 'active' : ''}
-                    aria-label='Buscar'
-                >
-                    <MagnifyingGlass size={32} alt='Buscar' />
-                </IconButton>
-                <IconButton
-                    onClick={() => navigate("/mapa/tornavias-subsuelo")}
-                    color='secondary'
-                    className={isActive('/mapa') ? 'active' : ''}
-                    aria-label='Inicio'
-                >
-                    <MapTrifold size={32} alt='Mapa' />
-                </IconButton>
-                <IconButton
-                    onClick={() => navigate("/perfil")}
-                    color='secondary'
-                    className={isActive(["/perfil", "/ingresar"]) ? 'active' : ''}
-                    aria-label='Perfil'
-                >
-                    {isAuthenticated && <UserCircle size={32} alt='Perfil' />}
-                    {!isAuthenticated && <SignIn size={32} alt='Iniciar Sesión' />}
-                </IconButton>
-            </>
-        )
-
-    const wideViewportButtons = () => (
-        <>
-            <IconButton
-                onClick={() => navigate("/")}
-                color='secondary'
-                className={isActive('/') ? 'active' : ''}
-                aria-label='Inicio'
-            >
-                <Typography flexGrow='1'>UNSAM</Typography> {/*Reemplazar por logo*/}
-            </IconButton>
-            <Box flexGrow='1' /> {/*Necesario para posicionar al logo a la izquierda y los iconos a la derecha*/}
+                </IconButton> :
+                <>
+                    <IconButton
+                        onClick={() => navigate("/")}
+                        color='secondary'
+                        className={isActive('/') ? 'active' : ''}
+                        aria-label='Inicio'
+                    >
+                        <Typography flexGrow='1'>UNSAM</Typography> {/*Reemplazar por logo*/}
+                    </IconButton>
+                    <Box flexGrow='1' />
+                </>
+            }
             <IconButton
                 onClick={() => navigate("/buscar")}
                 color='secondary'
@@ -84,7 +58,7 @@ export default function NavigationButtons() {
                 onClick={() => navigate("/mapa/tornavias-subsuelo")}
                 color='secondary'
                 className={isActive('/mapa') ? 'active' : ''}
-                aria-label='Mapa'
+                aria-label='Inicio'
             >
                 <MapTrifold size={32} alt='Mapa' />
             </IconButton>
@@ -98,9 +72,5 @@ export default function NavigationButtons() {
                 {!isAuthenticated && <SignIn size={32} alt='Iniciar Sesión' />}
             </IconButton>
         </>
-    )
-
-    return (
-        wideViewportButtons()
     )
 }
