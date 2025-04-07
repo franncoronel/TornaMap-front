@@ -54,7 +54,7 @@ export const tornavias = {
 
 export const tornavia2 = {
   id: 1,
-  text: 'Tornavia2',
+  text: 'Tornavias 1° Piso',
   path: 'mapa/tornavias-primer-piso',
   levels: [
     subsuelo
@@ -71,8 +71,18 @@ export const aularioNave3 = {
   ]
 }
 
+export const tornavia3 = {
+  id: 3,
+  text: 'Tornavias Planta Baja',
+  path: 'mapa/tornavias-planta-baja',
+  levels: [
+    subsuelo
+  ]
+}
+
 export const buildingData = [
   tornavias,
   tornavia2,
-  aularioNave3
+  aularioNave3,
+  tornavia3
 ]
