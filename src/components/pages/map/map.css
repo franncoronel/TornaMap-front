@@ -29,6 +29,30 @@
     color: #213547;
 }
 
+.bathroom path {
+    fill: #b9bdc0;
+    stroke: #505050;
+    stroke-width: 0.7;
+}
+
+.maintenance path {
+    fill: #aaa;
+    stroke: #505050;
+    stroke-width: 0.7;
+}
+
+.commonAreas path{
+    fill:#ececed;
+    stroke:#79787d;
+    stroke-width: 0.7;
+}
+
+.libraryRestrictedZone path{
+    fill:#bc793c;
+    stroke: #000000;
+    stroke-width: 0.7;
+}
+
 /* BuildingMap.css */
 svg path,
 svg text {
