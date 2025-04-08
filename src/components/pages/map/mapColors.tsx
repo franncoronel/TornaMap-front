@@ -43,16 +43,21 @@ export const mapColors = {
     strokeWidth: 0.7,
   },
 
-  exHumanidades:{
+  humanidades:{
     fill: '#dcdc00',
     stroke: '#734c10',
     strokeWidth: 0.7,
   },
-/*
-  //Baños
-  banios: {
-    fill: '#B9BDC0',
-    stroke: '#505050',
+
+  escuelaCyt:{
+    fill: '#9dd89f',
+    stroke: '#224525',
+    strokeWidth: 0.7,
+  },
+
+  lecturaMundi:{
+    fill:'#c7a67e',
+    stroke:'#505050',
     strokeWidth: 0.7,
   },
   //areas Comunes
@@ -61,6 +66,29 @@ export const mapColors = {
     stroke: '#79787d',
     strokeWidth: 0.7,
   },
+  institutoTransporte:{
+    fill: '#0f42c8',
+    stroke: '#10245b',
+    strokeWidth: 0.7,
+  },
+  centroDeAtencionPsico:{
+    fill: '#5260be',
+    stroke: '#373b71',
+    strokeWidth: 0.7,
+  },
+  iAMK:{
+    fill:'#7a2bc5',
+    stroke:'#552281',
+    strokeWidth: 0.7,
+  },
+  //Baños
+  banios: {
+    fill: '#B9BDC0',
+    stroke: '#505050',
+    strokeWidth: 0.7,
+  },
+/*
+  
   //maintenance:{
     fill:'#ececed',
     stroke:'#79787d',
