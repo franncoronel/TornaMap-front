@@ -198,15 +198,15 @@ export default function TornaviasPlantaBaja() {
               </g>
               {/* ..................................AyP //! Hay que actualizar los datos de la sección de ex-Humanidades */}
               {/* Sala de Prof AyP */}
-              <g style={{fill: mapColors.exHumanidades.fill, stroke: mapColors.exHumanidades.stroke, strokeWidth: mapColors.exHumanidades.strokeWidth}}>
+              <g style={{fill: mapColors.humanidades.fill, stroke: mapColors.humanidades.stroke, strokeWidth: mapColors.humanidades.strokeWidth}}>
                 <path d="M525.112846,190.449754l30.809784,14.566452l16.085864-28.032859c-7.029046-5.013683-24.83861-13.608648-35.213244-16.624776l-11.682404,30.091183Z" transform="translate(.000004 0.000001)"/>
               </g>
               {/* Departamento de servicios académicos EH */}
-              <g style={{fill: mapColors.exHumanidades.fill, stroke: mapColors.exHumanidades.stroke, strokeWidth: mapColors.exHumanidades.strokeWidth}}>
+              <g style={{fill: mapColors.humanidades.fill, stroke: mapColors.humanidades.stroke, strokeWidth: mapColors.humanidades.strokeWidth}}>
                 <path d="M459.017196,142.982326c-11.98079-.941199-31.695726-.447048-40.60859.534947l4.860879,54.315229c8.598158-.948591,24.775352-1.450442,32.632527-.478327l3.115184-54.371849Z" transform="translate(0 0.000003)"/>
               </g>
               {/* Cámara Gesell*/}
-              <g style={{fill: mapColors.exHumanidades.fill, stroke: mapColors.exHumanidades.stroke, strokeWidth: mapColors.exHumanidades.strokeWidth}}>
+              <g style={{fill: mapColors.humanidades.fill, stroke: mapColors.humanidades.stroke, strokeWidth: mapColors.humanidades.strokeWidth}}>
                 <path d="M418.408606,143.517274c-8.253008.539874-26.610644,3.298821-38.512331,6.416424l13.919479,52.79692c7.804107-2.107954,22.325769-4.690337,29.453731-4.898115" transform="translate(0 0.000002)"/>
               </g>
               {/* ..........................................:Consultorías:.......................................... */}
