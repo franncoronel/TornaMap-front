@@ -1,3 +1,5 @@
+import { mapColors } from "../mapColors";
+
 export default function AularioNave3PlantaAlta() {
   return (
     <>
@@ -11,12 +13,12 @@ export default function AularioNave3PlantaAlta() {
             export-id="a68713931cef473b941afaac88f25546"
           >
         {/* Contorno exterior  */}
-        <g>
-          <path d="M80.277592,39.238169h985.311873l-.000001,189.225753h-985.311872v-189.225753Z" transform="translate(.000004 0.000003)" fill="none" stroke="#d4d4d4" stroke-width="1.396"/>
+        <g style={{fill: mapColors.outline.fill, stroke: mapColors.outline.stroke, strokeWidth: mapColors.outline.strokeWidth}}>
+          <path d="M80.277592,39.238169h985.311873l-.000001,189.225753h-985.311872v-189.225753Z" transform="translate(.000004 0.000003)"/>
         </g>
         {/* A20 */}
-        <g>
-          <path d="M80.277596,39.238172h244.655514v189.225753h-244.655514Z" transform="translate(0 0.000001)" fill="#6ba0a8" stroke="#505050" stroke-width="0.7"/>
+        <g style={{fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth}}>
+          <path d="M80.277596,39.238172h244.655514v189.225753h-244.655514Z" transform="translate(0 0.000001)"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="25" font-weight="400" 
                   transform="translate(165 135)"
                   stroke-width="0">
@@ -25,8 +27,8 @@ export default function AularioNave3PlantaAlta() {
         </g>
         
         {/* A19 */}
-        <g>
-          <path d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z" transform="translate(0 0.000002)" fill="#6ba0a8" stroke="#505050" stroke-width="0.7"/>
+        <g style={{fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth}}>
+          <path d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z" transform="translate(0 0.000002)"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="25" font-weight="400" 
                   transform="translate(635 165)"
                   stroke-width="0">
@@ -34,8 +36,8 @@ export default function AularioNave3PlantaAlta() {
           </text>
         </g>
         {/* A18 */}
-        <g>
-          <path d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z" transform="translate(.000001 0.000001)" fill="#6ba0a8" stroke="#505050" stroke-width="0.7"/>
+        <g style={{fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth}}>
+          <path d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z" transform="translate(.000001 0.000001)"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="25" font-weight="400" 
                     transform="translate(895 140)"
                     stroke-width="0">
