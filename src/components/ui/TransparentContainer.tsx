@@ -8,7 +8,7 @@ export function TransparentContainer( {children, padding}: {children: ReactNode,
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         borderRadius: 2,
         p: {padding},
-        width: {xs:'80%', sm:'75%', md:'25%'},
+        width: {xs:'80%', sm:'75%', md:'50%', lg:'25%'},
         alignSelf:'center'
       }}
     >
