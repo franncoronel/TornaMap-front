@@ -9,6 +9,10 @@
     height: 100%
 }
 
+.mobile-logo {
+    display:none;
+}
+
 @Media (max-width:600px){
     .outer-container {
         height:10vh;
@@ -53,6 +57,22 @@
     .outer-container .active svg{
         transform: scale(1.2);
     }
+
+    .wide-screen-logo{
+        display:none;
+    }
+
+    .spacing {
+        display:none;
+    }
+
+    .mobile-logo{
+        display:flex;
+    }
+
+    .logo-label{
+        display:none;
+    }
 }
 
 @Media (min-width: 601px) and (max-width:1200px) {
@@ -65,5 +85,13 @@
     .outer-container button:hover svg,
     .outer-container button:active svg{
         transform: scale(0.9);
+    }
+}
+
+@Media (min-width: 601px){
+    .logo-container{
+        display: flex;
+        height: 100%;
+        flex-direction: column;
     }
 }
