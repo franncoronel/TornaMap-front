@@ -70,7 +70,7 @@ export default function Nav() {
           aria-label='Inicio'
         >
           <MapTrifold size={32} alt='Mapa' />
-          <Typography variant="body2" color="secondary" className='logo-label'>
+          <Typography variant="body2" color="secondary" className='logo-label middle-button'>
             MAPA
           </Typography>
         </IconButton>

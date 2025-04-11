@@ -13,6 +13,8 @@
     display:none;
 }
 
+
+
 @Media (max-width:600px){
     .outer-container {
         height:10vh;
@@ -93,5 +95,10 @@
         display: flex;
         height: 100%;
         flex-direction: column;
+    }
+
+    .middle-button{
+        padding-left:1rem;
+        padding-right:1rem;
     }
 }
