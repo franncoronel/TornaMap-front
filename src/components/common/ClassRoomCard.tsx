@@ -1,4 +1,4 @@
-import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip, Grid2 } from "@mui/material";
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip} from "@mui/material";
 import { MapPin,Clock,User,BookOpenText, Building, Laptop} from '@phosphor-icons/react'
 
 
@@ -36,7 +36,6 @@ export default function ClassRoomCard({name,
 // *        Lunes: 08:00 - 10:00 
 // *        Martes: 18:00 - 22:00
 
-// * - Si la modalidad es 'virtual' el aula y edificio deben aparecer vacías o no mostrar ese campo
 // * - Agregar el botón de edición (SpeedDialEditActions)
 // * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
 // * - Crear el modal para editar la materia
@@ -61,117 +60,100 @@ export default function ClassRoomCard({name,
       }}>
         <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-            {/* Nombre y comisión */}
-            <Grid2  columns={{ xs: 1, sm: 1, lg: 1}}
-                    sx={{ maxHeight: '90vh', overflowY: 'auto' }}>
-                <Box sx={{ display: 'flex', 
-                           flexDirection: 'column',
-                           maxWidth: '100%',
-                           alignItems: 'center',
-                           overflow: 'hidden', 
-                           mb: .5}} >
-                  <Tooltip title={name} arrow placement="top">
-                    <Typography variant="h5" 
-                                sx={{ color: '#333', 
-                                      fontWeight: 'bold',
-                                      whiteSpace: 'nowrap',
-                                      maxWidth: '100%',
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis', }}>
-                      {name}
-                    </Typography>
-                  </Tooltip>
-                  <Typography variant="h5" sx={{ color: '#333', fontWeight: 'bold' }}>
-                    {commission}
+          <Box  sx={{ display: 'grid',gridTemplateRows: 'auto auto',justifyItems: 'center',
+                      maxWidth: '100%',overflow: 'hidden',mb: 0.5,}}>
+            <Tooltip title={name} arrow placement="top">
+              <Typography variant="h5" sx={{ color: '#333',fontWeight: 'bold', whiteSpace: 'nowrap',
+                                              maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis',}}>
+                {name}
+              </Typography>
+            </Tooltip>
+            <Typography variant="h5" sx={{color: '#333', fontWeight: 'bold',}}>
+              {commission}
+            </Typography> 
+          </Box>
+
+          <Divider sx={{ mb: .5 }} />
+
+          <Box  sx={{ display: 'grid',
+                      gridTemplateRows: 'auto auto',
+                      gridTemplateColumns: 'auto 1fr',
+                      columnGap:1,
+                      maxHeight: '90vh',
+                      overflowY: 'auto',mb: 0.5,
+                      rowGap: 1,}}>
+            
+            {/* Aula y Edificio */}
+            {viewType === "standard" && (
+              <>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                  <MapPin size={24} color="#1976d2" />
+                </Box>
+                <Box sx={{display: 'flex',flexDirection: 'column', maxWidth: '100%',overflow: 'hidden'}}>
+                  <Typography variant="body2" sx={{ color: '#666',display: 'block', textAlign: 'left', whiteSpace: 'nowrap',
+                                              maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis',}}>
+                    Aula: {classroom}
                   </Typography>
+                  <Typography variant="body2" sx={{ color: '#666',display: 'flex', textAlign: 'left',}}>
+                    Edificio: {building}
+                  </Typography>       
                 </Box>
-            </Grid2>
-           
-            <Divider sx={{ mb: .5 }} />
+              </>
+            )}
 
-            <Grid2  container
-                    rowSpacing={1}
-                    columnSpacing={{ xs: '1rem', sm: '1.5rem' }}
-                    columns={{ xs: 1, sm: 2, lg:2 }}
-                    sx={{ maxHeight: '90vh', overflowY: 'auto' }}>
-              {/* Aula y Edificio */}
-              {viewType === "standard" && (
-                <>
-                  <Grid2 >
-                    <Box sx={{ display: 'flex', alignItems: 'center',flexDirection: 'row'}}>
-                      <MapPin size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px'}}/>
-                      <Box sx={{ display: 'flex', flexDirection: 'column',alignItems: 'flex-start'}}>
-                        <Typography variant="body2" sx={{ color: '#666' }}>
-                          Aula: {classroom}
-                        </Typography>
-                        <Typography variant="body2" sx={{ color: '#666' }}>
-                          Edificio: {building}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </Grid2>
-                </>
-              )}
-
-              {/* Profesor */}
-              <Grid2 >
-                <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                  <User size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px'}}/>
-                  <Tooltip title={teacher.join(' - ')} arrow>
-                    <Typography variant="body2" 
-                                sx={{ color: '#666',
-                                      whiteSpace: 'nowrap',
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis', }}>
-                      Profesor: {teacher.join(' - ')}
-                    </Typography>
-                  </Tooltip>
-                </Box>
-              </Grid2>
-
-              {/* Modalidad */}
-              <Grid2 >
-                <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                  {mode === 'presencial' ? (
-                    <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-                  ) : mode === 'virtual' ? (
-                    <Laptop size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-                  ) : (
-                    <Building size={24} color='#1976d2' style={{ marginRight: '8px' }} />
-                  )}
-                  <Typography variant="body2" sx={{ color: '#666' }}>
-                    Modalidad: {formattedMode}
-                  </Typography>
-                </Box>
-              </Grid2>                  
-                
-              {/* Horario */}
-              <Grid2 >
-                <Box sx={{ display: 'flex', alignItems: 'center'}}>
-                  <Clock size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px', }}/>
-                  <Typography variant="body2" sx={{ color: '#666' }}>
-                    Horario: {schedules} {/*Hay que ver como viene del back*/}
-                  </Typography>
-                </Box>
-              </Grid2>
-
-              {/* Carreras */}
-              <Grid2 >
-                <Box sx={{ display: 'flex', lignItems: 'center'}}>
-                  <BookOpenText size={24} color='#1976d2' style={{flexShrink: 0, marginRight:'8px',fontSize: '24px' }} />{/*,alignSelf: 'flex-start'*/}
-                  <Tooltip title={careers.join(', ')} arrow>
-                    <Typography variant="body2" 
-                                sx={{ color: '#1976d2',
-                                      whiteSpace: 'nowrap',
-                                      overflow: 'hidden',
-                                      textOverflow: 'ellipsis',
-                                }}>
-                      Carreras: {careers.join(', ')}
-                    </Typography>
-                  </Tooltip>
-                </Box>
-              </Grid2>
-            </Grid2>
+            {/* Profesor */}
+            <User size={24} color="#1976d2" />
+            <Box  sx={{maxWidth: '90%', width: '300px',overflow: 'hidden'}}>
+              <Tooltip title={teacher.join(' - ')} arrow>
+                <Typography
+                  variant="body2"
+                  sx={{ color: '#666',
+                        whiteSpace: 'nowrap',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                        display: 'block',
+                        textAlign: 'left',}}>
+                  Profesor: {teacher.join(' - ')}
+                </Typography>
+              </Tooltip>
+            </Box>
+            
+            {/* Modalidad */}
+            {mode === 'presencial' ? (
+              <Building size={24} color="#1976d2" />
+            ) : mode === 'virtual' ? (
+              <Laptop size={24} color="#1976d2" />
+            ) : (
+              <Building size={24} color="#1976d2" />
+            )}
+            <Typography variant="body2" sx={{ color: '#666',display: 'flex', textAlign: 'left', }}>
+              Modalidad: {formattedMode}
+            </Typography>
+            
+            {/* Horario */}
+            <Clock size={24} color="#1976d2" />
+            <Typography variant="body2" sx={{ color: '#666',display: 'flex', textAlign: 'left', }}>
+              Horario: {schedules}
+            </Typography>
+            
+            {/* Carreras */}
+            <BookOpenText size={24} color="#1976d2" />
+            
+            <Box  sx={{maxWidth: '90%',overflow: 'hidden'}}>
+              <Tooltip title={careers.join(', ')} arrow>
+                <Typography
+                  variant="body2"
+                  sx={{color: '#1976d2',
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    display: 'block',
+                    textAlign: 'left',}}>
+                    Carreras: {careers.join(', ')}
+                </Typography>
+              </Tooltip> 
+            </Box>           
+          </Box>
           </CardContent>
         </CardActionArea>
       </Card>
