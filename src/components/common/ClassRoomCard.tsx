@@ -41,7 +41,6 @@ export default function ClassRoomCard({name,
 
 // * - Si la modalidad es 'virtual' el aula y edificio deben aparecer vacías o no mostrar ese campo
 // * - Agregar el botón de edición (SpeedDialEditActions)
-// * - Corregir la proporcionalidad del títuto para que todas las cards tengan el mismo tamaño
 // * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
 // * - Crear el modal para editar la materia
 */}
@@ -65,29 +64,30 @@ export default function ClassRoomCard({name,
       }}>
         <CardActionArea onClick={handleClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-            {/* Nombre de la Materia y Comisión */}
-            {/* <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
-             {name}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
-            </Typography> */}
-           
-            <Grid2>
-              <Grid2>
-                <Tooltip title={name} arrow placement="top">
-                  <Typography gutterBottom variant="h5" component="div" 
-                          sx={{ color: '#333', 
-                                fontWeight: 'bold',
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis', }}>
-                    {name}
+            {/* Nombre y comisión */}
+            <Grid2  columns={{ xs: 1, sm: 1, lg: 1}}
+                    sx={{ maxHeight: '90vh', overflowY: 'auto' }}>
+                <Box sx={{ display: 'flex', 
+                           flexDirection: 'column',
+                           maxWidth: '100%',
+                           alignItems: 'center',
+                           overflow: 'hidden', 
+                           mb: .5}} >
+                  <Tooltip title={name} arrow placement="top">
+                    <Typography variant="h5" 
+                                sx={{ color: '#333', 
+                                      fontWeight: 'bold',
+                                      whiteSpace: 'nowrap',
+                                      maxWidth: '100%',
+                                      overflow: 'hidden',
+                                      textOverflow: 'ellipsis', }}>
+                      {name}
+                    </Typography>
+                  </Tooltip>
+                  <Typography variant="h5" sx={{ color: '#333', fontWeight: 'bold' }}>
+                    {commission}
                   </Typography>
-                </Tooltip>
-              </Grid2>
-              <Grid2>
-              <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
-                {commission}
-                </Typography>
-              </Grid2>
+                </Box>
             </Grid2>
            
             <Divider sx={{ mb: .5 }} />
