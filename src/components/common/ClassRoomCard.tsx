@@ -66,9 +66,30 @@ export default function ClassRoomCard({name,
         <CardActionArea onClick={handleClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
             {/* Nombre de la Materia y Comisión */}
-            <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
+            {/* <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
              {name}&nbsp;&nbsp;-&nbsp;&nbsp;{commission}
-            </Typography>
+            </Typography> */}
+           
+            <Grid2>
+              <Grid2>
+                <Tooltip title={name} arrow placement="top">
+                  <Typography gutterBottom variant="h5" component="div" 
+                          sx={{ color: '#333', 
+                                fontWeight: 'bold',
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis', }}>
+                    {name}
+                  </Typography>
+                </Tooltip>
+              </Grid2>
+              <Grid2>
+              <Typography gutterBottom variant="h5" component="div" sx={{ color: '#333', fontWeight: 'bold' }}>
+                {commission}
+                </Typography>
+              </Grid2>
+            </Grid2>
+           
             <Divider sx={{ mb: .5 }} />
 
             <Grid2  container
