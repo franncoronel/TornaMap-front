@@ -30,9 +30,6 @@ export default function ClassRoomCard({name,
 {
   const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
 
-  // Si la modalidad es 'virtual', no se debe ejecutar el onClick
-  const handleClick = onClick && mode !== 'virtual' ? onClick : undefined
-
 {/* //TODO: COMENTARIOS DE MEJORAS
 // * - Cambiar el formato de horario
 // *     Horario:
@@ -62,7 +59,7 @@ export default function ClassRoomCard({name,
         border: '1px solid #e0e0e0',
         '@media (max-width: 600px)': {maxWidth: '90%'}
       }}>
-        <CardActionArea onClick={handleClick}>
+        <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
             {/* Nombre y comisión */}
             <Grid2  columns={{ xs: 1, sm: 1, lg: 1}}
