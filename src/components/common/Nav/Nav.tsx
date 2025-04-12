@@ -1,9 +1,16 @@
 import { AppBar, Toolbar, Box, IconButton, Typography } from "@mui/material"
+import { styled } from "@mui/material/styles"
 import './nav.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from "@phosphor-icons/react"
 import logo from '@/assets/logos/logo-unsam-blanco-crop.png'
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  variant: "body2",
+  fontWeight: theme.typography.fontWeightMedium,
+  color: theme.palette.secondary.main,
+}))
 
 export default function Nav() {
   const navigate = useNavigate()
@@ -58,10 +65,10 @@ export default function Nav() {
           className={`${isActive('/buscar') ? 'active' : ''} logo-container`}
           aria-label='Buscar'
         >
-          <MagnifyingGlass size={32} alt='Buscar' />
-          <Typography variant="body2" color="secondary" className='logo-label'>
+          <MagnifyingGlass size={32} alt='Buscar'/>
+          <StyledTypography className='logo-label'>
             BUSCAR
-          </Typography>
+          </StyledTypography>
         </IconButton>
         <IconButton
           onClick={() => navigate("/mapa/tornavias-subsuelo")}
@@ -70,9 +77,9 @@ export default function Nav() {
           aria-label='Inicio'
         >
           <MapTrifold size={32} alt='Mapa' />
-          <Typography variant="body2" color="secondary" className='logo-label middle-button'>
+          <StyledTypography className='logo-label'>
             MAPA
-          </Typography>
+          </StyledTypography>
         </IconButton>
         <IconButton
           onClick={() => navigate("/perfil")}
@@ -83,17 +90,17 @@ export default function Nav() {
           {isAuthenticated &&
             <>
               <UserCircle size={32} alt='Perfil' />
-              <Typography variant="body2" color="secondary" className='logo-label'>
+              <StyledTypography className='logo-label'>
                 PERFIL
-              </Typography>
+              </StyledTypography>
             </>
           }
           {!isAuthenticated &&
             <>
               <SignIn size={32} alt='Iniciar Sesión' />
-              <Typography variant="body2" color="secondary" className='logo-label'>
+              <StyledTypography className='logo-label'>
                 INGRESAR
-              </Typography>
+              </StyledTypography>
             </>
           }
         </IconButton>
