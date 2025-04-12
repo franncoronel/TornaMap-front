@@ -2,18 +2,7 @@
     display: flex;
     width: 100%;
     justify-content: center;
-    min-height: 8vh;
 }
-
-.inner-container {
-    height: 100%
-}
-
-.mobile-logo {
-    display:none;
-}
-
-
 
 @Media (max-width:600px){
     .outer-container {
@@ -21,6 +10,7 @@
     }
 
     .inner-container  {
+        height: 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -77,13 +67,11 @@
     }
 }
 
-@Media (min-width: 601px) and (max-width:1200px) {
+@Media (min-width: 1200px){
     .outer-container {
-        min-height: 7vh
+        min-height: 8vh;
     }
-}
 
-@media (min-width: 1200px){
     .outer-container button:hover svg,
     .outer-container button:active svg{
         transform: scale(0.9);
@@ -91,6 +79,10 @@
 }
 
 @Media (min-width: 601px){
+    .outer-container {
+        min-height: 6vh
+    }
+
     .logo-container{
         display: flex;
         height: 100%;
@@ -100,5 +92,9 @@
     .middle-button{
         padding-left:1rem;
         padding-right:1rem;
+    }
+
+    .mobile-logo {
+        display:none;
     }
 }
