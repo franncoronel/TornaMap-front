@@ -103,7 +103,7 @@ export default function ClassRoomCard({name,
 
             {/* Profesor */}
             <User size={24} color="#1976d2" />
-            <Box  sx={{maxWidth: '90%', width: '300px',overflow: 'hidden'}}>
+            <Box  sx={{maxWidth: '100%',overflow: 'hidden'}}>
               <Tooltip title={teacher.join(' - ')} arrow>
                 <Typography
                   variant="body2"
@@ -139,7 +139,7 @@ export default function ClassRoomCard({name,
             {/* Carreras */}
             <BookOpenText size={24} color="#1976d2" />
             
-            <Box  sx={{maxWidth: '90%',overflow: 'hidden'}}>
+            <Box  sx={{maxWidth: '100%',overflow: 'hidden'}}>
               <Tooltip title={careers.join(', ')} arrow>
                 <Typography
                   variant="body2"
