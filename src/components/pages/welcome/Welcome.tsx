@@ -10,17 +10,7 @@ export function Welcome() {
   return (
     <Box
       data-testid="welcome-box"
-      sx={{
-        height: '90vh',
-        width: '100%',
-        backgroundImage:`url(${fondoTornavias})`,
-        backgroundSize:'cover',
-        backgroundPosition:'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent:'center',
-        gap: '1rem'
-      }}
+      className='welcome-page'
     >
       <Container
         sx={{
