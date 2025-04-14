@@ -46,7 +46,7 @@ export function Welcome() {
             <SignIn size={32} /> Iniciá sesión
           </Button>
           <Button 
-            // disabled
+            disabled
             sx={{
               display: 'flex',
               justifyContent: 'center',

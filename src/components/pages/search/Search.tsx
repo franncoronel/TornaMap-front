@@ -3,7 +3,7 @@ import SearchBar from "@/components/common/SearchBar"
 import { classes, IClass } from "@/data/mock/ClassData"
 import { Box, Divider, Grid2, Typography } from "@mui/material"
 import { useState } from "react"
-import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
+import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
 import '../interactive-page.css'
