@@ -1,20 +1,70 @@
-import { Stack} from "@mui/material"
+import { Typography} from "@mui/material"
 import { ProfileButton } from "./ProfileButton"
+import { useAuth } from "@/context/AuthContext"
+import { useNavigate } from "react-router-dom"
+import { SignOut } from '@phosphor-icons/react'
+import { userService } from "@/services/UserService"
+import { useEffect, useState } from "react"
+import { User } from "@/data/domain/User"
+
+import './profile.css'
 
 export default function Profile() {
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+  const [user, setUser] = useState<User | null>(null)
+
+  const handleLogout = async () => {
+    await logout()
+    navigate('/')
+  }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const user = await userService.getProfile()
+        setUser(user.data)
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+      }
+    }
+
+    if(!user){
+      fetchUserData()
+    }
+  }
+  , [user]) // Se ejecuta una vez al montar el componente
+
   return (
-    <Stack
-        flexGrow='1'
-        direction='column'
-        justifyContent='center'
-        alignItems='center'
-        spacing={6}
+    <main
+      className="profile-page"
     >
-      <ProfileButton>Agregar Tipo de Aula</ProfileButton>
-      <ProfileButton>Editar Aula</ProfileButton>
-      <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
+      <header>
+      {/* Agregar datos de mail y nombre de usuario */}
+        {/* Usar typography */}
+        <Typography variant="h2" component="h1" gutterBottom>
+          Perfil
+        </Typography>
+        {
+          user &&
+          <Typography variant="h4" component="h2" gutterBottom>
+            {user.name} {user.lastName}
+          </Typography>
+        }
+      </header>
+
+      {
+        user?.isAdmin &&
+        <>
+          <ProfileButton>Agregar Tipo de Aula</ProfileButton>
+          <ProfileButton>Editar Aula</ProfileButton>
+          <ProfileButton>Editar Aula</ProfileButton>
+          <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
+          <ProfileButton>Editar Clase</ProfileButton>
+        </>
+      }
       <ProfileButton>Agregar Clase</ProfileButton>
-      <ProfileButton>Editar Clase</ProfileButton>
-    </Stack>
+      <ProfileButton onClick={()=>handleLogout()}>Cerrar Sesión <SignOut size={32} alt='Cerrar sesión'/></ProfileButton>
+    </main>
   )
 }

@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Box, IconButton, Typography, Button } from "@mui/material"
+import { AppBar, Toolbar, Box, IconButton, Typography } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import './nav.css'
 import { useLocation, useNavigate } from "react-router-dom"
@@ -40,7 +40,7 @@ export default function Nav() {
       <Toolbar
         className="inner-container"
       >
-        <IconButton
+        {!isAuthenticated && <IconButton
           onClick={() => navigate("/")}
           className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
           aria-label='Ir al inicio'
@@ -57,7 +57,7 @@ export default function Nav() {
             className='wide-screen-logo'
           />
           <HouseSimple size={32} alt='Inicio' className='mobile-logo'/>
-        </IconButton>
+        </IconButton>}
         <Box flexGrow='1' className='spacing'/>
         <IconButton
           onClick={() => navigate("/buscar")}
