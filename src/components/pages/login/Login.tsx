@@ -11,7 +11,12 @@ import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
 
 export default function Login() {
-    const { control, handleSubmit, formState: { errors } } = useForm<LoginRequest>()
+    const { control, handleSubmit, formState: { errors } } = useForm<LoginRequest>({
+        defaultValues: {
+          email: '',
+          password: ''
+        }
+      })
     const { login } = useAuth()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = React.useState(false);
