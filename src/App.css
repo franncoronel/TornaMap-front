@@ -43,11 +43,28 @@ p{
 
 .layout-container {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
 }
 
-@Media (max-width: 600px) {
+.page-structure {
+  display:flex;
+  width:100%;
+  height: 90vh; /*Relativo a los 10vh que mide el Nav en mobile*/
+}
+
+@Media (min-width: 601px) {
   .layout-container {
-    flex-direction: column;
+    flex-direction: column-reverse;
+  }
+
+  .page-structure {
+    height:auto;
+    min-height: 94vh; /*Relativo a los 6vh que mide el Nav en mobile*/
+  }
+}
+
+@Media (min-width: 1200px) {
+  .page-structure {
+    min-height: 92vh; /*Relativo a los 8vh que mide el Nav en mobile*/
   }
 }

@@ -20,7 +20,9 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Box className="layout-container">
-            <RoutesWrapper />
+            <Box className="page-structure">
+              <RoutesWrapper />
+            </Box>
             <Nav />
           </Box>
         </BrowserRouter>
