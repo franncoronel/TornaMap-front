@@ -1,18 +1,66 @@
-import React, { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState, FC, ReactNode } from 'react'
+import axios from 'axios'
+import Cookies from 'js-cookie'
+
+
+import { environment } from '@/environment'
+import { User } from '@/data/domain/User'
+import { userService } from '@/services/UserService'
 
 interface AuthContextProps {
     isAuthenticated: boolean
-    login: () => void
+    login: (mail: string, password: string) => Promise<User>
     logout: () => void
 }
 
 const AuthContext = createContext<AuthContextProps | undefined>(undefined)
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+    const baseURL = environment.apiUrl
+    axios.defaults.baseURL = baseURL
+    axios.defaults.headers.common['Content-Type'] = 'application/json'
+    axios.defaults.headers.common['Accept'] = 'application/json'
+
     const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-    const login = () => setIsAuthenticated(true)
-    const logout = () => setIsAuthenticated(false)
+    // Implementar Login con AXIOS
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const login = async (email: string, password: string):Promise<User | any> => {
+        try {
+            const response = await userService.login(email, password)
+            sessionStorage.setItem('isAuthenticated', 'true')
+
+            setIsAuthenticated(true)
+            return response.data
+        } catch (error) {
+            setIsAuthenticated(false)
+            console.error('Error during login:', error)
+            return error
+        }
+    }
+
+    const logout = async () => {
+        // Eliminar token de localStorage
+        try{
+            sessionStorage.removeItem('isAuthenticated')
+            Cookies.remove('SESSION')
+            Cookies.remove('SESSION.sig')
+            document.cookie = 'SESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
+            setIsAuthenticated(false)
+
+            await userService.logout()
+        }catch (error) {
+            console.error('Error during logout:', error)
+            throw error
+        }
+    }
+
+    useEffect(() => {
+        const isAuthenticated = sessionStorage.getItem('isAuthenticated')
+        if(isAuthenticated) {
+            setIsAuthenticated(true)
+        }
+    }, [])
 
     return (
         <AuthContext.Provider value={{ isAuthenticated, login, logout }}>

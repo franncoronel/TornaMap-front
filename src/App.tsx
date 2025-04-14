@@ -18,7 +18,12 @@ function App() {
     <>
       <CssBaseline />
       <AuthProvider>
-        <BrowserRouter>
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <Box className="layout-container">
             <Box className="page-structure">
               <RoutesWrapper />

@@ -61,7 +61,7 @@
     min-height: 6vh;
     height: auto; /* Anular la altura fija de móvil */
   }
-  
+
   .inner-container .active.nav-icon::after {
     width: 100%;
     top: auto;
@@ -78,16 +78,16 @@
     height: 100%;
     flex-direction: column;
   }
-  
+
   .mobile-logo {
     display: none;
   }
-  
+
   .wide-screen-logo {
     display: flex;
   }
 
-  /* 
+  /*
     Espaciado entre los botones de navegación sin
     tener que agregar otro contenedor flex a la estructura.
   */
@@ -98,15 +98,15 @@
   .logo-container.nav-icon:first-of-type {
     margin-left: 0;
   }
-  
+
   .logo-container.nav-icon:last-of-type {
     margin-right: 0;
   }
-  
+
   .spacing {
     display: flex;
   }
-  
+
   .logo-label {
     display: flex;
   }

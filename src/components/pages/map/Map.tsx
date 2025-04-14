@@ -96,63 +96,70 @@ export default function Map() {
   return (
     <main className="interactive-page map-page">
 
+    <Box
+      position='sticky'
+      top='0'
+      zIndex='10'
+      sx={{backgroundColor:'white'}}
+    >
     {/* Select del edificio */}
-    <Controller
-      name="building"
-      control={control}
-      render={({ field }) => (
-        <FormControl fullWidth>
-          <InputLabel id="building-select-label">Edificio</InputLabel>
-          <Select
-            {...field}
-            labelId="building-select-label"
-            label="Edificio"
-            onChange={(e) => {
-              field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-              console.log(e.target.value)
-              handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
-            }}
-          >
-            {buildingData.map((building) => (
-              <MenuItem key={building.id} value={building.id}>
-                {building.text}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      )}
-    />
-    {/* RadioGroup de niveles */}
-    {currentBuilding &&
       <Controller
-        name="level"
+        name="building"
         control={control}
         render={({ field }) => (
-          <FormControl fullWidth>
-            <FormLabel id="building-levels-label">Niveles</FormLabel>
-            <RadioGroup
+          <FormControl fullWidth sx={{pb:'1rem'}}>
+            <InputLabel id="building-select-label">Edificio</InputLabel>
+            <Select
               {...field}
-              aria-labelledby="building-levels-label"
-              name="levels-group"
+              labelId="building-select-label"
+              label="Edificio"
               onChange={(e) => {
                 field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                console.log(e.target.value)
+                handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
               }}
             >
-              {buildingLevels().map((level, index) => (
-                <FormControlLabel
-                  key={index}
-                  value={level.path}
-                  control={<Radio />}
-                  label={level.text}
-                />
+              {buildingData.map((building) => (
+                <MenuItem key={building.id} value={building.id}>
+                  {building.text}
+                </MenuItem>
               ))}
-
-            </RadioGroup>
+            </Select>
           </FormControl>
         )}
       />
-    }
+      {/* RadioGroup de niveles */}
+      {currentBuilding &&
+        <Controller
+          name="level"
+          control={control}
+          render={({ field }) => (
+            <FormControl fullWidth>
+              <FormLabel id="building-levels-label">Niveles</FormLabel>
+              <RadioGroup
+                {...field}
+                aria-labelledby="building-levels-label"
+                name="levels-group"
+                onChange={(e) => {
+                  field.onChange(e.target.value) // Actualiza el valor en react-hook-form
+                  handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                }}
+              >
+                {buildingLevels().map((level, index) => (
+                  <FormControlLabel
+                    key={index}
+                    value={level.path}
+                    control={<Radio />}
+                    label={level.text}
+                  />
+                ))}
+
+              </RadioGroup>
+            </FormControl>
+          )}
+        />
+      }
+    </Box>
 
     <section className="map-container">
         <Outlet context={{ handleOpen }} />

@@ -3,7 +3,7 @@ import SearchBar from "@/components/common/SearchBar"
 import { classes, IClass } from "@/data/mock/ClassData"
 import { Box, Divider, Grid2, Typography } from "@mui/material"
 import { useState } from "react"
-import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
+import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
 import '../interactive-page.css'
@@ -97,14 +97,14 @@ export function Search() {
                    {currentClass.building} - {currentClass.buildingLevel}
                 </Typography>
               {/* Mapa interactivo del subsuelo */}
-              <TornaviasSubsuelo selectedClassRoomId={selectedClass?.classRoomId} onClassRoomClick={() => setSelectedClass(currentClass)}/> 
+              <TornaviasSubsuelo selectedClassRoomId={selectedClass?.classRoomId} onClassRoomClick={() => setSelectedClass(currentClass)}/>
               </>
               ) : (
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ textAlign: 'center', wordBreak: 'break-word',whiteSpace:'normal',}}>
                   Esta clase se dicta de forma virtual
                 </Typography>
-                <Laptop size={300} color="#d1d1d1" weight="duotone"/> 
+                <Laptop size={300} color="#d1d1d1" weight="duotone"/>
               </Box>
             )}
 
