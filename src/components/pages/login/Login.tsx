@@ -7,6 +7,7 @@ import React from 'react';
 import { EyeSlash,Eye, SignIn, FingerprintSimple} from '@phosphor-icons/react'
 import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
+import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
 
 export default function Login() {
@@ -37,21 +38,12 @@ export default function Login() {
             <Box
                 component="form"
                 onSubmit={handleSubmit(onSubmit)}
-                sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                    maxWidth: 400,
-                    margin: '0 auto',
-                    p: 3,
-                    border: '1px solid #ccc',
-                    borderRadius: 2,
-                    backgroundColor: 'white',
-                    // Ajustes para pantallas pequeñas (tablet/mobile)
-                    '@media (max-width:768px)': {
-                        border: 'none',
-                    }
-                }}
+                className='form'
+                // sx={{
+                //     maxWidth: 400,
+                //     margin: '0 auto',
+                //     border: '1px solid #ccc',
+                // }}
             >
                 <img
                     src={logoUnsam}

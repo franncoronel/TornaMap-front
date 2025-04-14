@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form"
 import { Outlet, useNavigate } from "react-router-dom"
 
 import './map.css'
+import '../interactive-page.css'
 import ClassInfoModal from "@/components/common/Modal"
 import { Box, InputBase, Typography } from "@mui/material"
 
@@ -93,7 +94,7 @@ export default function Map() {
   const selectedClassRoom = () => buildingData[selectedBuilding].levels.find((l) => l.id === selectedBuilding)?.classRooms.find((c) => c.id === classRoomId)
 
   return (
-    <main className="map-page">
+    <main className="interactive-page map-page">
 
     {/* Select del edificio */}
     <Controller
