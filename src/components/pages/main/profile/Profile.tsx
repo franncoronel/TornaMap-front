@@ -14,8 +14,8 @@ export default function Profile() {
   const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null)
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout()
     navigate('/')
   }
 
