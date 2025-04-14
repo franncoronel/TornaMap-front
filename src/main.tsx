@@ -36,6 +36,13 @@ let unsamTheme = createTheme({
       }
     }
   },
+  components: {
+    MuiIconButton: {
+      defaultProps: {
+        color:'secondary'
+      }
+    }
+  }
 })
 unsamTheme = responsiveFontSizes(unsamTheme)
 

@@ -119,6 +119,7 @@ export default function Login() {
                                     onMouseDown={handleMouseDownPassword}
                                     onMouseUp={handleMouseUpPassword}
                                     edge="end"
+                                    color="default"
                                 >
                                     {showPassword ? <Eye /> : <EyeSlash />}
                                 </IconButton>
