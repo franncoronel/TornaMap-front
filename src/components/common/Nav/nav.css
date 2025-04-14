@@ -1,4 +1,3 @@
-
 .outer-container {
   display: flex;
   width: 100%;
@@ -14,33 +13,24 @@
 }
 
 .outer-container button {
-  transition: transform 0.3s ease-in-out;
-  border: none;
   height: 100%;
-  /* Deshabilitar selección con el mouse */
-  user-select: none;
 }
 
 .outer-container button svg {
   transition: transform 0.3s ease-in-out;
 }
 
-.outer-container button:hover,
-.outer-container button:active {
-  border: none;
-  outline: none;
-}
-
 .outer-container .active {
   position: relative;
 }
 
-.outer-container .active::after {
+.inner-container .active.nav-icon::after,
+.inner-container .active.home-icon::after {
   content: '';
   position: absolute;
   width: 150%;
   height: 3px;
-  background-color: #f5f5f5;
+  background-color: #0F0F0F;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -66,26 +56,27 @@
   display: none;
 }
 
-/* Tablets y pantallas medianas (601px en adelante) */
-@media (min-width: 601px) {
+@Media (min-width: 601px) {
   .outer-container {
     min-height: 6vh;
     height: auto; /* Anular la altura fija de móvil */
   }
+  
+  .inner-container .active.nav-icon::after {
+    width: 100%;
+    top: auto;
+    bottom: 0;
+  }
 
-  .outer-container .active::after {
+  .inner-container .active.home-icon::after {
+    content: none;
     display: none;
   }
-  
+
   .logo-container {
     display: flex;
     height: 100%;
     flex-direction: column;
-  }
-  
-  .middle-button {
-    padding-left: 1rem;
-    padding-right: 1rem;
   }
   
   .mobile-logo {
@@ -95,14 +86,29 @@
   .wide-screen-logo {
     display: flex;
   }
+
+  /* 
+    Espaciado entre los botones de navegación sin
+    tener que agregar otro contenedor flex a la estructura.
+  */
+  .logo-container.nav-icon {
+    margin: 0 1.5rem
+  }
+
+  .logo-container.nav-icon:first-of-type {
+    margin-left: 0;
+  }
+  
+  .logo-container.nav-icon:last-of-type {
+    margin-right: 0;
+  }
   
   .spacing {
-    display: block;
+    display: flex;
   }
   
   .logo-label {
-    display: block;
-    font-style: bold;
+    display: flex;
   }
 }
 
@@ -110,10 +116,5 @@
 @media (min-width: 1200px) {
   .outer-container {
     min-height: 8vh;
-  }
-  
-  .outer-container button:hover svg,
-  .outer-container button:active svg {
-    transform: scale(0.9);
   }
 }
