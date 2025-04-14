@@ -59,7 +59,6 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
-                        color='secondary'
                         aria-label="Buscar"
                         onClick={handleSearch}>
                     <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>
