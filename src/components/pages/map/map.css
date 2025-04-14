@@ -1,10 +1,10 @@
 .map-page {
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    align-content:center;
-    margin-top:1rem;
-    padding:0 2rem 5rem;
+    display: flex;
+    width:100%;
+    flex-direction: column;
+    
+    gap: 2rem;
+
 }
 .map-container{
     height:90vh;

@@ -3,24 +3,14 @@ import { TransparentContainer } from '@/components/ui/TransparentContainer'
 import { useNavigate } from 'react-router-dom'
 import { CompassRose, FingerprintSimple, SignIn } from '@phosphor-icons/react'
 import logoUnsamBlanco from '@/assets/logos/logo-unsam-blanco.png'
-import fondoTornavias from '@/assets/fondos/fondo-tornavias.jpg'
+import '../background-image.css'
 export function Welcome() {
   const navigate = useNavigate()
 
   return (
     <Box
       data-testid="welcome-box"
-      sx={{
-        height: '90vh',
-        width: '100%',
-        backgroundImage:`url(${fondoTornavias})`,
-        backgroundSize:'cover',
-        backgroundPosition:'center',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent:'center',
-        gap: '1rem'
-      }}
+      className='welcome-page'
     >
       <Container
         sx={{
@@ -56,7 +46,7 @@ export function Welcome() {
             <SignIn size={32} /> Iniciá sesión
           </Button>
           <Button 
-            // disabled
+            disabled
             sx={{
               display: 'flex',
               justifyContent: 'center',

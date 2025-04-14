@@ -15,7 +15,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
   }
 
   return (
-    <Box  sx={{ display: 'flex', alignItems: 'center', mx: 2,p: 1,}}>
+    <Box  sx={{ display: 'flex', alignItems: 'center', pb:'1rem'}}>
       <Autocomplete
         freeSolo
         id="filled-hidden-label-normal"
@@ -59,7 +59,6 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                           justifyContent: 'center',
                           alignItems: 'center',
                         }}
-                        color='secondary'
                         aria-label="Buscar"
                         onClick={handleSearch}>
                     <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>

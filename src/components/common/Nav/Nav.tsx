@@ -1,14 +1,22 @@
-import { AppBar, IconButton, Toolbar } from "@mui/material"
-import { useLocation, useNavigate } from "react-router-dom"
-import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from '@phosphor-icons/react'
-import { useAuth } from "@/context/AuthContext"
+import { AppBar, Toolbar, Box, IconButton, Typography, Button } from "@mui/material"
+import { styled } from "@mui/material/styles"
 import './nav.css'
+import { useLocation, useNavigate } from "react-router-dom"
+import { useAuth } from "@/context/AuthContext"
+import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from "@phosphor-icons/react"
+import logo from '@/assets/logos/logo-unsam-negro-crop.png'
+
+const StyledTypography = styled(Typography)(({ theme }) => ({
+  variant: "body2",
+  fontWeight: theme.typography.fontWeightMedium,
+  color: theme.palette.secondary.main,
+}))
+
 export default function Nav() {
   const navigate = useNavigate()
-  const {isAuthenticated} = useAuth()
+  const { isAuthenticated } = useAuth()
   const location = useLocation()
 
-  // Función para detectar rutas parciales o múltiples coincidencias
   const isActive = (paths: string | string[]) => {
     if (typeof paths === "string") {
       return paths === "/"
@@ -21,23 +29,79 @@ export default function Nav() {
         : location.pathname.startsWith(path)
     )
   }
+
   return (
-    <AppBar className="footer-nav-bar" position="sticky" color="primary" sx={{ top: 'auto', bottom: 0, height: '10vh', display:'flex', justifyContent:'center', alignItems:'center' }} enableColorOnDark>
-      <Toolbar sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', height: '100%'}}>
-        <IconButton onClick={() => navigate("/")} color='secondary' className={isActive('/')?'active':''} aria-label='Buscar'>
-          <HouseSimple size={32} alt='Inicio'/>
+    <AppBar
+      className="outer-container"
+      position="sticky"
+      color="primary"
+      enableColorOnDark
+    >
+      <Toolbar
+        className="inner-container"
+      >
+        <IconButton
+          onClick={() => navigate("/")}
+          className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
+          aria-label='Ir al inicio'
+        >
+          <Box
+            component="img"
+            sx={{
+              height: '3rem',
+              width: 'auto',
+            }}
+            alt='Logo de la UNSAM'
+            title='Inicio'
+            src={logo}
+            className='wide-screen-logo'
+          />
+          <HouseSimple size={32} alt='Inicio' className='mobile-logo'/>
         </IconButton>
-        <IconButton onClick={() => navigate("/buscar")} color='secondary' className={isActive('/buscar')?'active':''} aria-label='Buscar'>
-          <MagnifyingGlass size={32} alt='Buscar' />
+        <Box flexGrow='1' className='spacing'/>
+        <IconButton
+          onClick={() => navigate("/buscar")}
+          className={`${isActive('/buscar') ? 'active' : ''} logo-container nav-icon`}
+          aria-label='Ir a búsqueda de materias'
+        >
+          <MagnifyingGlass size={32} alt='Buscar'/>
+          <StyledTypography className='logo-label'>
+            BUSCAR
+          </StyledTypography>
         </IconButton>
-        <IconButton onClick={() => navigate("/mapa/tornavias-subsuelo")} color='secondary' className={isActive('/mapa')?'active':''} aria-label='Inicio'>
-          <MapTrifold size={32} alt='Mapa' />
+        <IconButton
+          onClick={() => navigate("/mapa/tornavias-subsuelo")}
+          className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
+          aria-label='Ir al mapa interactivo'
+        >
+          <MapTrifold size={32} alt='Mapa'/>
+          <StyledTypography className='logo-label'>
+            MAPA
+          </StyledTypography>
         </IconButton>
-        <IconButton onClick={() => navigate("/perfil")} color='secondary' className={isActive(["/perfil", "/ingresar"])?'active':''} aria-label='Perfil'>
-          {isAuthenticated && <UserCircle size={32} alt='Perfil' />}
-          {!isAuthenticated && <SignIn size={32} alt='Iniciar Sesión' />}
+        <IconButton
+          onClick={() => navigate("/perfil")}
+          className={`${isActive(["/perfil", "/ingresar"]) ? 'active' : ''} logo-container nav-icon`}
+          aria-label={isAuthenticated ? 'Ir al perfil' : 'Ingresar'}
+        >
+          {isAuthenticated &&
+            <>
+              <UserCircle size={32} alt='Perfil'/>
+              <StyledTypography className='logo-label'>
+                PERFIL
+              </StyledTypography>
+            </>
+          }
+          {!isAuthenticated &&
+            <>
+              <SignIn size={32} alt='Iniciar Sesión'/>
+              <StyledTypography className='logo-label'>
+                INGRESAR
+              </StyledTypography>
+            </>
+          }
         </IconButton>
-      </Toolbar>
-    </AppBar>
+    </Toolbar>
+    </AppBar >
   )
 }

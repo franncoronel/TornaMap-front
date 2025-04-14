@@ -6,6 +6,8 @@ import { useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
+import '../interactive-page.css'
+import { Laptop } from "@phosphor-icons/react"
 
 export function Search() {
 
@@ -31,13 +33,7 @@ export function Search() {
 
   return (
     // Contenedor principal que organiza la disposición de los elementos
-    <Box
-      display='flex'
-      flexDirection='column'
-      height='100vh'
-      justifyContent='center'
-    >
-
+    <Box className='interactive-page'>
       {/* Barra de búsqueda fija */}
       <Box flexShrink='0' position='sticky' top='0' zIndex='10'>
         <SearchBar onSearch={() => search()} />
@@ -47,11 +43,10 @@ export function Search() {
       {/* Grilla para organizar las tarjetas de las aulas de manera responsive */}
       <Grid2
         container
-        rowSpacing='2rem'
+        rowSpacing='1rem'
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
         maxHeight='90vh'
-        px='2rem'
         pt='1rem'
         pb='7rem'
         sx={{ overflowY: 'auto' }}
@@ -87,12 +82,24 @@ export function Search() {
           classroomType="Aula"
         >
           <section className="class-info-container">
-            {/* Título del modal con información del edificio y nivel */}
-            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              {currentClass.building} - {currentClass.buildingLevel}
-            </Typography>
-            {/* Mapa interactivo del subsuelo */}
-            <TornaviasSubsuelo selectedClassRoomId={selectedClass?.classRoomId} onClassRoomClick={() => setSelectedClass(currentClass)} />
+            {currentClass.mode !== "virtual" ? (
+              <>
+              {/* Título del modal con información del edificio y nivel */}
+                <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                   {currentClass.building} - {currentClass.buildingLevel}
+                </Typography>
+              {/* Mapa interactivo del subsuelo */}
+              <TornaviasSubsuelo selectedClassRoomId={selectedClass?.classRoomId} onClassRoomClick={() => setSelectedClass(currentClass)}/> 
+              </>
+              ) : (
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ textAlign: 'center', wordBreak: 'break-word',whiteSpace:'normal',}}>
+                  Esta clase se dicta de forma virtual
+                </Typography>
+                <Laptop size={300} color="#d1d1d1" weight="duotone"/> 
+              </Box>
+            )}
+
             {/* Tarjeta con detalles adicionales de la clase */}
             <ClassRoomCard
               name={currentClass.name}

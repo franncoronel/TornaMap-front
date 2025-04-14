@@ -15,7 +15,7 @@ export default function SpeedDialEditActions() {
 
   return(
     <Box>
-      <Backdrop open={open} /> {/*Para el fondo oscuro */}
+      <Backdrop open={open} sx={{ zIndex: 1 }}/> {/*Para el fondo oscuro */}
       <SpeedDial
         ariaLabel='Menú de edición'
         sx={{ position: 'absolute',

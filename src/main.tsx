@@ -16,10 +16,10 @@ let unsamTheme = createTheme({
       palette: {
         primary: {
           main:'#7DA1C4', /*Pantone 645 como indica la UNSAM, si cambia es por #00DC8C (color de ECyT).*/
-          contrastText: '#FFFFFF' /*Blanco para el texto en el color principal*/
+          contrastText: '#0F0F0F' /* Azul oscuro/casi negro para el texto en el color principal*/
         },
         secondary: {
-          main:'#FFFFFF'
+          main:'#0F0F0F'
         },
         tonalOffset: 0.1
       }
@@ -36,6 +36,13 @@ let unsamTheme = createTheme({
       }
     }
   },
+  components: {
+    MuiIconButton: {
+      defaultProps: {
+        color:'secondary'
+      }
+    }
+  }
 })
 unsamTheme = responsiveFontSizes(unsamTheme)
 

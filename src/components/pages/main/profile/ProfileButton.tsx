@@ -5,7 +5,7 @@ export const ProfileButton = (props: ButtonProps) => {
     variant="contained"
     sx={
       {
-        width: { xs: '90%', sm: '50%', md:'25%' }
+        width: { xs: '90%', sm: '60%', lg: '35%', xl: '25%' }
       }}
     {...props}
   />

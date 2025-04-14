@@ -8,17 +8,23 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { AuthProvider } from "@/context/AuthContext.tsx"
 import Nav from './components/common/Nav/Nav'
 import { routes } from '@/routes'
+import { Box, useMediaQuery, useTheme } from '@mui/material'
 
 function App() {
-
+  // const theme = useTheme()
+  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   return (
     <>
       <CssBaseline />
       <AuthProvider>
         <BrowserRouter>
-          <RoutesWrapper />
-          <Nav />
+          <Box className="layout-container">
+            <Box className="page-structure">
+              <RoutesWrapper />
+            </Box>
+            <Nav />
+          </Box>
         </BrowserRouter>
       </AuthProvider>
     </>
