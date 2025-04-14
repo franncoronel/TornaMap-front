@@ -3,7 +3,7 @@ import { TextField, Button, Box, FormControl, IconButton, InputAdornment, InputL
 import { useNavigate } from 'react-router-dom'
 import {useAuth} from "../../../context/AuthContext.tsx";
 import { LoginRequest } from '../../../data/domain/User.ts'
-import React from 'react';
+import { useEffect, useState } from 'react'
 import { EyeSlash,Eye, SignIn, FingerprintSimple} from '@phosphor-icons/react'
 import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
@@ -19,13 +19,18 @@ export default function Login() {
       })
     const { login } = useAuth()
     const navigate = useNavigate()
-    const [showPassword, setShowPassword] = React.useState(false);
+    const [showPassword, setShowPassword] = useState(false)
 
-    const onSubmit : SubmitHandler<LoginRequest> = (data) => {
-        console.log('Login Data:', data)
-        // Redirigir a la ruta "/"
-        login()
-        navigate('/perfil')
+
+    const onSubmit : SubmitHandler<LoginRequest> = async (data) => {
+        try {
+            await login(data.email, data.password)
+
+            navigate('/perfil')
+
+        } catch (error) {
+            console.error('Error during login:', error)
+        }
     }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show)
@@ -37,6 +42,15 @@ export default function Login() {
     const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
       event.preventDefault()
     }
+
+    useEffect(() => {
+        const isAuthenticated = sessionStorage.getItem('isAuthenticated')
+
+        if(isAuthenticated) {
+            navigate('/perfil')
+        }
+    }
+    , [])
 
     return (
         <main className='login-page'>
@@ -62,7 +76,6 @@ export default function Login() {
                 <Controller
                     name="email"
                     control={control}
-                    defaultValue="prueba@unsam.edu.ar"
                     rules={{
                         required: 'Debe ingresar un email',
                         pattern: {
@@ -87,11 +100,10 @@ export default function Login() {
                 <Controller
                     name="password"
                     control={control}
-                    defaultValue="prueba@unsam.edu.ar"
                     rules={{
                         required: 'Debe ingresar una contraseña',
                         minLength: {
-                            value: 6,
+                            value: 4,
                             message: 'La contraseña debe tener al menos 6 caracteres',
                         },
                     }}
@@ -102,27 +114,27 @@ export default function Login() {
                         error={!!errors.password}>
                             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                             <OutlinedInput
-                            {...field}
-                            id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            data-testid="password-input"
-                            endAdornment={
-                                <InputAdornment position="end">
-                                <IconButton
-                                    aria-label={
-                                    showPassword ? 'hide the password' : 'display the password'
-                                    }
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    onMouseUp={handleMouseUpPassword}
-                                    edge="end"
-                                    color="default"
-                                >
-                                    {showPassword ? <Eye /> : <EyeSlash />}
-                                </IconButton>
-                                </InputAdornment>
-                            }
-                            label="Password"
+                                {...field}
+                                id="outlined-adornment-password"
+                                type={showPassword ? 'text' : 'password'}
+                                data-testid="password-input"
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label={
+                                        showPassword ? 'hide the password' : 'display the password'
+                                        }
+                                        onClick={handleClickShowPassword}
+                                        onMouseDown={handleMouseDownPassword}
+                                        onMouseUp={handleMouseUpPassword}
+                                        edge="end"
+                                        color="default"
+                                    >
+                                        {showPassword ? <Eye /> : <EyeSlash />}
+                                    </IconButton>
+                                    </InputAdornment>
+                                }
+                                label="Password"
                             />
                             {errors.password && <FormHelperText>{errors.password.message}</FormHelperText>}
                         </FormControl>
@@ -140,7 +152,7 @@ export default function Login() {
                 </Button>
 
                 {/* Register Button */}
-                <Button 
+                <Button
                     disabled
                     variant="outlined"
                     color="primary"
