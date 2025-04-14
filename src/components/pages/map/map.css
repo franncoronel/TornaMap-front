@@ -1,9 +1,8 @@
 .map-page {
     display: flex;
+    width:100%;
     flex-direction: column;
-    height: 100%;
-    padding: 2rem;
-    min-height: 90vh;
+    
     gap: 2rem;
 
 }
