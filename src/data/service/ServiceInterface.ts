@@ -1,13 +1,13 @@
 import { Entity } from "@/data/domain/Entity"
 
 export interface ServiceInterface {
-  getAll(): Promise<unknown>
+  getAll?(): Promise<unknown>
 
-  getById(id: number): Promise<unknown>
+  getById?(id: number): Promise<unknown>
 
-  create(entity: Entity): Promise<unknown>
+  create?(entity: Entity): Promise<unknown>
 
-  update(entity: Entity): Promise<unknown>
+  update?(entity: Entity): Promise<unknown>
 
-  delete(id: number): Promise<unknown>
+  delete?(id: number): Promise<unknown>
 }
