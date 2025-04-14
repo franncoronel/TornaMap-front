@@ -6,6 +6,7 @@ import { useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/TornaviasSubsuelo"
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
+import '../interactive-page.css'
 import { Laptop } from "@phosphor-icons/react"
 
 export function Search() {
@@ -32,13 +33,7 @@ export function Search() {
 
   return (
     // Contenedor principal que organiza la disposición de los elementos
-    <Box
-      display='flex'
-      flexDirection='column'
-      height='90vh'
-      justifyContent='center'
-    >
-
+    <Box className='interactive-page'>
       {/* Barra de búsqueda fija */}
       <Box flexShrink='0' position='sticky' top='0' zIndex='10'>
         <SearchBar onSearch={() => search()} />
@@ -52,7 +47,6 @@ export function Search() {
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
         maxHeight='90vh'
-        px={{ xs: '1rem', sm: '2rem' }}
         pt='1rem'
         pb='7rem'
         sx={{ overflowY: 'auto' }}
