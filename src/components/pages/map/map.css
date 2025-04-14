@@ -2,9 +2,8 @@
     display: flex;
     width:100%;
     flex-direction: column;
+    /* gap:0.7rem; */
     
-    gap: 2rem;
-
 }
 .map-container{
     height:90vh;
