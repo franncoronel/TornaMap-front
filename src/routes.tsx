@@ -6,13 +6,13 @@ import Register from '@/components/pages/register/Register'
 import NotFound from '@/components/pages/notFound/NotFound'
 import { ProtectedRoute } from "@/components/common/ProtectedRoute.tsx"
 import Profile from '@/components/pages/main/profile/Profile'
-import TornaviasSubsuelo from '@/components/pages/map/components/TornaviasSubsuelo'
+import TornaviasSubsuelo from '@/components/pages/map/components/tornavias/TornaviasSubsuelo'
 import { Search } from './components/pages/search/Search'
 import { Welcome } from './components/pages/welcome/Welcome'
-import AularioNave3PlantaAlta from './components/pages/map/components/AularioNave3PlantaAlta'
-import AularioNave3PlantaBaja from './components/pages/map/components/AularioNave3PlantaBaja'
-import TornaviasPrimerPiso from './components/pages/map/components/TornaviasPrimerPiso'
-import TornaviasPlantaBaja from './components/pages/map/components/TornaviasPlantaBaja'
+import AularioNave3PlantaAlta from './components/pages/map/components/aulario/AularioNave3PlantaAlta'
+import AularioNave3PlantaBaja from './components/pages/map/components/aulario/AularioNave3PlantaBaja'
+import TornaviasPrimerPiso from './components/pages/map/components/tornavias/TornaviasPrimerPiso'
+import TornaviasPlantaBaja from './components/pages/map/components/tornavias/TornaviasPlantaBaja'
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },

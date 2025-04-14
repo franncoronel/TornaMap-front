@@ -1,6 +1,6 @@
 import { BookOpenText, Toilet } from "@phosphor-icons/react"
 import { useOutletContext } from "react-router-dom"
-import { mapColors } from "../mapColors"
+import { mapColors } from "../../mapColors"
 
 interface OutletContextType {
   handleOpen: (classRoomId: number) => void

@@ -1,5 +1,5 @@
 //import { Toilet } from "@phosphor-icons/react";
-import { mapColors } from "../mapColors";
+import { mapColors } from "../../mapColors";
 
 // C:\Users\melod\Downloads\Proyecto Unsam\Proyecto\UNSAM-Frontend\src\main.tsx
 export default function TornaviasPlantaBaja() {

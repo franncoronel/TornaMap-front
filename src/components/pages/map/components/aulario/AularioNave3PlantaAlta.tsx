@@ -1,4 +1,4 @@
-import { mapColors } from "../mapColors";
+import { mapColors } from "../../mapColors";
 
 export default function AularioNave3PlantaAlta() {
   return (
