@@ -56,7 +56,7 @@ export function Welcome() {
             >
               <SignIn size={32} /> Iniciá sesión
             </Button>
-            <Button
+            {/* <Button
               // disabled
               sx={{
                 display: 'flex',
@@ -70,7 +70,7 @@ export function Welcome() {
               onClick={() => navigate('/registrar')}
             >
               <FingerprintSimple size={32} /> Registrate
-            </Button>
+            </Button> */}
             </>
           }
           <Button
