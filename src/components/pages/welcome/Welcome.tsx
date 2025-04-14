@@ -3,7 +3,7 @@ import { TransparentContainer } from '@/components/ui/TransparentContainer'
 import { useNavigate } from 'react-router-dom'
 import { CompassRose, FingerprintSimple, SignIn } from '@phosphor-icons/react'
 import logoUnsamBlanco from '@/assets/logos/logo-unsam-blanco.png'
-import fondoTornavias from '@/assets/fondos/fondo-tornavias.jpg'
+import '../background-image.css'
 export function Welcome() {
   const navigate = useNavigate()
 

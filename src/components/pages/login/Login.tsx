@@ -7,6 +7,7 @@ import React from 'react';
 import { EyeSlash,Eye, SignIn, FingerprintSimple} from '@phosphor-icons/react'
 import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
+import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
 
 export default function Login() {
