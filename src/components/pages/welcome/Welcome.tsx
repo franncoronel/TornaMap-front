@@ -11,11 +11,11 @@ export function Welcome() {
   const {isAuthenticated} = useAuth()
 
   useEffect(() => {
-    const token = localStorage.getItem('token')
-    if(token) {
+    const isAuthenticated = sessionStorage.getItem('isAuthenticated')
+    if(isAuthenticated) {
         navigate('/buscar')
     }
-  },[isAuthenticated])
+  },[])
 
   return (
     <Box
