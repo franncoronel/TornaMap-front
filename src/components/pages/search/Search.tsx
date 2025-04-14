@@ -8,11 +8,19 @@ import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
 import '../interactive-page.css'
 import { Laptop } from "@phosphor-icons/react"
+import { Course } from "@/data/domain/Course"
+import { courseService } from "@/data/service/CourseService"
 
 export function Search() {
-
   const [selectedClass, setSelectedClass] = useState<IClass | null>(null)
   const [open, setOpen] = useState(false)
+  const [courses, setCourses] = useState<Course[]>()
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  const fetchCourses = async () => {
+    const courses = await courseService.getAll()
+    setCourses(courses)
+  }
 
   const handleOpen = (classData: IClass) => {
     setSelectedClass(classData)
