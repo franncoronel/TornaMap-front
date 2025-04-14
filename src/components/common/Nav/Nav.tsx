@@ -1,10 +1,10 @@
-import { AppBar, Toolbar, Box, IconButton, Typography } from "@mui/material"
+import { AppBar, Toolbar, Box, IconButton, Typography, Button } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import './nav.css'
 import { useLocation, useNavigate } from "react-router-dom"
 import { useAuth } from "@/context/AuthContext"
 import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from "@phosphor-icons/react"
-import logo from '@/assets/logos/logo-unsam-blanco-crop.png'
+import logo from '@/assets/logos/logo-unsam-negro-crop.png'
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   variant: "body2",
@@ -42,9 +42,8 @@ export default function Nav() {
       >
         <IconButton
           onClick={() => navigate("/")}
-          color='secondary'
-          className={`${isActive('/') ? 'active' : ''} logo-container`}
-          aria-label='Inicio'
+          className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
+          aria-label='Ir al inicio'
         >
           <Box
             component="img"
@@ -52,7 +51,8 @@ export default function Nav() {
               height: '3rem',
               width: 'auto',
             }}
-            alt='Inicio'
+            alt='Logo de la UNSAM'
+            title='Inicio'
             src={logo}
             className='wide-screen-logo'
           />
@@ -61,9 +61,8 @@ export default function Nav() {
         <Box flexGrow='1' className='spacing'/>
         <IconButton
           onClick={() => navigate("/buscar")}
-          color='secondary'
-          className={`${isActive('/buscar') ? 'active' : ''} logo-container`}
-          aria-label='Buscar'
+          className={`${isActive('/buscar') ? 'active' : ''} logo-container nav-icon`}
+          aria-label='Ir a búsqueda de materias'
         >
           <MagnifyingGlass size={32} alt='Buscar'/>
           <StyledTypography className='logo-label'>
@@ -72,24 +71,22 @@ export default function Nav() {
         </IconButton>
         <IconButton
           onClick={() => navigate("/mapa/tornavias-subsuelo")}
-          color='secondary'
-          className={`${isActive('/mapa') ? 'active' : ''} logo-container`}
-          aria-label='Inicio'
+          className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
+          aria-label='Ir al mapa interactivo'
         >
-          <MapTrifold size={32} alt='Mapa' />
+          <MapTrifold size={32} alt='Mapa'/>
           <StyledTypography className='logo-label'>
             MAPA
           </StyledTypography>
         </IconButton>
         <IconButton
           onClick={() => navigate("/perfil")}
-          color='secondary'
-          className={`${isActive(["/perfil", "/ingresar"]) ? 'active' : ''} logo-container`}
-          aria-label='Perfil'
+          className={`${isActive(["/perfil", "/ingresar"]) ? 'active' : ''} logo-container nav-icon`}
+          aria-label={isAuthenticated ? 'Ir al perfil' : 'Ingresar'}
         >
           {isAuthenticated &&
             <>
-              <UserCircle size={32} alt='Perfil' />
+              <UserCircle size={32} alt='Perfil'/>
               <StyledTypography className='logo-label'>
                 PERFIL
               </StyledTypography>
@@ -97,7 +94,7 @@ export default function Nav() {
           }
           {!isAuthenticated &&
             <>
-              <SignIn size={32} alt='Iniciar Sesión' />
+              <SignIn size={32} alt='Iniciar Sesión'/>
               <StyledTypography className='logo-label'>
                 INGRESAR
               </StyledTypography>
