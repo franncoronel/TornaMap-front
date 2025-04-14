@@ -17,12 +17,13 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
   const isSelected = (id: number) => id === selectedClassRoomId
 
 // !important: Si se quiere volver a la posición original, sacar el rotate y reemplazar las coordenadas comentadas por las actuales.
-  return (
+ // todo-> viewBox="minX minY width height"    (minX;minY) ancho alto
+return (
     <>
       <svg className="svg-container" 
            id="eBHsLTiXjpU1" 
            xmlns="http://www.w3.org/2000/svg" 
-           viewBox="0 175 625 500" 
+           viewBox="0 230 625 420" 
            shape-rendering="geometricPrecision" 
            text-rendering="geometricPrecision" 
            project-id="729e4ceae0ad41f0af0203ebbf87e174" 
@@ -36,8 +37,8 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
         {/* Biblioteca Central  */}
         <g style={{fill: mapColors.library.fill, stroke: mapColors.library.stroke, strokeWidth: mapColors.library.strokeWidth}}>
           <path d="M2.826632,337c0,112.621305,58.627761,243.669928,216.740684,311.193148l19.308875-44.63483C83.807214,546.009954,52.979149,386.685276,52.979149,336h-50.152517" transform="translate(.000001 0)" />
-          <text className="text-common" dx='0' dy='0'
-                transform="translate(96 505) rotate(180)" //transform="translate(131.444581 427.258449)
+          <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" stroke-width="0"
+                transform="translate(87 510) rotate(180)" //transform="translate(131.444581 427.258449)
           >
             <tspan y="0" font-weight="700" stroke-width="0">Biblioteca</tspan>
             <tspan x="0" y="9" font-weight="700" stroke-width="0">Central</tspan>
@@ -150,8 +151,8 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
           <path d="M552.853878,469.450041c-5.199325,6.945144-18.767134,22.428585-27.127554,30.962849l39.909481,39.322713c10.065025-9.651156,26.734904-28.9414,33.03376-38.656988l-45.815687-31.628574Z" transform="translate(.000001 0.000001)"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="700" 
                 transform="translate(568 503.371962) rotate(180)" //transform="translate(556.824887 503.371962)"
-                stroke-width="0">
-            <tspan y="0" font-weight="700" stroke-width="0">IAMK</tspan>
+                stroke-width="0" className="text-common">
+            <tspan y="0" font-weight="700" stroke-width="0" >IAMK</tspan>
           </text>
         </g>
         {/* IAMK Servicios */}
@@ -160,7 +161,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
           <path d="M456.583909,547.452094c-9.774067,4.179228-29.597963,11.308888-39.669812,14.215282L430.42164,614.12842c13.015658-2.971658,37.650561-11.502414,49.290329-17.027303l-23.12806-49.649023Z"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" 
                 transform="translate(455 582) rotate(180)" //transform="translate(438.190008 580.042774)"  
-                stroke-width="0">
+                stroke-width="0" className="text-common">
             <tspan y="0" font-weight="700" stroke-width="0">IAMK</tspan>
             <tspan x="0" y="5" font-weight="400" stroke-width="0">Servicios</tspan>
           </text>
@@ -171,7 +172,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
           <path d="M416.914097,561.667376c-11.052498,2.765574-31.966516,6.307018-42.064177,6.551575l4.119723,54.91027c13.045229-.839876,38.75822-5.389702,51.451995-9.000803l-13.507541-52.461042Z" transform="translate(.000002 0.000004)"/>
           <text dx="0" dy="0" font-family="&quot;eBHsLTiXjpU1:::Roboto&quot;" font-size="5" font-weight="400" 
                 transform="translate(409 596) rotate(180)" //transform="translate(396.673075 590.013135)" 
-                stroke-width="0">
+                stroke-width="0" className="text-common">
             <tspan y="0" font-weight="700" stroke-width="0">IAMK</tspan>
             <tspan x="0" y="5" font-weight="400" stroke-width="0">Decanato</tspan>
           </text>
@@ -185,7 +186,7 @@ export default function TornaviasSubsuelo({ selectedClassRoomId, onClassRoomClic
                   stroke-width="0">
                 <tspan y="0" font-weight="700" stroke-width="0">Baños</tspan>
             </text>
-            <Toilet className="icon-common" transform="translate(362 601) rotate(180)"/> //transform="translate(345.8 592.5)"     
+            <Toilet className="icon-common" transform="translate(361 601) rotate(180)"/> //transform="translate(345.8 592.5)"     
         </g>
 </svg>
 

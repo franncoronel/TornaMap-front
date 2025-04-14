@@ -18,13 +18,11 @@
 }
 
 .text-common {
-    font-size: 0.5rem;
-    font-weight: 400;
-    stroke-width: 0;
+    fill: #fff;
 }  
 
 .icon-common {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: regular; 
     color: #213547;
 }
