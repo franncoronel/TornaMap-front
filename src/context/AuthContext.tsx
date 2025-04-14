@@ -42,13 +42,13 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     const logout = async () => {
         // Eliminar token de localStorage
         try{
-            await userService.logout()
             sessionStorage.removeItem('isAuthenticated')
-            // Eliminar cookie SESSION
             Cookies.remove('SESSION')
             Cookies.remove('SESSION.sig')
             document.cookie = 'SESSION=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;'
             setIsAuthenticated(false)
+
+            await userService.logout()
         }catch (error) {
             console.error('Error during logout:', error)
             throw error
