@@ -47,7 +47,6 @@ export default function Map() {
   const handleClose = () => {
     setClassRoomId(null)
     setOpen(false)
-    console.log('cerrar')
   }
 
   const handleOpen = (classRoomId: number) => {

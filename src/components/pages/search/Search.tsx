@@ -18,7 +18,6 @@ export function Search() {
   const fetchCourses = async (query?:string) => {
     const courses = await courseService.getAll(query)
     setCourses(courses.data)
-    console.log(courses)
   }
 
   const handleOpen = async (course: ICourseList) => {
@@ -44,7 +43,6 @@ export function Search() {
   }
 
   const search = (query: string) => {
-    console.log('Result', query)
     fetchCourses(query)
   }
 

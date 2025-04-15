@@ -7,7 +7,6 @@ export class CourseService implements ServiceInterface {
     async getAll(query?: string): Promise<Response<ICourseList[]>> {
         const url = query ? `${REST_API_URL}/courses?query=${query}` : `${REST_API_URL}/courses`
         const courseDTOs = await axios.get<Response<ICourseList[]>>(url)
-        console.log(courseDTOs)
         const courses = courseDTOs.data
         return courses
     }
