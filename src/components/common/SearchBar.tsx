@@ -1,6 +1,6 @@
 import { Autocomplete, Box, Divider, IconButton, InputAdornment, TextField} from "@mui/material"
 import { useState } from "react"
-import { MagnifyingGlass} from '@phosphor-icons/react'
+import { MagnifyingGlass, X} from '@phosphor-icons/react'
 import subjects from "@/data/mock/Subjects"
 
 interface SeachBarProps {
@@ -8,11 +8,19 @@ interface SeachBarProps {
 }
 
 export default function SeachBar({ onSearch }:SeachBarProps) {
-  const [query, setQuery] = useState('')
-
+ const [searchValue, setSearchValue] = useState<string>('')
+ const [searched, setSearched] = useState(false)
   const handleSearch = () => {
-    onSearch(query)
+    setSearched(true)
+    onSearch(searchValue)
   }
+  const resetSearch = () => {
+    setSearched(false)
+    setSearchValue('')
+    onSearch('')
+  }
+
+  const isQuery = searchValue.length > 0 && searched
 
   return (
     <Box  sx={{ display: 'flex', alignItems: 'center', pb:'1rem'}}>
@@ -22,10 +30,17 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
         disableClearable
         fullWidth
         options={subjects.map((option) => option.subject)}
+        onInputChange={(event, newInputValue) => setSearchValue(newInputValue)}
         renderInput={(params) => (
           <TextField
             {...params}
             label='Clase / Comisión / Profesor / Carrera'
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                event.preventDefault()  // Evita el comportamiento por defecto
+                handleSearch()
+              }
+            }}
             sx={{
               '& .MuiInputLabel-root': {
                 whiteSpace: 'nowrap',
@@ -61,7 +76,8 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                         }}
                         aria-label="Buscar"
                         onClick={handleSearch}>
-                    <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>
+                    {!isQuery && <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>}
+                    {isQuery && <X size={32} alt='Cerrar búsqueda' color='#5f83b1' onClick={resetSearch}/>}
                     </IconButton>
                   </InputAdornment>
               },
