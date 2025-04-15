@@ -13,11 +13,11 @@ export class CourseService implements ServiceInterface {
         return courses
     }
 
-    // async getById(id: number): Promise<Course> {
-    //     const courseDTO = await axios.get<Course>(`${REST_API_URL}/courses/${id}`)
-    //     const course = courseDTO.data
-    //     return course
-    // }
+    async getById(id: number): Promise<ICourse> {
+        const courseDTO = await axios.get<ICourse>(`${this.baseUrl}/${id}`)
+        const course = courseDTO.data
+        return course
+    }
 }
 
 export const courseService = new CourseService()

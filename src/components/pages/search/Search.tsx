@@ -1,6 +1,5 @@
 import ClassRoomCard from "@/components/common/ClassRoomCard"
 import SearchBar from "@/components/common/SearchBar"
-import { classes, IClass } from "@/data/mock/ClassData"
 import { Box, Divider, Grid2, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/TornaviasSubsuelo"
@@ -10,22 +9,46 @@ import '../interactive-page.css'
 import { ExclamationMark, Laptop } from "@phosphor-icons/react"
 import { ICourse } from "@/data/domain/Course"
 import { courseService } from "@/data/service/CourseService"
+import { displayErrorMessage } from "@/data/errors"
+import Loader from "@/components/common/Loader/Loader"
 
 export function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourse[]>([])
-
+  const [isLoading, setLoading] = useState<Boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
-  const fetchCourses = async (query?:string) => {
-    const courses = await courseService.getAll(query)
-    setCourses(courses)
-    console.log(courses)
+  const fetchCourses = async (query?: string) => {
+    setLoading(true)
+    courseService.getAll(query).then((response) => {
+      const courses = response
+      setCourses(courses)
+    }
+    ).catch((error) => {
+      setErrorMessage(displayErrorMessage(error))
+    }).finally(() => {
+    setLoading(false)
+    })
+  }
+
+  const fetchCourseData = async (courseId: number) => {
+    setLoading(true)
+    courseService.getById(courseId).then((response) => {
+      const course = response
+      setSelectedCourse(course)
+    }
+    ).catch((error) => {
+      setErrorMessage(displayErrorMessage(error))
+    }
+    ).finally(() => {
+      setLoading(false)
+    }
+    )
   }
 
   const handleOpen = (course: ICourse) => {
-    setSelectedCourse(course)
+    fetchCourseData(course.id!)
     setOpen(true)
   }
 
@@ -63,7 +86,7 @@ export function Search() {
         pb='7rem'
         sx={{ overflowY: 'auto' }}
       >
-        {
+        {isLoading ? <Loader/> :
           courses && courses.length > 0 && courses.map((course: ICourse) =>
             <Grid2 size={1} key={course.id}>
               <ClassRoomCard
@@ -79,7 +102,7 @@ export function Search() {
           <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
             <Typography variant="h6" sx={{ color: '#333' }}>
               <ExclamationMark color="#FFB74D" />
-                No se encontraron resultados
+                {errorMessage}
             </Typography>
           </Box>
         }
