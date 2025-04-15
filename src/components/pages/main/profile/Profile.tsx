@@ -9,21 +9,26 @@ import { User } from '@/data/domain/User'
 
 import './profile.css'
 import { useNotification } from '@/context/NotificationContext'
+import { useLoader } from '@/context/LoaderContext'
 
 export default function Profile() {
   const { logout } = useAuth()
   const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null)
   const { setNotificationState } = useNotification()
+  const { setLoader } = useLoader()
   const handleLogout = async () => {
+    setLoader(true)
     try {
       await logout()
+      setLoader(false)
       setNotificationState({
         title: 'Sesión cerrada correctamente',
         type: 'success'
       })
       navigate('/')
     } catch (error) {
+      setLoader(false)
       console.error('Error al cerrar sesión:', error)
       setNotificationState({
         title: 'Error al cerrar sesión',
@@ -34,11 +39,18 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      setLoader(true)
       try {
         const user = await userService.getProfile()
+        setLoader(false)
         setUser(user.data)
       } catch (error) {
+        setLoader(false)
         console.error('Error fetching user data:', error)
+        setNotificationState({
+          title: 'Error al obtener datos del usuario',
+          type: 'error'
+        })
       }
     }
 

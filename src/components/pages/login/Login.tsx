@@ -20,6 +20,7 @@ import './login.css'
 import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
 import { useNotification } from '@/context/NotificationContext.tsx'
+import { useLoader } from '@/context/LoaderContext.tsx'
 
 export default function Login() {
   const {
@@ -36,10 +37,12 @@ export default function Login() {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const { setNotificationState } = useNotification()
-
+  const { setLoader } = useLoader()
   const onSubmit: SubmitHandler<LoginRequest> = async (data) => {
+    setLoader(true)
     try {
       await login(data.email, data.password)
+      setLoader(false)
       setNotificationState({
         title: 'Bienvenido',
         description: 'Has iniciado sesión correctamente',
@@ -47,6 +50,7 @@ export default function Login() {
       })
       navigate('/perfil')
     } catch (error) {
+      setLoader(false)
       console.error('Error during login:', error)
       setNotificationState({
         title: 'Error',

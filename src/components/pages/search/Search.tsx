@@ -10,6 +10,7 @@ import { WarningCircle, Laptop } from '@phosphor-icons/react'
 import { ICourse, ICourseList } from '@/data/domain/Course'
 import { courseService } from '@/data/services/CourseService'
 import { useNotification } from '@/context/NotificationContext'
+import { useLoader } from '@/context/LoaderContext'
 
 export function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
@@ -17,10 +18,13 @@ export function Search() {
   const [courses, setCourses] = useState<ICourseList[]>([])
 
   const { setNotificationState } = useNotification()
+  const { setLoader } = useLoader()
 
   const fetchCourses = async (query?: string) => {
+    setLoader(true)
     try {
       const courses = await courseService.getAll(query)
+      setLoader(false)
       const coursesData = courses.data
       setCourses(coursesData)
       if (coursesData.length === 0) {
@@ -33,6 +37,7 @@ export function Search() {
         })
       }
     } catch (error) {
+      setLoader(false)
       console.error('Error fetching courses:', error)
       setNotificationState({
         title: 'Error al obtener cursos',
@@ -55,7 +60,9 @@ export function Search() {
         })
         return
       }
+      setLoader(true)
       const response = await courseService.getById(course.id)
+      setLoader(false)
       setSelectedCourse(response.data)
       setOpen(true)
 
@@ -66,6 +73,7 @@ export function Search() {
         action: () => {}
       })
     } catch (error) {
+      setLoader(false)
       console.error('Error fetching course details:', error)
       setNotificationState({
         title: 'Error al cargar curso',
