@@ -6,7 +6,7 @@ import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/Torna
 import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
 import '../interactive-page.css'
-import { ExclamationMark, Laptop } from "@phosphor-icons/react"
+import { WarningCircle, Laptop } from "@phosphor-icons/react"
 import { ICourse, ICourseList } from "@/data/domain/Course"
 import { courseService } from "@/data/services/CourseService"
 import { useNotification } from "@/context/NotificationContext"
@@ -124,9 +124,9 @@ export function Search() {
         }
         {
           courses.length === 0 &&
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
-            <Typography variant="h6" sx={{ color: '#333' }}>
-              <ExclamationMark color="#FFB74D" />
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width:'100%', gap:'1rem' }}>
+            <WarningCircle size={32} color="#FFB74D" />
+            <Typography variant="h6" sx={{ color: '#333', display: 'flex', gap:'1rem', alignItems: 'center', justifyContent: 'center' }}>
                 No se encontraron resultados
             </Typography>
           </Box>
