@@ -8,7 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import { AuthProvider } from "@/context/AuthContext.tsx"
 import Nav from './components/common/Nav/Nav'
 import { routes } from '@/routes'
-import { Box, useMediaQuery, useTheme } from '@mui/material'
+import { Box/* , useMediaQuery, useTheme  */} from '@mui/material'
+import { NotificationProvider } from './context/NotificationContext'
 
 function App() {
   // const theme = useTheme()
@@ -18,19 +19,21 @@ function App() {
     <>
       <CssBaseline />
       <AuthProvider>
-        <BrowserRouter
-          future={{
-            v7_startTransition: true,
-            v7_relativeSplatPath: true,
-          }}
-        >
-          <Box className="layout-container">
-            <Box className="page-structure">
-              <RoutesWrapper />
+      <NotificationProvider>
+          <BrowserRouter
+            future={{
+              v7_startTransition: true,
+              v7_relativeSplatPath: true,
+            }}
+          >
+            <Box className="layout-container">
+              <Box className="page-structure">
+                <RoutesWrapper />
+              </Box>
+              <Nav />
             </Box>
-            <Nav />
-          </Box>
-        </BrowserRouter>
+          </BrowserRouter>
+        </NotificationProvider>
       </AuthProvider>
     </>
   )
