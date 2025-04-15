@@ -15,8 +15,9 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
     onSearch(searchValue)
   }
   const resetSearch = () => {
-    setSearched(false)
     setSearchValue('')
+    if(searchValue.length === 0 && searched) return
+    setSearched(false)
     onSearch('')
   }
 
@@ -29,6 +30,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
         id="filled-hidden-label-normal"
         disableClearable
         fullWidth
+        inputValue={searchValue}
         options={subjects.map((option) => option.subject)}
         onInputChange={(event, newInputValue) => setSearchValue(newInputValue)}
         renderInput={(params) => (
