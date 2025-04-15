@@ -8,7 +8,7 @@ import {
   Link
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { User } from '../../../data/domain/User'
+// import { User } from '../../../data/domain/User'
 import './register.css'
 import { FingerprintSimple } from '@phosphor-icons/react'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -44,15 +44,16 @@ export default function Register() {
   })
 
   const createAccount = (userData: FormInputs) => {
-    const newUser = new User(
-      0,
+    console.log(userData)
+    /* const newUser = new User(
+
       userData.name,
       userData.surname,
       userData.username,
       userData.email,
       userData.password
     )
-    return newUser
+    return newUser */
   }
 
   const password = watch('password')
@@ -68,6 +69,7 @@ export default function Register() {
       */
       navigate('/ingresar')
     } catch (error) {
+      console.error('Error al registrar el usuario:', error)
       setError('root', {
         type: 'server',
         message: 'Hubo un error al procesar su solicitud. Intente nuevamente.'
