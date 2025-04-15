@@ -9,6 +9,7 @@ import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
 import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
+import { useNotification } from '@/context/NotificationContext.tsx';
 
 export default function Login() {
     const { control, handleSubmit, formState: { errors } } = useForm<LoginRequest>({
@@ -20,16 +21,26 @@ export default function Login() {
     const { login } = useAuth()
     const navigate = useNavigate()
     const [showPassword, setShowPassword] = useState(false)
+    const { setNotificationState } = useNotification()
 
 
     const onSubmit : SubmitHandler<LoginRequest> = async (data) => {
         try {
             await login(data.email, data.password)
-
+            setNotificationState({
+                title: 'Bienvenido',
+                description: 'Has iniciado sesión correctamente',
+                type: 'success',
+            })
             navigate('/perfil')
 
         } catch (error) {
             console.error('Error during login:', error)
+            setNotificationState({
+                title: 'Error',
+                description: 'Credenciales incorrectas',
+                type: 'error',
+            })
         }
     }
 
