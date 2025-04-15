@@ -1,13 +1,14 @@
 import axios from "axios"
 import { ICourse } from "../domain/Course"
 import { ServiceInterface } from "./ServiceInterface"
-import { REST_API_URL } from "../constants"
 import { Response } from "../domain/Response"
+import { environment } from "@/environment"
 export class CourseService implements ServiceInterface {
+    private baseUrl: string = `${environment.apiUrl}/courses`
+
     async getAll(query?: string): Promise<ICourse[]> {
-        const url = query ? `${REST_API_URL}/courses?query=${query}` : `${REST_API_URL}/courses`
+        const url = query ? `${this.baseUrl}?query=${query}` : this.baseUrl
         const courseDTOs = await axios.get<Response<ICourse[]>>(url)
-        console.log(courseDTOs)
         const courses = courseDTOs.data.data
         return courses
     }
