@@ -35,7 +35,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
         } catch (error) {
             setIsAuthenticated(false)
             console.error('Error during login:', error)
-            return error
+            throw error
         }
     }
 
