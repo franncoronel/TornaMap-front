@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, FC, ReactNode } from 'react'
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  FC,
+  ReactNode
+} from 'react'
 import { Snackbar, Alert } from '@mui/material'
 
 export interface Notification {
@@ -13,9 +20,13 @@ interface NotificationContextProps {
   setNotificationState: (notification: Notification | null) => void
 }
 
-const NotificationContext = createContext<NotificationContextProps | undefined>(undefined)
+const NotificationContext = createContext<NotificationContextProps | undefined>(
+  undefined
+)
 
-export const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const NotificationProvider: FC<{ children: ReactNode }> = ({
+  children
+}) => {
   const [notification, setNotification] = useState<Notification | null>(null)
 
   // Función para actualizar el estado de notificación.
@@ -30,7 +41,9 @@ export const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) 
   }, [])
 
   return (
-    <NotificationContext.Provider value={{ notification, setNotificationState }}>
+    <NotificationContext.Provider
+      value={{ notification, setNotificationState }}
+    >
       {children}
       {/* Snackbar global */}
       <Snackbar
@@ -48,7 +61,7 @@ export const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) 
             {notification.title}
             {notification.description && ` - ${notification.description}`}
           </Alert>
-        ):undefined}
+        ) : undefined}
       </Snackbar>
     </NotificationContext.Provider>
   )
@@ -57,7 +70,9 @@ export const NotificationProvider: FC<{ children: ReactNode }> = ({ children }) 
 export const useNotification = () => {
   const context = useContext(NotificationContext)
   if (!context) {
-    throw new Error('useNotification debe ser usado dentro de un NotificationProvider')
+    throw new Error(
+      'useNotification debe ser usado dentro de un NotificationProvider'
+    )
   }
   return context
 }

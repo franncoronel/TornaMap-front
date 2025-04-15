@@ -5,10 +5,10 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { BrowserRouter, useRoutes } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
-import { AuthProvider } from "@/context/AuthContext.tsx"
+import { AuthProvider } from '@/context/AuthContext.tsx'
 import Nav from './components/common/Nav/Nav'
 import { routes } from '@/routes'
-import { Box/* , useMediaQuery, useTheme  */} from '@mui/material'
+import { Box /* , useMediaQuery, useTheme  */ } from '@mui/material'
 import { NotificationProvider } from './context/NotificationContext'
 
 function App() {
@@ -19,11 +19,11 @@ function App() {
     <>
       <CssBaseline />
       <AuthProvider>
-      <NotificationProvider>
+        <NotificationProvider>
           <BrowserRouter
             future={{
               v7_startTransition: true,
-              v7_relativeSplatPath: true,
+              v7_relativeSplatPath: true
             }}
           >
             <Box className="layout-container">

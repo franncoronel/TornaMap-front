@@ -1,28 +1,37 @@
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select } from "@mui/material"
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select
+} from '@mui/material'
 
-import { Controller, useForm } from "react-hook-form"
-import { Outlet, useNavigate } from "react-router-dom"
+import { Controller, useForm } from 'react-hook-form'
+import { Outlet, useNavigate } from 'react-router-dom'
 
 import './map.css'
 import '../interactive-page.css'
-import ClassInfoModal from "@/components/common/Modal"
-import { Box, InputBase, Typography } from "@mui/material"
+import ClassInfoModal from '@/components/common/Modal'
+import { Box, InputBase, Typography } from '@mui/material'
 
-import { useState } from "react"
-import ClassRoomCard from "@/components/common/ClassRoomCard"
-import { buildingData } from "@/data/mock/BuildingData"
-import { classes, IClass } from "@/data/mock/ClassData"
+import { useState } from 'react'
+import ClassRoomCard from '@/components/common/ClassRoomCard'
+import { buildingData } from '@/data/mock/BuildingData'
+import { classes, IClass } from '@/data/mock/ClassData'
 
 export default function Map() {
   const { control, watch, setValue } = useForm({
     defaultValues: {
-      building:  0, // Valor inicial, índice del array de componentes
+      building: 0, // Valor inicial, índice del array de componentes
       level: 0 // Valor inicial, índice del array de componentes
     }
   })
   const navigate = useNavigate()
 
-   // Observamos los valores seleccionados
+  // Observamos los valores seleccionados
   const selectedBuilding = watch('building')
   const currentBuilding = buildingData.find((b) => b.id === selectedBuilding)
 
@@ -34,12 +43,12 @@ export default function Map() {
   }
   const handleBuildingChange = (buildingId: number) => {
     const newBuilding = buildingData.find((b) => b.id === buildingId)
-    setValue("level", 0) // Resetea el nivel al primer valor
+    setValue('level', 0) // Resetea el nivel al primer valor
     navigate(`/${newBuilding?.path}`)
   }
 
   // Estado para el modal
-  const [classRoomId, setClassRoomId] = useState<null|number>(null)
+  const [classRoomId, setClassRoomId] = useState<null | number>(null)
   const [open, setOpen] = useState(false)
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
   const [filteredClasses, setFilteredClasses] = useState<IClass[]>([])
@@ -50,15 +59,15 @@ export default function Map() {
   }
 
   const handleOpen = (classRoomId: number) => {
-    const today = new Date().toISOString().split('T')[0]; // Fecha actual en formato ISO
-    setDate(today); // Resetea la fecha seleccionada
-    setOpen(true);
-    setClassRoomId(classRoomId);
+    const today = new Date().toISOString().split('T')[0] // Fecha actual en formato ISO
+    setDate(today) // Resetea la fecha seleccionada
+    setOpen(true)
+    setClassRoomId(classRoomId)
 
     // Filtrar clases por la fecha actual
     const currentClassRoom = buildingData[selectedBuilding].levels
       .flatMap((l) => l.classRooms)
-      .find((c) => c.id === classRoomId);
+      .find((c) => c.id === classRoomId)
 
     if (currentClassRoom) {
       const filtered = classes.filter(
@@ -66,153 +75,155 @@ export default function Map() {
           cls.classroom === currentClassRoom.classroom &&
           new Date(cls.startDate) <= new Date(today) &&
           new Date(cls.endDate) >= new Date(today)
-      );
-      setFilteredClasses(filtered);
+      )
+      setFilteredClasses(filtered)
     }
   }
 
-  const findClassRoom = () => buildingData[selectedBuilding].levels.find((l) => l.id === selectedBuilding)?.classRooms.find((c) => c.id === classRoomId)
+  const findClassRoom = () =>
+    buildingData[selectedBuilding].levels
+      .find((l) => l.id === selectedBuilding)
+      ?.classRooms.find((c) => c.id === classRoomId)
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = e.target.value;
-    setDate(newDate);
+    const newDate = e.target.value
+    setDate(newDate)
     if (selectedClassRoom()) {
       // Filtrar las clases por fecha seleccionada
-      const filtered = classes.filter(
-        (cls) =>{
-          console.log(selectedClassRoom())
-          return (cls.classroom === selectedClassRoom()?.classroom &&
+      const filtered = classes.filter((cls) => {
+        console.log(selectedClassRoom())
+        return (
+          cls.classroom === selectedClassRoom()?.classroom &&
           new Date(cls.startDate) <= new Date(newDate) &&
-          new Date(cls.endDate) >= new Date(newDate))}
-      )
+          new Date(cls.endDate) >= new Date(newDate)
+        )
+      })
       console.log(filtered)
-      setFilteredClasses(filtered);
+      setFilteredClasses(filtered)
     }
-  };
+  }
 
-  const selectedClassRoom = () => buildingData[selectedBuilding].levels.find((l) => l.id === selectedBuilding)?.classRooms.find((c) => c.id === classRoomId)
+  const selectedClassRoom = () =>
+    buildingData[selectedBuilding].levels
+      .find((l) => l.id === selectedBuilding)
+      ?.classRooms.find((c) => c.id === classRoomId)
 
   return (
     <main className="interactive-page map-page">
-
-    <Box
-      position='sticky'
-      top='0'
-      zIndex='10'
-      sx={{backgroundColor:'white'}}
-    >
-    {/* Select del edificio */}
-      <Controller
-        name="building"
-        control={control}
-        render={({ field }) => (
-          <FormControl fullWidth sx={{pb:'1rem'}}>
-            <InputLabel id="building-select-label">Edificio</InputLabel>
-            <Select
-              {...field}
-              labelId="building-select-label"
-              label="Edificio"
-              onChange={(e) => {
-                field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                console.log(e.target.value)
-                handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
-              }}
-            >
-              {buildingData.map((building) => (
-                <MenuItem key={building.id} value={building.id}>
-                  {building.text}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-        )}
-      />
-      {/* RadioGroup de niveles */}
-      {currentBuilding &&
+      <Box
+        position="sticky"
+        top="0"
+        zIndex="10"
+        sx={{ backgroundColor: 'white' }}
+      >
+        {/* Select del edificio */}
         <Controller
-          name="level"
+          name="building"
           control={control}
           render={({ field }) => (
-            <FormControl fullWidth>
-              <FormLabel id="building-levels-label">Niveles</FormLabel>
-              <RadioGroup
+            <FormControl fullWidth sx={{ pb: '1rem' }}>
+              <InputLabel id="building-select-label">Edificio</InputLabel>
+              <Select
                 {...field}
-                aria-labelledby="building-levels-label"
-                name="levels-group"
+                labelId="building-select-label"
+                label="Edificio"
                 onChange={(e) => {
                   field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                  handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                  console.log(e.target.value)
+                  handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
                 }}
               >
-                {buildingLevels().map((level, index) => (
-                  <FormControlLabel
-                    key={index}
-                    value={level.path}
-                    control={<Radio />}
-                    label={level.text}
-                  />
+                {buildingData.map((building) => (
+                  <MenuItem key={building.id} value={building.id}>
+                    {building.text}
+                  </MenuItem>
                 ))}
-
-              </RadioGroup>
+              </Select>
             </FormControl>
           )}
         />
-      }
-    </Box>
+        {/* RadioGroup de niveles */}
+        {currentBuilding && (
+          <Controller
+            name="level"
+            control={control}
+            render={({ field }) => (
+              <FormControl fullWidth>
+                <FormLabel id="building-levels-label">Niveles</FormLabel>
+                <RadioGroup
+                  {...field}
+                  aria-labelledby="building-levels-label"
+                  name="levels-group"
+                  onChange={(e) => {
+                    field.onChange(e.target.value) // Actualiza el valor en react-hook-form
+                    handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                  }}
+                >
+                  {buildingLevels().map((level, index) => (
+                    <FormControlLabel
+                      key={index}
+                      value={level.path}
+                      control={<Radio />}
+                      label={level.text}
+                    />
+                  ))}
+                </RadioGroup>
+              </FormControl>
+            )}
+          />
+        )}
+      </Box>
 
-    <section className="map-container">
+      <section className="map-container">
         <Outlet context={{ handleOpen }} />
-    </section>
+      </section>
 
-    {/* Modal */}
-    {classRoomId !== null && (
+      {/* Modal */}
+      {classRoomId !== null && (
         <ClassInfoModal
           open={open}
           handleClose={handleClose}
           classroom={`${findClassRoom()?.classroom}`}
           classroomType="Aula"
         >
-            <InputBase
-              type="date"
-              value={date}
-              onChange={handleDateChange}
-              sx={{
-                width: "100%",
-                border: "1px solid #ccc",
-                borderRadius: 1,
-                p: 1,
-                mb: 2,
-              }}
-            />
+          <InputBase
+            type="date"
+            value={date}
+            onChange={handleDateChange}
+            sx={{
+              width: '100%',
+              border: '1px solid #ccc',
+              borderRadius: 1,
+              p: 1,
+              mb: 2
+            }}
+          />
 
-
-            {filteredClasses.length > 0 ? (
-              <section className="classes-container">
-              {
-                filteredClasses.map((cls, index) => (
-                  <ClassRoomCard
-                    key={index}
-                    name={cls.name}
-                    commission={cls.commission}
-                    classroom={cls.classroom}
-                    building={cls.building}
-                    teacher={cls.teacher}
-                    careers={cls.careers}
-                    schedules={cls.schedules}
-                    mode={cls.mode}   // capaz solo deberia cargar la materia que es presencial
-                    viewType="modal"
-                    onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
-                  />
-                ))
-              }
-                </section>
-
-            ) : (
-              <Typography variant="body2">No hay clases en la fecha seleccionada.</Typography>
-            )}
-
+          {filteredClasses.length > 0 ? (
+            <section className="classes-container">
+              {filteredClasses.map((cls, index) => (
+                <ClassRoomCard
+                  key={index}
+                  name={cls.name}
+                  commission={cls.commission}
+                  classroom={cls.classroom}
+                  building={cls.building}
+                  teacher={cls.teacher}
+                  careers={cls.careers}
+                  schedules={cls.schedules}
+                  mode={cls.mode} // capaz solo deberia cargar la materia que es presencial
+                  viewType="modal"
+                  onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
+                />
+              ))}
+            </section>
+          ) : (
+            <Typography variant="body2">
+              No hay clases en la fecha seleccionada.
+            </Typography>
+          )}
         </ClassInfoModal>
       )}
-  </main>
+    </main>
   )
 }

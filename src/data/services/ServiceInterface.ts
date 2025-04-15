@@ -1,4 +1,4 @@
-import { Entity } from "@/data/domain/Entity"
+import { Entity } from '@/data/domain/Entity'
 
 export interface ServiceInterface {
   getAll?(): Promise<unknown>

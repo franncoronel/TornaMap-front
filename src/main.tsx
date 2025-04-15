@@ -6,24 +6,22 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material'
 
 let unsamTheme = createTheme({
   typography: {
-    fontFamily: [
-      'Saira', /*Fuente que usa la UNSAM*/
-      'sans-serif'
-    ].join(','),
+    fontFamily: ['Saira' /*Fuente que usa la UNSAM*/, 'sans-serif'].join(',')
   },
   colorSchemes: {
     light: {
       palette: {
         primary: {
-          main:'#7DA1C4', /*Pantone 645 como indica la UNSAM, si cambia es por #00DC8C (color de ECyT).*/
-          contrastText: '#0F0F0F' /* Azul oscuro/casi negro para el texto en el color principal*/
+          main: '#7DA1C4' /*Pantone 645 como indica la UNSAM, si cambia es por #00DC8C (color de ECyT).*/,
+          contrastText:
+            '#0F0F0F' /* Azul oscuro/casi negro para el texto en el color principal*/
         },
         secondary: {
-          main:'#0F0F0F'
+          main: '#0F0F0F'
         },
         tonalOffset: 0.1
       }
-    },
+    }
     /* dark: {
       palette: {
         primary: {
@@ -39,7 +37,7 @@ let unsamTheme = createTheme({
   components: {
     MuiIconButton: {
       defaultProps: {
-        color:'secondary'
+        color: 'secondary'
       }
     }
   }

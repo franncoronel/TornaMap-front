@@ -1,22 +1,29 @@
-import { Autocomplete, Box, Divider, IconButton, InputAdornment, TextField} from "@mui/material"
-import { useState } from "react"
-import { MagnifyingGlass, X} from '@phosphor-icons/react'
-import subjects from "@/data/mock/Subjects"
+import {
+  Autocomplete,
+  Box,
+  Divider,
+  IconButton,
+  InputAdornment,
+  TextField
+} from '@mui/material'
+import { useState } from 'react'
+import { MagnifyingGlass, X } from '@phosphor-icons/react'
+import subjects from '@/data/mock/Subjects'
 
 interface SeachBarProps {
   onSearch: (query: string) => void
 }
 
-export default function SeachBar({ onSearch }:SeachBarProps) {
- const [searchValue, setSearchValue] = useState<string>('')
- const [searched, setSearched] = useState(false)
+export default function SeachBar({ onSearch }: SeachBarProps) {
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [searched, setSearched] = useState(false)
   const handleSearch = () => {
     setSearched(true)
     onSearch(searchValue)
   }
   const resetSearch = () => {
     setSearchValue('')
-    if(searchValue.length === 0 && searched) return
+    if (searchValue.length === 0 && searched) return
     setSearched(false)
     onSearch('')
   }
@@ -24,7 +31,7 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
   const isQuery = searchValue.length > 0 && searched
 
   return (
-    <Box  sx={{ display: 'flex', alignItems: 'center', pb:'1rem'}}>
+    <Box sx={{ display: 'flex', alignItems: 'center', pb: '1rem' }}>
       <Autocomplete
         freeSolo
         id="filled-hidden-label-normal"
@@ -36,10 +43,10 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
         renderInput={(params) => (
           <TextField
             {...params}
-            label='Clase / Comisión / Profesor / Carrera'
+            label="Clase / Comisión / Profesor / Carrera"
             onKeyDown={(event) => {
               if (event.key === 'Enter') {
-                event.preventDefault()  // Evita el comportamiento por defecto
+                event.preventDefault() // Evita el comportamiento por defecto
                 handleSearch()
               }
             }}
@@ -52,43 +59,57 @@ export default function SeachBar({ onSearch }:SeachBarProps) {
                 '@media (min-width: 450px)': {
                   maxWidth: 'none',
                   textOverflow: 'unset',
-                  whiteSpace: 'normal',
-                },
+                  whiteSpace: 'normal'
+                }
               },
               '& .MuiInputLabel-shrink': {
                 // Estilos cuando el label se eleva (flotante)
                 overflow: 'visible',
-                maxWidth: 'none',
+                maxWidth: 'none'
               }
             }}
             slotProps={{
               input: {
                 ...params.InputProps,
                 type: 'search',
-                endAdornment:
+                endAdornment: (
                   <InputAdornment position="end">
-                    <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+                    <Divider
+                      sx={{ height: 28, m: 0.5 }}
+                      orientation="vertical"
+                    />
                     <IconButton
-                        sx={{ padding: 1,
-                          fontSize: 32,
-                          height: '56px',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                        aria-label="Buscar"
-                        onClick={handleSearch}>
-                    {!isQuery && <MagnifyingGlass size={32} alt='Lupa' color='#5f83b1'/>}
-                    {isQuery && <X size={32} alt='Cerrar búsqueda' color='#5f83b1' onClick={resetSearch}/>}
+                      sx={{
+                        padding: 1,
+                        fontSize: 32,
+                        height: '56px',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                      aria-label="Buscar"
+                      onClick={handleSearch}
+                    >
+                      {!isQuery && (
+                        <MagnifyingGlass size={32} alt="Lupa" color="#5f83b1" />
+                      )}
+                      {isQuery && (
+                        <X
+                          size={32}
+                          alt="Cerrar búsqueda"
+                          color="#5f83b1"
+                          onClick={resetSearch}
+                        />
+                      )}
                     </IconButton>
                   </InputAdornment>
-              },
+                )
+              }
             }}
-            aria-label='Ingresar búsqueda'
+            aria-label="Ingresar búsqueda"
           />
         )}
       />
     </Box>
   )
-
 }
