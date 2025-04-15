@@ -1,5 +1,6 @@
 .interactive-page {
     padding: 1.5rem 1rem 0;
+    width: 100%;
 }
 
 @Media (min-width:601px) {
