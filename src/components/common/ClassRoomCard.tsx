@@ -1,4 +1,4 @@
-import { ICourse } from "@/data/domain/Course";
+import { ICourseList } from "@/data/domain/Course";
 import { ISchedule } from "@/data/domain/Schedule";
 /* import { EventAvailableTwoTone } from "@mui/icons-material"; */
 import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip} from "@mui/material";
@@ -34,23 +34,23 @@ export default function ClassRoomCard({
 */}
 
   const isVirtual = ()=>{
-    if(course){
-      return course?.events.some((event) => event.schedules.some((schedule) => schedule.isVirtual))
-    }else{
+    if(!course){
       return schedule?.isVirtual
+    }else{
+      return course?.modality === 'Virtual'
     }
   }
   const isPresential = () => {
-    if(course){
-      return course?.events.some((event) => event.schedules.some((schedule) => !schedule.isVirtual))
-    }else{
+    if(!course){
       return !schedule?.isVirtual
+    }else {
+      return course?.modality === 'Presencial'
     }
   }
 
   const classroom = () => {
     if(course){
-      return course?.events.map((event) => event.schedules.map((schedule) => schedule.classroom?.name).join(', ')).join(', ')
+      return ''
     }else{
       return schedule?.classroom?.name
     }
@@ -58,7 +58,7 @@ export default function ClassRoomCard({
 
   const building = () => {
     if(course){
-      return course?.events.map((event) => event.schedules.map((schedule) => schedule.classroom?.building?.name).join(', ')).join(', ')
+      return
     }else{
       return schedule?.classroom?.building?.name
     }
@@ -66,7 +66,7 @@ export default function ClassRoomCard({
 
   const timeSchedule = () => {
     if(course){
-      return course?.events.map((event) => event.schedules.map((schedule) => `${schedule.startTime} - ${schedule.endTime}`).join(', ')).join(', ')
+      return course?.schedules
     }else{
       return schedule?.startTime + ' - ' + schedule?.endTime
     }
@@ -74,7 +74,7 @@ export default function ClassRoomCard({
 
   const professors = () => {
     if(course){
-      return course.events.map((event)=>event.schedules.map(schedule=>schedule.professors.map(professor=>professor).join(' - ')))
+      return course.professors
     }else{
       return schedule?.professors.map(professor => professor).join(', ')
     }
@@ -82,7 +82,7 @@ export default function ClassRoomCard({
 
   const programs = () => {
     if(course){
-      return course?.programs.map(program=>program).join(', ')
+      return course?.programs
     }else{
       return null
     }
@@ -108,7 +108,7 @@ export default function ClassRoomCard({
       }}>
         <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-          <Box  sx={{ display: 'grid',gridTemplateRows: 'auto auto',justifyItems: 'center',
+          {course?.name && <><Box  sx={{ display: 'grid',gridTemplateRows: 'auto auto',justifyItems: 'center',
                       maxWidth: '100%',overflow: 'hidden',mb: 0.5,}}>
             <Tooltip title={course?.name} arrow placement="top">
               <Typography variant="h5" sx={{ color: '#333',fontWeight: 'bold', whiteSpace: 'nowrap',
@@ -117,11 +117,13 @@ export default function ClassRoomCard({
               </Typography>
             </Tooltip>
             <Typography variant="h5" sx={{color: '#333', fontWeight: 'bold',}}>
-              {course?.events.map((event) => event?.name).join(', ')}
+              {course?.events}
             </Typography>
           </Box>
+          <Divider sx={{ mb: .5 }} /></>
 
-          <Divider sx={{ mb: .5 }} />
+          }
+
 
           <Box  sx={{ display: 'grid',
                       gridTemplateRows: 'auto auto',
@@ -132,7 +134,7 @@ export default function ClassRoomCard({
                       rowGap: 1,}}>
 
             {/* Aula y Edificio */}
-            {viewType === "standard" && (
+            {viewType === "modal" && !isVirtual() && (
               <>
                 <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                   <MapPin size={24} color="#1976d2" />

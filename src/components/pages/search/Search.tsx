@@ -1,6 +1,5 @@
 import ClassRoomCard from "@/components/common/ClassRoomCard"
 import SearchBar from "@/components/common/SearchBar"
-import { classes, IClass } from "@/data/mock/ClassData"
 import { Box, Divider, Grid2, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import TornaviasSubsuelo from "@/components/pages/map/components/tornavias/TornaviasSubsuelo"
@@ -8,35 +7,47 @@ import ClassInfoModal from "@/components/common/Modal"
 import './search.css'
 import '../interactive-page.css'
 import { ExclamationMark, Laptop } from "@phosphor-icons/react"
-import { ICourse } from "@/data/domain/Course"
-import { courseService } from "@/data/service/CourseService"
+import { ICourse, ICourseList } from "@/data/domain/Course"
+import { courseService } from "@/data/services/CourseService"
 
 export function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
-  const [courses, setCourses] = useState<ICourse[]>([])
-
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const [courses, setCourses] = useState<ICourseList[]>([])
 
   const fetchCourses = async (query?:string) => {
     const courses = await courseService.getAll(query)
-    setCourses(courses)
+    setCourses(courses.data)
     console.log(courses)
   }
 
-  const handleOpen = (course: ICourse) => {
-    setSelectedCourse(course)
-    setOpen(true)
+  const handleOpen = async (course: ICourseList) => {
+    try{
+      if(course?.id === undefined){
+        console.error('Course ID is undefined')
+        return
+      }
+      const courseSelected = await courseService.getById(course.id)
+      setSelectedCourse(courseSelected.data)
+      setOpen(true)
+    }
+    catch (error) {
+      console.error(error)
+    }
+    /* setSelectedCourse(course)
+    setOpen(true) */
   }
 
   const handleClose = () => {
     setSelectedCourse(null)
     setOpen(false)
   }
+
   const search = (query: string) => {
     console.log('Result', query)
     fetchCourses(query)
   }
+
 
   useEffect(() => {
     fetchCourses()
@@ -64,11 +75,11 @@ export function Search() {
         sx={{ overflowY: 'auto' }}
       >
         {
-          courses && courses.length > 0 && courses.map((course: ICourse) =>
+          courses && courses.length > 0 && courses.map((course: ICourseList) =>
             <Grid2 size={1} key={course.id}>
               <ClassRoomCard
                 course={course}
-                viewType="card"
+                viewType="standard"
                 onClick={() => handleOpen(course)}
               />
             </Grid2>
@@ -95,7 +106,7 @@ export function Search() {
         >
           <section className="class-info-container">
             <Typography variant="h6" sx={{ mb: 2 }}>
-              {selectedCourse.programs.map((program) => program).join(', ')}
+              {selectedCourse?.programs?.map((program) => program).join(', ')}
             </Typography>
             {selectedCourse.events.map((event) => (
               <Box key={event.id} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexDirection:'column', width: '100%' }}>
@@ -135,11 +146,6 @@ export function Search() {
                 </section>
               </Box>
             ))}
-            {/* Tarjeta con detalles adicionales de la clase */}
-            {/* <ClassRoomCard
-              course={}
-              viewType="modal"
-            /> */}
           </section>
         </ClassInfoModal>
       }
