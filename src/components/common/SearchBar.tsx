@@ -1,20 +1,14 @@
-import {
-  Autocomplete,
-  Box,
-  Divider,
-  IconButton,
-  InputAdornment,
-  TextField
-} from '@mui/material'
+import {Autocomplete,Box,Divider,IconButton,InputAdornment,TextField} from '@mui/material'
 import { useState } from 'react'
 import { MagnifyingGlass, X } from '@phosphor-icons/react'
-import subjects from '@/data/mock/Subjects'
+
 
 interface SeachBarProps {
   onSearch: (query: string) => void
+  options: string[]
 }
 
-export default function SeachBar({ onSearch }: SeachBarProps) {
+export default function SeachBar({ onSearch,options }: SeachBarProps) {
   const [searchValue, setSearchValue] = useState<string>('')
   const [searched, setSearched] = useState(false)
   const handleSearch = () => {
@@ -38,7 +32,7 @@ export default function SeachBar({ onSearch }: SeachBarProps) {
         disableClearable
         fullWidth
         inputValue={searchValue}
-        options={subjects.map((option) => option.subject)}
+        options={options}
         onInputChange={(event, newInputValue) => setSearchValue(newInputValue)}
         renderInput={(params) => (
           <TextField
@@ -78,7 +72,7 @@ export default function SeachBar({ onSearch }: SeachBarProps) {
                       sx={{ height: 28, m: 0.5 }}
                       orientation="vertical"
                     />
-                    <IconButton
+                    <IconButton disableRipple
                       sx={{
                         padding: 1,
                         fontSize: 32,

@@ -102,7 +102,7 @@ export function Search() {
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
       <Box flexShrink="0" position="sticky" top="0" zIndex="10">
-        <SearchBar onSearch={search} />
+        <SearchBar onSearch={search} options={courses.map(course => course.name)} />
         <Divider variant="middle" flexItem />
       </Box>
 
