@@ -44,6 +44,7 @@ export default function Nav() {
           onClick={() => navigate("/")}
           className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
           aria-label='Ir al inicio'
+          disableRipple
         >
           <Box
             component="img"
@@ -63,6 +64,7 @@ export default function Nav() {
           onClick={() => navigate("/buscar")}
           className={`${isActive('/buscar') ? 'active' : ''} logo-container nav-icon`}
           aria-label='Ir a búsqueda de materias'
+          disableRipple
         >
           <MagnifyingGlass size={32} alt='Buscar'/>
           <StyledTypography className='logo-label'>
@@ -73,6 +75,7 @@ export default function Nav() {
           onClick={() => navigate("/mapa/tornavias-subsuelo")}
           className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
           aria-label='Ir al mapa interactivo'
+          disableRipple
         >
           <MapTrifold size={32} alt='Mapa'/>
           <StyledTypography className='logo-label'>
@@ -83,6 +86,7 @@ export default function Nav() {
           onClick={() => navigate("/perfil")}
           className={`${isActive(["/perfil", "/ingresar"]) ? 'active' : ''} logo-container nav-icon`}
           aria-label={isAuthenticated ? 'Ir al perfil' : 'Ingresar'}
+          disableRipple
         >
           {isAuthenticated &&
             <>
