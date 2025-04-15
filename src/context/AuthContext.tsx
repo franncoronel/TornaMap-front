@@ -34,6 +34,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const login = async (
     email: string,
     password: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<User | any> => {
     try {
       const response = await userService.login(email, password)
