@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 
 import { environment } from '@/environment'
 import { User } from '@/data/domain/User'
-import { userService } from '@/services/UserService'
+import { userService } from '@/data/services/UserService'
 
 interface AuthContextProps {
     isAuthenticated: boolean

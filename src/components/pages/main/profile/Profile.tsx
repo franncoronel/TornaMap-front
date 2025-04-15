@@ -3,7 +3,7 @@ import { ProfileButton } from "./ProfileButton"
 import { useAuth } from "@/context/AuthContext"
 import { useNavigate } from "react-router-dom"
 import { SignOut } from '@phosphor-icons/react'
-import { userService } from "@/services/UserService"
+import { userService } from "@/data/services/UserService"
 import { useEffect, useState } from "react"
 import { User } from "@/data/domain/User"
 
