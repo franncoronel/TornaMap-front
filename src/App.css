@@ -58,6 +58,60 @@ p {
   height: 90vh; /*Relativo a los 10vh que mide el Nav en mobile*/
 }
 
+.loader-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  transition: opacity 0.3s ease-in-out;
+  opacity: 1;
+}
+.loader-container.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.loader-container .loader{
+  position: absolute;
+}
+.loader-unsam {
+  font-size: 48px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  display: inline-block;
+  color: var(--primary-color);
+  letter-spacing: 2px;
+  position: relative;
+  box-sizing: border-box;
+}
+.loader-unsam::after {
+  content: 'UNSAM';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #fff;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: animloader 6s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    height: 100%;
+  }
+  100% {
+    height: 0%;
+  }
+}
+
 @media (min-width: 601px) {
   .layout-container {
     flex-direction: column-reverse;
