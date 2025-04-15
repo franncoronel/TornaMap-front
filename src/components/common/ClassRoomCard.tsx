@@ -6,7 +6,7 @@ import { MapPin,Clock,User,BookOpenText, Building, Laptop, ArrowsClockwise} from
 
 
 interface ClassRoomCardProps{
-  course? : ICourse
+  course? : ICourseList
   schedule?: ISchedule
   onClick?: () => void
   viewType: string//'standard' | 'modal'
