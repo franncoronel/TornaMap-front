@@ -20,9 +20,6 @@ const LoaderContext = createContext<LoaderContextProps | undefined>(undefined)
 export const LoaderProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [loader, setLoader] = useState<boolean>(false)
 
-  // Si querés también limpiar la notificación al montar el provider:
-  useEffect(() => {}, [])
-
   return (
     <LoaderContext.Provider value={{ setLoader }}>
       {children}
