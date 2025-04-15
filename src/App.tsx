@@ -10,6 +10,7 @@ import Nav from './components/common/Nav/Nav'
 import { routes } from '@/routes'
 import { Box /* , useMediaQuery, useTheme  */ } from '@mui/material'
 import { NotificationProvider } from './context/NotificationContext'
+import { LoaderProvider } from './context/LoaderContext'
 
 function App() {
   // const theme = useTheme()
@@ -18,23 +19,25 @@ function App() {
   return (
     <>
       <CssBaseline />
-      <AuthProvider>
-        <NotificationProvider>
-          <BrowserRouter
-            future={{
-              v7_startTransition: true,
-              v7_relativeSplatPath: true
-            }}
-          >
-            <Box className="layout-container">
-              <Box className="page-structure">
-                <RoutesWrapper />
+      <LoaderProvider>
+        <AuthProvider>
+          <NotificationProvider>
+            <BrowserRouter
+              future={{
+                v7_startTransition: true,
+                v7_relativeSplatPath: true
+              }}
+            >
+              <Box className="layout-container">
+                <Box className="page-structure">
+                  <RoutesWrapper />
+                </Box>
+                <Nav />
               </Box>
-              <Nav />
-            </Box>
-          </BrowserRouter>
-        </NotificationProvider>
-      </AuthProvider>
+            </BrowserRouter>
+          </NotificationProvider>
+        </AuthProvider>
+      </LoaderProvider>
     </>
   )
 }
