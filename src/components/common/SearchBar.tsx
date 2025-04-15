@@ -88,18 +88,13 @@ export default function SeachBar({ onSearch }: SeachBarProps) {
                         alignItems: 'center'
                       }}
                       aria-label="Buscar"
-                      onClick={handleSearch}
+                      onClick={isQuery && searched ? resetSearch : handleSearch} // Se asigna condicionalmente
                     >
                       {!isQuery && (
                         <MagnifyingGlass size={32} alt="Lupa" color="#5f83b1" />
                       )}
                       {isQuery && (
-                        <X
-                          size={32}
-                          alt="Cerrar búsqueda"
-                          color="#5f83b1"
-                          onClick={resetSearch}
-                        />
+                        <X size={32} alt="Cerrar búsqueda" color="#5f83b1" />
                       )}
                     </IconButton>
                   </InputAdornment>
