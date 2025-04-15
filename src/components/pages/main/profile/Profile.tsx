@@ -8,15 +8,28 @@ import { useEffect, useState } from "react"
 import { User } from "@/data/domain/User"
 
 import './profile.css'
+import { useNotification } from "@/context/NotificationContext"
 
 export default function Profile() {
   const { logout } = useAuth()
   const navigate = useNavigate()
   const [user, setUser] = useState<User | null>(null)
-
+  const { setNotificationState } = useNotification()
   const handleLogout = async () => {
-    await logout()
-    navigate('/')
+    try{
+      await logout()
+      setNotificationState({
+        title: 'Sesión cerrada correctamente',
+        type: 'success',
+      })
+      navigate('/')
+    }catch (error) {
+      console.error('Error al cerrar sesión:', error)
+      setNotificationState({
+        title: 'Error al cerrar sesión',
+        type: 'error',
+      })
+    }
   }
 
   useEffect(() => {

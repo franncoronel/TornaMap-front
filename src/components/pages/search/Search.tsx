@@ -9,32 +9,71 @@ import '../interactive-page.css'
 import { ExclamationMark, Laptop } from "@phosphor-icons/react"
 import { ICourse, ICourseList } from "@/data/domain/Course"
 import { courseService } from "@/data/services/CourseService"
+import { useNotification } from "@/context/NotificationContext"
 
 export function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
 
+  const { setNotificationState } = useNotification()
+
   const fetchCourses = async (query?:string) => {
-    const courses = await courseService.getAll(query)
-    setCourses(courses.data)
+    try{
+      const courses = await courseService.getAll(query)
+      const coursesData = courses.data
+      setCourses(coursesData)
+      if (coursesData.length === 0) {
+        // Notificar que no se encontraron resultados
+        setNotificationState({
+          title: "No se encontraron resultados",
+          type: "info",
+          description: "Intenta con otro término de búsqueda",
+          action: () => {}
+        })
+      }
+    } catch(error) {
+      console.error("Error fetching courses:", error)
+      setNotificationState({
+        title: "Error al obtener cursos",
+        type: "error",
+        description: "Ocurrió un error al cargar los cursos",
+        action: () => {}
+      })
+    }
   }
 
   const handleOpen = async (course: ICourseList) => {
-    try{
-      if(course?.id === undefined){
-        console.error('Course ID is undefined')
+    try {
+      if (!course?.id) {
+        console.error("Course ID is undefined")
+        setNotificationState({
+          title: "Error: ID indefinido",
+          type: "error",
+          description: "El curso no tiene un ID válido",
+          action: () => {}
+        })
         return
       }
-      const courseSelected = await courseService.getById(course.id)
-      setSelectedCourse(courseSelected.data)
+      const response = await courseService.getById(course.id)
+      setSelectedCourse(response.data)
       setOpen(true)
+
+      setNotificationState({
+        title: "Curso cargado",
+        type: "success",
+        description: "Detalles del curso obtenidos con éxito",
+        action: () => {}
+      })
+    } catch (error) {
+      console.error("Error fetching course details:", error)
+      setNotificationState({
+        title: "Error al cargar curso",
+        type: "error",
+        description: "No se pudo obtener la información del curso",
+        action: () => {}
+      })
     }
-    catch (error) {
-      console.error(error)
-    }
-    /* setSelectedCourse(course)
-    setOpen(true) */
   }
 
   const handleClose = () => {
