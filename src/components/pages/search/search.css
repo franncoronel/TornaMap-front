@@ -3,4 +3,36 @@
     flex-direction: column;
     align-items: center;
     gap: 1rem;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 1rem 0;
+}
+.schedules-list-container{
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    overflow-x: scroll;
+}
+
+.schedules-list{
+    display: flex;
+    gap: 1rem;
+    width: fit-content;
+}
+
+.schedules-list-item{
+    display: flex;
+    width: 70vw;
+    flex-direction: column;
+    gap: 1rem;
+    height: fit-content;
+    min-height: 450px;
+    padding: 1rem;
+    border-radius: 10px;
+    background-color: var(--primary-color-darker);
+    color: var(--light-color);
+    flex-grow: 1;
+}
+.schedules-list-item:only-child {
+    width: 100%;
 }
