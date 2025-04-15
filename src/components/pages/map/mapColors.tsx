@@ -5,19 +5,19 @@
 
 export const mapColors = {
   //Contorno del mapa
-  outline:{     
+  outline:{
     fill: 'none',
     stroke:"#d4d4d4",
     strokeWidth: 1.396,
   },
   library:{
-    fill: '#bc793c',    
+    fill: '#bc793c',
     stroke: '#000000',
     strokeWidth: 0.7,
   },
   //Aulas
   classrooms: {
-    fill: '#6ba0a8',    
+    fill: '#6ba0a8',
     stroke: '#144e65',
     strokeWidth: 0.7,
   },
@@ -30,7 +30,7 @@ export const mapColors = {
 
   //Consultorias
   consultancy: {
-    fill: '#c3dbde', 
+    fill: '#c3dbde',
     stroke: '#314248',
     strokeWidth: 0.7,
   },
@@ -88,11 +88,11 @@ export const mapColors = {
     strokeWidth: 0.7,
   },
 /*
-  
+
   //maintenance:{
     fill:'#ececed',
     stroke:'#79787d',
-    stroke-width: 0.7,
+    strokeWidth: 0.7,
   }
 */
 };
