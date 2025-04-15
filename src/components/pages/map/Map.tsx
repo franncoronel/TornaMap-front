@@ -173,7 +173,6 @@ export default function Map() {
           classroom={`${findClassRoom()?.classroom}`}
           classroomType="Aula"
         >
-          <Box>
             <InputBase
               type="date"
               value={date}
@@ -212,7 +211,7 @@ export default function Map() {
             ) : (
               <Typography variant="body2">No hay clases en la fecha seleccionada.</Typography>
             )}
-          </Box>
+
         </ClassInfoModal>
       )}
   </main>
