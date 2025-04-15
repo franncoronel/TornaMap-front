@@ -24,7 +24,7 @@ let unsamTheme = createTheme({
         tonalOffset: 0.1
       }
     },
-    dark: {
+    /* dark: {
       palette: {
         primary: {
           main:'#7DA1C4',
@@ -34,7 +34,7 @@ let unsamTheme = createTheme({
           main:'#FFFFFF'
         }
       }
-    }
+    } */
   },
   components: {
     MuiIconButton: {
