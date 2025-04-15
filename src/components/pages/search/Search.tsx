@@ -177,7 +177,10 @@ export function Search() {
                 <section className="schedules-list-container">
                   <div className="schedules-list">
                     {event.schedules.map((schedule) => (
-                      <article className="schedules-list-item">
+                      <article
+                        key={schedule.id}
+                        className="schedules-list-item"
+                      >
                         {!schedule.isVirtual ? (
                           <>
                             {/* Título del modal con información del edificio y nivel */}
