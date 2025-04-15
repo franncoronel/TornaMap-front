@@ -6,3 +6,12 @@ export interface ICourse extends Entity {
     programs: string[],
     events: IEvent[]
 }
+
+export interface ICourseList extends Entity {
+    name: string,
+    programs: string,
+    events: string,
+    professors: string,
+    modality: string,
+    schedules: string
+}
