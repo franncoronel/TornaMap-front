@@ -7,12 +7,12 @@ type ModalProps = {
   children: React.ReactNode  // Permite múltiples hijos de cualquier tipo
   open: boolean             // Propiedad para manejar el estado del Modal
   handleClose: () => void    // Función para cerrar el Modal
-  classroom:string
-  classroomType:string
+  title: string
+  subtitle?:string
 }
 
 
-export default function ClassInfoModal({ children, open, handleClose,classroom,classroomType }: ModalProps){
+export default function ClassInfoModal({ children, open, handleClose, title, subtitle }: ModalProps){
   return (
     <Modal
         open={open}
@@ -23,7 +23,7 @@ export default function ClassInfoModal({ children, open, handleClose,classroom,c
           maxHeight: '80vh',
           minHeight: '85vh',
           width: '90vw',
-          overflowY: 'auto',
+          overflowY: 'hidden',
           borderRadius: '24px',
           position: 'absolute',
           top: '50%',
@@ -35,16 +35,18 @@ export default function ClassInfoModal({ children, open, handleClose,classroom,c
         >
       <Fade in={open}>
         <Box sx={{
-
           bgcolor: 'background.paper',
           width: '100%',
           minHeight: '100%',
           p: 4,
-          }}>
+          position: 'relative'
+          }}
+        >
 
-          <Box sx={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between'}}>
-            <Typography id="modal-modal-title" variant="h6" component="h2" >
-              {classroom} <br /> {classroomType}
+          <Box sx={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'background.paper'}}>
+            <Typography sx={{display: 'flex', flexDirection:'column'}} id="modal-modal-title" variant="h6" component="h2" >
+              <span>{title}</span>
+              <span>{subtitle}</span>
             </Typography>
             <IconButton
                   aria-label='Cerrar Ventana'
@@ -54,10 +56,10 @@ export default function ClassInfoModal({ children, open, handleClose,classroom,c
               <X weight='bold'/>
             </IconButton>
           </Box>
-          <Divider sx={{ mb: 2 }} />
-          <>
+          <Divider  />
+          <Box sx={{display: 'flex', flexDirection:'column', gap: 2, maxHeight: '70vh', overflowY: 'auto' }}>
             {children}
-          </>
+          </Box>
         </Box>
       </Fade>
     </Modal>
