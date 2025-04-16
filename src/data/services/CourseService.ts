@@ -1,13 +1,15 @@
 import axios from 'axios'
 import { ICourse, ICourseList } from '../domain/Course'
 import { ServiceInterface } from './ServiceInterface'
-import { REST_API_URL } from '../constants'
 import { Response } from '../domain/Response'
+import { environment } from '@/environment'
 export class CourseService implements ServiceInterface {
+  baseUrl: string = `${environment.apiUrl}/courses`
+
   async getAll(query?: string): Promise<Response<ICourseList[]>> {
     const url = query
-      ? `${REST_API_URL}/courses?query=${query}`
-      : `${REST_API_URL}/courses`
+      ? `${this.baseUrl}?query=${query}`
+      : this.baseUrl
     const courseDTOs = await axios.get<Response<ICourseList[]>>(url)
     const courses = courseDTOs.data
     return courses
@@ -15,7 +17,7 @@ export class CourseService implements ServiceInterface {
 
   async getById(id: string | number): Promise<Response<ICourse>> {
     const courseDTO = await axios.get<Response<ICourse>>(
-      `${REST_API_URL}/courses/${id}`
+      `${this.baseUrl}/${id}`
     )
     const course = courseDTO.data
     return course
