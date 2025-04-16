@@ -1,69 +1,101 @@
-import { Modal, Box, Typography, Divider, IconButton, Fade } from "@mui/material";
-import React from "react";
-import {X} from '@phosphor-icons/react'
-
+import {
+  Modal,
+  Box,
+  Typography,
+  Divider,
+  IconButton,
+  Fade
+} from '@mui/material'
+import React from 'react'
+import { X } from '@phosphor-icons/react'
 
 type ModalProps = {
-  children: React.ReactNode  // Permite múltiples hijos de cualquier tipo
-  open: boolean             // Propiedad para manejar el estado del Modal
-  handleClose: () => void    // Función para cerrar el Modal
+  children: React.ReactNode // Permite múltiples hijos de cualquier tipo
+  open: boolean // Propiedad para manejar el estado del Modal
+  handleClose: () => void // Función para cerrar el Modal
   title: string
-  subtitle?:string
+  subtitle?: string
 }
 
-
-export default function ClassInfoModal({ children, open, handleClose, title, subtitle }: ModalProps){
+export default function ClassInfoModal({
+  children,
+  open,
+  handleClose,
+  title,
+  subtitle
+}: ModalProps) {
   return (
     <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-        sx={{
-          maxHeight: '80vh',
-          minHeight: '85vh',
-          width: '90vw',
-          overflowY: 'hidden',
-          borderRadius: '24px',
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          bgcolor: 'background.paper',
-          boxShadow: 3,
-          transform: 'translate(-50%, -55%)'
-        }}
-        >
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+      sx={{
+        maxHeight: '80vh',
+        minHeight: '85vh',
+        width: '90vw',
+        overflowY: 'hidden',
+        borderRadius: '24px',
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        bgcolor: 'background.paper',
+        boxShadow: 3,
+        transform: 'translate(-50%, -55%)'
+      }}
+    >
       <Fade in={open}>
-        <Box sx={{
-          bgcolor: 'background.paper',
-          width: '100%',
-          minHeight: '100%',
-          p: 4,
-          position: 'relative'
+        <Box
+          sx={{
+            bgcolor: 'background.paper',
+            width: '100%',
+            minHeight: '100%',
+            p: 4,
+            position: 'relative'
           }}
         >
-
-          <Box sx={{display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'background.paper'}}>
-            <Typography sx={{display: 'flex', flexDirection:'column'}} id="modal-modal-title" variant="h6" component="h2" >
+          <Box
+            sx={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              position: 'sticky',
+              top: 0,
+              zIndex: 1,
+              backgroundColor: 'background.paper'
+            }}
+          >
+            <Typography
+              sx={{ display: 'flex', flexDirection: 'column' }}
+              id="modal-modal-title"
+              variant="h6"
+              component="h2"
+            >
               <span>{title}</span>
               <span>{subtitle}</span>
             </Typography>
             <IconButton
-                  aria-label='Cerrar Ventana'
-                  onClick={handleClose}
-                  edge="end">
-
-              <X weight='bold'/>
+              aria-label="Cerrar Ventana"
+              onClick={handleClose}
+              edge="end"
+            >
+              <X weight="bold" />
             </IconButton>
           </Box>
-          <Divider  />
-          <Box sx={{display: 'flex', flexDirection:'column', gap: 2, maxHeight: '70vh', overflowY: 'auto' }}>
+          <Divider />
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+              maxHeight: '70vh',
+              overflowY: 'auto'
+            }}
+          >
             {children}
           </Box>
         </Box>
       </Fade>
     </Modal>
-
   )
-
 }

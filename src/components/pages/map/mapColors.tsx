@@ -5,94 +5,94 @@
 
 export const mapColors = {
   //Contorno del mapa
-  outline:{     
+  outline: {
     fill: 'none',
-    stroke:"#d4d4d4",
-    strokeWidth: 1.396,
+    stroke: '#d4d4d4',
+    strokeWidth: 1.396
   },
-  library:{
-    fill: '#bc793c',    
+  library: {
+    fill: '#bc793c',
     stroke: '#000000',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
   //Aulas
   classrooms: {
-    fill: '#6ba0a8',    
+    fill: '#6ba0a8',
     stroke: '#144e65',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
   //Laboratorios
   lab: {
     fill: '#4CAF50',
     stroke: '#224525',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
 
   //Consultorias
   consultancy: {
-    fill: '#c3dbde', 
+    fill: '#c3dbde',
     stroke: '#314248',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
   //Bedelia
   bedelia: {
-    fill_CyT: '#2ba886',   //'#6f6fa4'
+    fill_CyT: '#2ba886', //'#6f6fa4'
     fill_ExHumanidades: '#8b6447',
     stroke_CyT: '#135244',
     stroke_ExHumanidades: '#703d13',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
 
-  humanidades:{
+  humanidades: {
     fill: '#dcdc00',
     stroke: '#734c10',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
 
-  escuelaCyt:{
+  escuelaCyt: {
     fill: '#9dd89f',
     stroke: '#224525',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
 
-  lecturaMundi:{
-    fill:'#c7a67e',
-    stroke:'#505050',
-    strokeWidth: 0.7,
+  lecturaMundi: {
+    fill: '#c7a67e',
+    stroke: '#505050',
+    strokeWidth: 0.7
   },
   //areas Comunes
   commonAreas: {
-    fill: '#ececed',  // #ececed
+    fill: '#ececed', // #ececed
     stroke: '#79787d',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
-  institutoTransporte:{
+  institutoTransporte: {
     fill: '#0f42c8',
     stroke: '#b8ddff', //#10245b
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
-  centroDeAtencionPsico:{
+  centroDeAtencionPsico: {
     fill: '#5260be',
     stroke: '#373b71',
-    strokeWidth: 0.7,
+    strokeWidth: 0.7
   },
-  iAMK:{
-    fill:'#7a2bc5',
-    stroke:'#552281',
-    strokeWidth: 0.7,
+  iAMK: {
+    fill: '#7a2bc5',
+    stroke: '#552281',
+    strokeWidth: 0.7
   },
   //Baños
   banios: {
     fill: '#B9BDC0',
     stroke: '#505050',
-    strokeWidth: 0.7,
-  },
-/*
-  
+    strokeWidth: 0.7
+  }
+  /*
+
   //maintenance:{
     fill:'#ececed',
     stroke:'#79787d',
-    stroke-width: 0.7,
+    strokeWidth: 0.7,
   }
 */
-};
+}

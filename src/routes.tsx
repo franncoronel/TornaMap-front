@@ -4,7 +4,7 @@ import Main from '@/components/pages/main/Main'
 import Map from '@/components/pages/map/Map'
 import Register from '@/components/pages/register/Register'
 import NotFound from '@/components/pages/notFound/NotFound'
-import { ProtectedRoute } from "@/components/common/ProtectedRoute.tsx"
+import { ProtectedRoute } from '@/components/common/ProtectedRoute.tsx'
 import Profile from '@/components/pages/main/profile/Profile'
 import TornaviasSubsuelo from '@/components/pages/map/components/tornavias/TornaviasSubsuelo'
 import { Search } from './components/pages/search/Search'
@@ -27,8 +27,14 @@ export const routes: RouteObject[] = [
       { path: 'tornavias-subsuelo', element: <TornaviasSubsuelo /> },
       { path: 'tornavias-primer-piso', element: <TornaviasPrimerPiso /> },
       { path: 'tornavias-planta-baja', element: <TornaviasPlantaBaja /> },
-      { path: 'aulario-nave-3-planta-baja', element: <AularioNave3PlantaBaja /> },
-      { path: 'aulario-nave-3-planta-alta', element: <AularioNave3PlantaAlta /> },
+      {
+        path: 'aulario-nave-3-planta-baja',
+        element: <AularioNave3PlantaBaja />
+      },
+      {
+        path: 'aulario-nave-3-planta-alta',
+        element: <AularioNave3PlantaAlta />
+      }
     ]
   },
   {
@@ -38,9 +44,7 @@ export const routes: RouteObject[] = [
         <Main />
       </ProtectedRoute>
     ),
-    children: [
-      { path: 'perfil', element: <Profile /> }
-    ]
+    children: [{ path: 'perfil', element: <Profile /> }]
   },
   { path: '*', element: <NotFound /> }
 ]
