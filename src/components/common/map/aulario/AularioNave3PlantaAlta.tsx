@@ -1,6 +1,22 @@
-import { mapColors } from '../../mapColors'
+import { useOutletContext } from 'react-router-dom'
+import { mapColors } from '../../../pages/map/mapColors'
 
-export default function AularioNave3PlantaAlta() {
+interface OutletContextType {
+  handleOpen: (classRoomId: number) => void
+}
+interface AularioNave3PlantaAltaProps {
+  selectedCode?: string // Cambiado de selectedClassRoomId
+  onClassRoomClick?: (id: number) => void
+}
+
+export default function AularioNave3PlantaAlta({
+  selectedCode,
+  onClassRoomClick
+}: AularioNave3PlantaAltaProps) {
+  const context = useOutletContext<OutletContextType | null>()
+  const handleOpen = context?.handleOpen || onClassRoomClick
+  const isSelected = (id: string) => id === selectedCode
+
   return (
     <>
       <svg
@@ -33,6 +49,8 @@ export default function AularioNave3PlantaAlta() {
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
+          onClick={() => handleOpen?.(0)}
+          className={`classRoom ${isSelected('A20') ? 'selected' : ''}`}
         >
           <path
             d="M80.277596,39.238172h244.655514v189.225753h-244.655514Z"
@@ -60,6 +78,8 @@ export default function AularioNave3PlantaAlta() {
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
+          onClick={() => handleOpen?.(1)}
+          className={`classRoom ${isSelected('A19') ? 'selected' : ''}`}
         >
           <path
             d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z"
@@ -86,6 +106,8 @@ export default function AularioNave3PlantaAlta() {
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
+          onClick={() => handleOpen?.(1)}
+          className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
         >
           <path
             d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z"

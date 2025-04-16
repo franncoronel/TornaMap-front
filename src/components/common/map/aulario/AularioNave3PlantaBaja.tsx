@@ -1,23 +1,23 @@
 import { Toilet } from '@phosphor-icons/react'
 import { useOutletContext } from 'react-router-dom'
-import { mapColors } from '../../mapColors'
+import { mapColors } from '../../../pages/map/mapColors'
 
 interface OutletContextType {
   handleOpen: (classRoomId: number) => void
 }
 interface AularioNaveProps {
-  selectedClassRoomId?: number | null
+  selectedCode?: string // Cambiado de selectedClassRoomId
   onClassRoomClick?: (id: number) => void
 }
 
 export default function AularioNave3PlantaBaja({
-  selectedClassRoomId,
+  selectedCode,
   onClassRoomClick
 }: AularioNaveProps) {
   const context = useOutletContext<OutletContextType | null>()
   const handleOpen = context?.handleOpen || onClassRoomClick
   //
-  const isSelected = (id: number) => id === selectedClassRoomId
+  const isSelected = (id: string) => id === selectedCode
 
   return (
     <>
@@ -53,7 +53,7 @@ export default function AularioNave3PlantaBaja({
           }}
           onClick={() => handleOpen?.(0)}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected(3) ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('A17') ? 'selected' : ''}`}
         >
           <path
             d="M80.277596,39.238172h244.655514l.16554,42.911613h-28.836108v101.936404h28.670568v43.948748l-244.655514.428984v-189.225749Z"
@@ -82,7 +82,7 @@ export default function AularioNave3PlantaBaja({
           }}
           onClick={() => handleOpen?.(1)}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected(1) ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('A16') ? 'selected' : ''}`}
         >
           <path
             d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z"
@@ -111,7 +111,7 @@ export default function AularioNave3PlantaBaja({
           }}
           onClick={() => handleOpen?.(2)}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected(2) ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('A15') ? 'selected' : ''}`}
         >
           <path
             d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z"
