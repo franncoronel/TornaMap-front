@@ -1,10 +1,11 @@
 .interactive-page {
-    padding: 1.5rem 1rem 0;
+  padding: 1.5rem 1rem 0;
+  width: 100%;
 }
 
-@Media (min-width:601px) {
-    .interactive-page {
-        padding-left:2rem;
-        padding-right:2rem;
-    }
+@media (min-width: 601px) {
+  .interactive-page {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }

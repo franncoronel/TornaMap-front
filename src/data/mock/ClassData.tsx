@@ -1,64 +1,78 @@
 export const casoClass: IClass = {
-  id:0,
-  name: "Conceptos de Arquitectura y Sistemas Operativos",
-  classroomType : "Aula",
-  commission: "C-TI09",
-  classroom: "A28",
+  id: 0,
+  name: 'Conceptos de Arquitectura y Sistemas Operativos',
+  classroomType: 'Aula',
+  commission: 'C-TI09',
+  classroom: 'A28',
   classRoomId: 8,
-  building: "Tornavías",
+  building: 'Tornavías',
   buildingLevel: 'Subsuelo',
-  teacher: ["Cosme Fulanito","Mr. X"],
-  careers: ["Tecnicatura en Programación Informática", "Tecnicatura en Redes","Diagnóstico por Imágenes"],
-  schedules: "08:00 - 10:00",
-  weekDays: ["Martes","Jueves"],
-  startDate: "2024-12-01",
-  endDate: "2025-03-01",
+  teacher: ['Cosme Fulanito', 'Mr. X'],
+  careers: [
+    'Tecnicatura en Programación Informática',
+    'Tecnicatura en Redes',
+    'Diagnóstico por Imágenes'
+  ],
+  schedules: '08:00 - 10:00',
+  weekDays: ['Martes', 'Jueves'],
+  startDate: '2024-12-01',
+  endDate: '2025-03-01',
   viewType: 'standard',
   mode: 'virtual'
 }
 
 export const algo3Class: IClass = {
-  id:1,
-  name: "Algoritmos 3",
-  classroomType : "Lab. de Computación",
-  commission: "C-TI10",
-  classroom: "A28",
+  id: 1,
+  name: 'Algoritmos 3',
+  classroomType: 'Lab. de Computación',
+  commission: 'C-TI10',
+  classroom: 'A28',
   classRoomId: 8,
-  building: "Tornavías",
+  building: 'Tornavías',
   buildingLevel: 'Subsuelo',
-  teacher: ["Cosme Fulanito","Mr. X","El Barto","Krusty"],
-  careers: ["Tecnicatura en Programación Informática", "Tecnicatura en Redes","Ciencia de Datos","Tecnicatura en Programación Informática",],
-  schedules: "08:00 - 10:00",
-  weekDays: ["Lunes","Miércoles","Viernes"],
-  startDate: "2024-12-01",
-  endDate: "2025-03-01",
+  teacher: ['Cosme Fulanito', 'Mr. X', 'El Barto', 'Krusty'],
+  careers: [
+    'Tecnicatura en Programación Informática',
+    'Tecnicatura en Redes',
+    'Ciencia de Datos',
+    'Tecnicatura en Programación Informática'
+  ],
+  schedules: '08:00 - 10:00',
+  weekDays: ['Lunes', 'Miércoles', 'Viernes'],
+  startDate: '2024-12-01',
+  endDate: '2025-03-01',
   viewType: 'standard',
   mode: 'presencial'
 }
 
 export const algo2Class: IClass = {
-  id:2,
-  name: "Algoritmos 2",
-  classroomType : "Lab. de Computación",
-  commission: "C-TI10",
-  classroom: "Laboratorio de Computación 1",
+  id: 2,
+  name: 'Algoritmos 2',
+  classroomType: 'Lab. de Computación',
+  commission: 'C-TI10',
+  classroom: 'Laboratorio de Computación 1',
   classRoomId: 9,
-  building: "Tornavías",
+  building: 'Tornavías',
   buildingLevel: 'Subsuelo',
-  teacher: ["Cosme Fulanito","Mr. T"],
-  careers: ["Tecnicatura en Programación Informática", "Tecnicatura en Redes","Ciencia de Datos","Tecnicatura en Programación Informática",],
-  schedules: "18:00 - 22:00",
-  weekDays: ["Martes","Jueves"],
-  startDate: "2024-03-01",
-  endDate: "2025-07-01",
+  teacher: ['Cosme Fulanito', 'Mr. T'],
+  careers: [
+    'Tecnicatura en Programación Informática',
+    'Tecnicatura en Redes',
+    'Ciencia de Datos',
+    'Tecnicatura en Programación Informática'
+  ],
+  schedules: '18:00 - 22:00',
+  weekDays: ['Martes', 'Jueves'],
+  startDate: '2024-03-01',
+  endDate: '2025-07-01',
   viewType: 'standard',
   mode: 'presencial'
 }
 
-export interface IClass{
+export interface IClass {
   id: number
   name: string
-  classroomType : string
+  classroomType: string
   commission: string
   classroom: string
   classRoomId: number
@@ -70,8 +84,18 @@ export interface IClass{
   weekDays: string[]
   startDate: string
   endDate: string
-  viewType: string//'standard' | 'modal'
+  viewType: string //'standard' | 'modal'
   mode: 'presencial' | 'virtual'
 }
 
-export const classes = [casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class, casoClass, algo3Class, algo2Class]
+export const classes = [
+  casoClass,
+  algo3Class,
+  algo2Class,
+  casoClass,
+  algo3Class,
+  algo2Class,
+  casoClass,
+  algo3Class,
+  algo2Class
+]

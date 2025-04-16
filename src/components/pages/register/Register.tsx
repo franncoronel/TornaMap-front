@@ -1,7 +1,14 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import { Box, TextField, Button, Typography, Container, Link } from '@mui/material'
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Link
+} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
-import { User } from '../../../data/domain/User'
+// import { User } from '../../../data/domain/User'
 import './register.css'
 import { FingerprintSimple } from '@phosphor-icons/react'
 import SectionTitle from '@/components/common/SectionTitle'
@@ -21,7 +28,7 @@ export default function Register() {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting, /* isSubmitSuccessful */ },
+    formState: { errors, isSubmitting /* isSubmitSuccessful */ },
     watch,
     setError,
     trigger
@@ -37,15 +44,16 @@ export default function Register() {
   })
 
   const createAccount = (userData: FormInputs) => {
-    const newUser = new User(
-      0,
+    console.log(userData)
+    /* const newUser = new User(
+
       userData.name,
       userData.surname,
       userData.username,
       userData.email,
       userData.password
     )
-    return newUser
+    return newUser */
   }
 
   const password = watch('password')
@@ -61,6 +69,7 @@ export default function Register() {
       */
       navigate('/ingresar')
     } catch (error) {
+      console.error('Error al registrar el usuario:', error)
       setError('root', {
         type: 'server',
         message: 'Hubo un error al procesar su solicitud. Intente nuevamente.'
@@ -69,27 +78,28 @@ export default function Register() {
   }
 
   return (
-    <main className='register-page'>
+    <main className="register-page">
       <Container
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center', padding: '2rem',
+          justifyContent: 'center',
+          padding: '2rem',
           backgroundColor: 'white',
           borderRadius: 2
-        }}>
+        }}
+      >
         <Box
-          component='img'
+          component="img"
           sx={{
             maxWidth: '100%',
             height: 'auto',
             padding: '1rem',
             margin: 0,
-            alignSelf: 'center',
-
+            alignSelf: 'center'
           }}
-          alt='Logo de la universidad.'
-          src='/logo-unsam-largo.png'
+          alt="Logo de la universidad."
+          src="/logo-unsam-largo.png"
         />
         <Box
           sx={{
@@ -101,78 +111,85 @@ export default function Register() {
         >
           <SectionTitle title="Registro de Usuario" />
 
-          <Box component='form' role="form" onSubmit={handleSubmit(onSubmit)} sx={{ width: '100%' }} aria-label="Formulario de registro">
+          <Box
+            component="form"
+            role="form"
+            onSubmit={handleSubmit(onSubmit)}
+            sx={{ width: '100%' }}
+            aria-label="Formulario de registro"
+          >
             <Controller
-              name='name'
+              name="name"
               control={control}
               rules={{ required: 'Debe ingresar un nombre' }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Nombre'
+                  label="Nombre"
                   onBlur={() => trigger('name')}
                   error={!!errors.name}
                   helperText={errors.name?.message}
-                  id='name'
-                  aria-label='Nombre'
-                  aria-required='true'
-                  aria-describedby='name-helper-text'
+                  id="name"
+                  aria-label="Nombre"
+                  aria-required="true"
+                  aria-describedby="name-helper-text"
                 />
               )}
             />
 
             <Controller
-              name='surname'
+              name="surname"
               control={control}
               rules={{ required: 'Debe ingresar una contraseña' }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Apellido'
+                  label="Apellido"
                   onBlur={() => trigger('surname')}
                   error={!!errors.surname}
                   helperText={errors.surname?.message}
-                  id='surname'
+                  id="surname"
                   aria-label="Apellido"
-                  aria-required='true'
-                  aria-describedby='surname-helper-text'
+                  aria-required="true"
+                  aria-describedby="surname-helper-text"
                 />
               )}
             />
 
             <Controller
-              name='username'
+              name="username"
               control={control}
               rules={{
                 required: 'Debe ingresar un nombre de usuario',
                 minLength: {
                   value: 4,
-                  message: 'El nombre de usuario debe tener al menos 4 caracteres'
+                  message:
+                    'El nombre de usuario debe tener al menos 4 caracteres'
                 }
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Nombre de usuario'
+                  label="Nombre de usuario"
                   onBlur={() => trigger('username')}
                   error={!!errors.username}
                   helperText={errors.username?.message}
-                  id='username'
+                  id="username"
                   aria-label="Nombre de usuario"
-                  aria-required='true'
-                  aria-describedby='username-helper-text'
+                  aria-required="true"
+                  aria-describedby="username-helper-text"
                 />
               )}
             />
 
             <Controller
-              name='email'
+              name="email"
               control={control}
               rules={{
                 required: 'Debe ingresar un email',
@@ -184,24 +201,24 @@ export default function Register() {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Email'
-                  type='email'
+                  label="Email"
+                  type="email"
                   onBlur={() => trigger('email')}
                   error={!!errors.email}
                   helperText={errors.email?.message}
-                  id='email'
+                  id="email"
                   aria-label="Email"
-                  aria-required='true'
-                  aria-describedby='email-helper-text'
-                  placeholder='example@gmail.com'
+                  aria-required="true"
+                  aria-describedby="email-helper-text"
+                  placeholder="example@gmail.com"
                 />
               )}
             />
 
             <Controller
-              name='password'
+              name="password"
               control={control}
               rules={{
                 required: 'Debe ingresar una contraseña',
@@ -213,58 +230,62 @@ export default function Register() {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Contraseña'
-                  type='password'
+                  label="Contraseña"
+                  type="password"
                   onBlur={() => trigger('password')}
                   error={!!errors.password}
                   helperText={errors.password?.message}
-                  id='password'
+                  id="password"
                   aria-label="Contraseña"
-                  aria-required='true'
-                  aria-describedby='password-helper-text'
+                  aria-required="true"
+                  aria-describedby="password-helper-text"
                 />
               )}
             />
 
             <Controller
-              name='confirmPassword'
+              name="confirmPassword"
               control={control}
               rules={{
                 required: 'Debe confirmar la contraseña',
-                validate: value =>
+                validate: (value) =>
                   value === password || 'Las contraseñas no coinciden'
               }}
               render={({ field }) => (
                 <TextField
                   {...field}
-                  margin='normal'
+                  margin="normal"
                   fullWidth
-                  label='Confirmar contraseña'
-                  type='password'
+                  label="Confirmar contraseña"
+                  type="password"
                   onBlur={() => trigger('confirmPassword')}
                   error={!!errors.confirmPassword}
                   helperText={errors.confirmPassword?.message}
-                  id='confirmPassword'
+                  id="confirmPassword"
                   aria-label="Confirmar contraseña"
-                  aria-required='true'
-                  aria-describedby='confirmPassword-helper-text'
+                  aria-required="true"
+                  aria-describedby="confirmPassword-helper-text"
                 />
               )}
             />
 
             <Button
-              type='submit'
+              type="submit"
               fullWidth
-              variant='contained'
-              sx={{ mt: "1.5rem", mb: "1.5rem" }}
+              variant="contained"
+              sx={{ mt: '1.5rem', mb: '1.5rem' }}
               disabled={isSubmitting}
             >
-              <FingerprintSimple size={32} alt='Registrarse' /> {isSubmitting ? "Registrando..." : "Registrarse"}
+              <FingerprintSimple size={32} alt="Registrarse" />{' '}
+              {isSubmitting ? 'Registrando...' : 'Registrarse'}
             </Button>
             <Typography>
-              ¿Ya tenés una cuenta? <Link onClick={() => (navigate('/ingresar'))} tabIndex={0}>Iniciá sesión.</Link>
+              ¿Ya tenés una cuenta?{' '}
+              <Link onClick={() => navigate('/ingresar')} tabIndex={0}>
+                Iniciá sesión.
+              </Link>
             </Typography>
           </Box>
         </Box>

@@ -30,7 +30,7 @@
   position: absolute;
   width: 150%;
   height: 3px;
-  background-color: #0F0F0F;
+  background-color: #0f0f0f;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -56,7 +56,7 @@
   display: none;
 }
 
-@Media (min-width: 601px) {
+@media (min-width: 601px) {
   .outer-container {
     min-height: 6vh;
     height: auto; /* Anular la altura fija de móvil */
@@ -92,7 +92,7 @@
     tener que agregar otro contenedor flex a la estructura.
   */
   .logo-container.nav-icon {
-    margin: 0 1.5rem
+    margin: 0 1.5rem;
   }
 
   .logo-container.nav-icon:first-of-type {
