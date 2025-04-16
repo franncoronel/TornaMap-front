@@ -49,8 +49,8 @@ export default function ClassInfoModal({
           sx={{
             bgcolor: 'background.paper',
             width: '100%',
-            minHeight: '100%',
-            p: 4,
+            height: '100%',
+            p: 2,
             position: 'relative'
           }}
         >
@@ -61,6 +61,7 @@ export default function ClassInfoModal({
               justifyContent: 'space-between',
               position: 'sticky',
               top: 0,
+              p: 2,
               zIndex: 1,
               backgroundColor: 'background.paper'
             }}
