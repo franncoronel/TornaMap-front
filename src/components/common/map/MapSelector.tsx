@@ -5,6 +5,7 @@ import TornaviasPrimerPiso from './tornavias/TornaviasPrimerPiso'
 
 import AularioNave3PlantaBaja from './aulario/AularioNave3PlantaBaja'
 import AularioNave3PlantaAlta from './aulario/AularioNave3PlantaAlta'
+import { Box } from '@mui/material'
 
 // 1. define tus mapas por edificio
 const tornavias: Record<string, React.FC<{ selectedCode?: string }>> = {
@@ -14,32 +15,35 @@ const tornavias: Record<string, React.FC<{ selectedCode?: string }>> = {
 }
 
 const aulario: Record<string, React.FC<{ selectedCode?: string }>> = {
-  '1': AularioNave3PlantaBaja,
-  '2': AularioNave3PlantaAlta
+  '0': AularioNave3PlantaBaja,
+  '1': AularioNave3PlantaAlta
 }
 
 // 2. agrúpalos en un selector de edificios
 const buildingMaps: Record<string, typeof tornavias> = {
   Tornavías: tornavias,
-  Aulario: aulario
+  tornavias: tornavias,
+  AularioNave3: aulario,
+  aularioNave3: aulario
 }
 
 interface MapSelectorProps {
-  building: string | 'Tornavías' | 'Aulario'
-  level: string // '-1', '0', '1', '2', …
+  building: string | 'Tornavías' | 'AularioNave3' | undefined
+  level: string | undefined // '-1', '0', '1', '2', …
   classRoom?: string // e.g. 'A1'
 }
 
 export function MapSelector({ building, level, classRoom }: MapSelectorProps) {
-  const mapSet = buildingMaps[building]
+  const mapSet = buildingMaps[building ?? '']
   if (!mapSet) return <p>Edificio desconocido</p>
   // obtengo el componente concreto para el floor
-  const MapComponent = mapSet[level]
+  const MapComponent = mapSet[level ?? ''] // e.g. '0', '1', '2', …
   if (!MapComponent) return <p>Piso “{level}” no disponible</p>
 
   return (
-    <div className="modal">
+    <Box sx={{ width: '100%', height: '100%' }}>
+      {/* Renderiza el componente del mapa correspondiente */}
       <MapComponent selectedCode={classRoom} />
-    </div>
+    </Box>
   )
 }

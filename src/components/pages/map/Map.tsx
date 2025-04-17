@@ -10,17 +10,22 @@ import {
 } from '@mui/material'
 
 import { Controller, useForm } from 'react-hook-form'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import './map.css'
 import '../interactive-page.css'
 import ClassInfoModal from '@/components/common/Modal'
 import { Box, InputBase, Typography } from '@mui/material'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ClassRoomCard from '@/components/common/ClassRoomCard'
 import { buildingData } from '@/data/mock/BuildingData'
-import { classes, IClass } from '@/data/mock/ClassData'
+
+import { eventService } from '@/data/services/EventService'
+import { useNotification } from '@/context/NotificationContext'
+import { useLoader } from '@/context/LoaderContext'
+import { IEventList } from '@/data/domain/Event'
+import { MapSelector } from '@/components/common/map/MapSelector'
 
 export default function Map() {
   const { control, watch, setValue } = useForm({
@@ -30,83 +35,78 @@ export default function Map() {
     }
   })
   const navigate = useNavigate()
+  const params = useParams()
+  const { building: buildingPath, level: levelPath } = params
 
-  // Observamos los valores seleccionados
-  const selectedBuilding = watch('building')
-  const currentBuilding = buildingData.find((b) => b.id === selectedBuilding)
+  const currentBuilding = buildingData.find((b) => b.path === buildingPath)
+  const currentLevel = currentBuilding?.levels.find((l) => l.path === levelPath)
 
-  const buildingLevels = () => currentBuilding?.levels || [] // Devuelve niveles o un array vacío si no se encuentra
-
-  const handleLevelChange = (levelId: number) => {
-    const pathToNavigate = `${buildingData[selectedBuilding].levels[levelId].path}`
-    navigate(`/mapa/${pathToNavigate}`)
-  }
-  const handleBuildingChange = (buildingId: number) => {
-    const newBuilding = buildingData.find((b) => b.id === buildingId)
-    setValue('level', 0) // Resetea el nivel al primer valor
-    navigate(`/${newBuilding?.path}`)
-  }
-
-  // Estado para el modal
+  // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | number>(null)
-  const [open, setOpen] = useState(false)
   const [date, setDate] = useState(new Date().toISOString().split('T')[0])
-  const [filteredClasses, setFilteredClasses] = useState<IClass[]>([])
+  const [open, setOpen] = useState(false)
+  // Dato del modal
+  const [events, setEvents] = useState<IEventList[]>([])
+
+  const { setNotificationState } = useNotification()
+  const { setLoader } = useLoader()
 
   const handleClose = () => {
     setClassRoomId(null)
+
     setOpen(false)
   }
 
-  const handleOpen = (classRoomId: number) => {
-    const today = new Date().toISOString().split('T')[0] // Fecha actual en formato ISO
-    setDate(today) // Resetea la fecha seleccionada
-    setOpen(true)
-    setClassRoomId(classRoomId)
-
-    // Filtrar clases por la fecha actual
-    const currentClassRoom = buildingData[selectedBuilding].levels
-      .flatMap((l) => l.classRooms)
-      .find((c) => c.id === classRoomId)
-
-    if (currentClassRoom) {
-      const filtered = classes.filter(
-        (cls) =>
-          cls.classroom === currentClassRoom.classroom &&
-          new Date(cls.startDate) <= new Date(today) &&
-          new Date(cls.endDate) >= new Date(today)
-      )
-      setFilteredClasses(filtered)
+  const fetchEvents = async (classRoomId: number | null, date: Date) => {
+    try {
+      setLoader(true)
+      const filtered = await eventService.getAll(classRoomId, new Date(date))
+      setLoader(false)
+      setOpen(true)
+      console.log(filtered)
+      setEvents(filtered)
+    } catch (error) {
+      setLoader(false)
+      setOpen(false)
+      console.error('Error fetching classes:', error)
+      setNotificationState({
+        title: 'Error al obtener clases',
+        type: 'error',
+        description: 'Ocurrió un error al cargar los eventos',
+        action: () => {}
+      })
     }
   }
 
-  const findClassRoom = () =>
-    buildingData[selectedBuilding].levels
-      .find((l) => l.id === selectedBuilding)
-      ?.classRooms.find((c) => c.id === classRoomId)
+  const handleOpen = async (classRoomId: number) => {
+    const today = new Date().toISOString().split('T')[0]
+    setDate(today)
+    setClassRoomId(classRoomId)
+
+    fetchEvents(classRoomId, new Date(today))
+  }
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = e.target.value
     setDate(newDate)
-    if (selectedClassRoom()) {
-      // Filtrar las clases por fecha seleccionada
-      const filtered = classes.filter((cls) => {
-        console.log(selectedClassRoom())
-        return (
-          cls.classroom === selectedClassRoom()?.classroom &&
-          new Date(cls.startDate) <= new Date(newDate) &&
-          new Date(cls.endDate) >= new Date(newDate)
-        )
-      })
-      console.log(filtered)
-      setFilteredClasses(filtered)
-    }
+    fetchEvents(classRoomId, new Date(newDate))
+  }
+  const handleLevelChange = (levelPath: string) => {
+    navigate(`/mapa/${buildingPath}/${levelPath}`)
   }
 
-  const selectedClassRoom = () =>
-    buildingData[selectedBuilding].levels
-      .find((l) => l.id === selectedBuilding)
-      ?.classRooms.find((c) => c.id === classRoomId)
+  const handleBuildingChange = (newBuildingPath: string) => {
+    const newLevelPath = buildingData.find((b) => b.path == newBuildingPath)
+      ?.levels[0].path
+    // Debe sobreescrubur la ruta actual
+    navigate(`/mapa/${newBuildingPath}/${newLevelPath}`)
+  }
+
+  useEffect(() => {
+    if (!buildingPath) {
+      navigate(`mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`)
+    }
+  }, [])
 
   return (
     <main className="interactive-page map-page">
@@ -125,16 +125,16 @@ export default function Map() {
               <InputLabel id="building-select-label">Edificio</InputLabel>
               <Select
                 {...field}
+                value={currentBuilding?.path || ''}
                 labelId="building-select-label"
                 label="Edificio"
                 onChange={(e) => {
                   field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                  console.log(e.target.value)
-                  handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                  handleBuildingChange(`${e.target.value}`) // Redirige a la ruta
                 }}
               >
                 {buildingData.map((building) => (
-                  <MenuItem key={building.id} value={building.id}>
+                  <MenuItem key={building.id} value={building.path}>
                     {building.text}
                   </MenuItem>
                 ))}
@@ -154,17 +154,19 @@ export default function Map() {
                   {...field}
                   aria-labelledby="building-levels-label"
                   name="levels-group"
+                  value={currentLevel?.path || ''}
                   onChange={(e) => {
                     field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                    handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                    handleLevelChange(`${e.target.value}`) // Redirige a la ruta
                   }}
                 >
-                  {buildingLevels().map((level, index) => (
+                  {currentBuilding.levels.map((level, index) => (
                     <FormControlLabel
                       key={index}
                       value={level.path}
                       control={<Radio />}
                       label={level.text}
+                      checked={level.path === levelPath ? true : false}
                     />
                   ))}
                 </RadioGroup>
@@ -175,11 +177,15 @@ export default function Map() {
       </Box>
 
       <section className="map-container">
-        <Outlet context={{ handleOpen }} />
+        {/* <Outlet context={{ handleOpen }} /> */}
+        <MapSelector
+          building={buildingPath}
+          level={currentLevel?.level.toString()}
+        />
       </section>
 
       {/* Modal */}
-      {classRoomId !== null && (
+      {/* {classRoomId !== null && (
         <ClassInfoModal
           open={open}
           handleClose={handleClose}
@@ -223,7 +229,7 @@ export default function Map() {
             </Typography>
           )}
         </ClassInfoModal>
-      )}
+      )} */}
     </main>
   )
 }

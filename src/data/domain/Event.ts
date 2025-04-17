@@ -9,3 +9,8 @@ export interface IEvent {
   programNames: string[]
   schedules: ISchedule[]
 }
+
+
+export interface IEventList extends IEvent {
+  course: string
+}

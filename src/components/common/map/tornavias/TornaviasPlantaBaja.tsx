@@ -17,13 +17,12 @@ export default function TornaviasPlantaBaja({
   const context = useOutletContext<OutletContextType | null>()
   const handleOpen = context?.handleOpen || onClassRoomClick
   const isSelected = (id: string) => id === selectedCode
-
   return (
     <>
       <svg
         id="ez5G7WgO1Yc1"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1000 1000"
+        viewBox="0 0 850 800"
         shapeRendering="geometricPrecision"
         textRendering="geometricPrecision"
         project-id="e064b5b78f4a437ab47f81641934d1d6"
@@ -78,7 +77,9 @@ export default function TornaviasPlantaBaja({
           <BookOpenText
             className="icon-common"
             size={25}
-            transform="translate(95 185)"
+            x="95"
+            y="185"
+            /*  transform="translate(95 185)" */
           />
         </g>
         {/* Biblioteca - Zona restringida */}
@@ -1428,7 +1429,8 @@ export default function TornaviasPlantaBaja({
           </text>
           <ForkKnife
             className="icon-common"
-            transform="translate(365 634)"
+            x="365"
+            y="634"
             weight="fill"
             size={12}
           />
@@ -1460,7 +1462,8 @@ export default function TornaviasPlantaBaja({
           />
           <File
             className="icon-common"
-            transform="translate(688 517)"
+            x="688"
+            y="517"
             weight="duotone"
             size={15}
           />
@@ -1519,11 +1522,7 @@ export default function TornaviasPlantaBaja({
               Baños
             </tspan>
           </text>
-          <Toilet
-            className="icon-common"
-            transform="translate(108 505)"
-            size={25}
-          />
+          <Toilet className="icon-common" x="108" y="505" size={25} />
         </g>
         <g
           style={{
@@ -1549,11 +1548,7 @@ export default function TornaviasPlantaBaja({
               Baños
             </tspan>
           </text>
-          <Toilet
-            className="icon-common"
-            transform="translate(533 733)"
-            size={20}
-          />
+          <Toilet className="icon-common" x="533" y="733" size={20} />
         </g>
         <g
           style={{
@@ -1576,11 +1571,7 @@ export default function TornaviasPlantaBaja({
               Baños
             </tspan>
           </text>
-          <Toilet
-            className="icon-common"
-            transform="translate(664 150)"
-            size={25}
-          />
+          <Toilet className="icon-common" x="664" y="150" size={25} />
         </g>
         <g
           style={{
@@ -1610,11 +1601,7 @@ export default function TornaviasPlantaBaja({
               Baños
             </tspan>
           </text>
-          <Toilet
-            className="icon-common"
-            transform="translate(272 93)"
-            size={25}
-          />
+          <Toilet className="icon-common" x="272" y="95" size={25} />
         </g>
         <g className="maintenance">
           {/* Depósito */}

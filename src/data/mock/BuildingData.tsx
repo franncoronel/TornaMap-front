@@ -14,10 +14,28 @@ import {
 } from './ClassRoomData'
 import { a18_N3, a19_N3, a20_N3, a17_N3, a16_N3, a15_N3 } from './ClassRoomData'
 
-export const subsuelo = {
+export const aularioPlantaBajaNave3 = {
+  id: 0,
+  text: 'Planta Baja',
+  path: 'planta-baja',
+  level: 0,
+  classRooms: [a15_N3, a16_N3, a17_N3]
+}
+
+export const aularioPlantAltaNave3 = {
+  id: 1,
+  text: 'Planta Alta',
+  path: 'planta-alta',
+  level: 1,
+  classRooms: [a19_N3, a18_N3, a20_N3]
+}
+
+// Tornavías
+export const tornaviasSubsuelo = {
   id: 0,
   text: 'Subsuelo',
-  path: 'tornavias-subsuelo',
+  path: 'subsuelo',
+  level: -1,
   classRooms: [
     aduitorioLecturaMundi,
     lecturaMundiIdentidadVisual,
@@ -33,50 +51,32 @@ export const subsuelo = {
     iamkDecanato
   ]
 }
-
-export const aularioPlantaBajaNave3 = {
-  id: 0,
-  text: 'Planta Baja',
-  path: 'Aulario-nave-3-planta-baja',
-  classRooms: [a15_N3, a16_N3, a17_N3]
-}
-
-export const aularioPlantAltaNave3 = {
+const tornaviasPB = {
   id: 1,
-  text: 'Planta Alta',
-  path: 'Aulario-nave-3-planta-baja',
+  text: 'Planta Baja',
+  path: 'planta-baja',
+  level: 0,
+  classRooms: [a17_N3, a16_N3, a15_N3]
+}
+const tornaviasPP = {
+  id: 2,
+  text: 'Primer Piso',
+  path: 'primer-piso',
+  level: 1,
   classRooms: [a19_N3, a18_N3, a20_N3]
 }
 
-export const tornavias = {
-  id: 0,
-  text: 'Tornavías',
-  path: 'mapa/tornavias-planta-baja',
-  levels: [subsuelo]
-}
-
-export const tornavia2 = {
-  id: 1,
-  text: 'Tornavias 1° Piso',
-  path: 'mapa/tornavias-primer-piso',
-  levels: [subsuelo]
-}
-
-export const aularioNave3 = {
-  id: 2,
-  text: 'Aulario - Nave 3',
-  path: 'mapa/aulario-nave-3-planta-baja',
-  levels: [
-    aularioPlantaBajaNave3
-    //aularioPlantAltaNave3
-  ]
-}
-
-export const tornavia3 = {
-  id: 3,
-  text: 'Tornavias Planta Baja',
-  path: 'mapa/tornavias-planta-baja',
-  levels: [subsuelo]
-}
-
-export const buildingData = [tornavias, tornavia2, aularioNave3, tornavia3]
+export const buildingData = [
+  {
+    id: 0,
+    text: 'Tornavías',
+    path: 'tornavias',
+    levels: [tornaviasSubsuelo, tornaviasPB, tornaviasPP]
+  },
+  {
+    id: 1,
+    text: 'Aulario - Nave 3',
+    path: 'aularioNave3',
+    levels: [aularioPlantaBajaNave3, aularioPlantAltaNave3]
+  }
+]

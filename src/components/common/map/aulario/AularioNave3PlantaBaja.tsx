@@ -16,7 +16,7 @@ export default function AularioNave3PlantaBaja({
 }: AularioNaveProps) {
   const context = useOutletContext<OutletContextType | null>()
   const handleOpen = context?.handleOpen || onClassRoomClick
-  //
+
   const isSelected = (id: string) => id === selectedCode
 
   return (
@@ -169,7 +169,9 @@ export default function AularioNave3PlantaBaja({
             </tspan>
           </text>
           <Toilet
-            transform="translate(315 115)"
+            /* transform="translate(315 115)" */
+            x="320"
+            y="90"
             className="icon-common"
             size={30}
           />
