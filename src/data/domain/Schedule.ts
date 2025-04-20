@@ -4,8 +4,8 @@ export interface ISchedule {
   id: string
   startTime: string
   endTime: string
-  weekDay: string
-  date: Date
+  weekDay: string | null
+  date: Date | null
   isVirtual: boolean
   professors: string[]
   classroom: IClassroom
