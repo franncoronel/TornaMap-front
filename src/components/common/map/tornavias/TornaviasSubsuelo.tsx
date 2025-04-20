@@ -1,21 +1,15 @@
 import { BookOpenText, Toilet } from '@phosphor-icons/react'
-import { useOutletContext } from 'react-router-dom'
 import { mapColors } from '../../../pages/map/mapColors'
 
-interface OutletContextType {
-  handleOpen: (classRoomId: number) => void
-}
 interface TornaviasSubsueloProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
-  onClassRoomClick?: (id: number) => void
+  handleOpen?: (classRoomId: string) => void
 }
 
 export default function TornaviasSubsuelo({
   selectedCode,
-  onClassRoomClick
+  handleOpen
 }: TornaviasSubsueloProps) {
-  const context = useOutletContext<OutletContextType | null>()
-  const handleOpen = context?.handleOpen || onClassRoomClick
   const isSelected = (id: string) => id === selectedCode
 
   // !important: Si se quiere volver a la posición original, sacar el rotate y reemplazar las coordenadas comentadas por las actuales.
@@ -91,7 +85,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.lecturaMundi.stroke,
             strokeWidth: mapColors.lecturaMundi.strokeWidth
           }}
-          onClick={() => handleOpen?.(0)}
+          onClick={() => handleOpen?.('ALM')}
           className={`classRoom ${isSelected('ALM') ? 'selected' : ''}`}
         >
           <path
@@ -125,7 +119,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.lecturaMundi.stroke,
             strokeWidth: mapColors.lecturaMundi.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LMCIV')}
           transform="translate(.000001 0.000001)"
           className={`classRoom ${isSelected('LMCIV') ? 'selected' : ''}`}
         >
@@ -160,7 +154,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.library.stroke,
             strokeWidth: mapColors.library.strokeWidth
           }}
-          onClick={() => handleOpen?.(2)}
+          onClick={() => handleOpen?.('SUM')}
           className={`classRoom ${isSelected('SUM') ? 'selected' : ''}`}
         >
           <path
@@ -189,7 +183,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(3)}
+          onClick={() => handleOpen?.('A27')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A27') ? 'selected' : ''}`}
         >
@@ -218,7 +212,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(4)}
+          onClick={() => handleOpen?.('A26')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A26') ? 'selected' : ''}`}
         >
@@ -247,7 +241,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(5)}
+          onClick={() => handleOpen?.('A25')}
           className={`classRoom ${isSelected('A25') ? 'selected' : ''}`}
         >
           <path
@@ -281,7 +275,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(8)}
+          onClick={() => handleOpen?.('A28')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A28') ? 'selected' : ''}`}
         >
@@ -310,7 +304,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(9)}
+          onClick={() => handleOpen?.('A29')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A29') ? 'selected' : ''}`}
         >
@@ -339,7 +333,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.commonAreas.stroke,
             strokeWidth: mapColors.commonAreas.strokeWidth
           }}
-          onClick={() => handleOpen?.(6)}
+          onClick={() => handleOpen?.('GIST')}
           transform="translate(0 0.000001)"
           className={`classRoom ${isSelected('GIST') ? 'selected' : ''}`}
         >
@@ -375,7 +369,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.iAMK.stroke,
             strokeWidth: mapColors.iAMK.strokeWidth
           }}
-          onClick={() => handleOpen?.(7)}
+          onClick={() => handleOpen?.('IAMK')}
           transform="translate(0 0.000001)"
           className={`classRoom ${isSelected('IAMK') ? 'selected' : ''}`}
         >
@@ -405,7 +399,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.iAMK.stroke,
             strokeWidth: mapColors.iAMK.strokeWidth
           }}
-          onClick={() => handleOpen?.(10)}
+          onClick={() => handleOpen?.('IAMKS')}
           transform="translate(0 0.000001)"
           className={`classRoom ${isSelected('IAMKS') ? 'selected' : ''}`}
         >
@@ -435,7 +429,7 @@ export default function TornaviasSubsuelo({
             stroke: mapColors.iAMK.stroke,
             strokeWidth: mapColors.iAMK.strokeWidth
           }}
-          onClick={() => handleOpen?.(11)}
+          onClick={() => handleOpen?.('IAMKD')}
           transform="translate(0 0.000001)"
           className={`classRoom ${isSelected('IAMKD') ? 'selected' : ''}`}
         >

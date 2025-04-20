@@ -1,21 +1,15 @@
 import { BookOpenText, ForkKnife, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
-import { useOutletContext } from 'react-router-dom'
 
-interface OutletContextType {
-  handleOpen: (classRoomId: number) => void
-}
 interface TornaviasPrimerPisoProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
-  onClassRoomClick?: (id: number) => void
+  handleOpen?: (classRoomId: string) => void
 }
 
 export default function TornaviasPrimerPiso({
   selectedCode,
-  onClassRoomClick
+  handleOpen
 }: TornaviasPrimerPisoProps) {
-  const context = useOutletContext<OutletContextType | null>()
-  const handleOpen = context?.handleOpen || onClassRoomClick
   const isSelected = (id: string) => id === selectedCode
   return (
     <>
@@ -275,7 +269,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.escuelaCyt.stroke,
             strokeWidth: mapColors.escuelaCyt.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('IC')}
           className={`classRoom ${isSelected('IC') ? 'selected' : ''}`}
         >
           <path
@@ -456,7 +450,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.institutoTransporte.stroke,
             strokeWidth: mapColors.institutoTransporte.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('ITIT')}
           className={`classRoom ${isSelected('ITIT') ? 'selected' : ''}`}
         >
           <path
@@ -682,7 +676,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LB')}
           className={`classRoom ${isSelected('LB') ? 'selected' : ''}`}
         >
           <path d="M648.932918,481.725081c-6.72563,16.508337-23.875519,45.854964-34.995772,58.36084c10.699564,8.638894,25.144205,20.117947,28.261142,23.083734c13.481169-14.746894,33.384114-48.847337,40.462272-67.913721l-33.727642-13.530853Z" />
@@ -710,7 +704,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LO')}
           className={`classRoom ${isSelected('LO') ? 'selected' : ''}`}
         >
           <path
@@ -741,7 +735,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LI')}
           className={`classRoom ${isSelected('LI') ? 'selected' : ''}`}
         >
           <path d="M663.491106,379.269331l37.443302-2.056484c.514162,10.843138.867623,30.195541.411433,38.704806l-37.298649-2.559433c-.047288-9.17642-.116975-26.399805-.556086-34.088889Z" />
@@ -769,7 +763,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LEI')}
           className={`classRoom ${isSelected('LEI') ? 'selected' : ''}`}
         >
           <path
@@ -803,7 +797,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LEIII')}
           className={`classRoom ${isSelected('LEIII') ? 'selected' : ''}`}
         >
           <path
@@ -837,7 +831,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LEIV')}
           className={`classRoom ${isSelected('LEIV') ? 'selected' : ''}`}
         >
           <path
@@ -871,7 +865,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LCI')}
           className={`classRoom ${isSelected('LCI') ? 'selected' : ''}`}
         >
           <path
@@ -902,7 +896,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LCII')}
           className={`classRoom ${isSelected('LCII') ? 'selected' : ''}`}
         >
           <path
@@ -933,7 +927,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LCIII')}
           className={`classRoom ${isSelected('LCIII') ? 'selected' : ''}`}
         >
           <path
@@ -964,7 +958,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.humanidades.stroke,
             strokeWidth: mapColors.humanidades.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LICH')}
           className={`classRoom ${isSelected('LICH') ? 'selected' : ''}`}
         >
           <path
@@ -999,7 +993,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('CIDI')}
           className={`classRoom ${isSelected('CIDI') ? 'selected' : ''}`}
         >
           <path
@@ -1027,7 +1021,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A30')}
           className={`classRoom ${isSelected('A30') ? 'selected' : ''}`}
         >
           <path d="M569.382208,687.668369c11.707026-4.582715,33.386844-16.075886,43.6715-22.787882l28.314912,44.865716c-8.243741,6.165504-32.268534,19.027766-50.201334,26.374608l-21.785078-48.452442Z" />
@@ -1052,7 +1046,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A31')}
           className={`classRoom ${isSelected('A31') ? 'selected' : ''}`}
         >
           <path
@@ -1080,7 +1074,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A32')}
           className={`classRoom ${isSelected('A32') ? 'selected' : ''}`}
         >
           <path
@@ -1108,7 +1102,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A33')}
           className={`classRoom ${isSelected('A33') ? 'selected' : ''}`}
         >
           <path
@@ -1136,7 +1130,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A34')}
           className={`classRoom ${isSelected('A34') ? 'selected' : ''}`}
         >
           <path
@@ -1164,7 +1158,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A35')}
           className={`classRoom ${isSelected('A35') ? 'selected' : ''}`}
         >
           <path
@@ -1193,7 +1187,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T04')}
           className={`classRoom ${isSelected('T04') ? 'selected' : ''}`}
         >
           <path
@@ -1221,7 +1215,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T05')}
           className={`classRoom ${isSelected('T05') ? 'selected' : ''}`}
         >
           <path
@@ -1249,7 +1243,7 @@ export default function TornaviasPrimerPiso({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T06')}
           className={`classRoom ${isSelected('T06') ? 'selected' : ''}`}
         >
           <path d="M132.900095,431.925056l-54.384554,4.847048c-4.099336-28.608807-2.449949-86.175658,6.534544-116.869438l53.57151,11.607649c-8.670179,29.583261-8.787787,77.526784-5.7215,100.414741Z" />

@@ -1,22 +1,16 @@
 import { Toilet } from '@phosphor-icons/react'
-import { useOutletContext } from 'react-router-dom'
 import { mapColors } from '../../../pages/map/mapColors'
 
-interface OutletContextType {
-  handleOpen: (classRoomId: number) => void
-}
 interface AularioNaveProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
-  onClassRoomClick?: (id: number) => void
+  onClassRoomClick?: (id: string) => void
+  handleOpen?: (classRoomId: string) => void
 }
 
 export default function AularioNave3PlantaBaja({
   selectedCode,
-  onClassRoomClick
+  handleOpen
 }: AularioNaveProps) {
-  const context = useOutletContext<OutletContextType | null>()
-  const handleOpen = context?.handleOpen || onClassRoomClick
-
   const isSelected = (id: string) => id === selectedCode
 
   return (
@@ -51,7 +45,7 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(0)}
+          onClick={() => handleOpen?.('A17')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A17') ? 'selected' : ''}`}
         >
@@ -80,7 +74,7 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A16')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A16') ? 'selected' : ''}`}
         >
@@ -109,7 +103,7 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(2)}
+          onClick={() => handleOpen?.('A15')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('A15') ? 'selected' : ''}`}
         >

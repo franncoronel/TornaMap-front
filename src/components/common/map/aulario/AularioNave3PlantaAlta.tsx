@@ -1,21 +1,16 @@
-import { useOutletContext } from 'react-router-dom'
 import { mapColors } from '../../../pages/map/mapColors'
 
-interface OutletContextType {
-  handleOpen: (classRoomId: number) => void
-}
 interface AularioNave3PlantaAltaProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
   onClassRoomClick?: (id: number) => void
+  handleOpen?: (classRoomId: string) => void
 }
 
 export default function AularioNave3PlantaAlta({
   selectedCode,
-  onClassRoomClick
+  handleOpen
 }: AularioNave3PlantaAltaProps) {
-  const context = useOutletContext<OutletContextType | null>()
-  const handleOpen = context?.handleOpen || onClassRoomClick
-  const isSelected = (id: string) => id === selectedCode
+const isSelected = (id: string) => id === selectedCode
 
   return (
     <>
@@ -49,7 +44,7 @@ export default function AularioNave3PlantaAlta({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(0)}
+          onClick={() => handleOpen?.('A20')}
           className={`classRoom ${isSelected('A20') ? 'selected' : ''}`}
         >
           <path
@@ -78,7 +73,7 @@ export default function AularioNave3PlantaAlta({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A19')}
           className={`classRoom ${isSelected('A19') ? 'selected' : ''}`}
         >
           <path

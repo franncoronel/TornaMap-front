@@ -1,21 +1,16 @@
 import { Toilet, File, BookOpenText, ForkKnife } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
-import { useOutletContext } from 'react-router-dom'
 
-interface OutletContextType {
-  handleOpen: (classRoomId: number) => void
-}
 interface TornaviasPlantaBajaProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
   onClassRoomClick?: (id: number) => void
+  handleOpen?: (classRoomId: string) => void
 }
 
 export default function TornaviasPlantaBaja({
   selectedCode,
-  onClassRoomClick
+  handleOpen
 }: TornaviasPlantaBajaProps) {
-  const context = useOutletContext<OutletContextType | null>()
-  const handleOpen = context?.handleOpen || onClassRoomClick
   const isSelected = (id: string) => id === selectedCode
   return (
     <>
@@ -113,7 +108,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A1')}
           className={`classRoom ${isSelected('A1') ? 'selected' : ''}`}
         >
           <path
@@ -141,7 +136,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A2')}
           className={`classRoom ${isSelected('A2') ? 'selected' : ''}`}
         >
           <path
@@ -169,7 +164,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A3')}
           className={`classRoom ${isSelected('A3') ? 'selected' : ''}`}
         >
           <path
@@ -197,7 +192,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A4')}
           className={`classRoom ${isSelected('A4') ? 'selected' : ''}`}
         >
           <path
@@ -225,7 +220,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A5')}
           className={`classRoom ${isSelected('A5') ? 'selected' : ''}`}
         >
           <path
@@ -253,7 +248,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A6')}
           className={`classRoom ${isSelected('A6') ? 'selected' : ''}`}
         >
           <path
@@ -281,7 +276,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A6BIS')}
           className={`classRoom ${isSelected('A6BIS') ? 'selected' : ''}`}
         >
           <path
@@ -312,7 +307,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A7')}
           className={`classRoom ${isSelected('A7') ? 'selected' : ''}`}
         >
           <path d="M367.202026,94.832203c12.128687-3.332884,35.343102-6.854257,46.818324-7.550581l-5.361534-53.968794c-15.444814.626046-42.958866,4.702859-55.043662,9.490287l13.586872,52.029088Z" />
@@ -337,7 +332,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A8')}
           className={`classRoom ${isSelected('A8') ? 'selected' : ''}`}
         >
           <path d="M274.022341,206.945029l36.421292,39.43539c12.009296-11.719406,39.171505-28.241097,52.284151-33.101789l-21.052872-49.627238c-20.489948,7.526624-54.173738,29.397889-67.652571,43.293637Z" />
@@ -362,7 +357,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A9')}
           className={`classRoom ${isSelected('A9') ? 'selected' : ''}`}
         >
           <path
@@ -390,7 +385,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A10')}
           className={`classRoom ${isSelected('A10') ? 'selected' : ''}`}
         >
           <path
@@ -418,7 +413,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A11')}
           className={`classRoom ${isSelected('A11') ? 'selected' : ''}`}
         >
           <path
@@ -446,7 +441,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A12')}
           className={`classRoom ${isSelected('A12') ? 'selected' : ''}`}
         >
           <path
@@ -474,7 +469,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A13')}
           className={`classRoom ${isSelected('A13') ? 'selected' : ''}`}
         >
           <path
@@ -502,7 +497,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A14')}
           className={`classRoom ${isSelected('A14') ? 'selected' : ''}`}
         >
           <path
@@ -530,7 +525,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A15')}
           className={`classRoom ${isSelected('A15') ? 'selected' : ''}`}
         >
           <path
@@ -558,7 +553,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A16')}
           className={`classRoom ${isSelected('A16') ? 'selected' : ''}`}
         >
           <path
@@ -586,7 +581,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A17')}
           className={`classRoom ${isSelected('A17') ? 'selected' : ''}`}
         >
           <path d="M506.683509,651.420698c12.746688-3.315106,33.15614-9.511429,39.532292-13.149475l-21.990516-50.04664c-6.930454,3.36937-21.745469,8.808824-30.377302,11.025427l12.835526,52.170688Z" />
@@ -611,7 +606,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A18')}
           className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
         >
           <path
@@ -639,7 +634,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A18')}
           className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
         >
           <path
@@ -667,7 +662,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A20')}
           className={`classRoom ${isSelected('A20') ? 'selected' : ''}`}
         >
           <path
@@ -695,7 +690,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A21')}
           className={`classRoom ${isSelected('A21') ? 'selected' : ''}`}
         >
           <path
@@ -723,7 +718,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A22')}
           className={`classRoom ${isSelected('A22') ? 'selected' : ''}`}
         >
           <path
@@ -751,7 +746,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A23')}
           className={`classRoom ${isSelected('A23') ? 'selected' : ''}`}
         >
           <path
@@ -779,7 +774,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A24')}
           className={`classRoom ${isSelected('A24') ? 'selected' : ''}`}
         >
           <path
@@ -808,7 +803,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T01')}
           className={`classRoom ${isSelected('T01') ? 'selected' : ''}`}
         >
           <path
@@ -836,7 +831,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T0?')}
           className={`classRoom ${isSelected('T0?') ? 'selected' : ''}`}
         >
           <path
@@ -864,7 +859,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('T0??')}
           className={`classRoom ${isSelected('T0??') ? 'selected' : ''}`}
         >
           <path
@@ -893,7 +888,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LF')}
           className={`classRoom ${isSelected('LF') ? 'selected' : ''}`}
         >
           <path d="M644.09529,382.015267l53.618216-5.149157c1.870369,18.730835-1.177904,58.107014-5.036627,78.911346l-52.049281-12.019333c4.238038-13.417239,4.905592-44.175459,3.467692-61.742856Z" />
@@ -921,7 +916,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LQ')}
           className={`classRoom ${isSelected('LQ') ? 'selected' : ''}`}
         >
           <path
@@ -952,7 +947,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LBI')}
           className={`classRoom ${isSelected('LBI') ? 'selected' : ''}`}
         >
           <path d="M746.031684,326.011547l51.308606-12.619248c-2.866748-11.853755-11.084149-40.174065-18.546625-56.18865l-48.944987,20.837043c4.31331,8.225915,11.748444,32.619197,16.183006,47.970855Z" />
@@ -980,7 +975,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LBII')}
           className={`classRoom ${isSelected('LBII') ? 'selected' : ''}`}
         >
           <path
@@ -1011,7 +1006,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LN')}
           className={`classRoom ${isSelected('LN') ? 'selected' : ''}`}
         >
           <path
@@ -1042,7 +1037,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LEII')}
           className={`classRoom ${isSelected('LEII') ? 'selected' : ''}`}
         >
           <path
@@ -1077,7 +1072,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LT')}
           className={`classRoom ${isSelected('LT') ? 'selected' : ''}`}
         >
           <path
@@ -1108,7 +1103,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('LCIV')}
           className={`classRoom ${isSelected('LCIV') ? 'selected' : ''}`}
         >
           <path
@@ -1139,7 +1134,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('IEN')}
           className={`classRoom ${isSelected('IEN') ? 'selected' : ''}`}
         >
           <path d="M549.169254,575.385776c7.898751-4.666319,19.759674-13.837344,24.26661-17.77757l34.460785,41.641804c-8.888181,7.251522-23.190236,18.453662-30.578996,21.745986" />
@@ -1169,7 +1164,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.bedelia.stroke_CyT,
             strokeWidth: mapColors.bedelia.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('BCYT')}
           className={`classRoom ${isSelected('BCYT') ? 'selected' : ''}`}
         >
           <path
@@ -1197,7 +1192,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.bedelia.stroke_ExHumanidades,
             strokeWidth: mapColors.bedelia.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('BAYP')}
           className={`classRoom ${isSelected('BAYP') ? 'selected' : ''}`}
         >
           <path
@@ -1288,7 +1283,7 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.humanidades.stroke,
             strokeWidth: mapColors.humanidades.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('CGES')}
           className={`classRoom ${isSelected('CGES') ? 'selected' : ''}`}
         >
           <path
