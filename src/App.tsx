@@ -11,6 +11,7 @@ import { routes } from '@/routes'
 import { Box /* , useMediaQuery, useTheme  */ } from '@mui/material'
 import { NotificationProvider } from './context/NotificationContext'
 import { LoaderProvider } from './context/LoaderContext'
+import MuiDateProvider from './context/MuiDateContext'
 
 function App() {
   // const theme = useTheme()
@@ -22,19 +23,21 @@ function App() {
       <LoaderProvider>
         <AuthProvider>
           <NotificationProvider>
-            <BrowserRouter
-              future={{
-                v7_startTransition: true,
-                v7_relativeSplatPath: true
-              }}
-            >
-              <Box className="layout-container">
-                <Box className="page-structure">
-                  <RoutesWrapper />
+            <MuiDateProvider>
+              <BrowserRouter
+                future={{
+                  v7_startTransition: true,
+                  v7_relativeSplatPath: true
+                }}
+              >
+                <Box className="layout-container">
+                  <Box className="page-structure">
+                    <RoutesWrapper />
+                  </Box>
+                  <Nav />
                 </Box>
-                <Nav />
-              </Box>
-            </BrowserRouter>
+              </BrowserRouter>
+            </MuiDateProvider>
           </NotificationProvider>
         </AuthProvider>
       </LoaderProvider>
