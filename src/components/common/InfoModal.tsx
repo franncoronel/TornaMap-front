@@ -9,7 +9,7 @@ import {
 import React from 'react'
 import { X } from '@phosphor-icons/react'
 
-type ModalProps = {
+type InfoModalProps = {
   children: React.ReactNode // Permite múltiples hijos de cualquier tipo
   open: boolean // Propiedad para manejar el estado del Modal
   handleClose: () => void // Función para cerrar el Modal
@@ -17,13 +17,13 @@ type ModalProps = {
   subtitle?: string
 }
 
-export default function ClassInfoModal({
+export default function InfoModal({
   children,
   open,
   handleClose,
   title,
   subtitle
-}: ModalProps) {
+}: InfoModalProps) {
   return (
     <Modal
       open={open}
