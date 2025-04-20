@@ -7,7 +7,7 @@ export class EventService implements ServiceInterface {
   baseUrl: string = `${environment.apiUrl}/events`
 
   async getAll(
-    classroomId?: string,
+    classroomId?: string | null,
     date?: Date
   ): Promise<Response<IEventList[]>> {
     const encodedDate = encodeURIComponent(date?.toISOString() ?? '')
