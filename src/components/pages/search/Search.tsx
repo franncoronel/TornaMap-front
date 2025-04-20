@@ -2,7 +2,7 @@ import ClassRoomCard from '@/components/common/ClassRoomCard'
 import SearchBar from '@/components/common/SearchBar'
 import { Box, Divider, Grid2, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import ClassInfoModal from '@/components/common/Modal'
+import InfoModal from '@/components/common/InfoModal'
 import './search.css'
 import '../interactive-page.css'
 import { WarningCircle, Laptop } from '@phosphor-icons/react'
@@ -161,7 +161,7 @@ export function Search() {
 
       {/* Modal que muestra detalles de la clase seleccionada y un mapa */}
       {open && selectedCourse && (
-        <ClassInfoModal
+        <InfoModal
           open={open}
           handleClose={handleClose}
           title={selectedCourse.name}
@@ -251,7 +251,7 @@ export function Search() {
               </Box>
             ))}
           </section>
-        </ClassInfoModal>
+        </InfoModal>
       )}
     </Box>
   )
