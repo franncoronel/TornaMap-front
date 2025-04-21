@@ -101,7 +101,7 @@ const isSelected = (id: string) => id === selectedCode
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.(1)}
+          onClick={() => handleOpen?.('A18')}
           className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
         >
           <path
