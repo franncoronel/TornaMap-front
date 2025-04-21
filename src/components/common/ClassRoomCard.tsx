@@ -127,11 +127,11 @@ export default function ClassRoomCard({
       <Card
         sx={{
           width: '100%',
-          maxWidth: 450,
+          flexGrow: 1,
           borderRadius: 3,
           boxShadow: 1,
           border: '1px solid #e0e0e0',
-          '@media (max-width: 600px)': { maxWidth: '90%' }
+          '@media (min-width: 1201px)': { width: '95%' }
         }}
       >
         <CardActionArea onClick={onClick}>
