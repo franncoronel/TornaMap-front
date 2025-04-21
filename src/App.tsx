@@ -21,7 +21,6 @@ import { routes } from '@/routes'
 
 // Componentes
 import {
-  Box /* , useMediaQuery, useTheme  */,
   CircularProgress
 } from '@mui/material'
 import Nav from './components/common/Nav/Nav'
@@ -43,12 +42,12 @@ function App() {
                   v7_relativeSplatPath: true
                 }}
               >
-                <Box className="layout-container">
-                  <Box className="page-structure">
+                <div className="layout-container">
+                  <div className="page-structure">
                     <RoutesWrapper />
-                  </Box>
+                  </div>
                   <Nav />
-                </Box>
+                </div>
               </BrowserRouter>
             </MuiDateProvider>
           </NotificationProvider>
@@ -62,10 +61,10 @@ function RoutesWrapper() {
   return (
     <Suspense
       fallback={
-        <Box className="loader-container">
+        <div className="loader-container">
           <span className="loader-unsam">UNSAM</span>
           <CircularProgress className="loader" size={250} />
-        </Box>
+        </div>
       }
     >
       {useRoutes(routes)}
