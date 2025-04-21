@@ -1,6 +1,6 @@
 import ClassRoomCard from '@/components/common/ClassRoomCard'
 import SearchBar from '@/components/common/SearchBar'
-import { Box, Divider, Grid2, Tab, Tabs, Typography } from '@mui/material'
+import { Box, Divider, Grid2, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import InfoModal from '@/components/common/InfoModal'
 import './search.css'
@@ -11,6 +11,7 @@ import { courseService } from '@/data/services/CourseService'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
 import { MapSelector } from '@/components/common/map/MapSelector'
+import EventTabs from '@/components/common/EventTabs'
 
 
 interface TabPanelProps {
@@ -205,7 +206,7 @@ export function Search() {
           subtitle="Cursadas y eventos"
         >
           <section className="class-info-container">
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" fontWeight="medium" px="1rem">
               {selectedCourse?.programs?.map((program) => program).join(', ')}
             </Typography>
             <EventTabs events={selectedCourse.events} />
