@@ -5,20 +5,20 @@ import TornaviasPrimerPiso from './tornavias/TornaviasPrimerPiso'
 import AularioNave3PlantaBaja from './aulario/AularioNave3PlantaBaja'
 import AularioNave3PlantaAlta from './aulario/AularioNave3PlantaAlta'
 import { Box } from '@mui/material'
-
+import { FC } from 'react'
 interface FloorMapProps {
   selectedCode?: string
   handleOpen?: (classRoomId: string) => void
 }
 
 // 1. define tus mapas por edificio
-const tornavias: Record<string, React.FC<FloorMapProps>> = {
+const tornavias: Record<string, FC<FloorMapProps>> = {
   '-1': TornaviasSubsuelo,
   '0': TornaviasPlantaBaja,
   '1': TornaviasPrimerPiso
 }
 
-const aulario: Record<string, React.FC<FloorMapProps>> = {
+const aulario: Record<string, FC<FloorMapProps>> = {
   '0': AularioNave3PlantaBaja,
   '1': AularioNave3PlantaAlta
 }

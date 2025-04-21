@@ -1,3 +1,4 @@
+import { MouseEvent } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import {
   TextField,
@@ -62,15 +63,11 @@ export default function Login() {
 
   const handleClickShowPassword = () => setShowPassword((show) => !show)
 
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
-  const handleMouseUpPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleMouseUpPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
 
