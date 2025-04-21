@@ -2,8 +2,7 @@ import ClassRoomCard from '@/components/common/ClassRoomCard'
 import SearchBar from '@/components/common/SearchBar'
 import { Box, Divider, Grid2, Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
-import TornaviasSubsuelo from '@/components/pages/map/components/tornavias/TornaviasSubsuelo'
-import ClassInfoModal from '@/components/common/Modal'
+import InfoModal from '@/components/common/InfoModal'
 import './search.css'
 import '../interactive-page.css'
 import { WarningCircle, Laptop } from '@phosphor-icons/react'
@@ -11,6 +10,7 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 import { courseService } from '@/data/services/CourseService'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { MapSelector } from '@/components/common/map/MapSelector'
 
 export function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
@@ -102,7 +102,10 @@ export function Search() {
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
       <Box flexShrink="0" position="sticky" top="0" zIndex="10">
-        <SearchBar onSearch={search} options={courses.map(course => course.name)} />
+        <SearchBar
+          onSearch={search}
+          options={courses.map((course) => course.name)}
+        />
         <Divider variant="middle" flexItem />
       </Box>
 
@@ -158,7 +161,7 @@ export function Search() {
 
       {/* Modal que muestra detalles de la clase seleccionada y un mapa */}
       {open && selectedCourse && (
-        <ClassInfoModal
+        <InfoModal
           open={open}
           handleClose={handleClose}
           title={selectedCourse.name}
@@ -183,7 +186,9 @@ export function Search() {
                   {event.name}
                 </Typography>
                 <section className="schedules-list-container">
-                  <div className="schedules-list">
+                  <div
+                    className={`schedules-list ${event.schedules.length == 1 ? 'single' : ''}`}
+                  >
                     {event.schedules.map((schedule) => (
                       <article
                         key={schedule.id}
@@ -207,8 +212,10 @@ export function Search() {
                               {schedule.classroom?.building.name}
                             </Typography>
                             {/* Mapa interactivo del subsuelo */}
-                            <TornaviasSubsuelo
-                              selectedClassRoomId={schedule?.classroom?.id}
+                            <MapSelector
+                              building={schedule.classroom?.building.name}
+                              level={schedule.classroom?.floor.toString()}
+                              classRoom={schedule.classroom?.code}
                             />
                           </>
                         ) : (
@@ -231,7 +238,7 @@ export function Search() {
                             </Typography>
                             <Laptop
                               size={150}
-                              color="#d1d1d1"
+                              color="#2e4b7d"
                               weight="duotone"
                             />
                           </Box>
@@ -244,7 +251,7 @@ export function Search() {
               </Box>
             ))}
           </section>
-        </ClassInfoModal>
+        </InfoModal>
       )}
     </Box>
   )

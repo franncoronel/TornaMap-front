@@ -11,6 +11,7 @@ import {
   UserCircle
 } from '@phosphor-icons/react'
 import logo from '@/assets/logos/logo-unsam-negro-crop.png'
+import { buildingData } from '@/data/mock/BuildingData'
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   variant: 'body2',
@@ -74,7 +75,11 @@ export default function Nav() {
           <StyledTypography className="logo-label">BUSCAR</StyledTypography>
         </IconButton>
         <IconButton
-          onClick={() => navigate('/mapa/tornavias-subsuelo')}
+          onClick={() =>
+            navigate(
+              `/mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`
+            )
+          }
           className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
           aria-label="Ir al mapa interactivo"
         >
