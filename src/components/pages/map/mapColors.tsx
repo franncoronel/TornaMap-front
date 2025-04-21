@@ -7,11 +7,11 @@ export const mapColors = {
   //Contorno del mapa
   outline: {
     fill: 'none',
-    stroke: '#d4d4d4',
+    stroke: '#2e4b7d',
     strokeWidth: 1.396
   },
   library: {
-    fill: '#bc793c',
+    fill: '#757575',
     stroke: '#000000',
     strokeWidth: 0.7
   },

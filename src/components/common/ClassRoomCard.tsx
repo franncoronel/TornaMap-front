@@ -1,4 +1,5 @@
 import { ICourseList } from '@/data/domain/Course'
+import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
 /* import { EventAvailableTwoTone } from "@mui/icons-material" */
 import {
@@ -23,6 +24,7 @@ import {
 interface ClassRoomCardProps {
   course?: ICourseList
   schedule?: ISchedule
+  event?: IEventList
   onClick?: () => void
   viewType: string //'standard' | 'modal'
 }
@@ -31,40 +33,42 @@ export default function ClassRoomCard({
   course,
   onClick,
   viewType,
-  schedule
+  schedule,
+  event
 }: ClassRoomCardProps) {
   //const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
 
-  {
-    /* //TODO: COMENTARIOS DE MEJORAS
-// * - Cambiar el formato de horario
-// *     Horario:
-// *        Lunes: 08:00 - 10:00
-// *        Martes: 18:00 - 22:00
-
-// * - Agregar el botón de edición (SpeedDialEditActions)
-// * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
-// * - Crear el modal para editar la materia
-*/
-  }
+  /* //TODO: COMENTARIOS DE MEJORAS
+   * - Cambiar el formato de horario
+   *     Horario:
+   *        Lunes: 08:00 - 10:00
+   *        Martes: 18:00 - 22:00
+   * - Agregar el botón de edición (SpeedDialEditActions)
+   * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
+   * - Crear el modal para editar la materia
+   */
 
   const isVirtual = () => {
-    if (!course) {
-      return schedule?.isVirtual
-    } else {
+    if (course) {
       return course?.modality === 'Virtual'
+    } else if(schedule) {
+      return schedule?.isVirtual
+    }else{
+      return event?.schedules[0]?.isVirtual
     }
   }
   const isPresential = () => {
-    if (!course) {
-      return !schedule?.isVirtual
-    } else {
+    if (course) {
       return course?.modality === 'Presencial'
+    } else if(schedule) {
+      return !schedule?.isVirtual
+    }else{
+      return event?.schedules[0]?.isVirtual === false
     }
   }
 
   const classroom = () => {
-    if (course) {
+    if (course || event) {
       return ''
     } else {
       return schedule?.classroom?.name
@@ -72,7 +76,7 @@ export default function ClassRoomCard({
   }
 
   const building = () => {
-    if (course) {
+    if (course || event) {
       return
     } else {
       return schedule?.classroom?.building?.name
@@ -82,24 +86,30 @@ export default function ClassRoomCard({
   const timeSchedule = () => {
     if (course) {
       return course?.schedules
-    } else {
+    } else if(schedule) {
       return schedule?.startTime + ' - ' + schedule?.endTime
+    }else {
+      return event?.schedules[0]?.startTime + ' - ' + event?.schedules[0]?.endTime
     }
   }
 
   const professors = () => {
     if (course) {
       return course.professors
-    } else {
+    } else if(schedule) {
       return schedule?.professors.map((professor) => professor).join(', ')
+    } else {
+      return event?.schedules[0]?.professors.map((professor) => professor).join(', ')
     }
   }
 
   const programs = () => {
     if (course) {
       return course?.programs
-    } else {
+    } else if(schedule) {
       return null
+    } else {
+      return event?.programNames.map((program) => program).join(', ')
     }
   }
 

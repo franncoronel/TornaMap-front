@@ -15,23 +15,20 @@
   display: block;
 }
 
-.text-common {
-  fill: #fff;
-}
 
 .icon-common {
   font-size: 0.8rem;
   font-weight: regular;
   color: #213547;
 }
-
+.libraryRestrictedZone path,
 .maintenance path {
   fill: #aaa;
   stroke: #505050;
   stroke-width: 0.7;
 }
 
-.libraryRestrictedZone path {
+/* .libraryRestrictedZone path {
   fill: #bc793c;
   stroke: #000000;
   stroke-width: 0.7;
@@ -41,7 +38,7 @@
   fill: #c7a67e;
   stroke: #505050;
   stroke-width: 0.7;
-}
+} */
 
 .iAMKAdmin path {
   fill: #7a2bc5;
@@ -58,7 +55,7 @@ svg text {
 
 svg text {
   font-family: inherit; /* Usa la fuente heredada */
-  fill: #213547; /* Color del texto para mayor consistencia */
+  fill: #2e4b7d; /* Color del texto para mayor consistencia */
 }
 
 .classRoom path:hover {
@@ -71,11 +68,33 @@ svg text {
   gap: 1rem;
 }
 
-.classRoom.selected text {
-  font-size: 2rem;
+/* MAPA */
+
+.classRoom path {
+  fill: white !important;
+  stroke: #cccccc !important;
+  stroke-width: 1px !important;
 }
+.classRoom.selected text{
+  fill: #fff !important;
+  /* font-weight: bold !important;
+  font-size: 1.2rem !important;
+  line-height: 1.2rem !important; */
+}
+/* Aula seleccionada con colores originales */
 .classRoom.selected path {
-  stroke-width: 2px; /* Aumenta el borde */
-  stroke: #8f8e4c; /* Cambia color del borde */
-  fill: #bbbd4d;
+  fill: var(--danger-color-dark) !important;
+  stroke: initial !important;
+  stroke-width: initial !important;
+}
+.classRoom:hover path {
+  fill: var(--primary-color-light) !important;
+  stroke: initial !important;
+  stroke-width: initial !important;
+}
+
+/* Mantener colores especiales (biblioteca, baños, etc.) */
+.g-special path {
+  fill: initial !important;
+  stroke: initial !important;
 }

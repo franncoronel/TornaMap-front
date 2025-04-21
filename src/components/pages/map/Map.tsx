@@ -1,3 +1,9 @@
+// Hooks
+import { useEffect, useState } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { useNavigate, useParams } from 'react-router-dom'
+
+// Components
 import {
   FormControl,
   FormControlLabel,
@@ -6,107 +12,115 @@ import {
   MenuItem,
   Radio,
   RadioGroup,
-  Select
+  Select,
+  Box,
+  Typography
 } from '@mui/material'
+import { DatePicker } from '@mui/x-date-pickers'
+import InfoModal from '@/components/common/InfoModal'
+import ClassRoomCard from '@/components/common/ClassRoomCard'
+import { MapSelector } from '@/components/common/map/MapSelector'
 
-import { Controller, useForm } from 'react-hook-form'
-import { Outlet, useNavigate } from 'react-router-dom'
-
+// Styles
 import './map.css'
 import '../interactive-page.css'
-import ClassInfoModal from '@/components/common/Modal'
-import { Box, InputBase, Typography } from '@mui/material'
 
-import { useState } from 'react'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+// Data
 import { buildingData } from '@/data/mock/BuildingData'
-import { classes, IClass } from '@/data/mock/ClassData'
+import { IEventList } from '@/data/domain/Event'
+
+// Services
+import { eventService } from '@/data/services/EventService'
+
+// Contexts
+import { useNotification } from '@/context/NotificationContext'
+import { useLoader } from '@/context/LoaderContext'
 
 export default function Map() {
-  const { control, watch, setValue } = useForm({
+  const { control } = useForm({
     defaultValues: {
       building: 0, // Valor inicial, índice del array de componentes
       level: 0 // Valor inicial, índice del array de componentes
     }
   })
   const navigate = useNavigate()
+  const params = useParams()
+  const { building: buildingPath, level: levelPath } = params
 
-  // Observamos los valores seleccionados
-  const selectedBuilding = watch('building')
-  const currentBuilding = buildingData.find((b) => b.id === selectedBuilding)
+  const currentBuilding = buildingData.find((b) => b.path === buildingPath)
+  const currentLevel = currentBuilding?.levels.find((l) => l.path === levelPath)
 
-  const buildingLevels = () => currentBuilding?.levels || [] // Devuelve niveles o un array vacío si no se encuentra
-
-  const handleLevelChange = (levelId: number) => {
-    const pathToNavigate = `${buildingData[selectedBuilding].levels[levelId].path}`
-    navigate(`/mapa/${pathToNavigate}`)
-  }
-  const handleBuildingChange = (buildingId: number) => {
-    const newBuilding = buildingData.find((b) => b.id === buildingId)
-    setValue('level', 0) // Resetea el nivel al primer valor
-    navigate(`/${newBuilding?.path}`)
-  }
-
-  // Estado para el modal
-  const [classRoomId, setClassRoomId] = useState<null | number>(null)
+  // Estado del modal
+  const [classRoomId, setClassRoomId] = useState<null | string>(null)
+  const [date, setDate] = useState<Date | null>(null)
   const [open, setOpen] = useState(false)
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0])
-  const [filteredClasses, setFilteredClasses] = useState<IClass[]>([])
+  const [pickerOpen, setPickerOpen] = useState(false)
+  // Dato del modal
+  const [events, setEvents] = useState<IEventList[]>([])
 
+  const { setNotificationState } = useNotification()
+  const { setLoader } = useLoader()
+
+  // Manejo del mapa
+  const handleLevelChange = (levelPath: string) => {
+    navigate(`/mapa/${buildingPath}/${levelPath}`)
+  }
+  const handleBuildingChange = (newBuildingPath: string) => {
+    const newLevelPath = buildingData.find((b) => b.path == newBuildingPath)
+      ?.levels[0].path
+    navigate(`/mapa/${newBuildingPath}/${newLevelPath}`)
+  }
+
+  const fetchEvents = async (classRoomId: string | null, date: Date) => {
+    try {
+      setLoader(true)
+      const eventsResponse = await eventService.getAll(
+        classRoomId,
+        new Date(date)
+      )
+      setLoader(false)
+      console.log(eventsResponse)
+      setEvents(eventsResponse.data)
+    } catch (error) {
+      setLoader(false)
+      setOpen(false)
+      console.error('Error fetching classes:', error)
+      setNotificationState({
+        title: 'Error al obtener clases',
+        type: 'error',
+        description: 'Ocurrió un error al cargar los eventos',
+        action: () => {}
+      })
+    }
+  }
+
+  // Manejo del modal
+  const handleOpen = async (newClassRoomId: string) => {
+    const today = new Date()
+    setDate(today)
+    setClassRoomId(newClassRoomId)
+    await fetchEvents(newClassRoomId, today)
+    setOpen(true)
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleDateChange = (value: Date | null, _?: unknown) => {
+    if (!value) return // el usuario borró la fecha
+    setDate(value)
+    setPickerOpen(false)
+    fetchEvents(classRoomId, value)
+  }
   const handleClose = () => {
     setClassRoomId(null)
+    setDate(null)
     setOpen(false)
   }
 
-  const handleOpen = (classRoomId: number) => {
-    const today = new Date().toISOString().split('T')[0] // Fecha actual en formato ISO
-    setDate(today) // Resetea la fecha seleccionada
-    setOpen(true)
-    setClassRoomId(classRoomId)
-
-    // Filtrar clases por la fecha actual
-    const currentClassRoom = buildingData[selectedBuilding].levels
-      .flatMap((l) => l.classRooms)
-      .find((c) => c.id === classRoomId)
-
-    if (currentClassRoom) {
-      const filtered = classes.filter(
-        (cls) =>
-          cls.classroom === currentClassRoom.classroom &&
-          new Date(cls.startDate) <= new Date(today) &&
-          new Date(cls.endDate) >= new Date(today)
-      )
-      setFilteredClasses(filtered)
+  useEffect(() => {
+    if (!buildingPath) {
+      navigate(`mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`)
     }
-  }
-
-  const findClassRoom = () =>
-    buildingData[selectedBuilding].levels
-      .find((l) => l.id === selectedBuilding)
-      ?.classRooms.find((c) => c.id === classRoomId)
-
-  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = e.target.value
-    setDate(newDate)
-    if (selectedClassRoom()) {
-      // Filtrar las clases por fecha seleccionada
-      const filtered = classes.filter((cls) => {
-        console.log(selectedClassRoom())
-        return (
-          cls.classroom === selectedClassRoom()?.classroom &&
-          new Date(cls.startDate) <= new Date(newDate) &&
-          new Date(cls.endDate) >= new Date(newDate)
-        )
-      })
-      console.log(filtered)
-      setFilteredClasses(filtered)
-    }
-  }
-
-  const selectedClassRoom = () =>
-    buildingData[selectedBuilding].levels
-      .find((l) => l.id === selectedBuilding)
-      ?.classRooms.find((c) => c.id === classRoomId)
+  }, [])
 
   return (
     <main className="interactive-page map-page">
@@ -125,16 +139,16 @@ export default function Map() {
               <InputLabel id="building-select-label">Edificio</InputLabel>
               <Select
                 {...field}
+                value={currentBuilding?.path || ''}
                 labelId="building-select-label"
                 label="Edificio"
                 onChange={(e) => {
                   field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                  console.log(e.target.value)
-                  handleBuildingChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                  handleBuildingChange(`${e.target.value}`) // Redirige a la ruta
                 }}
               >
                 {buildingData.map((building) => (
-                  <MenuItem key={building.id} value={building.id}>
+                  <MenuItem key={building.id} value={building.path}>
                     {building.text}
                   </MenuItem>
                 ))}
@@ -154,17 +168,19 @@ export default function Map() {
                   {...field}
                   aria-labelledby="building-levels-label"
                   name="levels-group"
+                  value={currentLevel?.path || ''}
                   onChange={(e) => {
                     field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                    handleLevelChange(parseInt(`${e.target.value}`)) // Redirige a la ruta
+                    handleLevelChange(`${e.target.value}`) // Redirige a la ruta
                   }}
                 >
-                  {buildingLevels().map((level, index) => (
+                  {currentBuilding.levels.map((level, index) => (
                     <FormControlLabel
                       key={index}
                       value={level.path}
                       control={<Radio />}
                       label={level.text}
+                      checked={level.path === levelPath ? true : false}
                     />
                   ))}
                 </RadioGroup>
@@ -175,54 +191,54 @@ export default function Map() {
       </Box>
 
       <section className="map-container">
-        <Outlet context={{ handleOpen }} />
+        <MapSelector
+          building={buildingPath}
+          level={currentLevel?.level.toString()}
+          handleOpen={handleOpen}
+        />
       </section>
 
       {/* Modal */}
       {classRoomId !== null && (
-        <ClassInfoModal
+        <InfoModal
           open={open}
           handleClose={handleClose}
-          classroom={`${findClassRoom()?.classroom}`}
-          classroomType="Aula"
+          title={classRoomId}
+          subtitle={currentBuilding?.text}
         >
-          <InputBase
-            type="date"
+          <DatePicker
+            label="Elige una fecha"
             value={date}
+            open={pickerOpen}
+            onOpen={() => setPickerOpen(true)}
+            onClose={() => setPickerOpen(false)}
             onChange={handleDateChange}
-            sx={{
-              width: '100%',
-              border: '1px solid #ccc',
-              borderRadius: 1,
-              p: 1,
-              mb: 2
+            sx={{ mt: '1rem' }}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                size: 'small'
+              }
             }}
           />
 
-          {filteredClasses.length > 0 ? (
+          {events.length > 0 ? (
             <section className="classes-container">
-              {filteredClasses.map((cls, index) => (
+              {events.map((e, index) => (
                 <ClassRoomCard
                   key={index}
-                  name={cls.name}
-                  commission={cls.commission}
-                  classroom={cls.classroom}
-                  building={cls.building}
-                  teacher={cls.teacher}
-                  careers={cls.careers}
-                  schedules={cls.schedules}
-                  mode={cls.mode} // capaz solo deberia cargar la materia que es presencial
-                  viewType="modal"
+                  event={e}
+                  viewType="standard"
                   onClick={() => {}} // Aquí puedes agregar una acción al hacer clic
                 />
               ))}
             </section>
           ) : (
             <Typography variant="body2">
-              No hay clases en la fecha seleccionada.
+              No hay eventos en la fecha seleccionada.
             </Typography>
           )}
-        </ClassInfoModal>
+        </InfoModal>
       )}
     </main>
   )
