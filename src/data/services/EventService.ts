@@ -1,10 +1,12 @@
 import { ServiceInterface } from './ServiceInterface'
-import { environment } from '@/environment'
+// import { environment } from '@/environment'
 import { Response } from '../domain/Response'
 import { IEventList } from '../domain/Event'
 import axios from 'axios'
+import { API_URL } from '@/config'
+
 export class EventService implements ServiceInterface {
-  baseUrl: string = `${environment.apiUrl}/events`
+  baseUrl: string = `${API_URL}/events`
 
   async getAll(
     classroomId?: string | null,
