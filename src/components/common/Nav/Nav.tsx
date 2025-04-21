@@ -90,7 +90,6 @@ export default function Nav() {
           onClick={() => navigate('/perfil')}
           className={`${isActive(['/perfil', '/ingresar']) ? 'active' : ''} logo-container nav-icon`}
           aria-label={isAuthenticated ? 'Ir al perfil' : 'Ingresar'}
-          disableRipple
         >
           {isAuthenticated && (
             <>
