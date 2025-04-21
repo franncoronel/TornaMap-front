@@ -2,17 +2,12 @@ import { RouteObject } from 'react-router-dom'
 import Login from '@/components/pages/login/Login'
 import Main from '@/components/pages/main/Main'
 import Map from '@/components/pages/map/Map'
-import Register from '@/components/pages/register/Register'
+// import Register from '@/components/pages/register/Register'
 import NotFound from '@/components/pages/notFound/NotFound'
 import { ProtectedRoute } from '@/components/common/ProtectedRoute.tsx'
 import Profile from '@/components/pages/main/profile/Profile'
 import { Search } from './components/pages/search/Search'
 import { Welcome } from './components/pages/welcome/Welcome'
-/* import AularioNave3PlantaAlta from './components/common/map/aulario/AularioNave3PlantaAlta'
-import TornaviasSubsuelo from '@/components/common/map/tornavias/TornaviasSubsuelo'
-import AularioNave3PlantaBaja from './components/common/map/aulario/AularioNave3PlantaBaja'
-import TornaviasPrimerPiso from './components/common/map/tornavias/TornaviasPrimerPiso'
-import TornaviasPlantaBaja from './components/common/map/tornavias/TornaviasPlantaBaja' */
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
