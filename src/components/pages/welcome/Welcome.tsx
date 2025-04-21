@@ -54,21 +54,21 @@ export function Welcome() {
               >
                 <SignIn size={32} /> Iniciá sesión
               </Button>
-              {/* <Button
-              // disabled
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '0.5rem',
-                alignItems: 'center'
-              }}
-              variant="outlined"
-              color="primary"
-              size="large"
-              onClick={() => navigate('/registrar')}
-            >
-              <FingerprintSimple size={32} /> Registrate
-            </Button> */}
+              <Button
+                // disabled
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  alignItems: 'center'
+                }}
+                variant="outlined"
+                color="primary"
+                size="large"
+                /* onClick={() => navigate('/registrar')} */
+              >
+                <FingerprintSimple size={32} /> Registrate (Próximamente)
+              </Button>
             </>
           )}
           <Button
@@ -81,7 +81,7 @@ export function Welcome() {
             variant="outlined"
             color="primary"
             size="large"
-            onClick={() => navigate('/mapa/tornavias-subsuelo')}
+            onClick={() => navigate('/mapa/tornavias/subsuelo')}
           >
             <CompassRose size={32} /> Navegá el mapa
           </Button>
