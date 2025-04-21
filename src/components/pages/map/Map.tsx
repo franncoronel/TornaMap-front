@@ -79,7 +79,6 @@ export default function Map() {
         new Date(date)
       )
       setLoader(false)
-      console.log(eventsResponse)
       setEvents(eventsResponse.data)
     } catch (error) {
       setLoader(false)
