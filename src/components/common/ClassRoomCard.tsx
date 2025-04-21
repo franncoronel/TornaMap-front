@@ -142,7 +142,6 @@ export default function ClassRoomCard({
                     <Typography
                       variant="h5"
                       sx={{
-                        color: '#333',
                         fontWeight: 'bold',
                         whiteSpace: 'nowrap',
                         maxWidth: '100%',
@@ -153,12 +152,20 @@ export default function ClassRoomCard({
                       {course?.name}
                     </Typography>
                   </Tooltip>
-                  <Typography
-                    variant="h5"
-                    sx={{ color: '#333', fontWeight: 'bold' }}
-                  >
-                    {course?.events}
-                  </Typography>
+                  <Tooltip title={course?.events} arrow placement="bottom">
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontWeight: 'bold',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '90%',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {course?.events}
+                    </Typography>
+                  </Tooltip>
                 </Box>
                 <Divider sx={{ mb: 0.5 }} />
               </>
