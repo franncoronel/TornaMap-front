@@ -17,7 +17,7 @@ import TornaviasPlantaBaja from './components/common/map/tornavias/TornaviasPlan
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
   { path: '/ingresar', element: <Login /> },
-  { path: '/registrar', element: <Register /> },
+  /* { path: '/registrar', element: <Register /> }, */
   { path: '/buscar', element: <Search /> },
   {
     path: '/mapa/:building/:level',
