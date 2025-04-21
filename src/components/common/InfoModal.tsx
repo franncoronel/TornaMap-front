@@ -30,28 +30,23 @@ export default function InfoModal({
       onClose={handleClose}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
-      sx={{
-        maxHeight: '80vh',
-        minHeight: '85vh',
-        width: '90vw',
-        overflowY: 'hidden',
-        borderRadius: '24px',
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        bgcolor: 'background.paper',
-        boxShadow: 3,
-        transform: 'translate(-50%, -55%)'
-      }}
+      keepMounted
     >
       <Fade in={open}>
         <Box
           sx={{
+            maxHeight: '80vh',
+            minHeight: '85vh',
+            width: '90vw',
+            overflowY: 'hidden',
+            borderRadius: '24px',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
             bgcolor: 'background.paper',
-            width: '100%',
-            height: '100%',
-            p: 2,
-            position: 'relative'
+            boxShadow: 3,
+            transform: 'translate(-50%, -55%)',
+            p: 2
           }}
         >
           <Box
