@@ -95,6 +95,9 @@ export default function Welcome() {
         <Typography color="#000000" fontWeight={700}>
           Esto es una versión Beta Mobile
         </Typography>
+        <Typography color="#000000" fontWeight={700}>
+          v.0.1.0
+        </Typography>
       </TransparentContainer>
     </Box>
   )
