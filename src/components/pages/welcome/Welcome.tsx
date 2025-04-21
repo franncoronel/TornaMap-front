@@ -1,12 +1,13 @@
 import { Box, Button, Container, Stack, Typography } from '@mui/material'
-import { TransparentContainer } from '@/components/ui/TransparentContainer'
+import TransparentContainer from '@/components/ui/TransparentContainer'
 import { useNavigate } from 'react-router-dom'
 import { CompassRose, FingerprintSimple, SignIn } from '@phosphor-icons/react'
 import logoUnsamBlanco from '@/assets/logos/logo-unsam-blanco.png'
 import '../background-image.css'
 import { useAuth } from '@/context/AuthContext'
 import { useEffect } from 'react'
-export function Welcome() {
+
+export default function Welcome() {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
 

@@ -19,7 +19,7 @@ import {
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard'
-import { MapSelector } from '@/components/common/map/MapSelector'
+import MapSelector from '@/components/common/map/MapSelector'
 
 // Styles
 import './map.css'

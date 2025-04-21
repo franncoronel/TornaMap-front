@@ -38,7 +38,7 @@ interface MapSelectorProps {
   classRoom?: string // e.g. 'A1'
 }
 
-export function MapSelector({
+export default function MapSelector({
   building,
   level,
   handleOpen,

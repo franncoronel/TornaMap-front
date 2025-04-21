@@ -10,9 +10,9 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 import { courseService } from '@/data/services/CourseService'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
-import { MapSelector } from '@/components/common/map/MapSelector'
+import MapSelector from '@/components/common/map/MapSelector'
 
-export function Search() {
+export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
