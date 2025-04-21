@@ -1,5 +1,3 @@
-import React from 'react'
-
 export default function SectionTitle({ title }: { title: string }) {
   const capitalizeText = (text: string) => {
     return text.toUpperCase()
