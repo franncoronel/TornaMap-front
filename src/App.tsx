@@ -62,8 +62,9 @@ function RoutesWrapper() {
   return (
     <Suspense
       fallback={
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 6 }}>
-          <CircularProgress />
+        <Box className="loader-container">
+          <span className="loader-unsam">UNSAM</span>
+          <CircularProgress className="loader" size={250} />
         </Box>
       }
     >

@@ -1,6 +1,10 @@
 src/environment.*
 .env.development
 .env.production
+
+.firebase/*
+.firebase/hosting.*
+
 # Logs
 logs
 *.log
