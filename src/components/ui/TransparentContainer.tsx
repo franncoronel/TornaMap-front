@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box'
 import { ReactNode } from 'react'
 
-export function TransparentContainer({
+export default function TransparentContainer({
   children,
   padding
 }: {

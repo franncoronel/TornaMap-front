@@ -6,11 +6,11 @@ import {
   IconButton,
   Fade
 } from '@mui/material'
-import React from 'react'
+import { ReactNode } from 'react'
 import { X } from '@phosphor-icons/react'
 
 type InfoModalProps = {
-  children: React.ReactNode // Permite múltiples hijos de cualquier tipo
+  children: ReactNode // Permite múltiples hijos de cualquier tipo
   open: boolean // Propiedad para manejar el estado del Modal
   handleClose: () => void // Función para cerrar el Modal
   title: string

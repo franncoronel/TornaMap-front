@@ -1,17 +1,29 @@
+// Estilos
 import './App.css'
 import '@fontsource/roboto/300.css'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
-import { BrowserRouter, useRoutes } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
+
+// Librerías
+import { Suspense } from 'react'
+import { BrowserRouter, useRoutes } from 'react-router-dom'
+
+// Contextos
 import { AuthProvider } from '@/context/AuthContext.tsx'
-import Nav from './components/common/Nav/Nav'
-import { routes } from '@/routes'
-import { Box /* , useMediaQuery, useTheme  */ } from '@mui/material'
-import { NotificationProvider } from './context/NotificationContext'
 import { LoaderProvider } from './context/LoaderContext'
 import MuiDateProvider from './context/MuiDateContext'
+import { NotificationProvider } from './context/NotificationContext'
+
+// Rutas
+import { routes } from '@/routes'
+
+// Componentes
+import {
+  CircularProgress
+} from '@mui/material'
+import Nav from './components/common/Nav/Nav'
 
 function App() {
   // const theme = useTheme()
@@ -30,12 +42,12 @@ function App() {
                   v7_relativeSplatPath: true
                 }}
               >
-                <Box className="layout-container">
-                  <Box className="page-structure">
+                <div className="layout-container">
+                  <div className="page-structure">
                     <RoutesWrapper />
-                  </Box>
+                  </div>
                   <Nav />
-                </Box>
+                </div>
               </BrowserRouter>
             </MuiDateProvider>
           </NotificationProvider>
@@ -46,7 +58,18 @@ function App() {
 }
 
 function RoutesWrapper() {
-  return useRoutes(routes) // Ahora se ejecuta dentro del BrowserRouter
+  return (
+    <Suspense
+      fallback={
+        <div className="loader-container">
+          <span className="loader-unsam">UNSAM</span>
+          <CircularProgress className="loader" size={250} />
+        </div>
+      }
+    >
+      {useRoutes(routes)}
+    </Suspense>
+  )
 }
 
 export default App

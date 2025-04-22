@@ -3,6 +3,11 @@
   width: 100%;
   justify-content: center;
   height: 10vh;
+  height: 10dvh; /* Para pantallas de iPhone 14 Pro Max */
+  flex:   0 0 10dvh;    /* no se estira ni se achica */
+  touch-action: none; /* Deshabilitar el desplazamiento táctil */
+  -webkit-user-select: none;
+  background-color: red;
 }
 
 .inner-container {
@@ -10,6 +15,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+.outer-container *.active,
+.inner-container *.active{
+  border-color: transparent;
+  outline-color: transparent;
+  border-radius: 50rem;
+  border: none;
+  outline: none;
 }
 
 .outer-container button {

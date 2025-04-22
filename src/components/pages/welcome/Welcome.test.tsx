@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { Welcome } from './Welcome'
+import Welcome from './Welcome'
 import { BrowserRouter, useNavigate } from 'react-router-dom'
 import { describe, expect, it, vi } from 'vitest'
 import '@testing-library/jest-dom'

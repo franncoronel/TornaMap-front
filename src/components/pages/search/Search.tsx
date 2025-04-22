@@ -12,7 +12,7 @@ import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
 import EventTabs from '@/components/common/EventTabs'
 
-export function Search() {
+export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
