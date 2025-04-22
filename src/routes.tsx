@@ -1,23 +1,22 @@
+/* eslint-disable react-refresh/only-export-components */
+import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
-import Login from '@/components/pages/login/Login'
-import Main from '@/components/pages/main/Main'
-import Map from '@/components/pages/map/Map'
-import Register from '@/components/pages/register/Register'
-import NotFound from '@/components/pages/notFound/NotFound'
-import { ProtectedRoute } from '@/components/common/ProtectedRoute.tsx'
-import Profile from '@/components/pages/main/profile/Profile'
-import { Search } from './components/pages/search/Search'
-import { Welcome } from './components/pages/welcome/Welcome'
-/* import AularioNave3PlantaAlta from './components/common/map/aulario/AularioNave3PlantaAlta'
-import TornaviasSubsuelo from '@/components/common/map/tornavias/TornaviasSubsuelo'
-import AularioNave3PlantaBaja from './components/common/map/aulario/AularioNave3PlantaBaja'
-import TornaviasPrimerPiso from './components/common/map/tornavias/TornaviasPrimerPiso'
-import TornaviasPlantaBaja from './components/common/map/tornavias/TornaviasPlantaBaja' */
+
+import { ProtectedRoute } from './components/common/ProtectedRoute'
+// Lazy Components
+// const Register = lazy(() => import('@/components/pages/register/Register'))
+const Login = lazy(() => import('@/components/pages/login/Login'))
+const Main = lazy(() => import('@/components/pages/main/Main'))
+const Map = lazy(() => import('@/components/pages/map/Map'))
+const NotFound = lazy(() => import('@/components/pages/notFound/NotFound'))
+const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
+const Search = lazy(() => import('@/components/pages/search/Search'))
+const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
   { path: '/ingresar', element: <Login /> },
-  { path: '/registrar', element: <Register /> },
+  /* { path: '/registrar', element: <Register /> }, */
   { path: '/buscar', element: <Search /> },
   {
     path: '/mapa/:building/:level',

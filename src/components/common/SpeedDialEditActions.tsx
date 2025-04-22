@@ -6,7 +6,7 @@ import {
   SpeedDialIcon
 } from '@mui/material'
 import { Gear, PencilLine, Trash } from '@phosphor-icons/react'
-import * as React from 'react'
+import { useState } from 'react'
 
 const actions = [
   { icon: <PencilLine style={{ color: 'green' }} />, name: 'Editar' },
@@ -14,7 +14,7 @@ const actions = [
 ]
 
 export default function SpeedDialEditActions() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 

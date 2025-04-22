@@ -9,7 +9,8 @@ import {
 import axios from 'axios'
 import Cookies from 'js-cookie'
 
-import { environment } from '@/environment'
+import { API_URL } from '@/config'
+
 import { User } from '@/data/domain/User'
 import { userService } from '@/data/services/UserService'
 
@@ -22,7 +23,7 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps | undefined>(undefined)
 
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const baseURL = environment.apiUrl
+  const baseURL = API_URL
   axios.defaults.baseURL = baseURL
   axios.defaults.headers.common['Content-Type'] = 'application/json'
   axios.defaults.headers.common['Accept'] = 'application/json'
@@ -34,7 +35,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const login = async (
     email: string,
     password: string
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ): Promise<User | any> => {
     try {
       const response = await userService.login(email, password)
