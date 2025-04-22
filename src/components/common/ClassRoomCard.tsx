@@ -39,12 +39,7 @@ export default function ClassRoomCard({
   //const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
 
   /* //TODO: COMENTARIOS DE MEJORAS
-   * - Cambiar el formato de horario
-   *     Horario:
-   *        Lunes: 08:00 - 10:00
-   *        Martes: 18:00 - 22:00
    * - Agregar el botón de edición (SpeedDialEditActions)
-   * - Agregar al modal los distintos edificios y aulas (en el caso de que se curse en distintos edificios)
    * - Crear el modal para editar la materia
    */
 
@@ -97,7 +92,7 @@ export default function ClassRoomCard({
     if (course) {
       return course.professors
     } else if(schedule) {
-      return schedule?.professors.map((professor) => professor).join(', ')
+      return schedule?.professors.map((professor) => professor).join(' - ')
     } else {
       return event?.schedules[0]?.professors.map((professor) => professor).join(', ')
     }
@@ -127,11 +122,11 @@ export default function ClassRoomCard({
       <Card
         sx={{
           width: '100%',
-          maxWidth: 450,
+          flexGrow: 1,
           borderRadius: 3,
           boxShadow: 1,
           border: '1px solid #e0e0e0',
-          '@media (max-width: 600px)': { maxWidth: '90%' }
+          '@media (min-width: 1201px)': { width: '95%' }
         }}
       >
         <CardActionArea onClick={onClick}>
@@ -152,7 +147,6 @@ export default function ClassRoomCard({
                     <Typography
                       variant="h5"
                       sx={{
-                        color: '#333',
                         fontWeight: 'bold',
                         whiteSpace: 'nowrap',
                         maxWidth: '100%',
@@ -163,12 +157,20 @@ export default function ClassRoomCard({
                       {course?.name}
                     </Typography>
                   </Tooltip>
-                  <Typography
-                    variant="h5"
-                    sx={{ color: '#333', fontWeight: 'bold' }}
-                  >
-                    {course?.events}
-                  </Typography>
+                  <Tooltip title={course?.events} arrow placement="bottom">
+                    <Typography
+                      variant="h5"
+                      sx={{
+                        fontWeight: 'bold',
+                        whiteSpace: 'nowrap',
+                        maxWidth: '90%',
+                        overflow: 'hidden',
+                        textOverflow: 'ellipsis',
+                      }}
+                    >
+                      {course?.events}
+                    </Typography>
+                  </Tooltip>
                 </Box>
                 <Divider sx={{ mb: 0.5 }} />
               </>
@@ -272,12 +274,15 @@ export default function ClassRoomCard({
 
               {/* Horario */}
               <Clock size={24} color="#1976d2" />
-              <Typography
-                variant="body2"
-                sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
-              >
-                Horario: {timeSchedule()}
-              </Typography>
+              <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                    <Tooltip title={timeSchedule()} arrow>
+                      <Typography
+                        variant="body2"
+                        sx={{color: '#666',whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',display: 'block',textAlign: 'left'}}>
+                         Horario: {timeSchedule()}
+                      </Typography>
+                    </Tooltip>
+                  </Box>
 
               {/* Carreras */}
               {programs() && (

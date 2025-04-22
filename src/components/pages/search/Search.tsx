@@ -10,12 +10,19 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 import { courseService } from '@/data/services/CourseService'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
-import MapSelector from '@/components/common/map/MapSelector'
+import EventTabs from '@/components/common/EventTabs'
 
 export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
+
+  // Estado para manejar el valor de la pestaña activa
+  const [value, setValue] = useState(0)
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue)
+  }
 
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
@@ -168,88 +175,10 @@ export default function Search() {
           subtitle="Cursadas y eventos"
         >
           <section className="class-info-container">
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" fontWeight="medium" px="1rem">
               {selectedCourse?.programs?.map((program) => program).join(', ')}
             </Typography>
-            {selectedCourse.events.map((event) => (
-              <Box
-                key={event.id}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexDirection: 'column',
-                  width: '100%'
-                }}
-              >
-                <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
-                  {event.name}
-                </Typography>
-                <section className="schedules-list-container">
-                  <div
-                    className={`schedules-list ${event.schedules.length == 1 ? 'single' : ''}`}
-                  >
-                    {event.schedules.map((schedule) => (
-                      <article
-                        key={schedule.id}
-                        className="schedules-list-item"
-                      >
-                        {!schedule.isVirtual ? (
-                          <>
-                            {/* Título del modal con información del edificio y nivel */}
-                            <Typography
-                              id="modal-modal-title"
-                              variant="h6"
-                              component="h2"
-                              sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}
-                            >
-                              {schedule.classroom?.name} - Piso{' '}
-                              {schedule.classroom?.floor} -{' '}
-                              {schedule.classroom?.building.name}
-                            </Typography>
-                            {/* Mapa interactivo del subsuelo */}
-                            <MapSelector
-                              building={schedule.classroom?.building.name}
-                              level={schedule.classroom?.floor.toString()}
-                              classRoom={schedule.classroom?.code}
-                            />
-                          </>
-                        ) : (
-                          <Box
-                            display="flex"
-                            flexDirection="column"
-                            alignItems="center"
-                          >
-                            <Typography
-                              id="modal-modal-title"
-                              variant="h6"
-                              component="h2"
-                              sx={{
-                                textAlign: 'center',
-                                wordBreak: 'break-word',
-                                whiteSpace: 'normal'
-                              }}
-                            >
-                              Esta clase se dicta de forma virtual
-                            </Typography>
-                            <Laptop
-                              size={150}
-                              color="#2e4b7d"
-                              weight="duotone"
-                            />
-                          </Box>
-                        )}
-                        <ClassRoomCard schedule={schedule} viewType="modal" />
-                      </article>
-                    ))}
-                  </div>
-                </section>
-              </Box>
-            ))}
+            <EventTabs events={selectedCourse.events} />
           </section>
         </InfoModal>
       )}

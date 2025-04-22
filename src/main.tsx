@@ -37,7 +37,9 @@ let unsamTheme = createTheme({
   components: {
     MuiIconButton: {
       defaultProps: {
-        color: 'secondary'
+        color: 'secondary',
+        disableRipple: true,
+        disableFocusRipple: true
       }
     }
   }
