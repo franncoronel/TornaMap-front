@@ -3,7 +3,7 @@
   width: 100%;
 }
 
-@media (min-width: 601px) {
+@Media (min-width: 601px) {
   .interactive-page {
     padding-left: 2rem;
     padding-right: 2rem;
