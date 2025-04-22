@@ -34,10 +34,16 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
   }
 
   const createLabel = (schedule : ISchedule) => {
+    if (!schedule.weekDay && !schedule.date) {
+      return "Sin fecha"
+    }
     if (schedule.weekDay) {
       return schedule.weekDay
     }
+    return buildDateString(schedule)
+  }
 
+  const buildDateString = (schedule: ISchedule) => {
     const date = new Date(schedule.date!!)
   
     const day = date.getDate().toString().padStart(2, '0')
