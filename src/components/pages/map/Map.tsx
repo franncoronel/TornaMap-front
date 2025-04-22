@@ -233,7 +233,7 @@ export default function Map() {
               ))}
             </section>
           ) : (
-            <Typography variant="body2">
+            <Typography variant="body2" px="1rem">
               No hay eventos en la fecha seleccionada.
             </Typography>
           )}
