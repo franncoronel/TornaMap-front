@@ -24,18 +24,35 @@
   background-color: white;
 }
 
-@media (min-width: 601px) {
+@Media (min-width: 601px) {
+  .welcome-page,
+  .register-page,
+  .login-page {
+    height: auto;
+  }
+
   .form {
     height: auto;
-    max-width: 50%;
-    min-width: 40%;
+    max-width: 60%;
     border-radius: 0.5rem;
   }
 }
 
-@media (min-width: 1201px) {
+@Media (min-width: 901px) {
   .form {
-    min-width: 20%;
-    max-width: 25%;
+    max-width: 40%;
+  }
+}
+
+@Media (min-width: 1201px) {
+  .form {
+    min-width: 30%;
+  }
+}
+
+
+@Media (min-width: 1537px) {
+  .form {
+    max-width: 20%;
   }
 }
