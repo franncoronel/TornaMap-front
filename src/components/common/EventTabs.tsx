@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Box, Tabs, Tab, Typography } from '@mui/material'
-import { MapSelector } from '@/components/common/map/MapSelector'
+import MapSelector from '@/components/common/map/MapSelector'
 import ClassRoomCard from '@/components/common/ClassRoomCard'
 import { ISchedule } from '@/data/domain/Schedule'
 import { IEvent } from '@/data/domain/Event'
