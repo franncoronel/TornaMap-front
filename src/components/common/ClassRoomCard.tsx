@@ -46,18 +46,18 @@ export default function ClassRoomCard({
   const isVirtual = () => {
     if (course) {
       return course?.modality === 'Virtual'
-    } else if(schedule) {
+    } else if (schedule) {
       return schedule?.isVirtual
-    }else{
+    } else {
       return event?.schedules[0]?.isVirtual
     }
   }
   const isPresential = () => {
     if (course) {
       return course?.modality === 'Presencial'
-    } else if(schedule) {
+    } else if (schedule) {
       return !schedule?.isVirtual
-    }else{
+    } else {
       return event?.schedules[0]?.isVirtual === false
     }
   }
@@ -81,9 +81,9 @@ export default function ClassRoomCard({
   const timeSchedule = () => {
     if (course) {
       return course?.schedules
-    } else if(schedule) {
+    } else if (schedule) {
       return schedule?.startTime + ' - ' + schedule?.endTime
-    }else {
+    } else {
       return event?.schedules[0]?.startTime + ' - ' + event?.schedules[0]?.endTime
     }
   }
@@ -91,7 +91,7 @@ export default function ClassRoomCard({
   const professors = () => {
     if (course) {
       return course.professors
-    } else if(schedule) {
+    } else if (schedule) {
       return schedule?.professors.map((professor) => professor).join(' - ')
     } else {
       return event?.schedules[0]?.professors.map((professor) => professor).join(', ')
@@ -101,7 +101,7 @@ export default function ClassRoomCard({
   const programs = () => {
     if (course) {
       return course?.programs
-    } else if(schedule) {
+    } else if (schedule) {
       return null
     } else {
       return event?.programNames.map((program) => program).join(', ')
@@ -126,7 +126,7 @@ export default function ClassRoomCard({
           borderRadius: 3,
           boxShadow: 1,
           border: '1px solid #e0e0e0',
-          '@media (min-width: 1201px)': { width: '95%' }
+          '@Media (min-width: 1201px)': { width: '95%' }
         }}
       >
         <CardActionArea onClick={onClick}>
@@ -275,14 +275,14 @@ export default function ClassRoomCard({
               {/* Horario */}
               <Clock size={24} color="#1976d2" />
               <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <Tooltip title={timeSchedule()} arrow>
-                      <Typography
-                        variant="body2"
-                        sx={{color: '#666',whiteSpace: 'nowrap',overflow: 'hidden',textOverflow: 'ellipsis',display: 'block',textAlign: 'left'}}>
-                         Horario: {timeSchedule()}
-                      </Typography>
-                    </Tooltip>
-                  </Box>
+                <Tooltip title={timeSchedule()} arrow>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block', textAlign: 'left' }}>
+                    Horario: {timeSchedule()}
+                  </Typography>
+                </Tooltip>
+              </Box>
 
               {/* Carreras */}
               {programs() && (
