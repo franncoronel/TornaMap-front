@@ -1,12 +1,12 @@
 .map-page {
   display: flex;
-  width: 100%;
   flex-direction: column;
   /* gap:0.7rem; */
 }
-.map-container {
+
+
+.levels-radio-group {
   display: flex;
-  justify-content: center;
 }
 
 .svg-container {

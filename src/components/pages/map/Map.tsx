@@ -172,6 +172,7 @@ export default function Map() {
                     field.onChange(e.target.value) // Actualiza el valor en react-hook-form
                     handleLevelChange(`${e.target.value}`) // Redirige a la ruta
                   }}
+                  className="levels-radio-group"
                 >
                   {currentBuilding.levels.map((level, index) => (
                     <FormControlLabel
