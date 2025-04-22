@@ -16,14 +16,6 @@ export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
-
-  // Estado para manejar el valor de la pestaña activa
-  const [value, setValue] = useState(0)
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue)
-  }
-
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
 
