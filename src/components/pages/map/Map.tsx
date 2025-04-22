@@ -14,7 +14,8 @@ import {
   RadioGroup,
   Select,
   Box,
-  Typography
+  Typography,
+  Divider
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
@@ -123,12 +124,7 @@ export default function Map() {
 
   return (
     <main className="interactive-page map-page">
-      <Box
-        position="sticky"
-        top="0"
-        zIndex="10"
-        sx={{ backgroundColor: 'white' }}
-      >
+      <Box>
         {/* Select del edificio */}
         <Controller
           name="building"
@@ -189,6 +185,8 @@ export default function Map() {
           />
         )}
       </Box>
+
+      <Divider variant="middle" flexItem sx={{ }} />
 
       <section className="map-container">
         <MapSelector
