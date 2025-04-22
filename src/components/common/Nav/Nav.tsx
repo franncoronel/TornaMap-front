@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Box, IconButton, Typography } from '@mui/material'
+import { AppBar, Toolbar, Box, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import './nav.css'
 import { useLocation, useNavigate } from 'react-router-dom'
@@ -23,6 +23,8 @@ export default function Nav() {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
   const location = useLocation()
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
 
   const isActive = (paths: string | string[]) => {
     if (typeof paths === 'string') {
@@ -45,10 +47,21 @@ export default function Nav() {
       enableColorOnDark
     >
       <Toolbar className="inner-container">
-        {!isAuthenticated && (
+        {isMobile ? (
+          !isAuthenticated && (
+            <IconButton
+              onClick={() => navigate('/')}
+              className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
+              aria-label="Ir al inicio"
+            >
+              <HouseSimple size={32} alt="Inicio" className="mobile-logo" />
+            </IconButton>
+          )
+        ) : (
           <IconButton
-            onClick={() => navigate('/')}
+            onClick={!isAuthenticated ? () => navigate('/') : undefined}
             className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
+            disabled={isAuthenticated}
             aria-label="Ir al inicio"
           >
             <Box
@@ -62,7 +75,6 @@ export default function Nav() {
               src={logo}
               className="wide-screen-logo"
             />
-            <HouseSimple size={32} alt="Inicio" className="mobile-logo" />
           </IconButton>
         )}
         <Box flexGrow="1" className="spacing" />
