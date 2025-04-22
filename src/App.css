@@ -5,15 +5,7 @@
   text-align: center;
   font-size: 10px;
 }
-.welcome-page,
-.register-page,
-.login-page,
-.map-page,
-.interactive-page,
-.profile-page {
-  height: 100%;
-  overflow-y: scroll;
-}
+
 
 .logo {
   height: 6em;
@@ -21,12 +13,15 @@
   will-change: filter;
   transition: filter 300ms;
 }
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
+
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
 h1,
 h2,
 h3,
@@ -38,21 +33,27 @@ p {
   margin: 0;
   padding: 0;
 }
+
 h2 {
   font-size: 0.9rem;
 }
+
 h3 {
   font-size: 0.8rem;
 }
+
 h4 {
   font-size: 0.7rem;
 }
+
 h5 {
   font-size: 0.6rem;
 }
+
 h6 {
   font-size: 0.5rem;
 }
+
 p {
   font-size: 0.4rem;
 }
@@ -60,22 +61,31 @@ p {
 .layout-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   /* height: 100dvh; */
   /* min-height: 100dvh; */
 }
 
 .page-structure {
-  flex: 1 1 auto;      /* crece y se encoge según necesidad */
-  min-height: 0;       /* evita que el “bounce” comprima el hijo */
-  overflow-y: auto;    /* scroll interno sin afectar al layout raíz */
+  display: flex;
+  width: 100%;
+  height: 90vh;
+  /*Relativo a los 10vh que mide el Nav en mobile*/
+  -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  max-height: 90vh;
-  max-height: 90dvh;
-  -webkit-overflow-scrolling:touch;
 }
 
-.loader-container{
+.page-structure-no {
+  flex: 1 1 auto;
+  /* crece y se encoge según necesidad */
+  min-height: 0;
+  /* evita que el “bounce” comprima el hijo */
+  overflow-y: auto;
+  /* scroll interno sin afectar al layout raíz */
+  max-height: 90vh;
+  max-height: 90dvh;
+}
+
+.loader-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,13 +100,16 @@ p {
   transition: opacity 0.3s ease-in-out;
   opacity: 1;
 }
+
 .loader-container.hidden {
   opacity: 0;
   pointer-events: none;
 }
-.loader-container .loader{
+
+.loader-container .loader {
   position: absolute;
 }
+
 .loader-unsam {
   font-size: 48px;
   font-family: Arial, Helvetica, sans-serif;
@@ -107,6 +120,7 @@ p {
   position: relative;
   box-sizing: border-box;
 }
+
 .loader-unsam::after {
   content: 'UNSAM';
   position: absolute;
@@ -124,24 +138,27 @@ p {
   0% {
     height: 100%;
   }
+
   100% {
     height: 0%;
   }
 }
 
-@media (min-width: 601px) {
+@Media (min-width: 601px) {
   .layout-container {
     flex-direction: column-reverse;
   }
 
   .page-structure {
     height: auto;
-    min-height: 94vh; /*Relativo a los 6vh que mide el Nav en mobile*/
+    min-height: 94vh;
+    /*Relativo a los 6vh que mide el Nav en mobile*/
   }
 }
 
-@media (min-width: 1200px) {
+@Media (min-width: 1200px) {
   .page-structure {
-    min-height: 92vh; /*Relativo a los 8vh que mide el Nav en mobile*/
+    min-height: 92vh;
+    /*Relativo a los 8vh que mide el Nav en mobile*/
   }
 }
