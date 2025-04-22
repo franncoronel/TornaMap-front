@@ -33,6 +33,19 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
     }))
   }
 
+  const createLabel = (schedule : ISchedule) => {
+    if (schedule.weekDay) {
+      return schedule.weekDay
+    }
+
+    const date = new Date(schedule.date!!)
+  
+    const day = date.getDate().toString().padStart(2, '0')
+    const month = (date.getMonth() + 1).toString().padStart(2, '0')
+    
+    return `${day}/${month}`
+  }
+
   return (
     <>
       {events.map((event) => {
@@ -57,7 +70,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                 {event.schedules.map((schedule: ISchedule) => (
                   <Tab
                     key={schedule.id}
-                    label={schedule.weekDay || "Sin día"}
+                    label={ createLabel(schedule) }
                     sx={{
                       textTransform: "none",
                       fontWeight: "bold"
