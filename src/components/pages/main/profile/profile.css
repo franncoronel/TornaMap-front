@@ -1,6 +1,6 @@
 .profile-page {
   display: flex;
-  justify-content: center;
+  flex-grow: 1;
   flex-direction: column;
   width: 100%;
   align-items: center;
