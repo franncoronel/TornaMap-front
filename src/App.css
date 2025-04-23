@@ -61,28 +61,17 @@ p {
 .layout-container {
   display: flex;
   flex-direction: column;
-  /* height: 100dvh; */
-  /* min-height: 100dvh; */
+  height: 100vh;
 }
 
 .page-structure {
   display: flex;
-  width: 100%;
-  height: 90vh;
-  /*Relativo a los 10vh que mide el Nav en mobile*/
-  -webkit-overflow-scrolling: touch;
+  flex: 1 1 auto;      /* crece y se encoge según necesidad */
+  min-height: 0;       /* evita que el “bounce” comprima el hijo */
   overscroll-behavior: contain;
-}
-
-.page-structure-no {
-  flex: 1 1 auto;
-  /* crece y se encoge según necesidad */
-  min-height: 0;
-  /* evita que el “bounce” comprima el hijo */
-  overflow-y: auto;
-  /* scroll interno sin afectar al layout raíz */
   max-height: 90vh;
   max-height: 90dvh;
+  -webkit-overflow-scrolling:touch;
 }
 
 .loader-container {
