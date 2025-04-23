@@ -100,7 +100,7 @@ export default function Search() {
     // Contenedor principal que organiza la disposición de los elementos
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
-      <Box flexShrink="0" position="sticky" top="0" zIndex="10">
+      <Box position='sticky' top='0' zIndex='10'>
         <SearchBar
           onSearch={search}
           options={courses.map((course) => course.name)}
@@ -114,10 +114,8 @@ export default function Search() {
         rowSpacing="1rem"
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        maxHeight="90vh"
-        pt="1rem"
-        pb="7rem"
-        sx={{ overflowY: 'auto' }}
+        height='100%'
+        sx= {{ overflowY: 'auto' }}
       >
         {courses &&
           courses.length > 0 &&
