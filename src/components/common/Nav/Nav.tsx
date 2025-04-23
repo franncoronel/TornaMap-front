@@ -59,7 +59,7 @@ export default function Nav() {
           )
         ) : (
           <IconButton
-            onClick={!isAuthenticated ? () => navigate('/') : undefined}
+            onClick={() => navigate('/')}
             className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
             disabled={isAuthenticated}
             aria-label="Ir al inicio"
