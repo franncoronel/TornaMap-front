@@ -140,8 +140,6 @@ p {
 
   .page-structure {
     height: auto;
-    min-height: 94vh;
-    /*Relativo a los 6vh que mide el Nav en mobile*/
   }
 }
 

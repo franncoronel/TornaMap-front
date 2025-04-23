@@ -8,8 +8,14 @@
 
 @Media (min-width: 601px) {
   .interactive-page {
-    padding-top: 2rem;
+    padding-top: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+}
+
+@Media (min-width: 1201px) {
+  .interactive-page {
+    padding-top: 2rem;
   }
 }
