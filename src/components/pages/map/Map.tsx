@@ -14,7 +14,8 @@ import {
   RadioGroup,
   Select,
   Box,
-  Typography
+  Typography,
+  Divider
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
@@ -123,12 +124,7 @@ export default function Map() {
 
   return (
     <main className="interactive-page map-page">
-      <Box
-        position="sticky"
-        top="0"
-        zIndex="10"
-        sx={{ backgroundColor: 'white' }}
-      >
+      <Box>
         {/* Select del edificio */}
         <Controller
           name="building"
@@ -172,6 +168,7 @@ export default function Map() {
                     field.onChange(e.target.value) // Actualiza el valor en react-hook-form
                     handleLevelChange(`${e.target.value}`) // Redirige a la ruta
                   }}
+                  className="levels-radio-group"
                 >
                   {currentBuilding.levels.map((level, index) => (
                     <FormControlLabel
@@ -188,6 +185,8 @@ export default function Map() {
           />
         )}
       </Box>
+
+      <Divider variant="middle" flexItem sx={{ }} />
 
       <section className="map-container">
         <MapSelector
@@ -233,7 +232,7 @@ export default function Map() {
               ))}
             </section>
           ) : (
-            <Typography variant="body2">
+            <Typography variant="body2" px="1rem">
               No hay eventos en la fecha seleccionada.
             </Typography>
           )}

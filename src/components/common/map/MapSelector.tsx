@@ -1,10 +1,14 @@
+//Components
 import TornaviasSubsuelo from './tornavias/TornaviasSubsuelo'
 import TornaviasPlantaBaja from './tornavias/TornaviasPlantaBaja'
 import TornaviasPrimerPiso from './tornavias/TornaviasPrimerPiso'
-
 import AularioNave3PlantaBaja from './aulario/AularioNave3PlantaBaja'
 import AularioNave3PlantaAlta from './aulario/AularioNave3PlantaAlta'
+//MUI Components
 import { Box } from '@mui/material'
+// Styles
+import '@/components/pages/map/map.css'
+//React
 import { FC } from 'react'
 interface FloorMapProps {
   selectedCode?: string
@@ -51,7 +55,7 @@ export default function MapSelector({
   if (!MapComponent) return <p>Piso “{level}” no disponible</p>
 
   return (
-    <Box sx={{ width: '100%', height: '100%' }}>
+    <Box className="svg-container">
       {/* Renderiza el componente del mapa correspondiente */}
       <MapComponent selectedCode={classRoom} handleOpen={handleOpen} />
     </Box>

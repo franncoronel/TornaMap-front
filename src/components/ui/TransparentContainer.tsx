@@ -14,7 +14,7 @@ export default function TransparentContainer({
         backgroundColor: 'rgba(255, 255, 255, 0.9)',
         borderRadius: 2,
         p: { padding },
-        width: { xs: '80%', sm: '75%', md: '50%', lg: '25%' },
+        width: { xs: '90%', sm: '60%', md: '50%', lg: '35%', xl: '25%' },
         alignSelf: 'center'
       }}
     >

@@ -56,7 +56,7 @@ export default function SeachBar({ onSearch, options }: SeachBarProps) {
                 overflow: 'hidden',
                 maxWidth: '200px',
                 textOverflow: 'ellipsis',
-                '@media (min-width: 450px)': {
+                '@Media (min-width: 450px)': {
                   maxWidth: 'none',
                   textOverflow: 'unset',
                   whiteSpace: 'normal'

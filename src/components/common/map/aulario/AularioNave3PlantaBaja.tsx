@@ -16,7 +16,6 @@ export default function AularioNave3PlantaBaja({
   return (
     <>
       <svg
-        className="svg-container"
         id="eDZ35ixfFPu1"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1143 285"
