@@ -3,14 +3,10 @@
   width: 100%;
   justify-content: center;
   height: 10vh;
-  height: 10dvh;
-  /* Para pantallas de iPhone 14 Pro Max */
-  flex: 0 0 10dvh;
-  /* no se estira ni se achica */
-  touch-action: none;
-  /* Deshabilitar el desplazamiento táctil */
+  height: 10dvh; /* Para pantallas de iPhone 14 Pro Max */
+  flex: 0 0 10dvh; /* no se estira ni se achica */
+  touch-action: none; /* Deshabilitar el desplazamiento táctil */
   -webkit-user-select: none;
-  background-color: red;
 }
 
 .inner-container {
