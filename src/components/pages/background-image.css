@@ -10,8 +10,6 @@
   background-size: cover;
   background-position: center;
   gap: 1rem;
-  max-height: 90vh;
-  /* height: 90vh; */
 }
 
 .form {
