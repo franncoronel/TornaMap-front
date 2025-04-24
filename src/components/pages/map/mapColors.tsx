@@ -10,6 +10,11 @@ export const mapColors = {
     stroke: '#2e4b7d',
     strokeWidth: 1.396
   },
+  ladder: {
+    fill: 'none',
+    stroke: '#2e4b7d',
+    strokeWidth: 0.7
+  },
   library: {
     fill: '#757575',
     stroke: '#000000',
