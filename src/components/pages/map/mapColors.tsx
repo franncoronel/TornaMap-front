@@ -15,6 +15,14 @@ export const mapColors = {
     stroke: '#2e4b7d',
     strokeWidth: 0.7
   },
+  arrow: {
+    fill: 'none',
+    stroke: '#2e4b7d',
+    strokeWidth: 2.5,
+  },
+  entry: {
+    fill: '#c22448',
+  },
   library: {
     fill: '#757575',
     stroke: '#000000',
