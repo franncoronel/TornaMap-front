@@ -80,7 +80,7 @@ export const mapColors = {
     strokeWidth: 0.7
   },
   institutoTransporte: {
-    fill: '#0f42c8',
+    fill: '#10245b',
     stroke: '#b8ddff', //#10245b
     strokeWidth: 0.7
   },

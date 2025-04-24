@@ -494,7 +494,7 @@ export default function TornaviasPrimerPiso({
             dx="0"
             dy="0"
             fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="10"
+            fontSize="9.5"
             fontWeight="400"
             transform="translate(146 610) rotate(-35)"
             strokeWidth="0"
@@ -506,7 +506,7 @@ export default function TornaviasPrimerPiso({
             <tspan y="12" x="0" fontWeight="700" strokeWidth="0">
               Servicios
             </tspan>
-            <tspan y="24" x="0" fontWeight="700" strokeWidth="0">
+            <tspan y="24" x="-1" fontWeight="700" strokeWidth="0">
               Academicos
             </tspan>
             <tspan y="36" x="0" fontWeight="700" strokeWidth="0">

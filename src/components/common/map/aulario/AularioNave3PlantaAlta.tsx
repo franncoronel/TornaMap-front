@@ -29,7 +29,6 @@ const isSelected = (id: string) => id === selectedCode
                   stroke: mapColors.outline.stroke,
                   strokeWidth: mapColors.outline.strokeWidth}}>
           <path d="M80.277592,39.238169h985.311873l-.000001,189.225753h-985.311872v-189.225753Z" transform="translate(.000004 0.000003)"/>
-          {/* <path d="M440.63488,177.72591h92.96v23.10139h-92.96v-23.10139Zm-27.90648,0v-16.26338h27.90648l.00001,8.24999-.00001,8.01339h-27.90648Z"/> */}
         </g>
         
         <g  transform="matrix(-1 0 0 1 946.071006-.083143)"
