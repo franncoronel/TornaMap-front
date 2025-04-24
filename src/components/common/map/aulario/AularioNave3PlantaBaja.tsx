@@ -56,9 +56,22 @@ export default function AularioNave3PlantaBaja({
           <path d="M463.928088,177.72591v23.10139" transform="translate(22.733956 0)"/> 
         </g>
 
+        {/* Flecha */}
+        <g  transform="matrix(.533707 0 0 0.523591 451.40865 177.13594)"
+            style={{
+              fill: mapColors.arrow.fill,
+              stroke: mapColors.arrow.stroke,
+              strokeWidth: mapColors.arrow.strokeWidth,}}>
+          <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+        {/*Entradas*/}
+        <g style={{fill: mapColors.entry.fill,}}>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.404318 0 0 0.368131 361.3528 200.855564)" />
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.404318 0 0-.368131 401.7846 66.939015)" />
+        </g>
 
-        
-        
         {/* A17 */}
         <g
           style={{
