@@ -13,7 +13,7 @@ const NotFound = lazy(() => import('@/components/pages/notFound/NotFound'))
 const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
-const Form = lazy(() => import('@/components/pages/main/profile/form/Form'))
+const Form = lazy(() => import('@/components/pages/form/Form'))
 const CourseForm = lazy(() => import('@/components/common/CourseForm'))
 
 export const routes: RouteObject[] = [
@@ -38,7 +38,7 @@ export const routes: RouteObject[] = [
         element: <Profile />,
       },
       {
-        path: 'perfil/agregar',
+        path: 'formulario',
         element: <Form />,
         children: [
           {
