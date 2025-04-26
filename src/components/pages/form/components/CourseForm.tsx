@@ -2,11 +2,12 @@ import { ICourse } from "@/data/domain/Course"
 import { Box } from "@mui/material"
 import { useEffect } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useOutletContext } from "react-router-dom"
+import { useOutletContext, useParams } from "react-router-dom"
 import { FormContext } from "../Form"
 
 export default function CourseForm() {
     const { mode, setTitle } = useOutletContext<FormContext>()
+    const { id } = useParams()
     const {
         control,
         handleSubmit,
