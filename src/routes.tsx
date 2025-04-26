@@ -14,6 +14,7 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/main/profile/form/Form'))
+const CourseForm = lazy(() => import('@/components/common/CourseForm'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -37,8 +38,14 @@ export const routes: RouteObject[] = [
         element: <Profile />,
       },
       {
-        path: 'perfil/formulario',
-        element: <Form />
+        path: 'perfil/agregar',
+        element: <Form />,
+        children: [
+          {
+            path: 'materia',
+            element: <CourseForm /> 
+          }
+        ]
       }
     ]
   },
