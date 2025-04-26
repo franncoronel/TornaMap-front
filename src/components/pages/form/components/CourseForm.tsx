@@ -1,8 +1,12 @@
 import { ICourse } from "@/data/domain/Course"
 import { Box } from "@mui/material"
+import { useEffect } from "react"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { useOutletContext } from "react-router-dom"
+import { FormContext } from "../Form"
 
 export default function CourseForm() {
+    const { mode, setTitle } = useOutletContext<FormContext>()
     const {
         control,
         handleSubmit,
@@ -13,6 +17,10 @@ export default function CourseForm() {
     const onSubmit: SubmitHandler<ICourse> = async (data) => {
 
     }
+
+    useEffect(() => {
+        setTitle('Asignatura')
+    }, [setTitle])
 
     return (
         <Box
