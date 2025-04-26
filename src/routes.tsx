@@ -14,7 +14,7 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/form/Form'))
-const CourseForm = lazy(() => import('@/components/common/CourseForm'))
+const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
