@@ -42,7 +42,7 @@ export const routes: RouteObject[] = [
         element: <Form />,
         children: [
           {
-            path: 'materia',
+            path: 'asignatura',
             element: <CourseForm /> 
           }
         ]
