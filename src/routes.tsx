@@ -39,15 +39,30 @@ export const routes: RouteObject[] = [
       },
       {
         path: 'formulario',
-        element: <Form />,
         children: [
           {
-            path: 'asignatura',
-            element: <CourseForm /> 
+            path: 'agregar',
+            element: <Form mode='add'/>,
+            children: [
+              {
+                path: 'asignatura',
+                element: <CourseForm />
+              }
+            ]
+          },
+          {
+            path: 'editar',
+            element: <Form mode='edit' />,
+            children: [
+              {
+                path: 'asignatura/:id',
+                element: <CourseForm />
+              }
+            ]
           }
         ]
       }
     ]
   },
-{ path: '*', element: <NotFound /> }
+  { path: '*', element: <NotFound /> }
 ]
