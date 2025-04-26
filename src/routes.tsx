@@ -3,6 +3,7 @@ import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
+
 // Lazy Components
 // const Register = lazy(() => import('@/components/pages/register/Register'))
 const Login = lazy(() => import('@/components/pages/login/Login'))
@@ -12,6 +13,7 @@ const NotFound = lazy(() => import('@/components/pages/notFound/NotFound'))
 const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
+const Form = lazy(() => import('@/components/pages/main/profile/form/Form'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -29,7 +31,16 @@ export const routes: RouteObject[] = [
         <Main />
       </ProtectedRoute>
     ),
-    children: [{ path: 'perfil', element: <Profile /> }]
+    children: [
+      {
+        path: 'perfil',
+        element: <Profile />,
+      },
+      {
+        path: 'perfil/formulario',
+        element: <Form />
+      }
+    ]
   },
-  { path: '*', element: <NotFound /> }
+{ path: '*', element: <NotFound /> }
 ]
