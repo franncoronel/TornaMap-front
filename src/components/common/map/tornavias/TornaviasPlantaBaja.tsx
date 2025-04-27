@@ -59,8 +59,53 @@ export default function TornaviasPlantaBaja({
           <path d="M495.078007,119.682185c-38.732323-9.099701-102.75822-3.519551-131.420241,6.978778" transform="matrix(.999983-.005794 0.005794 0.999983-.824957 1.722331)"/>
           <path d="M493.74183,123.731865c-33.315014-7.873513-98.015663-4.513634-129.365394,7.28525" transform="matrix(.999983-.005794 0.005794 0.999983-.849316 1.720608)"/>
           {/* Escaleras*/}
+          <path d="M170.253401,191.140267l-58.671007,91.646276l11.943705,4.267917l56.922426-89.741944" transform="translate(0 0.000002)"/>
         </g>
-      
+
+        {/* Escalones */}
+        <g style={{fill: mapColors.ladder.fill,stroke: mapColors.outline.stroke,strokeWidth: mapColors.ladder.strokeWidthStep}}>
+          <path d="M121.608924,266.949109l10.409367,6.752875l2.853766-4.517707-10.163226-6.845909l3.02351-4.867637l10.281913,6.807003l6.37482-10.130499-10.348012-6.42206l3.1-4.84l10.389,6.337813l2.750273-4.287407-10.230822-6.579776l2.879724-4.490857l10.401607,6.244946l2.714431-4.338691-10.56-5.94l6.7813-10.61493l10.145045,6.471817l2.902006-4.469324-10.196535-6.402499l3.04-4.76l10.257066,6.184201" transform="translate(0 0.000003)"/>
+        </g>
+
+        {/* Flechas */}
+        <g style={{fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth,}}>
+          <g transform="matrix(-.170625-.096442 0.086213-.152529 109.852169 277.20303)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>    
+          <g transform="matrix(-.020642 0.194905-.174234-.018453 489.329685 125.094061)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)"stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)"stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(-.10329-.166569 0.148903-.092335 310.484334 138.751522)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)"stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)"stroke-linecap="round" stroke-linejoin="round"/>
+          </g>  
+          <g transform="matrix(.111677-.161066 0.143984 0.099833 293.830444 628.778914)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(-.116917 0.157304-.140621-.104517 256.982875 625.879725)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(-.078138-.179745 0.160682-.069851 559.405392 649.761943)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(-.195985 0.001948-.001741-.175199 447.871394 755.424221)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(-.19256-.036531 0.032656-.172138 708.288864 451.305877)">
+              <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <g transform="matrix(.139781-.137387 0.122816 0.124956 665.324112 209.871577)">
+            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+        </g>
 
         {/* Biblioteca */}
         <g
