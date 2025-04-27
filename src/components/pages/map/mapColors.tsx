@@ -8,7 +8,12 @@ export const mapColors = {
   outline: {
     fill: 'none',
     stroke: '#2e4b7d',
+    strokeRestrictedArea:'#d4d4d4',
     strokeWidth: 1.396
+  },
+  hatchingPattern: {
+    stroke: '#e6bfbb', /* #87453f*/
+    strokeWidth: 1,
   },
   ladder: {
     fill: 'none',
