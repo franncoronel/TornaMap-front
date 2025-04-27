@@ -13,7 +13,8 @@ export const mapColors = {
   ladder: {
     fill: 'none',
     stroke: '#2e4b7d',
-    strokeWidth: 0.7
+    strokeWidth: 0.7,
+    strokeWidthStep: 0.4
   },
   arrow: {
     fill: 'none',
