@@ -58,10 +58,7 @@ export default function TornaviasPrimerPiso({
             ry="77.1"
             transform="matrix(2.279425-.716586 0.775485 2.466781 444.895709 400.053565)"
           />
-          <path
-            d="M609.012246,202.702677l36.484625-44.822289"
-            transform="translate(.000001 0)"
-          />
+          <path d="M609.012246,202.702677l36.484625-44.822289" transform="translate(.000001 0)"/>
           {/*Para indicar que no se puede pasar por esta zona  */}
           <g style={{ stroke: mapColors.outline.strokeRestrictedArea ,strokeWidth: mapColors.outline.strokeWidth}}>
             <path fill="url(#hatchingPattern)" d="M85.050085,319.902668l53.571511,11.607648c10.52665-52.396156,37.616555-108.857236,98.645146-167.345706l-35.769028-40.496369-14.676226,13.232541l16.112415,16.561544-16.112416,16.592353-16.617096-15.443376c-4.886163,5.247362-16.365048,18.921596-22.654159,27.139485l17.890232,13.531262-13.704898,18.70457-17.883251-12.657874c-4.931415,5.166215-13.688972,21.432912-18.263729,31.535237l20.585652,10.382918-9.608468,20.734062-20.986916-9.370447c-6.720167,13.162541-15.870817,45.700736-20.528769,65.292152Z" transform="translate(.000015 0)" />
@@ -69,15 +66,15 @@ export default function TornaviasPrimerPiso({
             <path d="M631.386375,596.365258l15.070559,15.899439c21.885037-20.040174,56.131752-65.791469,66.500715-94.534986l-20.087891-8.48217c-8.203727,23.263382-40.368184,65.740939-61.483383,87.117717Z" transform="translate(.000001 0.000001)" />
             <path d="M696.386577,298.82018q20.757574-7.868519,20.809573-7.72927c11.81881,31.649476,12.707202,40.98898,17.688136,68.37431l-21.926638,2.972796c-1.775803-15.513462-10.072104-47.324036-16.571071-63.617836Z" transform="translate(.000004 0)" />
           </g>
-
         </g>
         {/* Flechas */}
         <g style={{fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth,}}>
-          <g transform="matrix(.043396-.155221 0.142541 0.039851 40.004042 300.114744)">
+        
+          <g transform="matrix(-.105488-.17018 0.190464-.118061 313.071142 136.98242)">
             <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
             <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
           </g>
-
+          
           <g transform="matrix(-.022277 0.195106-.209016-.023865 486.370357 136.52402)">
             <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
             <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
@@ -113,11 +110,6 @@ export default function TornaviasPrimerPiso({
             <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
           </g>
 
-          <g transform="matrix(.043396-.155221 0.142541 0.039851 40.004042 300.114744)">
-            <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
-            <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-          
           <g transform="matrix(-.189045 0.066653-.056341-.159798 158.585672 469.057777)">
             <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
             <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" stroke-linecap="round" transform="matrix(-1 0 0-1 0 0)" stroke-linejoin="round"/>
@@ -152,7 +144,20 @@ export default function TornaviasPrimerPiso({
             <path d="M304.382156,659.095123L324.72025,625.7641l-3.364518-1.801453-19.887658,32.717244" transform="matrix(.638129 0.76993-.76993 0.638129 795.249617 73.847479)"/>
             <path d="M298.373699,655.118124l19.857165-32.790926-3.49783-1.859994-18.982195,32.477055-3.732366-2.45782L311.6399,618.798222" transform="matrix(.638129 0.76993-.76993 0.638129 795.249617 73.847479)"/>
         </g>
-
+        {/*Entradas*/}
+        <g style={{fill: mapColors.entry.fill,}}>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.032458-.138823 0.137109 0.032057 369.70455 681.006557)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.036234 0.137886-.136183 0.035787 524.214466 665.845444)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.136122-.04238 0.041856-.134442 383.869642 622.878105)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.13456 0.047105-.046524-.132899 525.383938 615.477849)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.068541-.12501 0.123467-.067695 243.909254 514.020828)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.014185-.14186 0.140108 0.01401 215.316054 374.769788)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.117044-.0814 0.080395 0.1156 300.901698 219.494389)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.036273 0.137875-.136173-.035825 666.373717 460.451987)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.065059 0.126857-.125291 0.064255 644.98789 285.909092)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.09218 0.108758-.107415-.091042 639.586123 183.052366)"/>
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.052305-.132625 0.130988 0.05166 536.677267 135.571559)"/>
+        </g>
         {/* Biblioteca */}
         <g style={{fill: mapColors.library.fill,stroke: mapColors.library.stroke,strokeWidth: mapColors.library.strokeWidth}}>
           <path
