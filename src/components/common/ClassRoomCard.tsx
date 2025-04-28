@@ -84,7 +84,9 @@ export default function ClassRoomCard({
     } else if (schedule) {
       return schedule?.startTime + ' - ' + schedule?.endTime
     } else {
-      return event?.schedules[0]?.startTime + ' - ' + event?.schedules[0]?.endTime
+      return (
+        event?.schedules[0]?.startTime + ' - ' + event?.schedules[0]?.endTime
+      )
     }
   }
 
@@ -94,7 +96,9 @@ export default function ClassRoomCard({
     } else if (schedule) {
       return schedule?.professors.map((professor) => professor).join(' - ')
     } else {
-      return event?.schedules[0]?.professors.map((professor) => professor).join(', ')
+      return event?.schedules[0]?.professors
+        .map((professor) => professor)
+        .join(', ')
     }
   }
 
@@ -105,6 +109,18 @@ export default function ClassRoomCard({
       return null
     } else {
       return event?.programNames.map((program) => program).join(', ')
+    }
+  }
+
+  console.log('event', event)
+
+  const courseName = () => {
+    if (course) {
+      return course?.name
+    } else if (event) {
+      return event?.courseName
+    } else {
+      return null
     }
   }
 
@@ -131,7 +147,7 @@ export default function ClassRoomCard({
       >
         <CardActionArea onClick={onClick}>
           <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-            {course?.name && (
+            {courseName() && (
               <>
                 <Box
                   sx={{
@@ -143,7 +159,7 @@ export default function ClassRoomCard({
                     mb: 0.5
                   }}
                 >
-                  <Tooltip title={course?.name} arrow placement="top">
+                  <Tooltip title={courseName()} arrow placement="top">
                     <Typography
                       variant="h5"
                       sx={{
@@ -154,10 +170,10 @@ export default function ClassRoomCard({
                         textOverflow: 'ellipsis'
                       }}
                     >
-                      {course?.name}
+                      {courseName()}
                     </Typography>
                   </Tooltip>
-                  <Tooltip title={course?.events} arrow placement="bottom">
+                  {course?.events && <Tooltip title={course?.events} arrow placement="bottom">
                     <Typography
                       variant="h5"
                       sx={{
@@ -165,12 +181,26 @@ export default function ClassRoomCard({
                         whiteSpace: 'nowrap',
                         maxWidth: '90%',
                         overflow: 'hidden',
-                        textOverflow: 'ellipsis',
+                        textOverflow: 'ellipsis'
                       }}
                     >
                       {course?.events}
                     </Typography>
-                  </Tooltip>
+                  </Tooltip>}
+                  {
+                    event?.name && (
+                      <Tooltip title={event?.name} arrow placement="bottom">
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          {event?.name}
+                        </Typography>
+                      </Tooltip>
+                    )
+                  }
                 </Box>
                 <Divider sx={{ mb: 0.5 }} />
               </>
@@ -278,7 +308,15 @@ export default function ClassRoomCard({
                 <Tooltip title={timeSchedule()} arrow>
                   <Typography
                     variant="body2"
-                    sx={{ color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', display: 'block', textAlign: 'left' }}>
+                    sx={{
+                      color: '#666',
+                      whiteSpace: 'nowrap',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      display: 'block',
+                      textAlign: 'left'
+                    }}
+                  >
                     Horario: {timeSchedule()}
                   </Typography>
                 </Tooltip>
