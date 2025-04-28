@@ -8,7 +8,26 @@ export const mapColors = {
   outline: {
     fill: 'none',
     stroke: '#2e4b7d',
+    strokeRestrictedArea:'#d4d4d4',
     strokeWidth: 1.396
+  },
+  hatchingPattern: {
+    stroke: '#e6bfbb', /* #87453f*/
+    strokeWidth: 1,
+  },
+  ladder: {
+    fill: 'none',
+    stroke: '#2e4b7d',
+    strokeWidth: 0.7,
+    strokeWidthStep: 0.4
+  },
+  arrow: {
+    fill: 'none',
+    stroke: '#2e4b7d',
+    strokeWidth: 2.5,
+  },
+  entry: {
+    fill: '#c22448',
   },
   library: {
     fill: '#757575',
@@ -67,7 +86,7 @@ export const mapColors = {
     strokeWidth: 0.7
   },
   institutoTransporte: {
-    fill: '#0f42c8',
+    fill: '#10245b',
     stroke: '#b8ddff', //#10245b
     strokeWidth: 0.7
   },

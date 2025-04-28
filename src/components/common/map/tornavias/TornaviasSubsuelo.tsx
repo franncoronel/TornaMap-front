@@ -27,27 +27,36 @@ export default function TornaviasSubsuelo({
       >
         <g transform="rotate(180 312.5 440)">
           {/* Contorno exterior  */}
-          <g
-            style={{
-              fill: mapColors.outline.fill,
-              stroke: mapColors.outline.stroke,
-              strokeWidth: mapColors.outline.strokeWidth
-            }}
-          >
+          <g style={{fill: mapColors.outline.fill,stroke: mapColors.outline.stroke,strokeWidth: mapColors.outline.strokeWidth }} >
             <path
               d="M212.143328,347.599413c19.099633,144.497161,213.686862,166.157509,271.658316,44.5419l141.835612,64.711542C508.108976,700.652917,101.945488,683.872221,56.067693,359.168237l156.075635-11.568824Z"
-              transform="translate(-1.314856 0.986144)"
-            />
+              transform="translate(-1.314856 0.986144)" />
+
+            <path d="M170.253401,191.140267l-58.671007,91.646276" transform="matrix(.422702-.906269 0.906269 0.422702-135.866533 532.340949)"/>
+            <path d="M123.526099,287.05446l56.922426-89.741944" transform="matrix(.422702-.906269 0.906269 0.422702-135.866533 532.340949)"/>
+            <path d="M231.24261,601.122845l15.977745-14.179977c1.061258,1.145564,2.189604,2.318601,3.378225,3.514202c20.608867,20.729894,59.337712,48.24322,80.674972,56.956255l-9.349419,19.237647c-25.970083-11.204098-67.158688-41.127792-87.130707-61.713115-1.272938-1.312028-2.459688-2.58612-3.550816-3.815012Z" transform="matrix(.30885-.951111 0.951111 0.30885-202.896347 577.085546)"/>
+          
           </g>
+
+          <g style={{fill: mapColors.ladder.fill,stroke: mapColors.outline.stroke,strokeWidth: mapColors.ladder.strokeWidthStep}}>
+            <path d="M121.608924,266.949109l10.409367,6.752875l2.853766-4.517707-10.163226-6.845909l3.02351-4.867637l10.281913,6.807003l6.37482-10.130499-10.348012-6.42206l3.1-4.84l10.389,6.337813l2.750273-4.287407-10.230822-6.579776l2.879724-4.490857l10.401607,6.244946l2.714431-4.338691-10.56-5.94l6.7813-10.61493l10.145045,6.471817l2.902006-4.469324-10.196535-6.402499l3.04-4.76l10.257066,6.184201" transform="matrix(.422702-.906269 0.906269 0.422702-135.866533 532.340949)"/>
+            <path d="M318.000828,664.855625l9.262802-19.174452-4.588326-2.229948-9.689356,18.9644-4.26512-2.32l10.033188-18.765055-4.1-2.311817-10.471971,18.574217-4.36-2.6l10.720501-18.449721-4.18-2.62-10.676865,18.469308-4.62-2.9L302.261124,631.345l-3.812304-2.302247-11.51496,17.791395-4.160576-2.765281l11.895869-17.841925-4.014358-2.82-11.611849,17.923628-4.753228-3.337467l12.644142-17.206161-4.160576-3.118066-12.575682,17.115529-3.885168-2.564514l12.730512-17.295667-3.78-2.949762L262.3767,629.042753l-4.459943-3.36l13.55673-16.839106-3.38-2.635409-13.485359,16.608553-4.432196-3.677467l14.487161-15.791613-3.425149-2.971271-14.428149,16.013295-3.982647-3.675694l15.089609-15.255315-3.974734-3.665881-15.221415,15.050802-3.927196-3.905797l15.805154-14.480787" transform="matrix(.30885-.951111 0.951111 0.30885-202.896347 577.085546)"/>
+          
+          </g>
+          <g style={{fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth}}>
+            <g transform="matrix(-.051722-.167985 0.129282-.039805 430.999211 526.049973)">
+              <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" fstroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)"stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g transform="matrix(.145491-.098623 0.075901 0.11197 123.253141 452.916426)">
+              <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+              <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+          </g>
+
           {/* Biblioteca Central  */}
-          <g
-            className="libraryRestrictedZone"
-            style={{
-              fill: mapColors.library.fill,
-              stroke: mapColors.library.stroke,
-              strokeWidth: mapColors.library.strokeWidth
-            }}
-          >
+          <g className="libraryRestrictedZone"
+            style={{fill: mapColors.library.fill,stroke: mapColors.library.stroke,strokeWidth: mapColors.library.strokeWidth}}>
             <path
               d="M2.826632,337c0,112.621305,58.627761,243.669928,216.740684,311.193148l19.308875-44.63483C83.807214,546.009954,52.979149,386.685276,52.979149,336h-50.152517"
               transform="translate(.000001 0)"
@@ -59,7 +68,7 @@ export default function TornaviasSubsuelo({
               fontSize="10"
               fontWeight="400"
               strokeWidth="0"
-              transform="translate(100 510) rotate(180)" //transform="translate(131.444581 427.258449)
+              transform="translate(90 510) rotate(180)" //transform="translate(131.444581 427.258449)
             >
               <tspan y="0" fontWeight="700" strokeWidth="0" dy="2em">
                 Biblioteca
@@ -71,12 +80,8 @@ export default function TornaviasSubsuelo({
                 Subsuelo
               </tspan>
             </text>
-            <BookOpenText
-              className="icon-common"
-              size={18}
-              transform="translate(75 488) rotate(180)"
-            />
           </g>
+          <BookOpenText className="icon-common" size={18}transform="translate(67 468) rotate(180)"/>
           {/* Auditorio Lectura Mundi */}
           <g
             style={{
@@ -176,12 +181,7 @@ export default function TornaviasSubsuelo({
           </g>
           {/* ......................................................:Aulas:........................................................................... */}
           {/* A27 */}
-          <g
-            style={{
-              fill: mapColors.classrooms.fill,
-              stroke: mapColors.classrooms.stroke,
-              strokeWidth: mapColors.classrooms.strokeWidth
-            }}
+          <g style={{ fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth }}
             onClick={() => handleOpen?.('A27')}
             transform="translate(.000001 0)"
             className={`classRoom ${isSelected('A27') ? 'selected' : ''}`}
@@ -205,12 +205,7 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* A26 */}
-          <g
-            style={{
-              fill: mapColors.classrooms.fill,
-              stroke: mapColors.classrooms.stroke,
-              strokeWidth: mapColors.classrooms.strokeWidth
-            }}
+          <g style={{ fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth }}
             onClick={() => handleOpen?.('A26')}
             transform="translate(.000001 0)"
             className={`classRoom ${isSelected('A26') ? 'selected' : ''}`}
@@ -233,7 +228,7 @@ export default function TornaviasSubsuelo({
               </tspan>
             </text>
           </g>
-          {/* A25 Lab. de Artes Digitales*  //* Lo cambio a color lab? */}
+          {/* A25 Lab. de Artes Digitales*/}
           <g
             style={{
               fill: mapColors.classrooms.fill,
@@ -363,11 +358,7 @@ export default function TornaviasSubsuelo({
           {/* .........................................:IAMK:........................................................................*/}
           {/* IAMK */}
           <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
+            style={{ fill: mapColors.iAMK.fill, stroke: mapColors.iAMK.stroke, strokeWidth: mapColors.iAMK.strokeWidth }}
             onClick={() => handleOpen?.('IAMK')}
             transform="translate(0 0.000001)"
             className={`classRoom ${isSelected('IAMK') ? 'selected' : ''}`}
@@ -392,23 +383,13 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* IAMK Servicios */}
-          <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
+          <g style={{ fill: mapColors.iAMK.fill, stroke: mapColors.iAMK.stroke, strokeWidth: mapColors.iAMK.strokeWidth }}
             onClick={() => handleOpen?.('IAMKS')}
             transform="translate(0 0.000001)"
             className={`classRoom ${isSelected('IAMKS') ? 'selected' : ''}`}
           >
             <path d="M456.583909,547.452094c-9.774067,4.179228-29.597963,11.308888-39.669812,14.215282L430.42164,614.12842c13.015658-2.971658,37.650561-11.502414,49.290329-17.027303l-23.12806-49.649023Z" />
-            <text
-              dx="0"
-              dy="0"
-              fontFamily='"eBHsLTiXjpU1:::Roboto"'
-              fontSize="10"
-              fontWeight="400"
+            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="10" fontWeight="400"
               transform="translate(465 582) rotate(180)" //transform="translate(438.190008 580.042774)"
               strokeWidth="0"
               className="text-common"
@@ -423,11 +404,7 @@ export default function TornaviasSubsuelo({
           </g>
           {/* IAMK Decanato */}
           <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
+            style={{fill: mapColors.iAMK.fill, stroke: mapColors.iAMK.stroke, strokeWidth: mapColors.iAMK.strokeWidth }}
             onClick={() => handleOpen?.('IAMKD')}
             transform="translate(0 0.000001)"
             className={`classRoom ${isSelected('IAMKD') ? 'selected' : ''}`}
@@ -456,27 +433,16 @@ export default function TornaviasSubsuelo({
           </g>
 
           {/*......................................................:Baños:...................................................... */}
-          <g
-            transform="translate(.000001 0)"
-            style={{
-              fill: mapColors.banios.fill,
-              stroke: mapColors.banios.stroke,
-              strokeWidth: mapColors.banios.strokeWidth
-            }}
-          >
+          <g transform="translate(.000001 0)"
+            style={{fill: mapColors.banios.fill,stroke: mapColors.banios.stroke,strokeWidth: mapColors.banios.strokeWidth}}>
             <path
               d="M374.849922,568.218955c-10.749453.78454-32.279669.999543-43.060431.435108l-4.526401,54.915969c13.249275,1.059387,39.086713.957775,51.706554-.440808l-4.119722-54.910269Z"
               transform="translate(.000001 0.000001)"
             />
-            <text
-              dx="0"
-              dy="0"
-              fontFamily='"eBHsLTiXjpU1:::Roboto"'
-              fontSize="10"
+            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="10"
               fontWeight="400"
               transform="translate(365 603) rotate(180)" //transform="translate(345.673075 592.013135)"
-              strokeWidth="0"
-            >
+              strokeWidth="0" >
               <tspan y="0" fontWeight="700" strokeWidth="0">
                 Baños
               </tspan>
@@ -488,6 +454,24 @@ export default function TornaviasSubsuelo({
             />{' '}
             //transform="translate(345.8 592.5)"
           </g>
+          <g transform="matrix(1.015533 0.155046-.14689 0.962114-106.829819-47.308686)" style={{fill: mapColors.banios.fill,stroke: mapColors.banios.stroke,strokeWidth: mapColors.banios.strokeWidth}}>
+            <path d="M242.704333,460.637516c0,0-16.344838-12.22501-16.344838-12.22501l19.13844-17.251778l14.600957,10.41137-17.394559,19.065418Z" 
+            transform="matrix(.853824 0.003904-.00414 0.905589 144.391316 68.324917)"/>
+            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="6.5"
+              fontWeight="400"
+              transform="translate(358 474) rotate(180)"
+              strokeWidth="0" >
+              <tspan y="0" fontWeight="700" strokeWidth="0">
+                Baños
+              </tspan>
+            </text>
+            <Toilet
+              className="icon-common"
+              transform="translate(357 474) rotate(180)"
+              size={10}
+            />
+          </g>
+
         </g>
       </svg>
     </>
