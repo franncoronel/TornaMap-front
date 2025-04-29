@@ -111,13 +111,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -129,13 +129,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -147,13 +147,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -165,13 +165,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -183,13 +183,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -201,13 +201,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -219,13 +219,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -237,13 +237,13 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </g>
@@ -255,12 +255,12 @@ export default function TornaviasPrimerPiso({
               x2="50.06"
               y2="47.3"
               transform="matrix(-1 0 0-1 0 0)"
-              stroke-linecap="round"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
             <polyline
               points="37.76,60.46 50.06,45.74 62.36,60.46"
-              stroke-linecap="round"
+              strokeLinecap="round"
               transform="matrix(-1 0 0-1 0 0)"
               strokeLinejoin="round"
             />
