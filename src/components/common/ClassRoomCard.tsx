@@ -122,12 +122,12 @@ export default function ClassRoomCard({
   const hasEvents = () => {
     if (course) {
       return course?.events.length > 0
-    } else if (schedule) {
-      return false
+    } else if (event) {
+      return event.schedules.length > 0
+    } else {
+      return true
     }
   }
-
-  console.log('course', course)
 
   const courseName = () => {
     if (course) {
