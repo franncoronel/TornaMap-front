@@ -1,25 +1,24 @@
 import { Box, Typography } from '@mui/material'
 import '../interactive-page.css'
-import { Outlet } from 'react-router-dom'
-import { FormMode } from '@/data/types/FormMode'
+import { Outlet, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 
 export interface FormContext {
-    mode: FormMode
     setTitle: (title: string) => void
 }
 
-export default function Form({ mode }: {mode: FormMode}) {
+export default function Form() {
     const [title, setTitle] = useState<string>('')
+    const isEditing = useLocation().pathname.includes('/editar')
 
     return (
         <Box className='interactive-page'>
             <Typography variant="h4">
-            {mode === 'add' ? 'Agregar' : 'Editar'}
+            {isEditing ? 'Editar' : 'Agregar'}
             {title && ` ${title}`}
             </Typography>
             
-            <Outlet context={{ mode, setTitle } as FormContext}/>
+            <Outlet context={{ setTitle } as FormContext}/>
 
         </Box>
     )
