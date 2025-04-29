@@ -62,6 +62,14 @@ export default function ClassRoomCard({
     }
   }
 
+  const isHybrid = () => {
+    if (course) {
+      return course?.modality === 'Virtual - Presencial'
+    } else {
+      return false
+    }
+  }
+
   const classroom = () => {
     if (course || event) {
       return ''
@@ -119,7 +127,7 @@ export default function ClassRoomCard({
     }
   }
 
-  console.log('event', event)
+  console.log('course', course)
 
   const courseName = () => {
     if (course) {
@@ -319,7 +327,7 @@ export default function ClassRoomCard({
               {hasEvents() && isVirtual() && !isPresential() && (
                 <Laptop size={24} color="#1976d2" />
               )}
-              {hasEvents() && isPresential() && isVirtual() && (
+              {hasEvents() && isHybrid() && (
                 <ArrowsClockwise color="#1976d2" size={24} />
               )}
 
@@ -329,7 +337,7 @@ export default function ClassRoomCard({
                   sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
                 >
                   Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
-                  {isVirtual() && isPresential() ? ' - ' : ''}{' '}
+                  {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
                   {isPresential() ? 'Presencial' : ''}
                 </Typography>
               )}
