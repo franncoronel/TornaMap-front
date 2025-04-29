@@ -80,7 +80,7 @@ export default function Profile() {
           <ProfileButton>Editar Aula</ProfileButton>
           <ProfileButton>Editar Aula</ProfileButton>
           <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
-          <ProfileButton>Editar Clase</ProfileButton>
+          <ProfileButton onClick={() => navigate('/asignatura/agregar')}>Agregar Asignatura</ProfileButton>
         </>
       )}
       <ProfileButton>Agregar Clase</ProfileButton>
