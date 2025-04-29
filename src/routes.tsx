@@ -38,34 +38,6 @@ export const routes: RouteObject[] = [
         element: <Profile />,
       },
       {
-        path: 'agregar',
-        element: <Form />,
-        children: [
-          {
-            path: 'asignatura',
-            element: <CourseForm />
-          },
-          // {
-          //   path: 'horario',
-          //   element: <ScheduleForm />
-          // }
-        ]
-      },
-      {
-        path: 'editar',
-        element: <Form />,
-        children: [
-          {
-            path: 'asignatura/:id',
-            element: <CourseForm />
-          },
-          // {
-          //   path: 'horario',
-          //   element: <ScheduleForm />
-          // }
-        ]
-      },
-      {
         path: 'asignatura',
         element: <Form />,
         children: [
@@ -79,20 +51,20 @@ export const routes: RouteObject[] = [
           }
         ]
       },
-      {
-        path: 'horario',
-        element: <Form />,
-        children: [
-          {
-            path: 'agregar',
-            element: <CourseForm />
-          },
-          {
-            path: 'editar/:id',
-            element: <CourseForm />
-          }
-        ]
-      }
+      // {
+      //   path: 'horario',
+      //   element: <Form />,
+      //   children: [
+      //     {
+      //       path: 'agregar',
+      //       element: <ScheduleForm />
+      //     },
+      //     {
+      //       path: 'editar/:id',
+      //       element: <ScheduleForm />
+      //     }
+      //   ]
+      // }
     ]
   },
   { path: '*', element: <NotFound /> }
