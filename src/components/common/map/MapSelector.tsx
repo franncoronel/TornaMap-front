@@ -4,6 +4,7 @@ import TornaviasPlantaBaja from './tornavias/TornaviasPlantaBaja'
 import TornaviasPrimerPiso from './tornavias/TornaviasPrimerPiso'
 import AularioNave3PlantaBaja from './aulario/AularioNave3PlantaBaja'
 import AularioNave3PlantaAlta from './aulario/AularioNave3PlantaAlta'
+import ITSPb from './its/ITSPb'
 //MUI Components
 import { Box } from '@mui/material'
 // Styles
@@ -27,12 +28,18 @@ const aulario: Record<string, FC<FloorMapProps>> = {
   '1': AularioNave3PlantaAlta
 }
 
+const its: Record<string, FC<FloorMapProps>>={
+  '0': ITSPb
+}
+
 // 2. agrúpalos en un selector de edificios
 const buildingMaps: Record<string, typeof tornavias> = {
   Tornavías: tornavias,
   tornavias: tornavias,
   AularioNave3: aulario,
-  aularioNave3: aulario
+  aularioNave3: aulario,
+  ITS: its,
+  its: its
 }
 
 interface MapSelectorProps {
