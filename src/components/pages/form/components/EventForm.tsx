@@ -43,6 +43,7 @@ import { IEventCreate, IEventCreateDto } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
+import { weekDayEN, weekDayLabel } from '@/utils/helpers'
 
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
@@ -122,7 +123,7 @@ export default function EventForm() {
     setBuildings(buildingList)
 
     if (id) {
-      const { data: evt } = await eventService.getById(id)
+      const { data: evt } = await eventService.getDetailById(id)
       reset({
         /* id: evt.id, */
         name: evt.name,
@@ -367,17 +368,9 @@ export default function EventForm() {
                           <MenuItem value="">
                             <em>---</em>
                           </MenuItem>
-                          {[
-                            'MONDAY',
-                            'TUESDAY',
-                            'WEDNESDAY',
-                            'THURSDAY',
-                            'FRIDAY',
-                            'SATURDAY',
-                            'SUNDAY'
-                          ].map((d) => (
+                          {weekDayEN.map((d) => (
                             <MenuItem key={d} value={d}>
-                              {d.slice(0, 3)}
+                              {weekDayLabel[d]}
                             </MenuItem>
                           ))}
                         </Select>
