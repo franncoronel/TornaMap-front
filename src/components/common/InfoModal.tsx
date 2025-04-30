@@ -111,7 +111,7 @@ export default function InfoModal({
           {isAuthenticated && (
             <Tooltip title={`Agregar ${route()}`} arrow placement="top">
               <Plus
-                className="floating-button"
+                className="floating-button modal"
                 onClick={() => navigate(`/${route()}/agregar`)}
               />
             </Tooltip>

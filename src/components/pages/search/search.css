@@ -54,6 +54,9 @@
   transition: all 0.3s ease-in-out;
   z-index: 1000;
 }
+.floating-button.modal{
+  bottom: 2rem;
+}
 
 .floating-button:hover{
   background-color: var(--primary-color-dark);
