@@ -12,7 +12,7 @@ import { courseService } from '@/data/services/CourseService'
 import { ICourse, ICourseList } from '@/data/domain/Course'
 
 import { WarningCircle, Plus } from '@phosphor-icons/react'
-import { Box, Divider, Grid2, Typography } from '@mui/material'
+import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
 import ClassRoomCard from '@/components/common/ClassRoomCard'
 import InfoModal from '@/components/common/InfoModal'
@@ -182,10 +182,12 @@ export default function Search() {
       )}
 
       {isAuthenticated && (
-        <Plus
-          className="floating-button"
-          onClick={() => navigate('/asignatura/agregar')}
-        />
+        <Tooltip title='Agregar asignatura' arrow placement="top">
+          <Plus
+            className="floating-button"
+            onClick={() => navigate('/asignatura/agregar')}
+          />
+        </Tooltip>
       )}
     </Box>
   )
