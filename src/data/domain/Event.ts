@@ -16,8 +16,8 @@ export interface IEventCreate extends Entity {
   name: string
   isApproved: boolean
   isCancelled: boolean
-  courseId: string
-  periodId: string
+  courseID: string
+  periodID: string
   schedules: ISchedule[]
 }
 export interface IEventCreateDto extends Entity {
