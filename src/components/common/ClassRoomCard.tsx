@@ -1,3 +1,4 @@
+import { useAuth } from '@/context/AuthContext'
 import { ICourseList } from '@/data/domain/Course'
 import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
@@ -40,7 +41,7 @@ export default function ClassRoomCard({
   event
 }: ClassRoomCardProps) {
   const navigate = useNavigate()
-
+  const { isAuthenticated } = useAuth()
   const handleEdit = (e: React.MouseEvent) => {
     // NEW
     e.stopPropagation() // evita disparar onClick del Card
@@ -144,7 +145,7 @@ export default function ClassRoomCard({
       return null
     }
   }
-
+  console.log(viewType)
   return (
     <Box
       sx={{
@@ -157,20 +158,20 @@ export default function ClassRoomCard({
       }}
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
-        {' '}
-        {/* NEW */}
-        <IconButton /* NEW */
-          onClick={handleEdit}
-          sx={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 2
-          }}
-          aria-label="Editar"
-        >
-          <PencilSimple size={24} />
-        </IconButton>
+        {isAuthenticated && viewType == 'standard' && (
+          <IconButton /* NEW */
+            onClick={handleEdit}
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              zIndex: 2
+            }}
+            aria-label="Editar"
+          >
+            <PencilSimple size={24} />
+          </IconButton>
+        )}
         <Card
           sx={{
             width: '100%',
