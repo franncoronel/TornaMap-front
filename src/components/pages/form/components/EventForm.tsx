@@ -36,12 +36,10 @@ import { eventService } from '@/data/services/EventService'
 
 import { IPeriod } from '@/data/domain/Period'
 import { ICourseList } from '@/data/domain/Course'
-import {
-  IEventCreate,
-  IEventDetail,
-  IScheduleCreate
-} from '@/data/domain/Event'
+import { IEventCreate } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
+import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { IScheduleCreate } from '@/data/domain/Schedule'
 
 /* ---------- tipos ---------- */
 type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
@@ -123,12 +121,12 @@ export default function EventForm() {
     if (id) {
       const { data: evt } = await eventService.getById(id)
       reset({
-        id: evt.id,
+        /* id: evt.id, */
         name: evt.name,
         isApproved: evt.isApproved,
         isCancelled: evt.isCancelled,
-        periodID: evt.periodID,
-        courseID: evt.courseID,
+        periodID: evt.periodId,
+        courseID: evt.courseId,
         schedules: evt.schedules.map((s) => ({
           ...s,
           buildingId: s.classroom?.building.id ?? '',
@@ -165,7 +163,7 @@ export default function EventForm() {
 
     try {
       setLoader(true)
-      if (id) await eventService.update(data as unknown as IEventDetail)
+      if (id) await eventService.update(data as unknown as IEventCreate)
       else await eventService.create(data)
       navigate('/buscar')
       setNotificationState({
@@ -214,7 +212,7 @@ export default function EventForm() {
       /* weekday xor date */
       if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, '')
       /* virtual => limpia building & classroom */
-      if (s.isVirtual && (s.buildingId || s.classroomId)) {
+      if (s.isVirtual && s.classroom) {
         setValue(`schedules.${idx}.buildingId`, '')
         setValue(`schedules.${idx}.classroomId`, '')
       }
@@ -378,28 +376,23 @@ export default function EventForm() {
                     name={`schedules.${idx}.date`}
                     control={control}
                     render={({ field }) => (
-                      <>
-                        <TextField
-                          {...field}
-                          type="date"
+                      <Box sx={{ flex: 1 }}>
+                        <DatePicker
                           label="Fecha"
-                          InputLabelProps={{ shrink: true }}
-                          sx={{ flex: 1 }}
+                          disablePast
+                          value={field.value || null}
+                          onChange={(val) => field.onChange(val ? val : '')}
                           disabled={watch(`schedules.${idx}.weekDay`) !== ''}
-                        ></TextField>
-                        <Button
-                          onClick={() => setValue(`schedules.${idx}.date`, '')}
-                          sx={{ minWidth: 0, width: 10 }}
-                          variant="text"
-                          color="error"
-                          disabled={watch(`schedules.${idx}.date`) === ''}
-                        >
-                          X
-                        </Button>
-                      </>
+                          slotProps={{
+                            textField: { fullWidth: true },
+                            actionBar: {
+                              actions: ['cancel', 'clear', 'accept']
+                            }
+                          }}
+                        />
+                      </Box>
                     )}
                   />
-                  {/* X para limpiar el campo fecha rápidamente */}
                 </Stack>
 
                 {/* fila 2 */}
