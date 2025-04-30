@@ -171,6 +171,7 @@ export default function Search() {
           handleClose={handleClose}
           title={selectedCourse.name}
           subtitle="Cursadas y eventos"
+          type="event"
         >
           <section className="class-info-container">
             <Typography variant="h6" fontWeight="medium" px="1rem">
@@ -182,7 +183,7 @@ export default function Search() {
       )}
 
       {isAuthenticated && (
-        <Tooltip title='Agregar asignatura' arrow placement="top">
+        <Tooltip title="Agregar asignatura" arrow placement="top">
           <Plus
             className="floating-button"
             onClick={() => navigate('/asignatura/agregar')}

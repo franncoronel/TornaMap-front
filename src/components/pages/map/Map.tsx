@@ -203,6 +203,7 @@ export default function Map() {
           handleClose={handleClose}
           title={classRoomId}
           subtitle={currentBuilding?.text}
+          type='schedule'
         >
           <DatePicker
             label="Elige una fecha"
