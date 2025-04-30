@@ -1,13 +1,15 @@
 import { Entity } from '@/data/domain/Entity'
 
-export interface ServiceInterface {
+export interface ServiceInterface<EntityType = Entity, CreateDTO = EntityType> {
   getAll?(): Promise<unknown>
 
   getById?(id: string | number): Promise<unknown>
 
-  create?(entity: Entity): Promise<unknown>
+  create?(entity: CreateDTO): Promise<unknown>
 
-  update?(entity: Entity): Promise<unknown>
+  update?(entity: EntityType): Promise<unknown>
 
-  delete?(id: number): Promise<unknown>
+  delete?(id: string): Promise<unknown>
 }
+
+
