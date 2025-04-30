@@ -114,6 +114,26 @@ export default function CourseForm() {
       setLoader(false)
     }
   }
+  const deleteCourse = async (courseId: string) => {
+    try {
+      setLoader(true)
+      await courseService.delete(courseId)
+      setNotificationState({
+        title: 'Curso eliminado',
+        description: 'El curso fue eliminado correctamente',
+        type: 'success'
+      })
+    } catch (error) {
+      console.error('Error deleting course:', error)
+      setNotificationState({
+        title: 'Error al eliminar el curso',
+        description: 'Contacta a soporte',
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
 
   /* Submit */
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
