@@ -9,5 +9,5 @@ export interface ServiceInterface {
 
   update?(entity: Entity): Promise<unknown>
 
-  delete?(id: number): Promise<unknown>
+  delete?(id: number | string): Promise<unknown>
 }
