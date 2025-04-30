@@ -1,7 +1,7 @@
 import { IClassroom } from './Classroom'
 
 export interface ISchedule {
-  id: string
+  id?: string
   startTime: string
   endTime: string
   weekDay: string | null
