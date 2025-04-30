@@ -1,7 +1,10 @@
 import { IClassroom } from './Classroom'
 
-export interface ISchedule {
+export interface ISchedule extends IScheduleCreate {
   id?: string
+}
+
+export interface IScheduleCreate {
   startTime: string
   endTime: string
   weekDay: string | null
