@@ -9,14 +9,14 @@ interface ITSPbProps {
 export default function ITSPb({
   selectedCode,
   handleOpen
-}: AularioNaveProps) {
+}: ITSPbProps) {
   const isSelected = (id: string) => id === selectedCode
 
   return (
     <>
       <svg id="eJMUfI3K0761" 
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="-220 -10 1000 360" 
+      viewBox="-220 -25 1000 360" 
       shape-rendering="geometricPrecision" 
       text-rendering="geometricPrecision" 
       project-id="dad7e7c888d34c45a454bf474854790e" 
@@ -70,13 +70,27 @@ export default function ITSPb({
           <g>
             <path d="M483.432781,216.523986v83.476014l-81.121805.000003-.000001-83.476018l81.121806.000001Z" transform="translate(-154.233596 0.000001)"/>
           </g>
-          {/* Aula comun la vi en uso xp */}
-          <g>
+          {/* Aula 1*/}
+          <g onClick={() => handleOpen?.('A1')}
+            className={`classRoom ${isSelected('A1') ? 'selected' : ''}`}>
             <path d="M154.428424,447.647782l.000001,76.993416h106.484852l1.008429-76.993416h-107.493282Z" transform="translate(-154.233595 0)"/>
+            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
+                  transform="translate(50 480) rotate(90)" >
+              <tspan y="0" fontWeight="700" strokeWidth="0">
+                A1
+              </tspan>
+            </text>
           </g>
           {/* Este es el Lab */}
-          <g>
+          <g onClick={() => handleOpen?.('LabLCD')}
+            className={`classRoom ${isSelected('LabLCD') ? 'selected' : ''}`}>
             <path d="M154.428427,447.647782h107.493281l-.000001-76.993606h-107.590697l.097417,76.993606Z" transform="translate(-154.233595 0)"/>
+            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
+                  transform="translate(50 400) rotate(90)" >
+              <tspan y="0" fontWeight="700" strokeWidth="0">
+                LAB
+              </tspan>
+            </text>
           </g>
           <g>
             <path d="M154.428429,370.654176h107.493279l.000001-76.993606h-107.493281l.000001,76.993606Z" transform="translate(-154.233594 0)"/>
@@ -89,6 +103,12 @@ export default function ITSPb({
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.193062 0 0 0.168-3.57216 586.961002)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 0.142567-.140807 0 49.265492 579.068967)"/>
         </g>
+        <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
+                  transform="translate(200 -10)" >
+              <tspan y="0" fontWeight="700" strokeWidth="0">
+              Edificio en obra - Plano sujeto a cambios
+              </tspan>
+        </text>
       </svg>
     </>
   )
