@@ -1,6 +1,6 @@
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
-import { IEventList } from '../domain/Event'
+import { IEvent, IEventCreate, IEventList } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
 import { format } from 'date-fns'
@@ -22,13 +22,33 @@ export class EventService implements ServiceInterface {
     return events
   }
 
-  /* async getById(id: string | number): Promise<Response<ICourse>> {
-    const courseDTO = await axios.get<Response<ICourse>>(
+  async getById(id: string) {
+    const { data } = await axios.get<Response<IEvent>>( // detail trae schedules
       `${this.baseUrl}/${id}`
     )
-    const course = courseDTO.data
-    return course
-  } */
+    return data
+  }
+
+  async create(payload: IEventCreate): Promise<Response<IEventCreate>> {
+    const { data } = await axios.post<Response<IEventCreate>>(
+      this.baseUrl,
+      payload,
+      { withCredentials: true }
+    )
+    return data
+  }
+
+  async update(payload: IEventCreate): Promise<Response<IEventCreate>> {
+    const { data } = await axios.put<Response<IEventCreate>>(
+      `${this.baseUrl}/${payload.id}`,
+      payload,
+      { withCredentials: true }
+    )
+    return data
+  }
+
+  delete = async (id: string) =>
+    await axios.delete(`${this.baseUrl}/${id}`, { withCredentials: true })
 }
 
 export const eventService = new EventService()
