@@ -32,17 +32,20 @@ import { FormContext } from '../Form'
 import { periodService } from '@/data/services/PeriodService'
 import { courseService } from '@/data/services/CourseService'
 import { buildingService } from '@/data/services/BuildingService'
-import { eventService } from '@/data/services/EventService'
+import {
+  eventService,
+  mapScheduleToBackend
+} from '@/data/services/EventService'
 
 import { IPeriod } from '@/data/domain/Period'
 import { ICourseList } from '@/data/domain/Course'
-import { IEventCreate } from '@/data/domain/Event'
+import { IEventCreate, IEventCreateDto } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
 
 /* ---------- tipos ---------- */
-type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
+export type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
   id?: string
   buildingId?: string
   classroomId?: string
@@ -163,8 +166,18 @@ export default function EventForm() {
 
     try {
       setLoader(true)
-      if (id) await eventService.update(data as unknown as IEventCreate)
-      else await eventService.create(data)
+      const payload: IEventCreateDto = {
+        name: data.name,
+        isApproved: data.isApproved,
+        isCancelled: data.isCancelled,
+        periodID: data.periodID,
+        courseID: data.courseID,
+        schedules: data.schedules.map(mapScheduleToBackend)
+      }
+
+      if (id)
+        await eventService.update(payload) // update espera IEventCreate
+      else await eventService.create(payload)
       navigate('/buscar')
       setNotificationState({
         title: id ? 'Evento actualizado' : 'Evento creado',
@@ -210,7 +223,7 @@ export default function EventForm() {
   useEffect(() => {
     schedulesWatch.forEach((s, idx) => {
       /* weekday xor date */
-      if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, '')
+      if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, null)
       /* virtual => limpia building & classroom */
       if (s.isVirtual && s.classroom) {
         setValue(`schedules.${idx}.buildingId`, '')
@@ -342,7 +355,7 @@ export default function EventForm() {
                     render={({ field }) => (
                       <FormControl
                         sx={{ flex: 1 }}
-                        disabled={watch(`schedules.${idx}.date`) !== ''}
+                        disabled={Boolean(watch(`schedules.${idx}.date`))}
                       >
                         <InputLabel id={`weekday-lbl-${idx}`}>Día</InputLabel>
                         <Select
@@ -494,9 +507,10 @@ export default function EventForm() {
                       />
                     )}
                   />
-
+                </Stack>
+                <Stack direction="row" spacing={1} alignItems="center">
                   <Button color="error" onClick={() => remove(idx)}>
-                    X
+                    Eliminar Horario
                   </Button>
                 </Stack>
               </Stack>
@@ -509,10 +523,11 @@ export default function EventForm() {
                 weekDay: '',
                 startTime: '08:00',
                 endTime: '10:00',
-                date: '',
+                date: null,
                 isVirtual: false,
                 buildingId: '',
-                classroomId: ''
+                classroomId: '',
+                professors: []
               })
             }
           >

@@ -11,5 +11,5 @@ export interface IScheduleCreate {
   date: Date | null
   isVirtual: boolean
   professors: string[]
-  classroom: IClassroom
+  classroom?: IClassroom | null
 }
