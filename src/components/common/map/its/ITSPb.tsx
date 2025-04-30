@@ -1,12 +1,12 @@
 import { mapColors } from '../../../pages/map/mapColors'
 
-interface AularioNaveProps {
+interface ITSPbProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
   onClassRoomClick?: (id: string) => void
   handleOpen?: (classRoomId: string) => void
 }
 
-export default function AularioNave3PlantaBaja({
+export default function ITSPb({
   selectedCode,
   handleOpen
 }: AularioNaveProps) {
