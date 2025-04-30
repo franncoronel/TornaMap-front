@@ -72,13 +72,6 @@ export default function Search() {
       setLoader(false)
       setSelectedCourse(response.data)
       setOpen(true)
-
-      setNotificationState({
-        title: 'Curso cargado',
-        type: 'success',
-        description: 'Detalles del curso obtenidos con éxito',
-        action: () => {}
-      })
     } catch (error) {
       setLoader(false)
       console.error('Error fetching course details:', error)
