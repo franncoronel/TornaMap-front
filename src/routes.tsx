@@ -3,6 +3,7 @@ import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
+import EventForm from './components/pages/form/components/EventForm'
 
 // Lazy Components
 // const Register = lazy(() => import('@/components/pages/register/Register'))
@@ -14,7 +15,9 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/form/Form'))
-const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
+const CourseForm = lazy(
+  () => import('@/components/pages/form/components/CourseForm')
+)
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -35,7 +38,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: 'perfil',
-        element: <Profile />,
+        element: <Profile />
       },
       {
         path: 'asignatura',
@@ -51,6 +54,34 @@ export const routes: RouteObject[] = [
           }
         ]
       },
+      {
+        path: 'evento',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <EventForm />
+          },
+          {
+            path: 'editar/:id',
+            element: <EventForm />
+          }
+        ]
+      },
+      {
+        path: 'horario',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <EventForm />
+          },
+          {
+            path: 'editar/:id',
+            element: <EventForm />
+          }
+        ]
+      }
       // {
       //   path: 'horario',
       //   element: <Form />,
