@@ -43,7 +43,7 @@ import { IEventCreate, IEventCreateDto } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
-import { weekDayEN, weekDayLabel } from '@/utils/helpers'
+import { weekDayES, weekDayShort } from '@/utils/helpers'
 
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
@@ -224,7 +224,8 @@ export default function EventForm() {
   useEffect(() => {
     schedulesWatch.forEach((s, idx) => {
       /* weekday xor date */
-      if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, null)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, null as any)
       /* virtual => limpia building & classroom */
       if (s.isVirtual && s.classroom) {
         setValue(`schedules.${idx}.buildingId`, '')
@@ -359,6 +360,7 @@ export default function EventForm() {
                         disabled={Boolean(watch(`schedules.${idx}.date`))}
                       >
                         <InputLabel id={`weekday-lbl-${idx}`}>Día</InputLabel>
+
                         <Select
                           labelId={`weekday-lbl-${idx}`}
                           label="Día"
@@ -368,9 +370,10 @@ export default function EventForm() {
                           <MenuItem value="">
                             <em>---</em>
                           </MenuItem>
-                          {weekDayEN.map((d) => (
+
+                          {weekDayES.map((d) => (
                             <MenuItem key={d} value={d}>
-                              {weekDayLabel[d]}
+                              {weekDayShort[d]}
                             </MenuItem>
                           ))}
                         </Select>
