@@ -1,181 +1,186 @@
 import { useEffect, useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { useLoader } from '@/context/LoaderContext'
-import { useNotification } from '@/context/NotificationContext'
-import { useNavigate } from 'react-router-dom'
-import { useOutletContext, useParams } from 'react-router-dom'
-import { FormContext } from '../Form'
-
-import { programService } from '@/data/services/ProgramService'
-import { courseService } from '@/data/services/CourseService'
-
-import { ICourseCreate, ICourseList, ICourseUpdate } from '@/data/domain/Course'
-import { IProgram } from '@/data/domain/Program'
-
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm
+} from 'react-hook-form'
 import {
   Autocomplete,
   Box,
   Button,
-  Stack,
-  TextField,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogTitle,
+  FormControlLabel,
+  Stack,
+  Switch,
+  TextField,
+  Typography
 } from '@mui/material'
+import { useLoader } from '@/context/LoaderContext'
+import { useNotification } from '@/context/NotificationContext'
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
+import { FormContext } from '../Form'
+
 import { periodService } from '@/data/services/PeriodService'
-import { IPeriod } from '@/data/domain/Period'
+import { courseService } from '@/data/services/CourseService'
 import { eventService } from '@/data/services/EventService'
 
-type FormValues = Omit<ICourseCreate, 'id'> & { id?: string }
+import { IPeriod } from '@/data/domain/Period'
+import { ICourseList } from '@/data/domain/Course'
+import { IEventCreate } from '@/data/domain/Event'
+import { IBuildingList } from '@/data/domain/Building'
+import { buildingService } from '@/data/services/BuildingService'
+import { IScheduleCreate } from '@/data/domain/Schedule'
+
+type ScheduleForm = Omit<IScheduleCreate, 'id'> & { id?: string }
+type FormValues = Omit<
+  IEventCreate,
+  'periodID' | 'courseID' | 'classroomID'
+> & {
+  id?: string
+  periodID: string
+  courseID: string
+  schedules: ScheduleForm[]
+}
 
 export default function EventForm() {
+  /* ---------- state ---------- */
   const [periods, setPeriods] = useState<IPeriod[]>([])
   const [courses, setCourses] = useState<ICourseList[]>([])
+  const [buildings, setBuildings] = useState<IBuildingList[]>([])
   const [openConfirm, setOpenConfirm] = useState(false)
 
-  const navigate = useNavigate()
+  /* ---------- context ---------- */
   const { setLoader } = useLoader()
   const { setNotificationState } = useNotification()
   const { setTitle } = useOutletContext<FormContext>()
+  const navigate = useNavigate()
   const { id } = useParams()
 
+  /* ---------- form ---------- */
   const {
     control,
     handleSubmit,
     reset,
     formState: { errors }
   } = useForm<FormValues>({
-    defaultValues: { name: '', description: '', programs: [] }
+    defaultValues: {
+      name: '',
+      isApproved: false,
+      isCancelled: false,
+      periodID: '',
+      courseID: '',
+      schedules: []
+    }
   })
 
-  /* Llamados a API */
+  /* field array para schedules */
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'schedules'
+  })
+
+  /* ---------- helpers ---------- */
+  const optionLabelPeriod = (p: IPeriod) => p.title
+  const optionLabelCourse = (c: ICourseList) => c.name
+
+  /* ---------- fetch ---------- */
   const fetchInfo = async () => {
-    /* 1️⃣ Traemos los programas y los guardamos */
-    const { data: periodList } = await periodService.getAll()
-    console.log('periodList', periodList)
+    setLoader(true)
+    const [{ data: periodList }, { data: courseList }, { data: buildingList }] =
+      await Promise.all([
+        periodService.getAll(),
+        courseService.getAll(),
+        buildingService.getAll()
+      ])
     setPeriods(periodList)
-
-    const { data: courseList } = await courseService.getAll()
-    console.log('courseList', courseList)
     setCourses(courseList)
+    setBuildings(buildingList)
 
-    /* 2️⃣ Si estamos editando, traemos el curso */
     if (id) {
-      const { data: course } = await eventService.getById(id)
-
-      /* 3️⃣ Calculamos los ids con la lista recién recibida (progList) */
-      /* const programIds = progList
-        .filter((p) => course.programs.includes(p.name))
-        .map((p) => p.id) */
-
-      /*  reset({
-        id: course.id,
-        name: course.name,
-        description: course.description,
-        programs: programIds
-      }) */
+      /* editar */
+      const { data: evt } = await eventService.getById(id)
+      reset({
+        /* id: evt.id, */
+        name: evt.name,
+        isApproved: evt.isApproved,
+        isCancelled: evt.isCancelled,
+        periodID: evt.periodId,
+        courseID: evt.courseId,
+        schedules: evt.schedules.map((s) => ({
+          ...s,
+          date: s.date, // string yyyy-MM-dd que controla TextField type=date
+          classroomId: s.classroom.id ?? ''
+        }))
+      })
     }
+    setLoader(false)
   }
 
-  const createCourse = async (payload: ICourseCreate) => {
+  /* ---------- acciones ---------- */
+  const submit: SubmitHandler<FormValues> = async (data) => {
     try {
       setLoader(true)
-      await courseService.create(payload)
+      if (id) await eventService.update(data as IEventCreate)
+      else await eventService.create(data as IEventCreate)
+
       navigate('/buscar')
       setNotificationState({
-        title: 'Curso creado',
-        description: 'El curso fue creado correctamente',
+        title: id ? 'Evento actualizado' : 'Evento creado',
+        description: 'La operación se realizó correctamente',
         type: 'success'
       })
-    } catch (error) {
-      console.error('Error creating course:', error)
+    } catch {
+      setNotificationState({
+        title: 'Error',
+        description: 'Contacta a soporte',
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
 
-      setNotificationState({
-        title: 'Error al crear el curso',
-        description: 'Contacta a soporte',
-        type: 'error'
-      })
-    } finally {
-      setLoader(false)
-    }
-  }
-  const updateCourse = async (payload: ICourseUpdate) => {
+  const onDelete = async () => {
+    if (!id) return
     try {
       setLoader(true)
-      await courseService.update(payload)
-      setNotificationState({
-        title: 'Curso actualizado',
-        description: 'El curso fue actualizado correctamente',
-        type: 'success'
-      })
-    } catch (error) {
-      console.error('Error updating course:', error)
-      setNotificationState({
-        title: 'Error al actualizar el curso',
-        description: 'Contacta a soporte',
-        type: 'error'
-      })
-    } finally {
-      setLoader(false)
-    }
-  }
-  const deleteCourse = async (courseId: string) => {
-    try {
-      setLoader(true)
-      await courseService.delete(courseId)
+      await eventService.delete(id)
       navigate('/buscar')
       setNotificationState({
-        title: 'Curso eliminado',
-        description: 'El curso fue eliminado correctamente',
+        title: 'Evento eliminado',
+        description: 'El evento fue eliminado correctamente',
         type: 'success'
-      })
-    } catch (error) {
-      console.error('Error deleting course:', error)
-      setNotificationState({
-        title: 'Error al eliminar el curso',
-        description: 'Contacta a soporte',
-        type: 'error'
       })
     } finally {
       setLoader(false)
     }
   }
 
-  /* Submit */
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    if (id) {
-      await updateCourse({ id, ...data })
-    } else {
-      await createCourse(data)
-    }
-  }
-
-  /** ---------- helpers ---------- */
-  const optionLabel = (p: IProgram) => p.name
-  const findSelected = (ids: string[]) =>
-    periods.filter((p) => ids.includes(p.id))
-
+  /* ---------- efect ---------- */
   useEffect(() => {
     setTitle('Evento')
     fetchInfo()
   }, [id])
 
+  /* ---------- UI ---------- */
   return (
     <>
       <Box
         component="form"
-        noValidate
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}
+        onSubmit={handleSubmit(submit)}
+        sx={{ maxWidth: 650, mx: 'auto', mt: 2 }}
       >
         <Stack spacing={3}>
-          {/* Nombre */}
+          {/* nombre */}
           <Controller
             name="name"
             control={control}
-            rules={{ required: 'El nombre es obligatorio' }}
+            rules={{ required: 'Obligatorio' }}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -187,46 +192,209 @@ export default function EventForm() {
             )}
           />
 
-          {/* Descripción */}
-          <Controller
-            name="description"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Descripción"
-                fullWidth
-                multiline
-                minRows={4}
-              />
-            )}
-          />
+          {/* switches */}
+          <Stack direction="row" spacing={2}>
+            <Controller
+              name="isApproved"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={<Switch {...field} checked={field.value} />}
+                  label="Aprobado"
+                />
+              )}
+            />
+            <Controller
+              name="isCancelled"
+              control={control}
+              render={({ field }) => (
+                <FormControlLabel
+                  control={<Switch {...field} checked={field.value} />}
+                  label="Cancelado"
+                />
+              )}
+            />
+          </Stack>
 
-          {/* Programas */}
+          {/* periodo */}
           <Controller
-            name="programs"
+            name="periodID"
             control={control}
+            rules={{ required: true }}
             render={({ field }) => (
               <Autocomplete
-                multiple
                 options={periods}
-                disableCloseOnSelect
-                getOptionLabel={optionLabel}
+                getOptionLabel={optionLabelPeriod}
                 isOptionEqualToValue={(o, v) => o.id === v.id}
-                value={findSelected(field.value)}
-                onChange={(_, value) => field.onChange(value.map((v) => v.id))}
+                value={periods.find((p) => p.id === field.value) ?? null}
+                onChange={(_, val) => field.onChange(val ? val.id : '')}
                 renderInput={(params) => (
                   <TextField
                     {...params}
-                    label="Carreras o Programas"
-                    placeholder="Selecciona carreras o programas"
+                    label="Periodo"
+                    error={!!errors.periodID}
+                    helperText={errors.periodID && 'Obligatorio'}
                   />
                 )}
               />
             )}
           />
 
-          <Stack direction="column" spacing={2} justifyContent="space-between">
+          {/* curso */}
+          <Controller
+            name="courseID"
+            control={control}
+            rules={{ required: true }}
+            render={({ field }) => (
+              <Autocomplete
+                options={courses}
+                getOptionLabel={optionLabelCourse}
+                isOptionEqualToValue={(o, v) => o.id === v.id}
+                value={courses.find((c) => c.id === field.value) ?? null}
+                onChange={(_, val) => field.onChange(val ? val.id : '')}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Asignatura"
+                    error={!!errors.courseID}
+                    helperText={errors.courseID && 'Obligatorio'}
+                  />
+                )}
+              />
+            )}
+          />
+
+          {/* schedules dinámicos */}
+          <Typography variant="h6">Horarios</Typography>
+          {fields.map((f, idx) => (
+            <Stack
+              key={f.id}
+              direction="row"
+              spacing={1}
+              sx={{ alignItems: 'center' }}
+            >
+              {/* día */}
+              <Controller
+                name={`schedules.${idx}.weekDay`}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    select
+                    SelectProps={{ native: true }}
+                    label="Día"
+                    sx={{ width: 120 }}
+                  >
+                    {[
+                      'MONDAY',
+                      'TUESDAY',
+                      'WEDNESDAY',
+                      'THURSDAY',
+                      'FRIDAY',
+                      'SATURDAY',
+                      'SUNDAY'
+                    ].map((d) => (
+                      <option key={d} value={d}>
+                        {d.slice(0, 3)}
+                      </option>
+                    ))}
+                  </TextField>
+                )}
+              />
+
+              {/* inicio */}
+              <Controller
+                name={`schedules.${idx}.startTime`}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="time"
+                    label="Inicio"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ width: 120 }}
+                  />
+                )}
+              />
+
+              {/* fin */}
+              <Controller
+                name={`schedules.${idx}.endTime`}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="time"
+                    label="Fin"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ width: 120 }}
+                  />
+                )}
+              />
+
+              {/* fecha única (opcional) */}
+              <Controller
+                name={`schedules.${idx}.date`}
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    type="date"
+                    label="Fecha"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ width: 150 }}
+                  />
+                )}
+              />
+
+              {/* virtual */}
+              <Controller
+                name={`schedules.${idx}.isVirtual`}
+                control={control}
+                render={({ field }) => (
+                  <FormControlLabel
+                    control={<Switch {...field} checked={field.value} />}
+                    label="Virtual"
+                  />
+                )}
+              />
+
+              {/* aula */}
+              <Controller
+                name={`schedules.${idx}.classroomId`}
+                control={control}
+                render={({ field }) => (
+                  <TextField {...field} label="Aula Id" sx={{ width: 110 }} />
+                )}
+              />
+
+              <Button
+                color="error"
+                onClick={() => remove(idx)}
+                sx={{ minWidth: 30 }}
+              >
+                X
+              </Button>
+            </Stack>
+          ))}
+          <Button
+            onClick={() =>
+              append({
+                weekDay: 'MONDAY',
+                startTime: '08:00',
+                endTime: '10:00',
+                date: null,
+                isVirtual: false,
+                classroom: null,
+                professors: []
+              })
+            }
+          >
+            Añadir horario
+          </Button>
+
+          {/* acciones */}
+          <Stack direction="column" spacing={2}>
             <Button variant="contained" type="submit">
               {id ? 'Actualizar' : 'Crear'}
             </Button>
@@ -245,13 +413,13 @@ export default function EventForm() {
           </Stack>
         </Stack>
       </Box>
-      {/* ---------- DIALOG DE CONFIRMACIÓN ---------- */}
+
+      {/* confirmación */}
       <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
-        <DialogTitle>¿Eliminar curso?</DialogTitle>
+        <DialogTitle>¿Eliminar evento?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Esta acción es irreversible. ¿Seguro que deseas eliminar la
-            asignatura?
+            Esta acción es irreversible. ¿Seguro que deseas eliminar el evento?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -259,7 +427,7 @@ export default function EventForm() {
           <Button
             color="error"
             onClick={() => {
-              if (id) deleteCourse(id) // llama al service
+              onDelete()
               setOpenConfirm(false)
             }}
           >
