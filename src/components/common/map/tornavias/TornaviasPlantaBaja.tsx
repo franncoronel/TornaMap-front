@@ -1466,8 +1466,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LCIV')}
-          className={`classRoom ${isSelected('LCIV') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('LC4')}
+          className={`classRoom ${isSelected('LC4') ? 'selected' : ''}`}
         >
           <path
             d="M711.065724,561.468643c7.928198-14.428356,19.708134-38.131889,22.326755-46.34822L783.07873,534.9998c-3.919149,11.468931-16.242515,38.379238-25.992051,54.033457l-46.020955-27.564614Z"
