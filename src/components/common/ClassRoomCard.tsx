@@ -159,18 +159,27 @@ export default function ClassRoomCard({
       <Box sx={{ position: 'relative', width: '100%' }}>
         {' '}
         {/* NEW */}
-        <IconButton /* NEW */
-          onClick={handleEdit}
-          sx={{
-            position: 'absolute',
-            top: 8,
-            right: 8,
-            zIndex: 2
-          }}
-          aria-label="Editar"
-        >
-          <PencilSimple size={24} />
-        </IconButton>
+          <IconButton /* NEW */
+            onClick={handleEdit}
+            sx={{
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              zIndex: 2,
+              color: '#666',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                color: 'primary.main',
+                transform: 'scale(1.1)',
+              },
+              '&:active': {
+                transform: 'scale(1)',
+              }
+            }}
+            aria-label="Editar"
+          >
+            <PencilSimple size={24} />
+          </IconButton>
         <Card
           sx={{
             width: '100%',
