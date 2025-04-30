@@ -4,10 +4,13 @@ import {
   Typography,
   Divider,
   IconButton,
-  Fade
+  Fade,
+  Tooltip
 } from '@mui/material'
 import { ReactNode } from 'react'
-import { X } from '@phosphor-icons/react'
+import { Plus, X } from '@phosphor-icons/react'
+import { useAuth } from '@/context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 type InfoModalProps = {
   children: ReactNode // Permite múltiples hijos de cualquier tipo
@@ -15,6 +18,7 @@ type InfoModalProps = {
   handleClose: () => void // Función para cerrar el Modal
   title: string
   subtitle?: string
+  type: 'course' | 'event' | 'schedule'
 }
 
 export default function InfoModal({
@@ -22,8 +26,21 @@ export default function InfoModal({
   open,
   handleClose,
   title,
-  subtitle
+  subtitle,
+  type
 }: InfoModalProps) {
+  const { isAuthenticated } = useAuth()
+  const navigate = useNavigate()
+  const route = () => {
+    if (type === 'course') {
+      return 'asignatura'
+    } else if (type === 'event') {
+      return 'evento'
+    } else if (type === 'schedule') {
+      return 'horario'
+    }
+  }
+
   return (
     <Modal
       open={open}
@@ -90,6 +107,15 @@ export default function InfoModal({
           >
             {children}
           </Box>
+
+          {isAuthenticated && (
+            <Tooltip title={`Agregar ${route()}`} arrow placement="top">
+              <Plus
+                className="floating-button"
+                onClick={() => navigate(`/${route()}/agregar`)}
+              />
+            </Tooltip>
+          )}
         </Box>
       </Fade>
     </Modal>
