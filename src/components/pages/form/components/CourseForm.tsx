@@ -18,13 +18,18 @@ import {
   Button,
   Stack,
   TextField,
-  Typography
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@mui/material'
 
 type FormValues = Omit<ICourseCreate, 'id'> & { id?: string }
 
 export default function CourseForm() {
   const [programs, setPrograms] = useState<IProgram[]>([])
+  const [openConfirm, setOpenConfirm] = useState(false)
 
   const navigate = useNavigate()
   const { setLoader } = useLoader()
@@ -36,42 +41,35 @@ export default function CourseForm() {
     control,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors }
   } = useForm<FormValues>({
     defaultValues: { name: '', description: '', programs: [] }
   })
 
   /* Llamados a API */
-  const fetchPrograms = async () => {
-    const response = await programService.getAll()
-    setPrograms(response.data)
-  }
-  const fetchCourse = async (courseId: string) => {
-    try {
-      setLoader(true)
-      const { data: course } = await courseService.getById(courseId)
-      console.log(course)
+  const fetchInfo = async () => {
+    /* 1️⃣ Traemos los programas y los guardamos */
+    const { data: progList } = await programService.getAll()
+    setPrograms(progList)
+
+    /* 2️⃣ Si estamos editando, traemos el curso */
+    if (id) {
+      const { data: course } = await courseService.getById(id)
+
+      /* 3️⃣ Calculamos los ids con la lista recién recibida (progList) */
+      const programIds = progList
+        .filter((p) => course.programs.includes(p.name))
+        .map((p) => p.id)
+
       reset({
         id: course.id,
         name: course.name,
         description: course.description,
-        programs: course.programs
+        programs: programIds
       })
-      // setValue('name', course.name)
-      // setValue('description', course.description)
-      // setValue('programs', course.programs)
-    } catch (error) {
-      console.error('Error fetching course:', error)
-      setNotificationState({
-        title: 'Error al obtener el curso',
-        description: 'Contacta a soporte',
-        type: 'error'
-      })
-    } finally {
-      setLoader(false)
     }
   }
+
   const createCourse = async (payload: ICourseCreate) => {
     try {
       setLoader(true)
@@ -118,6 +116,7 @@ export default function CourseForm() {
     try {
       setLoader(true)
       await courseService.delete(courseId)
+      navigate('/buscar')
       setNotificationState({
         title: 'Curso eliminado',
         description: 'El curso fue eliminado correctamente',
@@ -151,86 +150,114 @@ export default function CourseForm() {
 
   useEffect(() => {
     setTitle('Asignatura')
-    fetchPrograms()
-    if (id) fetchCourse(id)
+    fetchInfo()
   }, [id])
 
   return (
-    <Box
-      component="form"
-      noValidate
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}
-    >
-      <Stack spacing={3}>
-        <Typography variant="h5">
-          {id ? 'Editar curso' : 'Crear curso'}
-        </Typography>
+    <>
+      <Box
+        component="form"
+        noValidate
+        onSubmit={handleSubmit(onSubmit)}
+        sx={{ maxWidth: 600, mx: 'auto', mt: 2 }}
+      >
+        <Stack spacing={3}>
+          {/* Nombre */}
+          <Controller
+            name="name"
+            control={control}
+            rules={{ required: 'El nombre es obligatorio' }}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Nombre"
+                fullWidth
+                error={!!errors.name}
+                helperText={errors.name?.message}
+              />
+            )}
+          />
 
-        {/* Nombre */}
-        <Controller
-          name="name"
-          control={control}
-          rules={{ required: 'El nombre es obligatorio' }}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Nombre"
-              fullWidth
-              error={!!errors.name}
-              helperText={errors.name?.message}
-            />
-          )}
-        />
+          {/* Descripción */}
+          <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Descripción"
+                fullWidth
+                multiline
+                minRows={4}
+              />
+            )}
+          />
 
-        {/* Descripción */}
-        <Controller
-          name="description"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Descripción"
-              fullWidth
-              multiline
-              minRows={4}
-            />
-          )}
-        />
+          {/* Programas */}
+          <Controller
+            name="programs"
+            control={control}
+            render={({ field }) => (
+              <Autocomplete
+                multiple
+                options={programs}
+                disableCloseOnSelect
+                getOptionLabel={optionLabel}
+                isOptionEqualToValue={(o, v) => o.id === v.id}
+                value={findSelected(field.value)}
+                onChange={(_, value) => field.onChange(value.map((v) => v.id))}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Carreras o Programas"
+                    placeholder="Selecciona carreras o programas"
+                  />
+                )}
+              />
+            )}
+          />
 
-        {/* Programas */}
-        <Controller
-          name="programs"
-          control={control}
-          render={({ field }) => (
-            <Autocomplete
-              multiple
-              options={programs}
-              disableCloseOnSelect
-              getOptionLabel={optionLabel}
-              isOptionEqualToValue={(o, v) => o.id === v.id}
-              value={findSelected(field.value)}
-              onChange={(_, value) => field.onChange(value.map((v) => v.id))}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Carreras o Programas"
-                  placeholder="Selecciona carreras o programas"
-                />
-              )}
-            />
-          )}
-        />
-
-        <Stack direction="row" spacing={2} justifyContent="flex-end">
-          <Button variant="outlined" onClick={() => navigate(-1)}>
-            Cancelar
-          </Button>
-          <Button variant="contained" type="submit">
-            {id ? 'Actualizar' : 'Crear'}
-          </Button>
+          <Stack direction="column" spacing={2} justifyContent="space-between">
+            <Button variant="contained" type="submit">
+              {id ? 'Actualizar' : 'Crear'}
+            </Button>
+            <Button variant="outlined" onClick={() => navigate(-1)}>
+              Cancelar
+            </Button>
+            {id && (
+              <Button
+                variant="outlined"
+                color="error"
+                onClick={() => setOpenConfirm(true)}
+              >
+                Eliminar
+              </Button>
+            )}
+          </Stack>
         </Stack>
-      </Stack>
-    </Box>
+      </Box>
+      {/* ---------- DIALOG DE CONFIRMACIÓN ---------- */}
+      <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
+        <DialogTitle>¿Eliminar curso?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Esta acción es irreversible. ¿Seguro que deseas eliminar la
+            asignatura?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenConfirm(false)}>Cancelar</Button>
+          <Button
+            color="error"
+            onClick={() => {
+              if (id) deleteCourse(id) // llama al service
+              setOpenConfirm(false)
+            }}
+          >
+            Sí, eliminar
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
   )
 }
