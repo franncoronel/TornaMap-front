@@ -34,6 +34,13 @@ export class EventService implements ServiceInterface {
     return data
   }
 
+  async getDetailById(id: string) {
+    const { data } = await axios.get<Response<IEventCreate>>( // detail trae schedules
+      `${this.baseUrl}/detail/${id}`
+    )
+    return data
+  }
+
   async create(payload: IEventCreateDto): Promise<Response<IEventCreate>> {
     const { data } = await axios.post<Response<IEventCreate>>(
       this.baseUrl,

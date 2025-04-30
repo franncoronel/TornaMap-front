@@ -128,8 +128,8 @@ export default function EventForm() {
         name: evt.name,
         isApproved: evt.isApproved,
         isCancelled: evt.isCancelled,
-        periodID: evt.periodId,
-        courseID: evt.courseId,
+        periodID: evt.periodID,
+        courseID: evt.courseID,
         schedules: evt.schedules.map((s) => ({
           ...s,
           buildingId: s.classroom?.building.id ?? '',
