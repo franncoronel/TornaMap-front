@@ -36,8 +36,13 @@ export const mapColors = {
   },
   //Aulas
   classrooms: {
-    fill: '#6ba0a8',
+    fill: '#6ba0a8' ,
     stroke: '#144e65',
+    strokeWidth: 0.7
+  },
+  classRooms: {
+    fill: 'white' ,
+    stroke: '#cccccc',
     strokeWidth: 0.7
   },
   //Laboratorios
