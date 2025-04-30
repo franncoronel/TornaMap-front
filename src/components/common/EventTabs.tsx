@@ -74,12 +74,16 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
       {events.map((event) => {
         const activeTab = tabStates[event.id] || 0 // Índice de la pestaña activa para este evento
         return (
-          <Box key={event.id} sx={{ mb: 4, position: 'relative' }}>
+          <Box
+            key={event.id}
+            sx={{ mb: 4, position: 'relative', width: '100%' }}
+          >
             <Typography
               variant="h6"
               sx={{
                 textAlign: 'center',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                width: '100%'
               }}
             >
               {event.name}
