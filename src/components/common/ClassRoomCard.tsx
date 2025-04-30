@@ -9,7 +9,8 @@ import {
   Card,
   Box,
   Divider,
-  Tooltip
+  Tooltip,
+  IconButton
 } from '@mui/material'
 import {
   MapPin,
@@ -18,8 +19,10 @@ import {
   BookOpenText,
   Building,
   Laptop,
-  ArrowsClockwise
+  ArrowsClockwise,
+  PencilSimple
 } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
 
 interface ClassRoomCardProps {
   course?: ICourseList
@@ -36,12 +39,15 @@ export default function ClassRoomCard({
   schedule,
   event
 }: ClassRoomCardProps) {
-  //const formattedMode = mode.charAt(0).toUpperCase() + mode.slice(1).toLowerCase()
+  const navigate = useNavigate()
 
-  /* //TODO: COMENTARIOS DE MEJORAS
-   * - Agregar el botón de edición (SpeedDialEditActions)
-   * - Crear el modal para editar la materia
-   */
+  const handleEdit = (e: React.MouseEvent) => {
+    // NEW
+    e.stopPropagation() // evita disparar onClick del Card
+    if (course) navigate(`/asignatura/editar/${course.id}`)
+    else if (event) navigate(`/evento/editar/${event.id}`)
+    else if (schedule) navigate(`/horario/editar/${schedule.id}`)
+  }
 
   const isVirtual = () => {
     if (course) {
@@ -150,158 +156,222 @@ export default function ClassRoomCard({
         gap: 2
       }}
     >
-      <Card
-        sx={{
-          width: '100%',
-          flexGrow: 1,
-          borderRadius: 3,
-          boxShadow: 1,
-          border: '1px solid #e0e0e0',
-          '@Media (min-width: 1201px)': { width: '95%' }
-        }}
-      >
-        <CardActionArea onClick={onClick}>
-          <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-            {courseName() && (
-              <>
-                <Box
-                  sx={{
-                    display: 'grid',
-                    gridTemplateRows: 'auto auto',
-                    justifyItems: 'center',
-                    maxWidth: '100%',
-                    overflow: 'hidden',
-                    mb: 0.5
-                  }}
-                >
-                  <Tooltip title={courseName()} arrow placement="top">
-                    <Typography
-                      variant="h5"
-                      sx={{
-                        fontWeight: 'bold',
-                        whiteSpace: 'nowrap',
-                        maxWidth: '100%',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
-                      }}
-                    >
-                      {courseName()}
-                    </Typography>
-                  </Tooltip>
-                  {hasEvents() && (
-                    <Tooltip title={course?.events} arrow placement="bottom">
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 'bold',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '90%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          color: '#666'
-                        }}
-                      >
-                        {course?.events}
-                      </Typography>
-                    </Tooltip>
-                  )}
-                  {course && !hasEvents() && (
-                    <Tooltip title={course?.events} arrow placement="bottom">
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 'bold',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '90%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          color: '#666'
-                        }}
-                      >
-                        Sin eventos
-                      </Typography>
-                    </Tooltip>
-                  )}
-                  {}
-                  {event?.name && (
-                    <Tooltip title={event?.name} arrow placement="bottom">
-                      <Typography
-                        variant="h5"
-                        sx={{
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        {event?.name}
-                      </Typography>
-                    </Tooltip>
-                  )}
-                </Box>
-                <Divider sx={{ mb: 0.5 }} />
-              </>
-            )}
-
-            <Box
-              sx={{
-                display: 'grid',
-                gridTemplateRows: 'auto auto',
-                gridTemplateColumns: 'auto 1fr',
-                columnGap: 1,
-                maxHeight: '90vh',
-                overflowY: 'auto',
-                mb: 0.5,
-                rowGap: 1
-              }}
-            >
-              {/* Aula y Edificio */}
-              {viewType === 'modal' && !isVirtual() && (
+      <Box sx={{ position: 'relative', width: '100%' }}>
+        {' '}
+        {/* NEW */}
+        <IconButton /* NEW */
+          onClick={handleEdit}
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 2
+          }}
+          aria-label="Editar"
+        >
+          <PencilSimple size={24} />
+        </IconButton>
+        <Card
+          sx={{
+            width: '100%',
+            flexGrow: 1,
+            borderRadius: 3,
+            boxShadow: 1,
+            border: '1px solid #e0e0e0',
+            '@Media (min-width: 1201px)': { width: '95%' }
+          }}
+        >
+          <CardActionArea onClick={onClick}>
+            <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
+              {courseName() && (
                 <>
                   <Box
                     sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <MapPin size={24} color="#1976d2" />
-                  </Box>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
+                      display: 'grid',
+                      gridTemplateRows: 'auto auto',
+                      justifyItems: 'center',
                       maxWidth: '100%',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      mb: 0.5
                     }}
                   >
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: '#666',
-                        display: 'block',
-                        textAlign: 'left',
-                        whiteSpace: 'nowrap',
-                        maxWidth: '100%',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis'
-                      }}
-                    >
-                      Aula: {classroom()}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
-                    >
-                      Edificio: {building()}
-                    </Typography>
+                    <Tooltip title={courseName()} arrow placement="top">
+                      <Typography
+                        variant="h5"
+                        sx={{
+                          fontWeight: 'bold',
+                          whiteSpace: 'nowrap',
+                          maxWidth: '90%',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}
+                      >
+                        {courseName()}
+                      </Typography>
+                    </Tooltip>
+                    {hasEvents() && (
+                      <Tooltip title={course?.events} arrow placement="bottom">
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            fontWeight: 'bold',
+                            whiteSpace: 'nowrap',
+                            maxWidth: '90%',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            color: '#666'
+                          }}
+                        >
+                          {course?.events}
+                        </Typography>
+                      </Tooltip>
+                    )}
+                    {course && !hasEvents() && (
+                      <Tooltip title={course?.events} arrow placement="bottom">
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            fontWeight: 'bold',
+                            whiteSpace: 'nowrap',
+                            maxWidth: '90%',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            color: '#666'
+                          }}
+                        >
+                          Sin eventos
+                        </Typography>
+                      </Tooltip>
+                    )}
+                    {}
+                    {event?.name && (
+                      <Tooltip title={event?.name} arrow placement="bottom">
+                        <Typography
+                          variant="h5"
+                          sx={{
+                            fontWeight: 'bold'
+                          }}
+                        >
+                          {event?.name}
+                        </Typography>
+                      </Tooltip>
+                    )}
                   </Box>
+                  <Divider sx={{ mb: 0.5 }} />
                 </>
               )}
 
-              {/* Profesor */}
-              {hasEvents() && (
-                <>
-                  <User size={24} color="#1976d2" />
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateRows: 'auto auto',
+                  gridTemplateColumns: 'auto 1fr',
+                  columnGap: 1,
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  mb: 0.5,
+                  rowGap: 1
+                }}
+              >
+                {/* Aula y Edificio */}
+                {viewType === 'modal' && !isVirtual() && (
+                  <>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <MapPin size={24} color="#1976d2" />
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        maxWidth: '100%',
+                        overflow: 'hidden'
+                      }}
+                    >
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: '#666',
+                          display: 'block',
+                          textAlign: 'left',
+                          whiteSpace: 'nowrap',
+                          maxWidth: '100%',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
+                        }}
+                      >
+                        Aula: {classroom()}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        sx={{
+                          color: '#666',
+                          display: 'flex',
+                          textAlign: 'left'
+                        }}
+                      >
+                        Edificio: {building()}
+                      </Typography>
+                    </Box>
+                  </>
+                )}
+
+                {/* Profesor */}
+                {hasEvents() && (
+                  <>
+                    <User size={24} color="#1976d2" />
+                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                      <Tooltip title={professors()} arrow>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: '#666',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: 'block',
+                            textAlign: 'left'
+                          }}
+                        >
+                          Profesor: {professors()}
+                        </Typography>
+                      </Tooltip>
+                    </Box>
+                  </>
+                )}
+
+                {/* Modalidad */}
+                {hasEvents() && isPresential() && !isVirtual() && (
+                  <Building size={24} color="#1976d2" />
+                )}
+                {hasEvents() && isVirtual() && !isPresential() && (
+                  <Laptop size={24} color="#1976d2" />
+                )}
+                {hasEvents() && isHybrid() && (
+                  <ArrowsClockwise color="#1976d2" size={24} />
+                )}
+
+                {hasEvents() && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
+                  >
+                    Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
+                    {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
+                    {isPresential() ? 'Presencial' : ''}
+                  </Typography>
+                )}
+
+                {/* Horario */}
+                {hasEvents() && <Clock size={24} color="#1976d2" />}
+                {hasEvents() && (
                   <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <Tooltip title={professors()} arrow>
+                    <Tooltip title={timeSchedule()} arrow>
                       <Typography
                         variant="body2"
                         sx={{
@@ -313,84 +383,40 @@ export default function ClassRoomCard({
                           textAlign: 'left'
                         }}
                       >
-                        Profesor: {professors()}
+                        Horario: {timeSchedule()}
                       </Typography>
                     </Tooltip>
                   </Box>
-                </>
-              )}
+                )}
 
-              {/* Modalidad */}
-              {hasEvents() && isPresential() && !isVirtual() && (
-                <Building size={24} color="#1976d2" />
-              )}
-              {hasEvents() && isVirtual() && !isPresential() && (
-                <Laptop size={24} color="#1976d2" />
-              )}
-              {hasEvents() && isHybrid() && (
-                <ArrowsClockwise color="#1976d2" size={24} />
-              )}
-
-              {hasEvents() && (
-                <Typography
-                  variant="body2"
-                  sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
-                >
-                  Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
-                  {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
-                  {isPresential() ? 'Presencial' : ''}
-                </Typography>
-              )}
-
-              {/* Horario */}
-              {hasEvents() && <Clock size={24} color="#1976d2" />}
-              {hasEvents() && (
-                <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                  <Tooltip title={timeSchedule()} arrow>
-                    <Typography
-                      variant="body2"
-                      sx={{
-                        color: '#666',
-                        whiteSpace: 'nowrap',
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        display: 'block',
-                        textAlign: 'left'
-                      }}
-                    >
-                      Horario: {timeSchedule()}
-                    </Typography>
-                  </Tooltip>
-                </Box>
-              )}
-
-              {/* Carreras */}
-              {programs() && (
-                <>
-                  <BookOpenText size={24} color="#1976d2" />
-                  <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <Tooltip title={programs()} arrow>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: '#1976d2',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: 'block',
-                          textAlign: 'left'
-                        }}
-                      >
-                        Carreras: {programs()}
-                      </Typography>
-                    </Tooltip>
-                  </Box>
-                </>
-              )}
-            </Box>
-          </CardContent>
-        </CardActionArea>
-      </Card>
+                {/* Carreras */}
+                {programs() && (
+                  <>
+                    <BookOpenText size={24} color="#1976d2" />
+                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                      <Tooltip title={programs()} arrow>
+                        <Typography
+                          variant="body2"
+                          sx={{
+                            color: '#1976d2',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            display: 'block',
+                            textAlign: 'left'
+                          }}
+                        >
+                          Carreras: {programs()}
+                        </Typography>
+                      </Tooltip>
+                    </Box>
+                  </>
+                )}
+              </Box>
+            </CardContent>
+          </CardActionArea>
+        </Card>
+      </Box>
     </Box>
   )
 }
