@@ -182,10 +182,13 @@ export default function Search() {
       )}
 
       {isAuthenticated && (
-        <Tooltip title='Agregar asignatura' arrow placement="top">
+        <Tooltip title='Agregar asignatura' arrow placement="top" enterDelay={500} leaveDelay={200}
+                 slotProps={{popper: {modifiers: [{name: 'offset',options: {offset: [0,-8],},},],},}}>
           <Plus
             className="floating-button"
             onClick={() => navigate('/asignatura/agregar')}
+            role="button"
+            aria-label="Agregar asignatura"
           />
         </Tooltip>
       )}
