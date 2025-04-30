@@ -8,6 +8,8 @@ import { Laptop } from '@phosphor-icons/react'
 import '../pages/search/search.css'
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
 import { useNavigate } from 'react-router-dom'
+import { format, parseISO } from 'date-fns'
+import { useAuth } from '@/context/AuthContext'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -17,7 +19,6 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
-
   return (
     <div
       role="tabpanel"
@@ -40,7 +41,10 @@ function a11yProps(index: number) {
 
 export default function EventTabs({ events }: { events: IEvent[] }) {
   const [tabStates, setTabStates] = useState<{ [eventId: string]: number }>({})
+
   const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
+
   const handleTabChange = (eventId: string, newValue: number) => {
     setTabStates((prev) => ({
       ...prev,
@@ -59,12 +63,10 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
   }
 
   const buildDateString = (schedule: ISchedule) => {
-    const date = new Date(schedule.date!!)
+    // schedule.date es un ISO-string: "2025-05-01"
+    const date = parseISO(schedule.date!!) // ✅ no aplica zona
 
-    const day = date.getDate().toString().padStart(2, '0')
-    const month = (date.getMonth() + 1).toString().padStart(2, '0')
-
-    return `${day}/${month}`
+    return format(date, 'dd/MM') // 01/05
   }
 
   return (
@@ -82,19 +84,21 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
             >
               {event.name}
             </Typography>
-            <IconButton /* NEW */
-              onClick={() => navigate(`/evento/editar/${event.id}`)}
-              sx={{
-                position: 'absolute',
-                top: 0,
-                right: 15,
-                padding: 0,
-                zIndex: 2
-              }}
-              aria-label="Editar"
-            >
-              <PencilSimple size={24} />
-            </IconButton>
+            {isAuthenticated && (
+              <IconButton
+                onClick={() => navigate(`/evento/editar/${event.id}`)}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 15,
+                  padding: 0,
+                  zIndex: 2
+                }}
+                aria-label="Editar"
+              >
+                <PencilSimple size={24} />
+              </IconButton>
+            )}
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}

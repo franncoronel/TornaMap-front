@@ -1,10 +1,6 @@
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
-import {
-  IEventCreate,
-  IEventCreateDto,
-  IEventList
-} from '../domain/Event'
+import { IEventCreate, IEventCreateDto, IEventList } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
 import { format } from 'date-fns'
@@ -52,7 +48,7 @@ export class EventService implements ServiceInterface {
 
   async update(payload: IEventCreateDto): Promise<Response<IEventCreate>> {
     const { data } = await axios.put<Response<IEventCreate>>(
-      `${this.baseUrl}/${payload.id}`,
+      `${this.baseUrl}`,
       payload,
       { withCredentials: true }
     )
@@ -67,7 +63,7 @@ export function mapScheduleToBackend(s: ScheduleForm): BackendSchedule {
   // HH:mm ya viene en startTime / endTime
   return {
     weekDay: s.weekDay || null,
-    date: s.date || null, // el DatePicker ya devuelve 'yyyy-MM-dd'
+    date: s.date ? format(s.date, 'yyyy-MM-dd') : null, // el DatePicker ya devuelve 'yyyy-MM-dd'
     startTime: s.startTime,
     endTime: s.endTime,
     isVirtual: s.isVirtual,
@@ -77,7 +73,7 @@ export function mapScheduleToBackend(s: ScheduleForm): BackendSchedule {
 
 export type BackendSchedule = {
   weekDay: string | null
-  date: Date | null // yyyy-MM-dd
+  date: string | null // yyyy-MM-dd
   startTime: string // HH:mm
   endTime: string // HH:mm
   isVirtual: boolean

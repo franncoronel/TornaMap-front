@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { parseISO } from 'date-fns'
 import {
   Controller,
   SubmitHandler,
@@ -46,8 +47,9 @@ import { IScheduleCreate } from '@/data/domain/Schedule'
 import { weekDayES, weekDayShort } from '@/utils/helpers'
 
 /* ---------- tipos ---------- */
-export type ScheduleForm = Omit<IScheduleCreate, 'id'> & {
+export type ScheduleForm = Omit<IScheduleCreate, 'id' | 'date'> & {
   id?: string
+  date: Date | null
   buildingId?: string
   classroomId?: string
 }
@@ -125,7 +127,6 @@ export default function EventForm() {
     if (id) {
       const { data: evt } = await eventService.getDetailById(id)
       reset({
-        /* id: evt.id, */
         name: evt.name,
         isApproved: evt.isApproved,
         isCancelled: evt.isCancelled,
@@ -133,6 +134,10 @@ export default function EventForm() {
         courseID: evt.courseID,
         schedules: evt.schedules.map((s) => ({
           ...s,
+          date:
+            typeof s.date === 'string'
+              ? parseISO(s.date) // string  -> Date
+              : s.date, // Date    -> Date
           buildingId: s.classroom?.building.id ?? '',
           classroomId: s.classroom?.id ?? ''
         }))
@@ -167,7 +172,9 @@ export default function EventForm() {
 
     try {
       setLoader(true)
-      const payload: IEventCreateDto = {
+
+      const payload: IEventCreateDto & { id: string | undefined } = {
+        id,
         name: data.name,
         isApproved: data.isApproved,
         isCancelled: data.isCancelled,
@@ -223,9 +230,12 @@ export default function EventForm() {
   const schedulesWatch = watch('schedules')
   useEffect(() => {
     schedulesWatch.forEach((s, idx) => {
-      /* weekday xor date */
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if (s.weekDay && s.date) setValue(`schedules.${idx}.date`, null as any)
+      if (s.weekDay && s.date) {
+        setValue(`schedules.${idx}.date`, null)
+      }
+      if (!s.weekDay && s.date) {
+        setValue(`schedules.${idx}.date`, s.date)
+      }
       /* virtual => limpia building & classroom */
       if (s.isVirtual && s.classroom) {
         setValue(`schedules.${idx}.buildingId`, '')
@@ -389,8 +399,8 @@ export default function EventForm() {
                         <DatePicker
                           label="Fecha"
                           disablePast
-                          value={field.value || null}
-                          onChange={(val) => field.onChange(val ? val : '')}
+                          value={field.value}
+                          onChange={(val) => field.onChange(val)}
                           disabled={watch(`schedules.${idx}.weekDay`) !== ''}
                           slotProps={{
                             textField: { fullWidth: true },

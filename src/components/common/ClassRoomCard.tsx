@@ -145,7 +145,6 @@ export default function ClassRoomCard({
       return null
     }
   }
-  console.log(viewType)
   return (
     <Box
       sx={{
