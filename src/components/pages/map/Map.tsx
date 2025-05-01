@@ -19,7 +19,7 @@ import {
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import MapSelector from '@/components/common/map/MapSelector'
 
 // Styles
@@ -186,7 +186,7 @@ export default function Map() {
         )}
       </Box>
 
-      <Divider variant="middle" flexItem sx={{ }} />
+      <Divider variant="middle" flexItem sx={{}} />
 
       <section className="map-container">
         <MapSelector
@@ -203,7 +203,7 @@ export default function Map() {
           handleClose={handleClose}
           title={classRoomId}
           subtitle={currentBuilding?.text}
-          type='schedule'
+          type="schedule"
         >
           <DatePicker
             label="Elige una fecha"

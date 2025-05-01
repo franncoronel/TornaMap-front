@@ -45,6 +45,12 @@ import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
 import { weekDayES, weekDayShort } from '@/utils/helpers'
+import { Trash } from '@phosphor-icons/react/dist/icons/Trash'
+import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
+import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
+import { CalendarPlus } from '@phosphor-icons/react/dist/icons/CalendarPlus'
+import { CalendarDots } from '@phosphor-icons/react/dist/icons/CalendarDots'
+import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id' | 'date'> & {
@@ -72,7 +78,7 @@ export default function EventForm() {
   /* context */
   const { setLoader } = useLoader()
   const { setNotificationState } = useNotification()
-  const { setTitle } = useOutletContext<FormContext>()
+  const { setTitle, setIcon } = useOutletContext<FormContext>()
   const navigate = useNavigate()
   const { id } = useParams()
 
@@ -223,6 +229,7 @@ export default function EventForm() {
   /* efectos */
   useEffect(() => {
     setTitle('Evento')
+    setIcon(<CalendarStar size={32} />)
     fetchInfo()
   }, [id])
 
@@ -286,6 +293,7 @@ export default function EventForm() {
               control={control}
               render={({ field }) => (
                 <FormControlLabel
+                  sx={{ display: 'none' }}
                   control={<Switch {...field} checked={field.value} />}
                   label="Cancelado"
                 />
@@ -340,9 +348,13 @@ export default function EventForm() {
               />
             )}
           />
+          {/* Separator */}
 
           {/* horarios */}
-          <Typography variant="h6">Horarios</Typography>
+          <Typography variant="h2">
+            <CalendarDots size={32} />
+            Horarios
+          </Typography>
           {fields.map((f, idx) => {
             const buildField = `schedules.${idx}.buildingId` as const
             const classField = `schedules.${idx}.classroomId` as const
@@ -516,6 +528,7 @@ export default function EventForm() {
                 </Stack>
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Button color="error" onClick={() => remove(idx)}>
+                    <Trash size={32} />
                     Eliminar Horario
                   </Button>
                 </Stack>
@@ -530,22 +543,25 @@ export default function EventForm() {
                 startTime: '08:00',
                 endTime: '10:00',
                 date: null,
-                isVirtual: false,
+                isVirtual: true,
                 buildingId: '',
                 classroomId: '',
                 professors: []
               })
             }
           >
+            <CalendarPlus size={32} />
             Añadir horario
           </Button>
 
           {/* acciones */}
           <Stack direction="column" spacing={2}>
             <Button variant="contained" type="submit">
-              {id ? 'Actualizar' : 'Crear'}
+              <FloppyDisk size={32} />
+              {id ? 'Actualizar' : 'Guardar'}
             </Button>
             <Button variant="outlined" onClick={() => navigate(-1)}>
+              <XSquare size={32} />
               Cancelar
             </Button>
             {id && (
@@ -554,6 +570,7 @@ export default function EventForm() {
                 color="error"
                 onClick={() => setOpenConfirm(true)}
               >
+                <Trash size={32} />
                 Eliminar
               </Button>
             )}
@@ -570,7 +587,10 @@ export default function EventForm() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenConfirm(false)}>Cancelar</Button>
+          <Button onClick={() => setOpenConfirm(false)}>
+            <XSquare size={32} />
+            Cancelar
+          </Button>
           <Button
             color="error"
             onClick={() => {
@@ -578,6 +598,7 @@ export default function EventForm() {
               setOpenConfirm(false)
             }}
           >
+            <Trash size={32} />
             Sí, eliminar
           </Button>
         </DialogActions>

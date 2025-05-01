@@ -14,7 +14,7 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 import { WarningCircle, Plus } from '@phosphor-icons/react'
 import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import InfoModal from '@/components/common/InfoModal'
 import EventTabs from '@/components/common/EventTabs'
 

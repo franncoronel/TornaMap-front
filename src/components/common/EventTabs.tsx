@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 
 // Components
 import MapSelector from '@/components/common/map/MapSelector'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 
 // Material UI
 import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
@@ -68,7 +68,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
 
   const buildDateString = (schedule: ISchedule) => {
     // schedule.date es un ISO-string: "2025-05-01"
-    const date = parseISO(schedule.date?.toString()??'') // ✅ no aplica zona
+    const date = parseISO(schedule.date?.toString() ?? '') // ✅ no aplica zona
 
     return format(date, 'dd/MM') // 01/05
   }
@@ -110,7 +110,9 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
-                onChange={(e, newValue) => handleTabChange(event.id??'', newValue)}
+                onChange={(e, newValue) =>
+                  handleTabChange(event.id ?? '', newValue)
+                }
                 variant="fullWidth"
               >
                 {event.schedules.map((schedule: ISchedule) => (

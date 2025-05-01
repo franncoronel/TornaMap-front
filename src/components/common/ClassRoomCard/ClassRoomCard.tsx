@@ -1,8 +1,14 @@
+// Styles
+import './classRoomCard.css'
+// Context
 import { useAuth } from '@/context/AuthContext'
+
+// Interfaces
 import { ICourseList } from '@/data/domain/Course'
 import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
-/* import { EventAvailableTwoTone } from "@mui/icons-material" */
+
+// MUI
 import {
   CardActionArea,
   CardContent,
@@ -155,6 +161,7 @@ export default function ClassRoomCard({
         py: 2,
         gap: 2
       }}
+      className="classroom-card"
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
         {isAuthenticated && viewType == 'standard' && (
