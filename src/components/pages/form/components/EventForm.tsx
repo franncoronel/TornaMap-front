@@ -497,28 +497,32 @@ export default function EventForm() {
                   />
                 </Stack>
 
-                {/* fila 3 */}
-                <Stack direction="row" spacing={1} alignItems="center">
-                  {/* virtual */}
+                <Stack
+                  direction={{ xs: 'column', sm: 'row' }}
+                  spacing={1}
+                  alignItems="center"
+                >
+                  {/* Virtual */}
                   <Controller
                     name={`schedules.${idx}.isVirtual`}
                     control={control}
                     render={({ field }) => (
                       <FormControlLabel
+                        sx={{ alignSelf: 'start' }}
                         control={<Switch {...field} checked={field.value} />}
                         label="Virtual"
                       />
                     )}
                   />
-                </Stack>
-                <Stack direction="row" spacing={1} alignItems="center">
-                  {/* building */}
+
+                  {/* Edificio */}
                   <Controller
                     name={buildField}
                     control={control}
                     render={({ field }) => (
                       <Autocomplete
                         options={buildings}
+                        sx={{ flex: 1, width: { xs: '100%' } }}
                         getOptionLabel={(b) => b.name}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
                         value={
@@ -532,20 +536,25 @@ export default function EventForm() {
                           <TextField
                             {...params}
                             label="Edificio"
-                            sx={{ width: 180 }}
+                            fullWidth
+                            sx={{
+                              // en móvil, ocupa 100%; en sm+ fija width si lo quieres
+                              width: { xs: '100%' }
+                            }}
+                            disabled={watch(`schedules.${idx}.isVirtual`)}
                           />
                         )}
-                        disabled={isVirtual}
                       />
                     )}
                   />
 
-                  {/* aula */}
+                  {/* Aula */}
                   <Controller
                     name={classField}
                     control={control}
                     render={({ field }) => (
                       <Autocomplete
+                        sx={{ flex: 1, width: { xs: '100%' } }}
                         options={classroomsFiltered}
                         getOptionLabel={(o) => o.label}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
@@ -559,10 +568,16 @@ export default function EventForm() {
                           <TextField
                             {...params}
                             label="Aula"
-                            sx={{ width: 180 }}
+                            fullWidth
+                            sx={{
+                              width: { xs: '100%' }
+                            }}
+                            disabled={
+                              watch(`schedules.${idx}.isVirtual`) ||
+                              !buildingIdSel
+                            }
                           />
                         )}
-                        disabled={isVirtual || !buildingIdSel}
                       />
                     )}
                   />
