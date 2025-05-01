@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { CaretLeft } from '@phosphor-icons/react/dist/icons/CaretLeft'
 export interface FormContext {
   setTitle: (title: string) => void
+  setIcon: (icon: JSX.Element | null) => void
 }
 
 export default function Form() {

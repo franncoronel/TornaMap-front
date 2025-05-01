@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { parseISO } from 'date-fns'
+import { format, parse, parseISO } from 'date-fns'
 import {
   Controller,
   SubmitHandler,
@@ -51,6 +51,7 @@ import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
 import { CalendarPlus } from '@phosphor-icons/react/dist/icons/CalendarPlus'
 import { CalendarDots } from '@phosphor-icons/react/dist/icons/CalendarDots'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
+import { TimePicker } from '@mui/x-date-pickers'
 
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id' | 'date'> & {
@@ -428,29 +429,54 @@ export default function EventForm() {
 
                 {/* fila 2 */}
                 <Stack direction="row" spacing={1}>
+                  {/* ─── Hora inicio ───────────────────────────────────────────── */}
                   <Controller
-                    name={`schedules.${idx}.startTime`}
+                    name={`schedules.${idx}.startTime`} // string "18:00"
                     control={control}
+                    rules={{ required: true }}
                     render={({ field }) => (
-                      <TextField
-                        {...field}
-                        type="time"
+                      <TimePicker
                         label="Inicio"
-                        InputLabelProps={{ shrink: true }}
-                        sx={{ flex: 1 }}
+                        /*  value: convierte el string guardado a Date  */
+                        value={
+                          field.value // '' | '18:00' …
+                            ? parse(field.value, 'HH:mm', new Date())
+                            : null // ←  TimePicker acepta null
+                        }
+                        /*  onChange: vuelve a string "HH:mm" para el form  */
+                        onChange={(val) =>
+                          field.onChange(
+                            val ? format(val as Date, 'HH:mm') : ''
+                          )
+                        }
+                        slotProps={{
+                          textField: { fullWidth: true } // mismo aspecto
+                        }}
                       />
                     )}
                   />
+
+                  {/* ─── Hora fin ──────────────────────────────────────────────── */}
                   <Controller
                     name={`schedules.${idx}.endTime`}
                     control={control}
+                    rules={{ required: true }}
                     render={({ field }) => (
-                      <TextField
-                        {...field}
-                        type="time"
+                      <TimePicker
                         label="Fin"
-                        InputLabelProps={{ shrink: true }}
-                        sx={{ flex: 1 }}
+                        value={
+                          field.value
+                            ? parse(field.value, 'HH:mm', new Date())
+                            : null
+                        }
+                        onChange={(val) =>
+                          field.onChange(
+                            val ? format(val as Date, 'HH:mm') : ''
+                          )
+                        }
+                        slotProps={{
+                          textField: { fullWidth: true }
+                        }}
                       />
                     )}
                   />
