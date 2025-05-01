@@ -4,13 +4,10 @@ import {
   Typography,
   Divider,
   IconButton,
-  Fade,
-  Tooltip
+  Fade
 } from '@mui/material'
 import { ReactNode } from 'react'
-import { Plus, X } from '@phosphor-icons/react'
-import { useAuth } from '@/context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { X } from '@phosphor-icons/react'
 
 type InfoModalProps = {
   children: ReactNode // Permite múltiples hijos de cualquier tipo
@@ -26,20 +23,8 @@ export default function InfoModal({
   open,
   handleClose,
   title,
-  subtitle,
-  type
+  subtitle
 }: InfoModalProps) {
-  const { isAuthenticated } = useAuth()
-  const navigate = useNavigate()
-  const route = () => {
-    if (type === 'course') {
-      return 'asignatura'
-    } else if (type === 'event') {
-      return 'evento'
-    } else if (type === 'schedule') {
-      return 'horario'
-    }
-  }
 
   return (
     <Modal

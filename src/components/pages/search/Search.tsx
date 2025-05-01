@@ -192,7 +192,7 @@ export default function Search() {
         <Tooltip title="Agregar asignatura" arrow placement="top">
           <Plus
             className="floating-button"
-            onClick={() => navigate('/curso/nuevo')}
+            onClick={() => navigate('/asignatura/agregar')}
           />
         </Tooltip>
       )}

@@ -246,7 +246,6 @@ export default function EventForm() {
     setTitle('Evento')
     setIcon(<CalendarStar size={32} />)
     fetchInfo()
-    console.log('EventForm: useEffect', initialCourseID)
     if (!id /* estamos creando, no editando */ && initialCourseID) {
       // marcamos el valor en el form
       setValue('courseID', initialCourseID)
