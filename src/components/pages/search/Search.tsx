@@ -172,6 +172,19 @@ export default function Search() {
             </Typography>
             <EventTabs events={selectedCourse.events} />
           </section>
+          {isAuthenticated && (
+            <Tooltip title={`Agregar evento`} arrow placement="top">
+              <Plus
+                className="floating-button modal"
+                onClick={() =>
+                  // suponiendo que tu ruta para crear evento es '/evento/nuevo'
+                  navigate('/evento/agregar', {
+                    state: { courseID: selectedCourse?.id }
+                  })
+                }
+              />
+            </Tooltip>
+          )}
         </InfoModal>
       )}
 
@@ -179,7 +192,7 @@ export default function Search() {
         <Tooltip title="Agregar asignatura" arrow placement="top">
           <Plus
             className="floating-button"
-            onClick={() => navigate('/asignatura/agregar')}
+            onClick={() => navigate('/curso/nuevo')}
           />
         </Tooltip>
       )}

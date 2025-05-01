@@ -27,7 +27,12 @@ import {
 } from '@mui/material'
 import { useLoader } from '@/context/LoaderContext'
 import { useNotification } from '@/context/NotificationContext'
-import { useNavigate, useOutletContext, useParams } from 'react-router-dom'
+import {
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useParams
+} from 'react-router-dom'
 import { FormContext } from '../Form'
 
 import { periodService } from '@/data/services/PeriodService'
@@ -53,6 +58,9 @@ import { CalendarDots } from '@phosphor-icons/react/dist/icons/CalendarDots'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { TimePicker } from '@mui/x-date-pickers'
 
+interface LocationState {
+  courseID?: string
+}
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id' | 'date'> & {
   id?: string
@@ -70,6 +78,9 @@ type FormValues = Omit<IEventCreate, 'periodID' | 'courseID'> & {
 
 /* ---------- componente ---------- */
 export default function EventForm() {
+  const location = useLocation()
+  const { courseID: initialCourseID } = (location.state ?? {}) as LocationState
+
   /* state */
   const [periods, setPeriods] = useState<IPeriod[]>([])
   const [courses, setCourses] = useState<ICourseList[]>([])
@@ -97,7 +108,7 @@ export default function EventForm() {
       isApproved: false,
       isCancelled: false,
       periodID: '',
-      courseID: '',
+      courseID: initialCourseID ?? '',
       schedules: []
     }
   })
@@ -227,16 +238,20 @@ export default function EventForm() {
     }
   }
 
+  /* reglas: observar schedules para limpiar campos */
+  const schedulesWatch = watch('schedules')
+
   /* efectos */
   useEffect(() => {
     setTitle('Evento')
     setIcon(<CalendarStar size={32} />)
     fetchInfo()
-  }, [id])
+    console.log('EventForm: useEffect', initialCourseID)
+    if (!id /* estamos creando, no editando */ && initialCourseID) {
+      // marcamos el valor en el form
+      setValue('courseID', initialCourseID)
+    }
 
-  /* reglas: observar schedules para limpiar campos */
-  const schedulesWatch = watch('schedules')
-  useEffect(() => {
     schedulesWatch.forEach((s, idx) => {
       if (s.weekDay && s.date) {
         setValue(`schedules.${idx}.date`, null)
@@ -250,7 +265,7 @@ export default function EventForm() {
         setValue(`schedules.${idx}.classroomId`, '')
       }
     })
-  }, [schedulesWatch, setValue])
+  }, [id, schedulesWatch, setValue])
 
   /* ui */
   return (
@@ -337,7 +352,7 @@ export default function EventForm() {
                 getOptionLabel={optionLabelCourse}
                 isOptionEqualToValue={(o, v) => o.id === v.id}
                 value={courses.find((c) => c.id === field.value) ?? null}
-                onChange={(_, val) => field.onChange(val ? val.id : '')}
+                onChange={(_, v) => field.onChange(v ? v.id : '')}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -349,6 +364,7 @@ export default function EventForm() {
               />
             )}
           />
+
           {/* Separator */}
 
           {/* horarios */}

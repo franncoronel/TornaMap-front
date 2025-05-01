@@ -26,8 +26,8 @@ h2.interactive-page-subtitle{
   font-weight: 400;
   color: var(--color-primary);
 }
-.MuiButtonBase-root,
-.MuiTypography-root{
+.interactive-page .MuiButtonBase-root,
+.interactive-page .MuiTypography-root{
   display: flex;
   align-items: center;
   justify-content: center;

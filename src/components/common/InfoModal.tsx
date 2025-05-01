@@ -107,15 +107,6 @@ export default function InfoModal({
           >
             {children}
           </Box>
-
-          {isAuthenticated && (
-            <Tooltip title={`Agregar ${route()}`} arrow placement="top">
-              <Plus
-                className="floating-button modal"
-                onClick={() => navigate(`/${route()}/agregar`)}
-              />
-            </Tooltip>
-          )}
         </Box>
       </Fade>
     </Modal>
