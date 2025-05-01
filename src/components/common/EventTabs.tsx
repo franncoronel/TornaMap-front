@@ -1,15 +1,26 @@
+// Hooks
 import { useState } from 'react'
-import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
+import { useAuth } from '@/context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+// Components
 import MapSelector from '@/components/common/map/MapSelector'
 import ClassRoomCard from '@/components/common/ClassRoomCard'
+
+// Material UI
+import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
+import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
+import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
+
+// Interfaces
 import { ISchedule } from '@/data/domain/Schedule'
 import { IEvent } from '@/data/domain/Event'
-import { Laptop } from '@phosphor-icons/react'
+
+// Styles
 import '../pages/search/search.css'
-import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
-import { useNavigate } from 'react-router-dom'
+
+// Utils
 import { format, parseISO } from 'date-fns'
-import { useAuth } from '@/context/AuthContext'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -30,13 +41,6 @@ function CustomTabPanel(props: TabPanelProps) {
       {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
     </div>
   )
-}
-
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`
-  }
 }
 
 export default function EventTabs({ events }: { events: IEvent[] }) {
@@ -64,7 +68,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
 
   const buildDateString = (schedule: ISchedule) => {
     // schedule.date es un ISO-string: "2025-05-01"
-    const date = parseISO(schedule.date!!) // ✅ no aplica zona
+    const date = parseISO(schedule.date?.toString()??'') // ✅ no aplica zona
 
     return format(date, 'dd/MM') // 01/05
   }
@@ -72,7 +76,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
   return (
     <>
       {events.map((event) => {
-        const activeTab = tabStates[event.id] || 0 // Índice de la pestaña activa para este evento
+        const activeTab = tabStates[event.id ?? 0] || 0 // Índice de la pestaña activa para este evento
         return (
           <Box
             key={event.id}
@@ -106,7 +110,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
-                onChange={(e, newValue) => handleTabChange(event.id, newValue)}
+                onChange={(e, newValue) => handleTabChange(event.id??'', newValue)}
                 variant="fullWidth"
               >
                 {event.schedules.map((schedule: ISchedule) => (
