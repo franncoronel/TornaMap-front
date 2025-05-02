@@ -6,6 +6,7 @@ import logoUnsamBlanco from '@/assets/logos/logo-unsam-blanco.png'
 import '../background-image.css'
 import { useAuth } from '@/context/AuthContext'
 import { useEffect } from 'react'
+import { MagnifyingGlass } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass'
 
 export default function Welcome() {
   const navigate = useNavigate()
@@ -51,11 +52,40 @@ export default function Welcome() {
                 variant="contained"
                 color="primary"
                 size="large"
+                onClick={() => navigate('/buscar')}
+              >
+                <MagnifyingGlass size={32} /> Buscá tu materia o profesor
+              </Button>
+              <Button
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  alignItems: 'center'
+                }}
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={() => navigate('/mapa/tornavias/subsuelo')}
+              >
+                <CompassRose size={32} /> Navegá el mapa
+              </Button>
+
+              <Button
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  gap: '0.5rem',
+                  alignItems: 'center'
+                }}
+                variant="outlined"
+                color="primary"
+                size="large"
                 onClick={() => navigate('/ingresar')}
               >
                 <SignIn size={32} /> Iniciá sesión
               </Button>
-              <Button
+              {/* <Button
                 // disabled
                 sx={{
                   display: 'flex',
@@ -66,26 +96,11 @@ export default function Welcome() {
                 variant="outlined"
                 color="primary"
                 size="large"
-                /* onClick={() => navigate('/registrar')} */
               >
                 <FingerprintSimple size={32} /> Registrate (Próximamente)
-              </Button>
+              </Button> */}
             </>
           )}
-          <Button
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '0.5rem',
-              alignItems: 'center'
-            }}
-            variant="outlined"
-            color="primary"
-            size="large"
-            onClick={() => navigate('/mapa/tornavias/subsuelo')}
-          >
-            <CompassRose size={32} /> Navegá el mapa
-          </Button>
         </Stack>
       </TransparentContainer>
       <TransparentContainer padding="0.9rem">
