@@ -43,7 +43,7 @@ export default function Profile() {
       try {
         const user = await userService.getProfile()
         setLoader(false)
-        setUser(user.data)
+        setUser(user.data.data)
       } catch (error) {
         setLoader(false)
         console.error('Error fetching user data:', error)
@@ -80,8 +80,12 @@ export default function Profile() {
           <ProfileButton>Editar Aula</ProfileButton>
           <ProfileButton>Editar Aula</ProfileButton>
           <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
-          <ProfileButton onClick={() => navigate('/asignatura/agregar')}>Agregar Asignatura</ProfileButton>
-          <ProfileButton onClick={() => navigate('/programas')}>Programas</ProfileButton>
+          <ProfileButton onClick={() => navigate('/asignatura/agregar')}>
+            Agregar Asignatura
+          </ProfileButton>
+          <ProfileButton onClick={() => navigate('/programas')}>
+            Programas
+          </ProfileButton>
         </>
       )}
       <ProfileButton>Agregar Clase</ProfileButton>
