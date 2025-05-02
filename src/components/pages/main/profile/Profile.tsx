@@ -10,6 +10,9 @@ import { User } from '@/data/domain/User'
 import './profile.css'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeacher'
+import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
+import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
 
 export default function Profile() {
   const { logout } = useAuth()
@@ -76,19 +79,23 @@ export default function Profile() {
 
       {user?.isAdmin && (
         <>
-          <ProfileButton>Agregar Tipo de Aula</ProfileButton>
-          <ProfileButton>Editar Aula</ProfileButton>
-          <ProfileButton>Editar Aula</ProfileButton>
-          <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
+          {/* <ProfileButton>Agregar Tipo de Aula</ProfileButton>
+          <ProfileButton>Editar Aula</ProfileButton> */}
+          {/* <ProfileButton>Habilitar Solicitud Clase</ProfileButton> */}
+          <ProfileButton onClick={() => navigate('/programas')}>
+            <GraduationCap size={32} />
+            Carreras o Programas
+          </ProfileButton>
           <ProfileButton onClick={() => navigate('/asignatura/agregar')}>
+            <ChalkboardTeacher size={32} />
             Agregar Asignatura
           </ProfileButton>
-          <ProfileButton onClick={() => navigate('/programas')}>
-            Programas
+          <ProfileButton onClick={() => navigate('/evento/agregar')}>
+            <CalendarStar size={32} />
+            Agregar Evento / Clase
           </ProfileButton>
         </>
       )}
-      <ProfileButton>Agregar Clase</ProfileButton>
       <ProfileButton onClick={() => handleLogout()}>
         Cerrar Sesión <SignOut size={32} alt="Cerrar sesión" />
       </ProfileButton>
