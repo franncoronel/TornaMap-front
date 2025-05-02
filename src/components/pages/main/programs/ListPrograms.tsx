@@ -7,6 +7,7 @@ import DeleteModal from '@/components/common/DeleteModal'
 import FloatingButton from '@/components/common/FloatingButton'
 import FormProgram from './FormProgram'
 import { useFetchPrograms } from './useFetchPrograms'
+import { GraduationCap } from '@phosphor-icons/react/dist/icons/GraduationCap'
 
 export default function ListPrograms() {
   const {
@@ -45,7 +46,8 @@ export default function ListPrograms() {
       width="100%"
     >
       <Typography variant="h1" gutterBottom>
-        Programas
+        <GraduationCap size={32} />
+        Carreras o Programas
       </Typography>
 
       <Box
