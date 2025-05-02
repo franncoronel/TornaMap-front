@@ -15,9 +15,8 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/form/Form'))
-const CourseForm = lazy(
-  () => import('@/components/pages/form/components/CourseForm')
-)
+const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
+const Programs = lazy(() => import('@/components/pages/main/programs/ListPrograms'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -81,7 +80,7 @@ export const routes: RouteObject[] = [
             element: <EventForm />
           }
         ]
-      }
+      },
       // {
       //   path: 'horario',
       //   element: <Form />,
@@ -96,7 +95,13 @@ export const routes: RouteObject[] = [
       //     }
       //   ]
       // }
-    ]
+      {
+        path: 'programas',
+        element: <Programs />,
+
+      }
+    ],
+
   },
   { path: '*', element: <NotFound /> }
 ]
