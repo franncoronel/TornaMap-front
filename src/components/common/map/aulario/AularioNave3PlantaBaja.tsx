@@ -32,44 +32,98 @@ export default function AularioNave3PlantaBaja({
             strokeWidth: mapColors.outline.strokeWidth
           }}
         >
-          <path d="M80.277592,39.238169h985.311873l-.000001,189.225753h-985.311872v-189.225753Z" transform="translate(.000004 0.000003)"/>
+          <path
+            d="M80.277592,39.238169h985.311873l-.000001,189.225753h-985.311872v-189.225753Z"
+            transform="translate(.000004 0.000003)"
+          />
 
-          <path d="M440.63488,177.72591h92.96v23.10139h-92.96v-23.10139Zm-27.90648,0v-16.26338h27.90648l.00001,8.24999-.00001,8.01339h-27.90648Z"/>
+          <path d="M440.63488,177.72591h92.96v23.10139h-92.96v-23.10139Zm-27.90648,0v-16.26338h27.90648l.00001,8.24999-.00001,8.01339h-27.90648Z" />
         </g>
         {/* Escaleras*/}
-        <g style={{
+        <g
+          style={{
             fill: mapColors.ladder.fill,
             stroke: mapColors.ladder.stroke,
             strokeWidth: mapColors.ladder.strokeWidth
-          }}>
-          <path d="M448.482723,177.72591v23.10139"/>
-          <path d="M456.44605,177.72591l.144788,23.10139"/>
-          <path d="M412.7284,169.71252h27.90649"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(.000001 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(14.557917 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(37.44266 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(60.739404 0)"/>
-          <path d="M448.482723,177.72591v23.10139" transform="translate(61.450076 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(52.476029 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(30.750273 0)"/>
-          <path d="M448.482723,177.72591v23.10139" transform="translate(23.137556 0)"/>
-          <path d="M463.928088,177.72591v23.10139" transform="translate(22.733956 0)"/> 
+          }}
+        >
+          <path d="M448.482723,177.72591v23.10139" />
+          <path d="M456.44605,177.72591l.144788,23.10139" />
+          <path d="M412.7284,169.71252h27.90649" />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(.000001 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(14.557917 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(37.44266 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(60.739404 0)"
+          />
+          <path
+            d="M448.482723,177.72591v23.10139"
+            transform="translate(61.450076 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(52.476029 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(30.750273 0)"
+          />
+          <path
+            d="M448.482723,177.72591v23.10139"
+            transform="translate(23.137556 0)"
+          />
+          <path
+            d="M463.928088,177.72591v23.10139"
+            transform="translate(22.733956 0)"
+          />
         </g>
 
         {/* Flecha */}
-        <g  transform="matrix(.533707 0 0 0.523591 451.40865 177.13594)"
-            style={{
-              fill: mapColors.arrow.fill,
-              stroke: mapColors.arrow.stroke,
-              strokeWidth: mapColors.arrow.strokeWidth,}}>
-          <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
-          <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0-1 0 0)" stroke-linecap="round" stroke-linejoin="round"/>
+        <g
+          transform="matrix(.533707 0 0 0.523591 451.40865 177.13594)"
+          style={{
+            fill: mapColors.arrow.fill,
+            stroke: mapColors.arrow.stroke,
+            strokeWidth: mapColors.arrow.strokeWidth
+          }}
+        >
+          <line
+            x1="50.06"
+            y1="77.95"
+            x2="50.06"
+            y2="47.3"
+            transform="matrix(-1 0 0-1 0 0)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+          <polyline
+            points="37.76,60.46 50.06,45.74 62.36,60.46"
+            transform="matrix(-1 0 0-1 0 0)"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </g>
-        
+
         {/*Entradas*/}
-        <g style={{fill: mapColors.entry.fill,}}>
-          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(.404318 0 0 0.368131 361.3528 200.855564)" />
-          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-.404318 0 0-.368131 401.7846 66.939015)" />
+        <g style={{ fill: mapColors.entry.fill }}>
+          <polygon
+            points="50,23.15 19,76.85 81,76.85 50,23.15"
+            transform="matrix(.404318 0 0 0.368131 361.3528 200.855564)"
+          />
+          <polygon
+            points="50,23.15 19,76.85 81,76.85 50,23.15"
+            transform="matrix(-.404318 0 0-.368131 401.7846 66.939015)"
+          />
         </g>
 
         {/* A17 */}

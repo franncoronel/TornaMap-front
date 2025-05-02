@@ -1,5 +1,10 @@
 import axios from 'axios'
-import { ICourse, ICourseList } from '../domain/Course'
+import {
+  ICourse,
+  ICourseCreate,
+  ICourseList,
+  ICourseUpdate
+} from '../domain/Course'
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
 import { API_URL } from '@/config'
@@ -20,6 +25,34 @@ export class CourseService implements ServiceInterface {
     )
     const course = courseDTO.data
     return course
+  }
+
+  async create(course: ICourseCreate): Promise<Response<ICourseCreate>> {
+    const courseDTO = await axios.post<Response<ICourseCreate>>(
+      this.baseUrl,
+      course,
+      { withCredentials: true }
+    )
+    const createdCourse = courseDTO.data
+    return createdCourse
+  }
+
+  async update(course: ICourseUpdate): Promise<Response<ICourseUpdate>> {
+    const courseDTO = await axios.put<Response<ICourseUpdate>>(
+      `${this.baseUrl}`,
+      course,
+      { withCredentials: true }
+    )
+    const updatedCourse = courseDTO.data
+    return updatedCourse
+  }
+
+  async delete(id: string | number): Promise<Response<ICourse>> {
+    const courseDTO = await axios.delete<Response<ICourse>>(
+      `${this.baseUrl}/${id}`
+    )
+    const deletedCourse = courseDTO.data
+    return deletedCourse
   }
 }
 

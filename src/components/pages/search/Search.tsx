@@ -1,24 +1,32 @@
-import ClassRoomCard from '@/components/common/ClassRoomCard'
-import SearchBar from '@/components/common/SearchBar'
-import { Box, Divider, Grid2, Typography } from '@mui/material'
-import { useEffect, useState } from 'react'
-import InfoModal from '@/components/common/InfoModal'
 import './search.css'
 import '../interactive-page.css'
-import { WarningCircle, Laptop } from '@phosphor-icons/react'
-import { ICourse, ICourseList } from '@/data/domain/Course'
-import { courseService } from '@/data/services/CourseService'
+
+import { useEffect, useState } from 'react'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/context/AuthContext'
+
+import { courseService } from '@/data/services/CourseService'
+
+import { ICourse, ICourseList } from '@/data/domain/Course'
+
+import { WarningCircle, Plus } from '@phosphor-icons/react'
+import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
+import SearchBar from '@/components/common/SearchBar'
+import ClassRoomCard from '@/components/common/ClassRoomCard'
+import InfoModal from '@/components/common/InfoModal'
 import EventTabs from '@/components/common/EventTabs'
 
 export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
+
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
-
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
   const fetchCourses = async (query?: string) => {
     setLoader(true)
     try {
@@ -100,7 +108,7 @@ export default function Search() {
     // Contenedor principal que organiza la disposición de los elementos
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
-      <Box position='sticky' top='0' zIndex='10'>
+      <Box position="sticky" top="0" zIndex="10">
         <SearchBar
           onSearch={search}
           options={courses.map((course) => course.name)}
@@ -114,8 +122,8 @@ export default function Search() {
         rowSpacing="1rem"
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        height='100%'
-        sx= {{ overflowY: 'auto' }}
+        height="100%"
+        sx={{ overflowY: 'auto' }}
       >
         {courses &&
           courses.length > 0 &&
@@ -171,6 +179,18 @@ export default function Search() {
             <EventTabs events={selectedCourse.events} />
           </section>
         </InfoModal>
+      )}
+
+      {isAuthenticated && (
+        <Tooltip title='Agregar asignatura' arrow placement="top" enterDelay={500} leaveDelay={200}
+                 slotProps={{popper: {modifiers: [{name: 'offset',options: {offset: [0,-8],},},],},}}>
+          <Plus
+            className="floating-button"
+            onClick={() => navigate('/asignatura/agregar')}
+            role="button"
+            aria-label="Agregar asignatura"
+          />
+        </Tooltip>
       )}
     </Box>
   )
