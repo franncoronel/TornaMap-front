@@ -374,7 +374,7 @@ export default function EventForm() {
           {fields.map((f, idx) => {
             const buildField = `schedules.${idx}.buildingId` as const
             const classField = `schedules.${idx}.classroomId` as const
-            const isVirtual = watch(`schedules.${idx}.isVirtual`)
+            /* const isVirtual = watch(`schedules.${idx}.isVirtual`) */
             const buildingIdSel = watch(buildField)
             const classroomsFiltered = classroomsFlat.filter(
               (c) => c.buildingId === buildingIdSel
