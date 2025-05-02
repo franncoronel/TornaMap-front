@@ -21,6 +21,12 @@ let unsamTheme = createTheme(
           secondary: {
             main: '#0F0F0F'
           },
+          error: {
+            main: '#ef9a9a'
+          },
+          warning: {
+            main: '#ff9800'
+          },
           tonalOffset: 0.1
         }
       }
