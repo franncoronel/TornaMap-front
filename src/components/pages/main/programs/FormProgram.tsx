@@ -1,88 +1,93 @@
 import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    DialogActions,
-    Button,
-    TextField
-  } from '@mui/material';
-  import { useEffect, useState } from 'react';
-  
-  type FormProgramProps = {
-    open: boolean;
-    handleClose: () => void;
-    onSubmit: (data: { name: string; description: string }) => void;
-    initialData?: { name: string; description: string };
-    isEdit?: boolean;
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField
+} from '@mui/material';
+import { useEffect, useState } from 'react';
+
+type FormProgramProps = {
+  open: boolean;
+  handleClose: () => void;
+  onSubmit: (data: { name: string; description: string }) => void;
+  initialData?: { name: string; description: string };
+  isEdit?: boolean;
+};
+
+export default function FormProgram({
+  open,
+  handleClose,
+  onSubmit,
+  initialData,
+  isEdit = false
+}: FormProgramProps) {
+  const [formValues, setFormValues] = useState({ name: '', description: '' });
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
+
+  useEffect(() => {
+    if (initialData) {
+      setFormValues(initialData);
+    } else {
+      setFormValues({ name: '', description: '' });
+    }
+    setErrors({});
+  }, [initialData, open]);
+
+  const handleChange = (field: string, value: string) => {
+    setFormValues((prev) => ({ ...prev, [field]: value }));
   };
-  
-  export default function FormProgram({
-    open,
-    handleClose,
-    onSubmit,
-    initialData,
-    isEdit = false
-  }: FormProgramProps) {
-    const [name, setName] = useState('');
-    const [description, setDescription] = useState('');
-    const [errors, setErrors] = useState({ name: false, description: false });
-  
-    useEffect(() => {
-      if (initialData) {
-        setName(initialData.name);
-        setDescription(initialData.description);
-      } else {
-        setName('');
-        setDescription('');
-      }
-    }, [initialData, open]);
-  
-    const handleFormSubmit = () => {
-      const newErrors = {
-        name: name.trim() === '',
-        description: description.trim() === ''
-      };
-  
-      setErrors(newErrors);
-  
-      if (!newErrors.name && !newErrors.description) {
-        onSubmit({ name, description });
-        handleClose();
-      }
+
+  const handleFormSubmit = () => {
+    const newErrors: { [key: string]: boolean } = {
+      name: formValues.name.trim() === '',
+      description: formValues.description.trim() === ''
     };
-  
-    return (
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
-        <DialogTitle sx={{display:'flex', justifyContent:'center'}}>{isEdit ? 'Editar Programa' : 'Agregar Programa'}</DialogTitle>
-        <DialogContent>
-          <TextField
-            label="Nombre"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            error={errors.name}
-            helperText={errors.name && 'El nombre es requerido'}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Descripción"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            error={errors.description}
-            helperText={errors.description && 'La descripción es requerida'}
-            fullWidth
-            multiline
-            rows={4}
-            margin="normal"
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancelar</Button>
-          <Button variant="contained" onClick={handleFormSubmit}>
-            {isEdit ? 'Guardar cambios' : 'Agregar'}
-          </Button>
-        </DialogActions>
-      </Dialog>
-    );
-  }
-  
+
+    setErrors(newErrors);
+
+    const hasErrors = Object.values(newErrors).some((v) => v);
+
+    if (!hasErrors) {
+      onSubmit(formValues);
+      handleClose();
+    }
+  };
+
+  return (
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
+      <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
+        {isEdit ? 'Editar Programa' : 'Agregar Programa'}
+      </DialogTitle>
+      <DialogContent>
+        <TextField
+          label="Nombre"
+          value={formValues.name}
+          onChange={(e) => handleChange('name', e.target.value)}
+          error={errors.name}
+          helperText={errors.name && 'El nombre es requerido'}
+          fullWidth
+          margin="normal"
+        />
+        <TextField
+          label="Descripción"
+          value={formValues.description}
+          onChange={(e) => handleChange('description', e.target.value)}
+          error={errors.description}
+          helperText={errors.description && 'La descripción es requerida'}
+          fullWidth
+          multiline
+          rows={4}
+          margin="normal"
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>Cancelar</Button>
+        <Button variant="contained" onClick={handleFormSubmit}>
+          {isEdit ? 'Guardar cambios' : 'Agregar'}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}

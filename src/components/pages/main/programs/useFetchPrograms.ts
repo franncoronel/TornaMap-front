@@ -62,7 +62,7 @@ export const useFetchPrograms = () => {
     setLoader(true)
     try {
       await programService.delete(selectedProgram.id)
-      setPrograms(prev => prev.filter(p => p.id !== selectedProgram.id))
+      await fetchPrograms() 
       setNotificationState({
         title: 'Programa eliminado',
         type: 'success',
@@ -88,9 +88,6 @@ export const useFetchPrograms = () => {
       if (editingProgram) {
         const updated = { ...editingProgram, ...data }
         await programService.update(updated)
-        setPrograms(prev =>
-          prev.map(p => (p.id === updated.id ? updated : p))
-        )
         setNotificationState({
           title: 'Programa actualizado',
           type: 'success',
@@ -98,9 +95,7 @@ export const useFetchPrograms = () => {
           action: () => {}
         })
       } else {
-        const response = await programService.create(data)
-        const created = response.data
-        setPrograms(prev => [...prev, created])
+        await programService.create(data)
         setNotificationState({
           title: 'Programa creado',
           type: 'success',
@@ -108,6 +103,7 @@ export const useFetchPrograms = () => {
           action: () => {}
         })
       }
+      await fetchPrograms()
     } catch (error) {
       setNotificationState({
         title: 'Error al guardar',
@@ -118,7 +114,6 @@ export const useFetchPrograms = () => {
     } finally {
       setLoader(false)
       setOpenForm(false)
-      fetchPrograms()
     }
   }
 
