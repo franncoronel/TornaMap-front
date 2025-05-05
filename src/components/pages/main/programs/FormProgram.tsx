@@ -25,33 +25,37 @@ export default function FormProgram({
   initialData,
   isEdit = false
 }: FormProgramProps) {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [errors, setErrors] = useState({ name: false, description: false })
+  const [formValues, setFormValues] = useState({ name: '', description: '' });
+  const [errors, setErrors] = useState<{ [key: string]: boolean }>({});
 
   useEffect(() => {
     if (initialData) {
-      setName(initialData.name)
-      setDescription(initialData.description)
+      setFormValues(initialData);
     } else {
-      setName('')
-      setDescription('')
+      setFormValues({ name: '', description: '' });
     }
-  }, [initialData, open])
+    setErrors({});
+  }, [initialData, open]);
+
+  const handleChange = (field: string, value: string) => {
+    setFormValues((prev) => ({ ...prev, [field]: value }));
+  };
 
   const handleFormSubmit = () => {
-    const newErrors = {
-      name: name.trim() === '',
-      description: description.trim() === ''
-    }
+    const newErrors: { [key: string]: boolean } = {
+      name: formValues.name.trim() === '',
+      description: formValues.description.trim() === ''
+    };
 
-    setErrors(newErrors)
+    setErrors(newErrors);
 
-    if (!newErrors.name && !newErrors.description) {
-      onSubmit({ name, description })
-      handleClose()
+    const hasErrors = Object.values(newErrors).some((v) => v);
+
+    if (!hasErrors) {
+      onSubmit(formValues);
+      handleClose();
     }
-  }
+  };
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
@@ -61,8 +65,8 @@ export default function FormProgram({
       <DialogContent>
         <TextField
           label="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={formValues.name}
+          onChange={(e) => handleChange('name', e.target.value)}
           error={errors.name}
           helperText={errors.name && 'El nombre es requerido'}
           fullWidth
@@ -70,8 +74,8 @@ export default function FormProgram({
         />
         <TextField
           label="Descripción"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          value={formValues.description}
+          onChange={(e) => handleChange('description', e.target.value)}
           error={errors.description}
           helperText={errors.description && 'La descripción es requerida'}
           fullWidth

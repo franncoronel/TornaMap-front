@@ -94,6 +94,10 @@ export default function Profile() {
             <CalendarStar size={32} />
             Agregar Evento / Clase
           </ProfileButton>
+          <ProfileButton onClick={() => navigate('/periodos')}>
+            Periodos
+          </ProfileButton>
+
         </>
       )}
       <ProfileButton onClick={() => handleLogout()}>

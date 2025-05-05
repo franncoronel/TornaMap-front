@@ -1,7 +1,8 @@
-import { Entity } from "./Entity"
-
-export interface IPeriod extends Entity{
-    title: string
-    startDate: Date
-    endDate: Date
+export interface IPeriod {
+  id: string
+  title: string
+  startDate: string
+  endDate: string
 }
+
+export type PeriodFormData = Omit<IPeriod, 'id'>
