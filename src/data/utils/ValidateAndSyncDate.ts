@@ -1,21 +1,20 @@
-// Esta función valida y sincroniza dos fechas, asegurando que la fecha de inicio no sea posterior a la fecha de finalización y viceversa.
-import { Moment } from 'moment'
+import { isAfter, isBefore } from 'date-fns'
 
 type ValidatedDates = {
-  startDate: Moment
-  endDate: Moment
+  startDate: Date
+  endDate: Date
 }
 
 export function validateAndSyncDates(
-  startDate: Moment,
-  endDate: Moment
+  startDate: Date,
+  endDate: Date
 ): ValidatedDates {
-  if (startDate.isAfter(endDate)) {
-    return { startDate, endDate: startDate.clone() }
+  if (isAfter(startDate, endDate)) {
+    return { startDate, endDate: new Date(startDate) }
   }
 
-  if (endDate.isBefore(startDate)) {
-    return { startDate: endDate.clone(), endDate }
+  if (isBefore(endDate, startDate)) {
+    return { startDate: new Date(endDate), endDate }
   }
 
   return { startDate, endDate }
