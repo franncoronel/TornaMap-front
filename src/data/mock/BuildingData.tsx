@@ -13,6 +13,7 @@ import {
   sumSubsuelo
 } from './ClassRoomData'
 import { a18_N3, a19_N3, a20_N3, a17_N3, a16_N3, a15_N3 } from './ClassRoomData'
+import {its_A1,its_LabLCD} from './ClassRoomData'
 
 export const aularioPlantaBajaNave3 = {
   id: 0,
@@ -66,6 +67,14 @@ const tornaviasPP = {
   classRooms: [a19_N3, a18_N3, a20_N3]
 }
 
+export const itsPlantaBaja = {
+  id: 0,
+  text: 'Planta Baja',
+  path: 'planta-baja',
+  level: 0,
+  classRooms: [its_A1, its_LabLCD,]
+}
+
 export const buildingData = [
   {
     id: 0,
@@ -78,5 +87,11 @@ export const buildingData = [
     text: 'Aulario - Nave 3',
     path: 'aularioNave3',
     levels: [aularioPlantaBajaNave3, aularioPlantAltaNave3]
+  },
+  {
+    id: 2,
+    text: 'ITS ',
+    path: 'its',
+    levels: [itsPlantaBaja]
   }
 ]

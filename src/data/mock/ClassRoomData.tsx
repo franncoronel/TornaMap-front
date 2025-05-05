@@ -139,3 +139,19 @@ export const a18_N3 = {
   building: 'Aulario - Nave 3',
   level: 'Planta Alta'
 }
+// ..............................: ITS :..................................................//
+//                             Planta Baja
+export const its_A1 = {
+  id: 0,
+  classroom: 'A1',
+  classroomType: 'Aula',
+  building: 'ITS',
+  level: 'Planta Baja'
+}
+export const its_LabLCD = {
+  id: 1,
+  classroom: 'Lab LCD',
+  classroomType: 'Laboratorio',
+  building: 'ITS',
+  level: 'Planta Baja'
+}
