@@ -20,6 +20,8 @@ type CustomCardProps = {
   onEdit?: () => void;
   onDelete?: () => void;
   expandable?: boolean;
+  height?: number | string;
+  width?: number | string;
 };
 
 export default function CustomCard({
@@ -28,15 +30,17 @@ export default function CustomCard({
   children,
   onEdit,
   onDelete,
-  expandable = false
+  expandable = false,
+  height = 220,
+  width = 400
 }: CustomCardProps) {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <Card
       sx={{
-        maxWidth: 400,
-        height: expanded ? 'auto' : 220,
+        width: width,
+        height: expanded ? 'auto' : height,
         display: 'flex',
         flexDirection: 'column',
         borderRadius: 3,
