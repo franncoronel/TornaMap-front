@@ -82,16 +82,16 @@ export default function Profile() {
           {/* <ProfileButton>Agregar Tipo de Aula</ProfileButton>
           <ProfileButton>Editar Aula</ProfileButton> */}
           {/* <ProfileButton>Habilitar Solicitud Clase</ProfileButton> */}
-          <ProfileButton onClick={() => navigate('/programas')}>
-            <GraduationCap size={32} />
+          <ProfileButton onClick={() => navigate('/programas')} 
+            startIcon={<GraduationCap size={32} />}>
             Carreras o Programas
           </ProfileButton>
-          <ProfileButton onClick={() => navigate('/asignatura/agregar')}>
-            <ChalkboardTeacher size={32} />
+          <ProfileButton onClick={() => navigate('/asignatura/agregar')}
+            startIcon={<ChalkboardTeacher size={32} />}>
             Agregar Asignatura
           </ProfileButton>
-          <ProfileButton onClick={() => navigate('/evento/agregar')}>
-            <CalendarStar size={32} />
+          <ProfileButton onClick={() => navigate('/evento/agregar')}
+            startIcon={<CalendarStar size={32} />}>
             Agregar Evento / Clase
           </ProfileButton>
           <ProfileButton onClick={() => navigate('/periodos')}>
@@ -100,8 +100,9 @@ export default function Profile() {
 
         </>
       )}
-      <ProfileButton onClick={() => handleLogout()}>
-        Cerrar Sesión <SignOut size={32} alt="Cerrar sesión" />
+      <ProfileButton onClick={() => handleLogout()} centerText={true} 
+        endIcon={<SignOut size={32} alt="Cerrar sesión" />} >
+        Cerrar Sesión 
       </ProfileButton>
     </main>
   )
