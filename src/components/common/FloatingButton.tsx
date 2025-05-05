@@ -1,9 +1,9 @@
-import { Fab, Tooltip } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Fab, Tooltip } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
 
 type FloatingButtonProps = {
-  onClick: () => void;
-};
+  onClick: () => void
+}
 
 export default function FloatingButton({ onClick }: FloatingButtonProps) {
   return (
@@ -14,14 +14,13 @@ export default function FloatingButton({ onClick }: FloatingButtonProps) {
         onClick={onClick}
         sx={{
           position: 'fixed',
-          bottom: 65,
+          bottom: 75,
           right: 24,
-          zIndex: 1000,
-
+          zIndex: 1000
         }}
       >
         <AddIcon />
       </Fab>
     </Tooltip>
-  );
+  )
 }

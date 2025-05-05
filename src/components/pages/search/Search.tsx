@@ -14,7 +14,7 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 import { WarningCircle, Plus } from '@phosphor-icons/react'
 import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import InfoModal from '@/components/common/InfoModal'
 import EventTabs from '@/components/common/EventTabs'
 
@@ -72,13 +72,6 @@ export default function Search() {
       setLoader(false)
       setSelectedCourse(response.data)
       setOpen(true)
-
-      setNotificationState({
-        title: 'Curso cargado',
-        type: 'success',
-        description: 'Detalles del curso obtenidos con éxito',
-        action: () => {}
-      })
     } catch (error) {
       setLoader(false)
       console.error('Error fetching course details:', error)
@@ -171,6 +164,7 @@ export default function Search() {
           handleClose={handleClose}
           title={selectedCourse.name}
           subtitle="Cursadas y eventos"
+          type="event"
         >
           <section className="class-info-container">
             <Typography variant="h6" fontWeight="medium" px="1rem">
@@ -178,6 +172,19 @@ export default function Search() {
             </Typography>
             <EventTabs events={selectedCourse.events} />
           </section>
+          {isAuthenticated && (
+            <Tooltip title={`Agregar evento`} arrow placement="top">
+              <Plus
+                className="floating-button modal"
+                onClick={() =>
+                  // suponiendo que tu ruta para crear evento es '/evento/nuevo'
+                  navigate('/evento/agregar', {
+                    state: { courseID: selectedCourse?.id }
+                  })
+                }
+              />
+            </Tooltip>
+          )}
         </InfoModal>
       )}
 

@@ -1,11 +1,26 @@
-import { useState } from "react"
-import { Box, Tabs, Tab, Typography } from '@mui/material'
+// Hooks
+import { useState } from 'react'
+import { useAuth } from '@/context/AuthContext'
+import { useNavigate } from 'react-router-dom'
+
+// Components
 import MapSelector from '@/components/common/map/MapSelector'
-import ClassRoomCard from '@/components/common/ClassRoomCard'
+import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
+
+// Material UI
+import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
+import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
+import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
+
+// Interfaces
 import { ISchedule } from '@/data/domain/Schedule'
 import { IEvent } from '@/data/domain/Event'
-import { Laptop } from '@phosphor-icons/react'
+
+// Styles
 import '../pages/search/search.css'
+
+// Utils
+import { format, parseISO } from 'date-fns'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -15,7 +30,6 @@ interface TabPanelProps {
 
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props
-
   return (
     <div
       role="tabpanel"
@@ -29,26 +43,22 @@ function CustomTabPanel(props: TabPanelProps) {
   )
 }
 
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  }
-}
-
 export default function EventTabs({ events }: { events: IEvent[] }) {
   const [tabStates, setTabStates] = useState<{ [eventId: string]: number }>({})
+
+  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth()
 
   const handleTabChange = (eventId: string, newValue: number) => {
     setTabStates((prev) => ({
       ...prev,
-      [eventId]: newValue,
+      [eventId]: newValue
     }))
   }
 
-  const createLabel = (schedule : ISchedule) => {
+  const createLabel = (schedule: ISchedule) => {
     if (!schedule.weekDay && !schedule.date) {
-      return "Sin fecha"
+      return 'Sin fecha'
     }
     if (schedule.weekDay) {
       return schedule.weekDay
@@ -57,53 +67,68 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
   }
 
   const buildDateString = (schedule: ISchedule) => {
-    const date = new Date(schedule.date!!)
-  
-    const day = date.getDate().toString().padStart(2, '0')
-    const month = (date.getMonth() + 1).toString().padStart(2, '0')
-    
-    return `${day}/${month}`
+    // schedule.date es un ISO-string: "2025-05-01"
+    const date = parseISO(schedule.date?.toString() ?? '') // ✅ no aplica zona
+
+    return format(date, 'dd/MM') // 01/05
   }
 
   return (
     <>
       {events.map((event) => {
-        const activeTab = tabStates[event.id] || 0 // Índice de la pestaña activa para este evento
+        const activeTab = tabStates[event.id ?? 0] || 0 // Índice de la pestaña activa para este evento
         return (
-          <Box key={event.id} sx={{ mb: 4 }}>
+          <Box
+            key={event.id}
+            sx={{ mb: 4, position: 'relative', width: '100%' }}
+          >
             <Typography
               variant="h6"
               sx={{
-                  textAlign: "center",
-                  fontWeight: "bold"
-                }}
+                textAlign: 'center',
+                fontWeight: 'bold',
+                width: '100%'
+              }}
             >
               {event.name}
             </Typography>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+            {isAuthenticated && (
+              <IconButton
+                onClick={() => navigate(`/evento/editar/${event.id}`)}
+                sx={{
+                  position: 'absolute',
+                  top: 0,
+                  right: 15,
+                  padding: 0,
+                  zIndex: 2
+                }}
+                aria-label="Editar"
+              >
+                <PencilSimple size={24} />
+              </IconButton>
+            )}
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
-                onChange={(e, newValue) => handleTabChange(event.id, newValue)}
+                onChange={(e, newValue) =>
+                  handleTabChange(event.id ?? '', newValue)
+                }
                 variant="fullWidth"
               >
                 {event.schedules.map((schedule: ISchedule) => (
                   <Tab
                     key={schedule.id}
-                    label={ createLabel(schedule) }
+                    label={createLabel(schedule)}
                     sx={{
-                      textTransform: "none",
-                      fontWeight: "bold"
+                      textTransform: 'none',
+                      fontWeight: 'bold'
                     }}
                   />
                 ))}
               </Tabs>
             </Box>
             {event.schedules.map((schedule: ISchedule, index) => (
-              <CustomTabPanel
-                key={schedule.id}
-                value={activeTab}
-                index={index}
-              >
+              <CustomTabPanel key={schedule.id} value={activeTab} index={index}>
                 <section className="schedules-list-container">
                   <div
                     className={`schedules-list ${event.schedules.length == 1 ? 'single' : ''}`}
@@ -148,17 +173,10 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                         >
                           Esta clase se dicta de forma virtual
                         </Typography>
-                        <Laptop
-                          size={150}
-                          color="#2e4b7d"
-                          weight="duotone"
-                        />
+                        <Laptop size={150} color="#2e4b7d" weight="duotone" />
                       </Box>
                     )}
-                    <ClassRoomCard
-                      schedule={schedule}
-                      viewType="modal"
-                    />
+                    <ClassRoomCard schedule={schedule} viewType="modal" />
                   </div>
                 </section>
               </CustomTabPanel>

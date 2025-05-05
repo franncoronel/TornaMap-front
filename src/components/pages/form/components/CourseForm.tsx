@@ -24,6 +24,10 @@ import {
   DialogContentText,
   DialogActions
 } from '@mui/material'
+import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
+import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
+import { Trash } from '@phosphor-icons/react/dist/icons/Trash'
+import { ChalkboardTeacher } from '@phosphor-icons/react/dist/icons/ChalkboardTeacher'
 
 type FormValues = Omit<ICourseCreate, 'id'> & { id?: string }
 
@@ -34,7 +38,7 @@ export default function CourseForm() {
   const navigate = useNavigate()
   const { setLoader } = useLoader()
   const { setNotificationState } = useNotification()
-  const { setTitle } = useOutletContext<FormContext>()
+  const { setTitle, setIcon } = useOutletContext<FormContext>()
   const { id } = useParams()
 
   const {
@@ -150,6 +154,7 @@ export default function CourseForm() {
 
   useEffect(() => {
     setTitle('Asignatura')
+    setIcon(<ChalkboardTeacher size={32} />)
     fetchInfo()
   }, [id])
 
@@ -219,9 +224,11 @@ export default function CourseForm() {
 
           <Stack direction="column" spacing={2} justifyContent="space-between">
             <Button variant="contained" type="submit">
-              {id ? 'Actualizar' : 'Crear'}
+              <FloppyDisk size={32} />
+              {id ? 'Actualizar' : 'Guardar'}
             </Button>
             <Button variant="outlined" onClick={() => navigate(-1)}>
+              <XSquare size={32} />
               Cancelar
             </Button>
             {id && (
@@ -230,6 +237,7 @@ export default function CourseForm() {
                 color="error"
                 onClick={() => setOpenConfirm(true)}
               >
+                <Trash size={32} />
                 Eliminar
               </Button>
             )}

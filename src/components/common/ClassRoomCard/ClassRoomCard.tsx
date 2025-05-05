@@ -1,8 +1,14 @@
+// Styles
+import './classRoomCard.css'
+// Context
+import { useAuth } from '@/context/AuthContext'
+
+// Interfaces
 import { ICourseList } from '@/data/domain/Course'
 import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
-import { useAuth } from '@/context/AuthContext'
-/* import { EventAvailableTwoTone } from "@mui/icons-material" */
+
+// MUI
 import {
   CardActionArea,
   CardContent,
@@ -42,7 +48,6 @@ export default function ClassRoomCard({
 }: ClassRoomCardProps) {
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
-
   const handleEdit = (e: React.MouseEvent) => {
     // NEW
     e.stopPropagation() // evita disparar onClick del Card
@@ -146,7 +151,6 @@ export default function ClassRoomCard({
       return null
     }
   }
-
   return (
     <Box
       sx={{
@@ -157,11 +161,10 @@ export default function ClassRoomCard({
         py: 2,
         gap: 2
       }}
+      className="classroom-card"
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
-        {' '}
-        {/* NEW */}
-        {isAuthenticated && (
+        {isAuthenticated && viewType == 'standard' && (
           <IconButton /* NEW */
             onClick={handleEdit}
             sx={{
@@ -182,7 +185,8 @@ export default function ClassRoomCard({
             aria-label="Editar"
           >
             <PencilSimple size={24} />
-          </IconButton>)}
+          </IconButton>
+        )}
         <Card
           sx={{
             width: '100%',

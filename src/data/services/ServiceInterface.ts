@@ -9,7 +9,8 @@ export interface ServiceInterface<EntityType = Entity, CreateDTO = EntityType> {
 
   update?(entity: EntityType): Promise<unknown>
 
-  delete?(id: string): Promise<unknown>
+  delete?(id: number | string): Promise<unknown>
+
 }
 
 

@@ -5,16 +5,18 @@ import {
   DialogActions,
   Button,
   TextField
-} from '@mui/material';
-import { useEffect, useState } from 'react';
+} from '@mui/material'
+import { FloppyDisk } from '@phosphor-icons/react'
+import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare'
+import { useEffect, useState } from 'react'
 
 type FormProgramProps = {
-  open: boolean;
-  handleClose: () => void;
-  onSubmit: (data: { name: string; description: string }) => void;
-  initialData?: { name: string; description: string };
-  isEdit?: boolean;
-};
+  open: boolean
+  handleClose: () => void
+  onSubmit: (data: { name: string; description: string }) => void
+  initialData?: { name: string; description: string }
+  isEdit?: boolean
+}
 
 export default function FormProgram({
   open,
@@ -83,11 +85,15 @@ export default function FormProgram({
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancelar</Button>
+        <Button onClick={handleClose}>
+          <XSquare size={32} />
+          Cancelar
+        </Button>
         <Button variant="contained" onClick={handleFormSubmit}>
+          <FloppyDisk size={32} />
           {isEdit ? 'Guardar cambios' : 'Agregar'}
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

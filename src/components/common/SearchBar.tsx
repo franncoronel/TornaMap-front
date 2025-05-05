@@ -31,7 +31,7 @@ export default function SeachBar({ onSearch, options }: SeachBarProps) {
   const isQuery = searchValue.length > 0 && searched
 
   return (
-    <Box sx={{ display: 'flex', alignItems: 'center', pb: '1rem' }}>
+    <Box sx={{ display: 'flex', alignItems: 'center', bg: 'white' }}>
       <Autocomplete
         freeSolo
         id="filled-hidden-label-normal"

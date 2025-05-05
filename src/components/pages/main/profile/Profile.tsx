@@ -10,6 +10,9 @@ import { User } from '@/data/domain/User'
 import './profile.css'
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeacher'
+import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
+import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
 
 export default function Profile() {
   const { logout } = useAuth()
@@ -43,7 +46,7 @@ export default function Profile() {
       try {
         const user = await userService.getProfile()
         setLoader(false)
-        setUser(user.data)
+        setUser(user.data.data)
       } catch (error) {
         setLoader(false)
         console.error('Error fetching user data:', error)
@@ -76,19 +79,30 @@ export default function Profile() {
 
       {user?.isAdmin && (
         <>
-          <ProfileButton>Agregar Tipo de Aula</ProfileButton>
-          <ProfileButton>Editar Aula</ProfileButton>
-          <ProfileButton>Editar Aula</ProfileButton>
-          <ProfileButton>Habilitar Solicitud Clase</ProfileButton>
-          <ProfileButton onClick={() => navigate('/asignatura/agregar')}>Agregar Asignatura</ProfileButton>
-          <ProfileButton onClick={() => navigate('/programas')}>Programas</ProfileButton>
-          <ProfileButton onClick={() => navigate('/periodos')}>Periodos</ProfileButton>
+          {/* <ProfileButton>Agregar Tipo de Aula</ProfileButton>
+          <ProfileButton>Editar Aula</ProfileButton> */}
+          {/* <ProfileButton>Habilitar Solicitud Clase</ProfileButton> */}
+          <ProfileButton onClick={() => navigate('/programas')} 
+            startIcon={<GraduationCap size={32} />}>
+            Carreras o Programas
+          </ProfileButton>
+          <ProfileButton onClick={() => navigate('/asignatura/agregar')}
+            startIcon={<ChalkboardTeacher size={32} />}>
+            Agregar Asignatura
+          </ProfileButton>
+          <ProfileButton onClick={() => navigate('/evento/agregar')}
+            startIcon={<CalendarStar size={32} />}>
+            Agregar Evento / Clase
+          </ProfileButton>
+          <ProfileButton onClick={() => navigate('/periodos')}>
+            Periodos
+          </ProfileButton>
 
         </>
       )}
-      <ProfileButton>Agregar Clase</ProfileButton>
-      <ProfileButton onClick={() => handleLogout()}>
-        Cerrar Sesión <SignOut size={32} alt="Cerrar sesión" />
+      <ProfileButton onClick={() => handleLogout()} centerText={true} 
+        endIcon={<SignOut size={32} alt="Cerrar sesión" />} >
+        Cerrar Sesión 
       </ProfileButton>
     </main>
   )

@@ -3,6 +3,7 @@ import { lazy } from 'react'
 import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
+import EventForm from './components/pages/form/components/EventForm'
 
 // Lazy Components
 // const Register = lazy(() => import('@/components/pages/register/Register'))
@@ -37,7 +38,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: 'perfil',
-        element: <Profile />,
+        element: <Profile />
       },
       {
         path: 'asignatura',
@@ -50,6 +51,34 @@ export const routes: RouteObject[] = [
           {
             path: 'editar/:id',
             element: <CourseForm />
+          }
+        ]
+      },
+      {
+        path: 'evento',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <EventForm />
+          },
+          {
+            path: 'editar/:id',
+            element: <EventForm />
+          }
+        ]
+      },
+      {
+        path: 'horario',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <EventForm />
+          },
+          {
+            path: 'editar/:id',
+            element: <EventForm />
           }
         ]
       },
@@ -70,14 +99,13 @@ export const routes: RouteObject[] = [
       {
         path: 'programas',
         element: <Programs />,
-       
       },
-      { 
+      {
         path: 'periodos',
         element: <Periods />,
       }
     ],
-    
+
   },
   { path: '*', element: <NotFound /> }
 ]

@@ -15,6 +15,7 @@ type InfoModalProps = {
   handleClose: () => void // Función para cerrar el Modal
   title: string
   subtitle?: string
+  type: 'course' | 'event' | 'schedule'
 }
 
 export default function InfoModal({
@@ -24,6 +25,7 @@ export default function InfoModal({
   title,
   subtitle
 }: InfoModalProps) {
+
   return (
     <Modal
       open={open}

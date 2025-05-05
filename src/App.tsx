@@ -20,10 +20,11 @@ import { NotificationProvider } from './context/NotificationContext'
 import { routes } from '@/routes'
 
 // Componentes
-import {
-  CircularProgress
-} from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import Nav from './components/common/Nav/Nav'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { es } from 'date-fns/locale/es'
 
 function App() {
   // const theme = useTheme()
@@ -36,19 +37,21 @@ function App() {
         <AuthProvider>
           <NotificationProvider>
             <MuiDateProvider>
-              <BrowserRouter
-                future={{
-                  v7_startTransition: true,
-                  v7_relativeSplatPath: true
-                }}
-              >
-                <div className="layout-container">
-                  <div className="page-structure">
-                    <RoutesWrapper />
+              <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={es}>
+                <BrowserRouter
+                  future={{
+                    v7_startTransition: true,
+                    v7_relativeSplatPath: true
+                  }}
+                >
+                  <div className="layout-container">
+                    <div className="page-structure">
+                      <RoutesWrapper />
+                    </div>
+                    <Nav />
                   </div>
-                  <Nav />
-                </div>
-              </BrowserRouter>
+                </BrowserRouter>
+              </LocalizationProvider>
             </MuiDateProvider>
           </NotificationProvider>
         </AuthProvider>

@@ -1,4 +1,4 @@
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode } from 'react'
 import {
   Card,
   CardHeader,
@@ -7,11 +7,11 @@ import {
   IconButton,
   Typography,
   Tooltip
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+} from '@mui/material'
+import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 
 type CustomCardProps = {
   title: string;
@@ -34,7 +34,7 @@ export default function CustomCard({
   height = 220,
   width = 400
 }: CustomCardProps) {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
 
   return (
     <Card
@@ -65,7 +65,7 @@ export default function CustomCard({
           display: '-webkit-box',
           WebkitLineClamp: expanded ? 'unset' : 4,
           WebkitBoxOrient: 'vertical',
-          flexGrow: 1,
+          flexGrow: 1
         }}
       >
         {children}
@@ -88,7 +88,7 @@ export default function CustomCard({
           )}
           {onDelete && (
             <Tooltip title="Eliminar">
-              <IconButton color="primary" onClick={onDelete} aria-label="delete">
+              <IconButton color="error" onClick={onDelete} aria-label="delete">
                 <DeleteIcon />
               </IconButton>
             </Tooltip>
@@ -96,5 +96,5 @@ export default function CustomCard({
         </div>
       </CardActions>
     </Card>
-  );
+  )
 }

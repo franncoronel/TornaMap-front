@@ -2,7 +2,54 @@
   padding-top: 1.5rem;
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-bottom: 4rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  overflow-y: scroll;
+}
+.interactive-page-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.interactive-page-header > svg{
+  align-self: flex-start;
+  cursor: pointer;
+}
+h1.MuiTypography-root{
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+h2.MuiTypography-root{
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+h3.MuiTypography-root{
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+h4.MuiTypography-root,
+h5.MuiTypography-root,
+h6.MuiTypography-root{
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.interactive-page .MuiButtonBase-root,
+.interactive-page .MuiTypography-root{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.MuiTypography-root{
+  color: var(--color-primary);
+}
+.MuiCardContent-root{
   width: 100%;
 }
 
@@ -11,6 +58,21 @@
     padding-top: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
+  }
+
+  h1.MuiTypography-root{
+    font-size: 2.3rem;
+  }
+  h2.MuiTypography-root{
+    font-size: 2rem;
+  }
+  h3.MuiTypography-root{
+    font-size: 1.5rem;
+  }
+  h4.MuiTypography-root,
+  h5.MuiTypography-root,
+  h6.MuiTypography-root{
+    font-size: 1.2rem;
   }
 }
 
