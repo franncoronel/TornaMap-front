@@ -36,6 +36,8 @@ import { eventService } from '@/data/services/EventService'
 // Contexts
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import FloatingButton from '@/components/common/FloatingButton'
+import { useAuth } from '@/context/AuthContext'
 
 export default function Map() {
   const { control } = useForm({
@@ -46,6 +48,7 @@ export default function Map() {
   })
   const navigate = useNavigate()
   const params = useParams()
+  const { isAuthenticated } = useAuth()
   const { building: buildingPath, level: levelPath } = params
 
   const currentBuilding = buildingData.find((b) => b.path === buildingPath)
@@ -236,6 +239,8 @@ export default function Map() {
               No hay eventos en la fecha seleccionada.
             </Typography>
           )}
+
+          {isAuthenticated && <FloatingButton onClick={() => navigate('/horario/agregar')}/>}
         </InfoModal>
       )}
     </main>

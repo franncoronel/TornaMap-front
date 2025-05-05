@@ -17,6 +17,7 @@ const Form = lazy(() => import('@/components/pages/form/Form'))
 const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
 const Programs = lazy(() => import('@/components/pages/main/programs/ListPrograms'))
 const Periods = lazy(() => import('@/components/pages/main/periods/ListPeriod'))
+const ScheduleForm = lazy(() => import('@/components/pages/form/components/ScheduleForm'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -53,20 +54,20 @@ export const routes: RouteObject[] = [
           }
         ]
       },
-      // {
-      //   path: 'horario',
-      //   element: <Form />,
-      //   children: [
-      //     {
-      //       path: 'agregar',
-      //       element: <ScheduleForm />
-      //     },
-      //     {
-      //       path: 'editar/:id',
-      //       element: <ScheduleForm />
-      //     }
-      //   ]
-      // }
+      {
+        path: 'horario',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <ScheduleForm />
+          },
+          {
+            path: 'editar/:id',
+            element: <ScheduleForm />
+          }
+        ]
+      },
       {
         path: 'programas',
         element: <Programs />,
