@@ -9,7 +9,7 @@ import FormPeriod from './FormPeriod'
 import { useFetchPeriods } from './useFetchPeriods'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventIcon from '@mui/icons-material/Event'
-import { format } from 'date-fns'
+import { format, parseISO } from 'date-fns'
 import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
 
 export default function ListPeriod() {
@@ -77,14 +77,14 @@ export default function ListPeriod() {
                 <CalendarMonthIcon fontSize="small" color="primary" />
                 <Typography variant="body2">
                   Fecha de inicio:{' '}
-                  {format(new Date(period.startDate), 'dd/MM/yyyy')}
+                  {format(parseISO(period.startDate), 'dd/MM/yyyy')}
                 </Typography>
               </Stack>
 
               <Stack direction="row" spacing={1} alignItems="center">
                 <EventIcon fontSize="small" color="primary" />
                 <Typography variant="body2">
-                  Fecha de fin: {format(new Date(period.endDate), 'dd/MM/yyyy')}
+                  Fecha de fin: {format(parseISO(period.endDate), 'dd/MM/yyyy')}
                 </Typography>
               </Stack>
             </CustomCard>
