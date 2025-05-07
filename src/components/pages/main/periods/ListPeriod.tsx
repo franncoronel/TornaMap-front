@@ -12,7 +12,7 @@ import EventIcon from '@mui/icons-material/Event'
 import { format } from 'date-fns'
 import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
 
-export default function ListPrograms() {
+export default function ListPeriod() {
   const {
     periods,
     searchQuery,
@@ -50,7 +50,12 @@ export default function ListPrograms() {
         Periodos
       </Typography>
 
-      <Box position="sticky" top="0" zIndex="10">
+      <Box
+        position="sticky"
+        top="0"
+        zIndex="10"
+        sx={{ backgroundColor: 'white', height: 'fit-content', mb: 2 }}
+      >
         <SearchBar
           onSearch={handleSearch}
           options={periods.map((period) => period.title)}
