@@ -264,7 +264,7 @@ export default function EventForm() {
         setValue(`schedules.${idx}.classroomId`, '')
       }
     })
-  }, [id, schedulesWatch, setValue])
+  }, [])
 
   /* ui */
   return (
