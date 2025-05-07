@@ -13,6 +13,7 @@ import { useLoader } from '@/context/LoaderContext'
 import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeacher'
 import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
+import { ClockClockwise } from '@phosphor-icons/react/dist/ssr/ClockClockwise'
 
 export default function Profile() {
   const { logout } = useAuth()
@@ -94,7 +95,10 @@ export default function Profile() {
             startIcon={<CalendarStar size={32} />}>
             Agregar Evento / Clase
           </ProfileButton>
-          <ProfileButton onClick={() => navigate('/periodos')}>
+          <ProfileButton
+            onClick={() => navigate('/periodos')}
+            startIcon={<ClockClockwise size={32} />}
+          >
             Periodos
           </ProfileButton>
 

@@ -13,6 +13,10 @@ import { esES } from '@mui/x-date-pickers/locales'
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { validateAndSyncDates } from '@/data/utils/ValidateAndSyncDate'
+import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
+import { PickerValue } from '@mui/x-date-pickers/internals'
+import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare'
+import { FloppyDisk } from '@phosphor-icons/react/dist/ssr/FloppyDisk'
 
 type FormPeriodsProps = {
   open: boolean
@@ -82,6 +86,7 @@ export default function FormPeriods({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
+        <ClockClockwise size={32} />
         {isEdit ? 'Editar Periodo' : 'Agregar Periodo'}
       </DialogTitle>
       <DialogContent>
@@ -132,8 +137,12 @@ export default function FormPeriods({
         </LocalizationProvider>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancelar</Button>
+        <Button onClick={handleClose}>
+          {' '}
+          <XSquare size={32} /> Cancelar
+        </Button>
         <Button variant="contained" onClick={handleFormSubmit}>
+          <FloppyDisk size={32} />
           {isEdit ? 'Guardar cambios' : 'Agregar'}
         </Button>
       </DialogActions>

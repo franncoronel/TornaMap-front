@@ -7,6 +7,7 @@ import {
   TextField
 } from '@mui/material'
 import { FloppyDisk } from '@phosphor-icons/react'
+import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare'
 import { useEffect, useState } from 'react'
 
@@ -60,6 +61,7 @@ export default function FormProgram({
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ display: 'flex', justifyContent: 'center' }}>
+        <GraduationCap size={32} />
         {isEdit ? 'Editar Programa' : 'Agregar Programa'}
       </DialogTitle>
       <DialogContent>

@@ -10,6 +10,7 @@ import { useFetchPeriods } from './useFetchPeriods'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventIcon from '@mui/icons-material/Event'
 import { format } from 'date-fns'
+import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
 
 export default function ListPrograms() {
   const {
@@ -44,7 +45,8 @@ export default function ListPrograms() {
 
   return (
     <Box sx={{ mt: 5, px: 3, overflowY: 'auto', pb: 1 }} width="100%">
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h1" gutterBottom>
+        <ClockClockwise size={32} />
         Periodos
       </Typography>
 
