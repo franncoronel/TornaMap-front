@@ -28,7 +28,7 @@ const aulario: Record<string, FC<FloorMapProps>> = {
   '1': AularioNave3PlantaAlta
 }
 
-const its: Record<string, FC<FloorMapProps>>={
+const its: Record<string, FC<FloorMapProps>> = {
   '0': ITSPb
 }
 
@@ -55,7 +55,7 @@ export default function MapSelector({
   handleOpen,
   classRoom
 }: MapSelectorProps) {
-  const mapSet = buildingMaps[building ?? '']
+  const mapSet = buildingMaps[building?.replace(/\s+/g, '') ?? '']
   if (!mapSet) return <p>Edificio desconocido</p>
   // obtengo el componente concreto para el floor
   const MapComponent = mapSet[level ?? ''] // e.g. '0', '1', '2', …
