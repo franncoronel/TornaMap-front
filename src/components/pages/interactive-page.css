@@ -46,6 +46,9 @@ h6.MuiTypography-root{
   justify-content: center;
   gap: 0.5rem;
 }
+.interactive-page p.MuiTypography-root{
+  justify-content: flex-start;
+}
 .MuiTypography-root{
   color: var(--color-primary);
 }
