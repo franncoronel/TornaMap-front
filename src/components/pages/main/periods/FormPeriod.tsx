@@ -21,7 +21,11 @@ import { FloppyDisk } from '@phosphor-icons/react/dist/ssr/FloppyDisk'
 type FormPeriodsProps = {
   open: boolean
   handleClose: () => void
-  onSubmit: (data: { title: string; startDate: string; endDate: string }) => void
+  onSubmit: (data: {
+    title: string
+    startDate: string
+    endDate: string
+  }) => void
   initialData?: { title: string; startDate: string; endDate: string }
   isEdit?: boolean
 }
@@ -57,9 +61,12 @@ export default function FormPeriods({
     setErrors({})
   }, [initialData, open])
 
-  const handleChange = (field: string, value: any) => {
-    let updated = { ...formValues, [field]: value }
-    const { startDate, endDate } = validateAndSyncDates(updated.startDate, updated.endDate)
+  const handleChange = (field: string, value: string | PickerValue) => {
+    const updated = { ...formValues, [field]: value }
+    const { startDate, endDate } = validateAndSyncDates(
+      updated.startDate,
+      updated.endDate
+    )
     setFormValues({ ...updated, startDate, endDate })
   }
 
@@ -103,7 +110,9 @@ export default function FormPeriods({
         <LocalizationProvider
           dateAdapter={AdapterDateFns}
           adapterLocale={es}
-          localeText={esES.components.MuiLocalizationProvider.defaultProps.localeText}
+          localeText={
+            esES.components.MuiLocalizationProvider.defaultProps.localeText
+          }
         >
           <DatePicker
             label="Fecha de inicio"
