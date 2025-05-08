@@ -1,0 +1,133 @@
+.outer-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  height: 10vh;
+  height: 10dvh; /* Para pantallas de iPhone 14 Pro Max */
+  flex: 0 0 10dvh; /* no se estira ni se achica */
+  touch-action: none; /* Deshabilitar el desplazamiento táctil */
+  -webkit-user-select: none;
+}
+
+.inner-container {
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.outer-container *.active,
+.inner-container *.active {
+  border-color: transparent;
+  outline-color: transparent;
+  border-radius: 50rem;
+  border: none;
+  outline: none;
+}
+
+.outer-container button {
+  height: 100%;
+}
+
+.outer-container button svg {
+  transition: transform 0.3s ease-in-out;
+}
+
+.outer-container .active {
+  position: relative;
+}
+
+.inner-container .active.nav-icon::after,
+.inner-container .active.home-icon::after {
+  content: '';
+  position: absolute;
+  width: 150%;
+  height: 3px;
+  background-color: #0f0f0f;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.outer-container .active svg {
+  transform: scale(1.2);
+}
+
+.wide-screen-logo {
+  display: none;
+}
+
+.spacing {
+  display: none;
+}
+
+.mobile-logo {
+  display: flex;
+}
+
+.logo-label {
+  display: none;
+}
+
+@Media (min-width: 601px) {
+  .outer-container {
+    min-height: 6vh;
+    height: auto; /* Anular la altura fija de móvil */
+  }
+
+  .inner-container .active.nav-icon::after {
+    width: 100%;
+    top: auto;
+    bottom: 0;
+  }
+
+  .inner-container .active.home-icon::after {
+    content: none;
+    display: none;
+  }
+
+  .logo-container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .mobile-logo {
+    display: none;
+  }
+
+  .wide-screen-logo {
+    display: flex;
+  }
+
+  /*
+    Espaciado entre los botones de navegación sin
+    tener que agregar otro contenedor flex a la estructura.
+  */
+  .logo-container.nav-icon {
+    margin: 0 1.5rem;
+  }
+
+  .logo-container.nav-icon:first-of-type {
+    margin-left: 0;
+  }
+
+  .logo-container.nav-icon:last-of-type {
+    margin-right: 0;
+  }
+
+  .spacing {
+    display: flex;
+  }
+
+  .logo-label {
+    display: flex;
+  }
+}
+
+/* Pantallas grandes (1200px en adelante) */
+@Media (min-width: 1200px) {
+  .outer-container {
+    min-height: 8vh;
+  }
+}

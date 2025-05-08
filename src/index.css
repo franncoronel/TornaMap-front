@@ -1,0 +1,113 @@
+:root {
+  --primary-color: #7da1c4;
+  --primary-color-light: #a4c8e1;
+  --primary-color-dark: #4b7da1;
+  --primary-color-darker: #2e4b7d;
+  --primary-color-darkest: #1f2e4b;
+  --primary-color-contrast: #ffffff;
+  --success-color: #4caf50;
+  --success-color-light: #a5d6a7;
+  --success-color-dark: #388e3c;
+  --success-color-darker: #2e7d32;
+  --success-color-darkest: #1b5e20;
+  --danger-color: #f44336;
+  --danger-color-light: #ef9a9a;
+  --danger-color-dark: #d32f2f;
+  --danger-color-darker: #c62828;
+  --danger-color-darkest: #b71c1c;
+  --warning-color: #ff9800;
+  --warning-color-light: #ffb74d;
+  --warning-color-dark: #f57c00;
+  --warning-color-darker: #ef6c00;
+  --warning-color-darkest: #e65100;
+  --info-color: #2196f3;
+  --info-color-light: #64b5f6;
+  --info-color-dark: #1976d2;
+  --info-color-darker: #1565c0;
+  --info-color-darkest: #0d47a1;
+  --text-color: #212121;
+  --text-color-light: #757575;
+  --light-color: #f5f5f5;
+
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+html,
+body {
+  overscroll-behavior: none;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+body #root>main {
+  height: 90vh;
+  overflow-y: scroll;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@Media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
