@@ -176,10 +176,10 @@ export default function ClassRoomCard({
               transition: 'all 0.3s ease',
               '&:hover': {
                 color: 'primary.main',
-                transform: 'scale(1.1)',
+                transform: 'scale(1.1)'
               },
               '&:active': {
-                transform: 'scale(1)',
+                transform: 'scale(1)'
               }
             }}
             aria-label="Editar"
@@ -213,7 +213,7 @@ export default function ClassRoomCard({
                   >
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
-                        variant="h5"
+                        variant="h3"
                         sx={{
                           fontWeight: 'bold',
                           whiteSpace: 'nowrap',
@@ -228,7 +228,7 @@ export default function ClassRoomCard({
                     {hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h5"
+                          variant="h4"
                           sx={{
                             fontWeight: 'bold',
                             whiteSpace: 'nowrap',
@@ -245,7 +245,7 @@ export default function ClassRoomCard({
                     {course && !hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h5"
+                          variant="h2"
                           sx={{
                             fontWeight: 'bold',
                             whiteSpace: 'nowrap',
@@ -263,7 +263,7 @@ export default function ClassRoomCard({
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
-                          variant="h5"
+                          variant="h4"
                           sx={{
                             fontWeight: 'bold'
                           }}
