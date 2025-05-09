@@ -20,7 +20,8 @@ import { IEvent } from '@/data/domain/Event'
 import '../pages/search/search.css'
 
 // Utils
-import { format, parseISO } from 'date-fns'
+import { parseISO } from 'date-fns/parseISO'
+import { format } from 'date-fns/format'
 
 interface TabPanelProps {
   children?: React.ReactNode

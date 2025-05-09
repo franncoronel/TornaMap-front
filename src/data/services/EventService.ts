@@ -3,7 +3,7 @@ import { Response } from '../domain/Response'
 import { IEventCreate, IEventCreateDto, IEventList } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
-import { format } from 'date-fns'
+import { format } from 'date-fns/format'
 import { ScheduleForm } from '@/components/pages/form/components/EventForm'
 
 export class EventService implements ServiceInterface {

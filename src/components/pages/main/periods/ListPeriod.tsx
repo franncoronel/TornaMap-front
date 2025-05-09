@@ -9,7 +9,8 @@ import FormPeriod from './FormPeriod'
 import { useFetchPeriods } from './useFetchPeriods'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventIcon from '@mui/icons-material/Event'
-import { format, parseISO } from 'date-fns'
+import { format } from 'date-fns/format'
+import { parseISO } from 'date-fns/parseISO'
 import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
 
 export default function ListPeriod() {

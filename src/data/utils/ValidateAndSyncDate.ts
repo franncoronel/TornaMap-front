@@ -1,4 +1,5 @@
-import { isAfter, isBefore } from 'date-fns'
+import { isBefore } from 'date-fns/isBefore'
+import { isAfter } from 'date-fns/isAfter'
 
 type ValidatedDates = {
   startDate: Date
