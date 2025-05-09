@@ -25,6 +25,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: (id) => {
+          if (id.includes('@mui/material'))           return 'mui-core'
+          if (id.includes('@mui/x-date-pickers'))     return 'mui-pickers'
+          if (id.includes('@mui/system'))             return 'mui-system'
           if (id.includes('node_modules')) {
             const parts = id.split('node_modules/')
             const moduleName = parts[1].split('/')[0]
