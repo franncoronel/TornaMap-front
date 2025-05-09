@@ -1,16 +1,16 @@
+import {FC, Suspense, lazy } from 'react'
 //Components
-import TornaviasSubsuelo from './tornavias/TornaviasSubsuelo'
-import TornaviasPlantaBaja from './tornavias/TornaviasPlantaBaja'
-import TornaviasPrimerPiso from './tornavias/TornaviasPrimerPiso'
-import AularioNave3PlantaBaja from './aulario/AularioNave3PlantaBaja'
-import AularioNave3PlantaAlta from './aulario/AularioNave3PlantaAlta'
-import ITSPb from './its/ITSPb'
+const TornaviasSubsuelo = lazy(()=>import('./tornavias/TornaviasSubsuelo'))
+const TornaviasPlantaBaja = lazy(()=>import('./tornavias/TornaviasPlantaBaja'))
+const TornaviasPrimerPiso = lazy(()=>import('./tornavias/TornaviasPrimerPiso'))
+const AularioNave3PlantaBaja = lazy(()=>import('./aulario/AularioNave3PlantaBaja'))
+const AularioNave3PlantaAlta = lazy(()=>import('./aulario/AularioNave3PlantaAlta'))
+const ITSPb = lazy(()=>import('./its/ITSPb'))
 //MUI Components
-import { Box } from '@mui/material'
+import { Box, CircularProgress } from '@mui/material'
 // Styles
 import '@/components/pages/map/map.css'
 //React
-import { FC } from 'react'
 interface FloorMapProps {
   selectedCode?: string
   handleOpen?: (classRoomId: string) => void
@@ -62,9 +62,18 @@ export default function MapSelector({
   if (!MapComponent) return <p>Piso “{level}” no disponible</p>
 
   return (
-    <Box className="svg-container">
-      {/* Renderiza el componente del mapa correspondiente */}
-      <MapComponent selectedCode={classRoom} handleOpen={handleOpen} />
-    </Box>
+    <Suspense
+          fallback={
+            <div className="loader-container">
+              <span className="loader-unsam">UNSAM</span>
+              <CircularProgress className="loader" size={250} />
+            </div>
+          }
+        >
+      <Box className="svg-container">
+        {/* Renderiza el componente del mapa correspondiente */}
+        <MapComponent selectedCode={classRoom} handleOpen={handleOpen} />
+      </Box>
+    </Suspense>
   )
 }
