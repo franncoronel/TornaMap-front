@@ -110,8 +110,10 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
-                onChange={(e, newValue) =>
+                onChange={(e, newValue) =>{
+                  console.log(e)
                   handleTabChange(event.id ?? '', newValue)
+                }
                 }
                 variant="fullWidth"
               >
