@@ -1,5 +1,4 @@
 import CustomCard from '@/components/common/CustomCard'
-import { Typography, Box, Grid2, Stack } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
 import { IPeriod } from '@/data/domain/Period'
 import NoResults from '@/components/common/NoResults'
@@ -12,6 +11,10 @@ import EventIcon from '@mui/icons-material/Event'
 import { format } from 'date-fns/format'
 import { parseISO } from 'date-fns/parseISO'
 import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
+import Box from '@mui/material/Box/Box'
+import Typography from '@mui/material/Typography/Typography'
+import Grid2 from '@mui/material/Grid2/Grid2'
+import Stack from '@mui/material/Stack/Stack'
 
 export default function ListPeriod() {
   const {

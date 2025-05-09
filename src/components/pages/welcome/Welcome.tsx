@@ -1,4 +1,3 @@
-import { Box, Button, Container, Stack, Typography } from '@mui/material'
 import TransparentContainer from '@/components/ui/TransparentContainer'
 import { useNavigate } from 'react-router-dom'
 import logoUnsamBlanco from '@/assets/logos/logo-unsam-blanco.png'
@@ -8,6 +7,11 @@ import { useEffect } from 'react'
 import { MagnifyingGlass } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass'
 import { SignIn } from '@phosphor-icons/react/dist/icons/SignIn'
 import { CompassRose } from '@phosphor-icons/react/dist/icons/CompassRose'
+import Box from '@mui/material/Box/Box'
+import Container from '@mui/material/Container/Container'
+import Stack from '@mui/material/Stack/Stack'
+import Button from '@mui/material/Button/Button'
+import Typography from '@mui/material/Typography/Typography'
 
 export default function Welcome() {
   const navigate = useNavigate()

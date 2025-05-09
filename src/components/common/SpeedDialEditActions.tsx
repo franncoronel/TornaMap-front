@@ -1,10 +1,8 @@
-import {
-  Box,
-  Backdrop,
-  SpeedDialAction,
-  SpeedDial,
-  SpeedDialIcon
-} from '@mui/material'
+import Backdrop from '@mui/material/Backdrop/Backdrop'
+import Box from '@mui/material/Box/Box'
+import SpeedDial from '@mui/material/SpeedDial/SpeedDial'
+import SpeedDialAction from '@mui/material/SpeedDialAction/SpeedDialAction'
+import SpeedDialIcon from '@mui/material/SpeedDialIcon/SpeedDialIcon'
 import { Gear } from '@phosphor-icons/react/dist/icons/Gear'
 import { PencilLine } from '@phosphor-icons/react/dist/icons/PencilLine'
 import { Trash } from '@phosphor-icons/react/dist/ssr/Trash'

@@ -7,9 +7,9 @@ const AularioNave3PlantaBaja = lazy(()=>import('./aulario/AularioNave3PlantaBaja
 const AularioNave3PlantaAlta = lazy(()=>import('./aulario/AularioNave3PlantaAlta'))
 const ITSPb = lazy(()=>import('./its/ITSPb'))
 //MUI Components
-import { Box, CircularProgress } from '@mui/material'
-// Styles
 import '@/components/pages/map/map.css'
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress'
+import Box from '@mui/material/Box/Box'
 //React
 interface FloorMapProps {
   selectedCode?: string

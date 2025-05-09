@@ -12,22 +12,21 @@ import { courseService } from '@/data/services/CourseService'
 import { ICourseCreate, ICourseUpdate } from '@/data/domain/Course'
 import { IProgram } from '@/data/domain/Program'
 
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Stack,
-  TextField,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogContentText,
-  DialogActions
-} from '@mui/material'
+
 import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
 import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
 import { Trash } from '@phosphor-icons/react/dist/icons/Trash'
 import { ChalkboardTeacher } from '@phosphor-icons/react/dist/icons/ChalkboardTeacher'
+import Box from '@mui/material/Box/Box'
+import Stack from '@mui/material/Stack/Stack'
+import TextField from '@mui/material/TextField/TextField'
+import Autocomplete from '@mui/material/Autocomplete/Autocomplete'
+import Button from '@mui/material/Button/Button'
+import Dialog from '@mui/material/Dialog/Dialog'
+import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
+import DialogContent from '@mui/material/DialogContent/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText/DialogContentText'
+import DialogActions from '@mui/material/DialogActions/DialogActions'
 
 type FormValues = Omit<ICourseCreate, 'id'> & { id?: string }
 

@@ -1,11 +1,9 @@
-import {
-  Autocomplete,
-  Box,
-  Divider,
-  IconButton,
-  InputAdornment,
-  TextField
-} from '@mui/material'
+import Autocomplete from '@mui/material/Autocomplete/Autocomplete'
+import Box from '@mui/material/Box/Box'
+import Divider from '@mui/material/Divider/Divider'
+import IconButton from '@mui/material/IconButton/IconButton'
+import InputAdornment from '@mui/material/InputAdornment/InputAdornment'
+import TextField from '@mui/material/TextField/TextField'
 import { MagnifyingGlass } from '@phosphor-icons/react/dist/icons/MagnifyingGlass'
 import { X } from '@phosphor-icons/react/dist/icons/X'
 import { useState } from 'react'

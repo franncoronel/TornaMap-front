@@ -9,25 +9,7 @@ import {
   useFieldArray,
   useForm
 } from 'react-hook-form'
-import {
-  Autocomplete,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  Switch,
-  TextField,
-  Typography
-} from '@mui/material'
+
 import { useLoader } from '@/context/LoaderContext'
 import { useNotification } from '@/context/NotificationContext'
 import {
@@ -60,6 +42,23 @@ import { CalendarPlus } from '@phosphor-icons/react/dist/icons/CalendarPlus'
 import { CalendarDots } from '@phosphor-icons/react/dist/icons/CalendarDots'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { TimePicker } from '@mui/x-date-pickers'
+import Box from '@mui/material/Box/Box'
+import Stack from '@mui/material/Stack/Stack'
+import TextField from '@mui/material/TextField/TextField'
+import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel'
+import Switch from '@mui/material/Switch/Switch'
+import Autocomplete from '@mui/material/Autocomplete/Autocomplete'
+import Typography from '@mui/material/Typography/Typography'
+import FormControl from '@mui/material/FormControl/FormControl'
+import InputLabel from '@mui/material/InputLabel/InputLabel'
+import Select from '@mui/material/Select/Select'
+import MenuItem from '@mui/material/MenuItem/MenuItem'
+import Button from '@mui/material/Button/Button'
+import Dialog from '@mui/material/Dialog/Dialog'
+import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
+import DialogContent from '@mui/material/DialogContent/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText/DialogContentText'
+import DialogActions from '@mui/material/DialogActions/DialogActions'
 
 interface LocationState {
   courseID?: string

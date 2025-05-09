@@ -1,11 +1,4 @@
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Button,
-  TextField
-} from '@mui/material'
+
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { es } from 'date-fns/locale'
@@ -17,6 +10,12 @@ import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
 import { PickerValue } from '@mui/x-date-pickers/internals'
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare'
 import { FloppyDisk } from '@phosphor-icons/react/dist/ssr/FloppyDisk'
+import Dialog from '@mui/material/Dialog/Dialog'
+import DialogTitle from '@mui/material/DialogTitle/DialogTitle'
+import DialogContent from '@mui/material/DialogContent/DialogContent'
+import TextField from '@mui/material/TextField/TextField'
+import DialogActions from '@mui/material/DialogActions/DialogActions'
+import Button from '@mui/material/Button/Button'
 
 type FormPeriodsProps = {
   open: boolean

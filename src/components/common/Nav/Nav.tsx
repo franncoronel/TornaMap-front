@@ -1,5 +1,4 @@
-import { AppBar, Toolbar, Box, IconButton, Typography, useMediaQuery, useTheme } from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { styled, useTheme } from '@mui/material/styles'
 import './nav.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
@@ -10,6 +9,12 @@ import { MagnifyingGlass } from '@phosphor-icons/react/dist/icons/MagnifyingGlas
 import { MapTrifold } from '@phosphor-icons/react/dist/icons/MapTrifold'
 import { UserCircle } from '@phosphor-icons/react/dist/icons/UserCircle'
 import { SignIn } from '@phosphor-icons/react/dist/icons/SignIn'
+import Typography from '@mui/material/Typography/Typography'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import AppBar from '@mui/material/AppBar/AppBar'
+import Toolbar from '@mui/material/Toolbar/Toolbar'
+import IconButton from '@mui/material/IconButton/IconButton'
+import Box from '@mui/material/Box/Box'
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   variant: 'body2',

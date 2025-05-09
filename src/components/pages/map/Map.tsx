@@ -4,19 +4,6 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Components
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  Box,
-  Typography,
-  Divider
-} from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -36,6 +23,17 @@ import { eventService } from '@/data/services/EventService'
 // Contexts
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import Box from '@mui/material/Box/Box'
+import FormControl from '@mui/material/FormControl/FormControl'
+import InputLabel from '@mui/material/InputLabel/InputLabel'
+import Select from '@mui/material/Select/Select'
+import MenuItem from '@mui/material/MenuItem/MenuItem'
+import FormLabel from '@mui/material/FormLabel/FormLabel'
+import RadioGroup from '@mui/material/RadioGroup/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel/FormControlLabel'
+import Radio from '@mui/material/Radio/Radio'
+import Divider from '@mui/material/Divider/Divider'
+import Typography from '@mui/material/Typography/Typography'
 
 export default function Map() {
   const { control } = useForm({

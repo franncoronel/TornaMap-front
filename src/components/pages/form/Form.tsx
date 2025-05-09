@@ -1,8 +1,9 @@
-import { Box, Typography } from '@mui/material'
 import '../interactive-page.css'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import { CaretLeft } from '@phosphor-icons/react/dist/icons/CaretLeft'
+import Box from '@mui/material/Box/Box'
+import Typography from '@mui/material/Typography/Typography'
 export interface FormContext {
   setTitle: (title: string) => void
   setIcon: (icon: JSX.Element | null) => void

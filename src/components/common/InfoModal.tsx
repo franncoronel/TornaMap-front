@@ -1,11 +1,9 @@
-import {
-  Modal,
-  Box,
-  Typography,
-  Divider,
-  IconButton,
-  Fade
-} from '@mui/material'
+import Box from '@mui/material/Box/Box'
+import Divider from '@mui/material/Divider/Divider'
+import Fade from '@mui/material/Fade/Fade'
+import IconButton from '@mui/material/IconButton/IconButton'
+import Modal from '@mui/material/Modal/Modal'
+import Typography from '@mui/material/Typography/Typography'
 import { X } from '@phosphor-icons/react/dist/icons/X'
 import { ReactNode } from 'react'
 

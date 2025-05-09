@@ -1,4 +1,3 @@
-import { Typography } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -14,6 +13,7 @@ import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
 import { ClockClockwise } from '@phosphor-icons/react/dist/ssr/ClockClockwise'
 import { SignOut } from '@phosphor-icons/react/dist/icons/SignOut'
+import Typography from '@mui/material/Typography/Typography'
 
 export default function Profile() {
   const { logout } = useAuth()

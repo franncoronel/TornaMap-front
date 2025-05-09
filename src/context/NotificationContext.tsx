@@ -1,3 +1,5 @@
+import Alert from '@mui/material/Alert/Alert'
+import Snackbar from '@mui/material/Snackbar/Snackbar'
 import {
   createContext,
   useContext,
@@ -6,7 +8,6 @@ import {
   FC,
   ReactNode
 } from 'react'
-import { Snackbar, Alert } from '@mui/material'
 
 export interface Notification {
   title: string

@@ -1,5 +1,6 @@
-import { Fab, Tooltip } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
+import Fab from '@mui/material/Fab/Fab'
+import Tooltip from '@mui/material/Tooltip/Tooltip'
 
 type FloatingButtonProps = {
   onClick: () => void

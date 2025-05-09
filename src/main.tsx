@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from '@/App.tsx'
-import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material'
+import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import { esES } from '@mui/x-date-pickers/locales'
 
 let unsamTheme = createTheme(

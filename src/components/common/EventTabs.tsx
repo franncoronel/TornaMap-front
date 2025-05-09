@@ -8,7 +8,6 @@ import MapSelector from '@/components/common/map/MapSelector'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 
 // Material UI
-import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
 import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
 
@@ -22,6 +21,11 @@ import '../pages/search/search.css'
 // Utils
 import { parseISO } from 'date-fns/parseISO'
 import { format } from 'date-fns/format'
+import Box from '@mui/material/Box/Box'
+import Typography from '@mui/material/Typography/Typography'
+import IconButton from '@mui/material/IconButton/IconButton'
+import Tabs from '@mui/material/Tabs/Tabs'
+import Tab from '@mui/material/Tab/Tab'
 
 interface TabPanelProps {
   children?: React.ReactNode

@@ -1,5 +1,4 @@
 import CustomCard from '@/components/common/CustomCard'
-import { Typography, Box, Grid2 } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
 import { IProgram } from '@/data/domain/Program'
 import NoResults from '@/components/common/NoResults'
@@ -8,6 +7,9 @@ import FloatingButton from '@/components/common/FloatingButton'
 import FormProgram from './FormProgram'
 import { useFetchPrograms } from './useFetchPrograms'
 import { GraduationCap } from '@phosphor-icons/react/dist/icons/GraduationCap'
+import Box from '@mui/material/Box/Box'
+import Typography from '@mui/material/Typography/Typography'
+import Grid2 from '@mui/material/Grid2/Grid2'
 
 export default function ListPrograms() {
   const {

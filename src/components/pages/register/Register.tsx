@@ -1,17 +1,16 @@
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Container,
-  Link
-} from '@mui/material'
+
 import { useNavigate } from 'react-router-dom'
 // import { User } from '../../../data/domain/User'
 import './register.css'
 import SectionTitle from '@/components/common/SectionTitle'
 import { FingerprintSimple } from '@phosphor-icons/react/dist/ssr/FingerprintSimple'
+import Container from '@mui/material/Container/Container'
+import Box from '@mui/material/Box/Box'
+import TextField from '@mui/material/TextField/TextField'
+import Button from '@mui/material/Button/Button'
+import Typography from '@mui/material/Typography/Typography'
+import Link from '@mui/material/Link/Link'
 
 type FormInputs = {
   name: string
