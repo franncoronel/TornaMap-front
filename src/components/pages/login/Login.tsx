@@ -15,13 +15,16 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../context/AuthContext.tsx'
 import { LoginRequest } from '../../../data/domain/User.ts'
 import { useEffect, useState } from 'react'
-import { EyeSlash, Eye, SignIn, FingerprintSimple } from '@phosphor-icons/react'
 import logoUnsam from '@/assets/logos/logo-unsam-largo.png'
 import './login.css'
 import '../background-image.css'
 import SectionTitle from '@/components/common/SectionTitle.tsx'
 import { useNotification } from '@/context/NotificationContext.tsx'
 import { useLoader } from '@/context/LoaderContext.tsx'
+import { EyeSlash } from '@phosphor-icons/react/dist/icons/EyeSlash'
+import { Eye } from '@phosphor-icons/react/dist/icons/Eye'
+import { SignIn } from '@phosphor-icons/react/dist/icons/SignIn'
+import { FingerprintSimple } from '@phosphor-icons/react/dist/icons/FingerprintSimple'
 
 export default function Login() {
   const {

@@ -5,7 +5,9 @@ import {
   SpeedDial,
   SpeedDialIcon
 } from '@mui/material'
-import { Gear, PencilLine, Trash } from '@phosphor-icons/react'
+import { Gear } from '@phosphor-icons/react/dist/icons/Gear'
+import { PencilLine } from '@phosphor-icons/react/dist/icons/PencilLine'
+import { Trash } from '@phosphor-icons/react/dist/ssr/Trash'
 import { useState } from 'react'
 
 const actions = [

@@ -1,5 +1,6 @@
-import { BookOpenText, Toilet } from '@phosphor-icons/react'
+import { BookOpenText } from '@phosphor-icons/react/dist/icons/BookOpenText'
 import { mapColors } from '../../../pages/map/mapColors'
+import { Toilet } from '@phosphor-icons/react/dist/icons/Toilet'
 
 interface TornaviasSubsueloProps {
   selectedCode?: string // Cambiado de selectedClassRoomId

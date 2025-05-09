@@ -19,16 +19,15 @@ import {
   Tooltip,
   IconButton
 } from '@mui/material'
-import {
-  MapPin,
-  Clock,
-  User,
-  BookOpenText,
-  Building,
-  Laptop,
-  ArrowsClockwise,
-  PencilSimple
-} from '@phosphor-icons/react'
+import { ArrowsClockwise } from '@phosphor-icons/react/dist/icons/ArrowsClockwise'
+import { BookOpenText } from '@phosphor-icons/react/dist/icons/BookOpenText'
+import { Building } from '@phosphor-icons/react/dist/icons/Building'
+import { Clock } from '@phosphor-icons/react/dist/icons/Clock'
+import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
+import { MapPin } from '@phosphor-icons/react/dist/icons/MapPin'
+import { PencilSimple } from '@phosphor-icons/react/dist/icons/PencilSimple'
+import { User } from '@phosphor-icons/react/dist/icons/User'
+
 import { useNavigate } from 'react-router-dom'
 
 interface ClassRoomCardProps {

@@ -6,8 +6,8 @@ import {
   IconButton,
   Fade
 } from '@mui/material'
+import { X } from '@phosphor-icons/react/dist/icons/X'
 import { ReactNode } from 'react'
-import { X } from '@phosphor-icons/react'
 
 type InfoModalProps = {
   children: ReactNode // Permite múltiples hijos de cualquier tipo

@@ -1,4 +1,4 @@
-import { Toilet } from '@phosphor-icons/react'
+import { Toilet } from '@phosphor-icons/react/dist/icons/Toilet'
 import { mapColors } from '../../../pages/map/mapColors'
 
 interface AularioNaveProps {

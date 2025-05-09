@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { WarningCircle } from '@phosphor-icons/react'
+import { WarningCircle } from '@phosphor-icons/react/dist/icons/WarningCircle';
 
 const NoResults: React.FC = () => {
     return (

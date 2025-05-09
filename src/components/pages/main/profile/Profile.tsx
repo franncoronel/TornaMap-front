@@ -2,7 +2,6 @@ import { Typography } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { SignOut } from '@phosphor-icons/react'
 import { userService } from '@/data/services/UserService'
 import { useEffect, useState } from 'react'
 import { User } from '@/data/domain/User'
@@ -14,6 +13,7 @@ import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeac
 import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
 import { ClockClockwise } from '@phosphor-icons/react/dist/ssr/ClockClockwise'
+import { SignOut } from '@phosphor-icons/react/dist/icons/SignOut'
 
 export default function Profile() {
   const { logout } = useAuth()

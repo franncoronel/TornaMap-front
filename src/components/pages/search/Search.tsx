@@ -11,12 +11,13 @@ import { courseService } from '@/data/services/CourseService'
 
 import { ICourse, ICourseList } from '@/data/domain/Course'
 
-import { WarningCircle, Plus } from '@phosphor-icons/react'
 import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import InfoModal from '@/components/common/InfoModal'
 import EventTabs from '@/components/common/EventTabs'
+import { WarningCircle } from '@phosphor-icons/react/dist/icons/WarningCircle'
+import { Plus } from '@phosphor-icons/react/dist/icons/Plus'
 
 export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)

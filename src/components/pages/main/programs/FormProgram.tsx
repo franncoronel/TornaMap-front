@@ -6,7 +6,7 @@ import {
   Button,
   TextField
 } from '@mui/material'
-import { FloppyDisk } from '@phosphor-icons/react'
+import { FloppyDisk } from '@phosphor-icons/react/dist/ssr/FloppyDisk'
 import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { XSquare } from '@phosphor-icons/react/dist/ssr/XSquare'
 import { useEffect, useState } from 'react'

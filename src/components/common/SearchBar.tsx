@@ -6,8 +6,9 @@ import {
   InputAdornment,
   TextField
 } from '@mui/material'
+import { MagnifyingGlass } from '@phosphor-icons/react/dist/icons/MagnifyingGlass'
+import { X } from '@phosphor-icons/react/dist/icons/X'
 import { useState } from 'react'
-import { MagnifyingGlass, X } from '@phosphor-icons/react'
 
 interface SeachBarProps {
   onSearch: (query: string) => void

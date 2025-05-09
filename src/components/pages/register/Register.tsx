@@ -10,8 +10,8 @@ import {
 import { useNavigate } from 'react-router-dom'
 // import { User } from '../../../data/domain/User'
 import './register.css'
-import { FingerprintSimple } from '@phosphor-icons/react'
 import SectionTitle from '@/components/common/SectionTitle'
+import { FingerprintSimple } from '@phosphor-icons/react/dist/ssr/FingerprintSimple'
 
 type FormInputs = {
   name: string

@@ -1,5 +1,7 @@
-import { BookOpenText, ForkKnife, Toilet } from '@phosphor-icons/react'
+import { BookOpenText } from '@phosphor-icons/react/dist/icons/BookOpenText'
 import { mapColors } from '../../../pages/map/mapColors'
+import { ForkKnife } from '@phosphor-icons/react/dist/icons/ForkKnife'
+import { Toilet } from '@phosphor-icons/react/dist/icons/Toilet'
 
 interface TornaviasPrimerPisoProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
