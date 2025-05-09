@@ -2,6 +2,8 @@ src/environment.*
 .env.development
 .env.production
 
+stats.html
+
 .firebase/*
 .firebase/hosting.*
 
