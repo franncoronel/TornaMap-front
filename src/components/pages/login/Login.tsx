@@ -171,6 +171,7 @@ export default function Login() {
         </Button>
 
         {/* Register Button */}
+        <span style={{ cursor: 'not-allowed' }}>
           <Button
             disabled
             variant="outlined"
@@ -179,6 +180,7 @@ export default function Login() {
             onClick={() => navigate('/registrar')}>
             <FingerprintSimple size={32} alt="Registrarse" /> Registrarse
           </Button>
+        </span>
       </Box>
     </main>
   )
