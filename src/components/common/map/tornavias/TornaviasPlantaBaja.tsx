@@ -997,8 +997,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A18')}
-          className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('A19')}
+          className={`classRoom ${isSelected('A19') ? 'selected' : ''}`}
         >
           <path
             d="M273.111053,512.080725c7.415474,13.710616,29.198574,36.776487,42.263239,46.648422l-32.492883,42.731182c-16.481705-10.310838-41.869802-41.583753-54.170306-60.848775l44.39995-28.530829Z"
@@ -1400,8 +1400,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LEII')}
-          className={`classRoom ${isSelected('LEII') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('LE2')}
+          className={`classRoom ${isSelected('LE2') ? 'selected' : ''}`}
         >
           <path
             d="M806.954264,423.529654l-53.458398-3.163908c-.183917,9.706394-3.47723,34.08643-6.41688,48.847472l51.689861,11.624104c3.768401-15.776431,7.844646-44.125494,8.185417-57.307668Z"
