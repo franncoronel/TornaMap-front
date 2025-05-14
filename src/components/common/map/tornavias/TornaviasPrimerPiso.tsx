@@ -513,8 +513,8 @@ export default function TornaviasPrimerPiso({
         {/* Biblioteca - Zona restringida */}
         <g className="libraryRestrictedZone">
           <path
-            d="M273.252965,207.995954l25.195868,27.738939c-10.274954,6.950338-27.800736,27.597664-35.723918,40.465414-7.47902,10.416339-19.387936,32.152111-23.5042,43.702359l-34.020799-13.822501c.770365-6.778904,13.046347-30.177084,23.949262-46.811389c6.748521-12.346305,29.6429-37.561474,44.103787-51.272822Z"
-            transform="translate(.000001 1)"
+            d="M273.252966,208.995954l25.195864,26.73894c-19.437791,15.137535-39.473314,44.458042-46.353422,57.52251-7.333077,13.9246-20.107289,41.538435-22.306411,58.262714l-36.38288-8.132782c3.269117-17.818629,15.770433-49.96823,24.811004-66.187029c9.559187-17.149197,35.674315-52.04063,55.035845-68.204353Z" 
+            transform="translate(.000004 0)"
           />
           <text
             dx="0"
@@ -844,34 +844,9 @@ export default function TornaviasPrimerPiso({
             </tspan>
           </text>
         </g>
-        {/* Centro de Atención Psicoanalítica UIS */}{' '}
-        {/* //* Intentar en algú momento ponerle el nombre completo  */}
-        <g
-          style={{
-            fill: mapColors.centroDeAtencionPsico.fill,
-            stroke: mapColors.centroDeAtencionPsico.stroke,
-            strokeWidth: mapColors.centroDeAtencionPsico.strokeWidth
-          }}
-        >
-          <path
-            d="M231.242577,455.079984c1.547165,7.554654,7.064444,23.381722,10.675336,31.773873l-33.635827,14.863117-12.725862-36.438078l35.686353-10.198912Z"
-            transform="translate(.000002 0.000003)"
-          />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="12"
-            fontWeight="400"
-            transform="translate(210 480)"
-            className="text-common"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              UIS
-            </tspan>
-          </text>
-        </g>
+        {/* Centro de Atención Psicoanalítica UIS */}
+        {/* //todo: Buscar la nueva ubicación de este departamanto*/}
+        
         {/*// todo: Verificar que aulas y distribucion tiene ex Escuela de Humanidades  */}
         {/* Escuela de Humanidades - Decanato*/}
         <g
@@ -1316,7 +1291,7 @@ export default function TornaviasPrimerPiso({
           </text>
         </g>
         {/* .......................................................:Aulas:......................................................... */}
-        {/* CIDI  // todo: No se si dejarle este color*/}
+        {/* CIDI*/}
         <g
           style={{
             fill: mapColors.classrooms.fill,
@@ -1453,8 +1428,8 @@ export default function TornaviasPrimerPiso({
             </tspan>
           </text>
         </g>
-        {/* A34 */}
-        <g
+        {/* A34 */}{/* //TODO: Buscar la ubicación de esta aula  */}
+        {/* <g
           style={{
             fill: mapColors.classrooms.fill,
             stroke: mapColors.classrooms.stroke,
@@ -1480,7 +1455,7 @@ export default function TornaviasPrimerPiso({
               A34
             </tspan>
           </text>
-        </g>
+        </g> */}
         {/* A35 */}
         <g
           style={{
@@ -1509,7 +1484,29 @@ export default function TornaviasPrimerPiso({
             </tspan>
           </text>
         </g>
-        {/* //! Verificar estas Aulas */}
+        
+        {/*Talleres de Arquitectura*/}
+        <g onClick={() => handleOpen?.('T03')}
+          className={`classRoom ${isSelected('T03') ? 'selected' : ''}`}>
+          <path
+            d="M231.242577,455.079984c1.547165,7.554654,7.064444,23.381722,10.675336,31.773873l-33.635827,14.863117c-4.275043-8.620784-10.602577-26.851622-12.725862-36.438078l35.686353-10.198912Z" 
+            transform="translate(.000002 0.000003)"
+          />
+          <text
+            dx="0"
+            dy="0"
+            fontFamily='"eBHsLTiXjpU1:::Roboto"'
+            fontSize="12"
+            fontWeight="400"
+            transform="translate(207 480)"
+            className="text-common"
+            strokeWidth="0"
+          >
+            <tspan y="0" fontWeight="700" strokeWidth="0">
+              T03
+            </tspan>
+          </text>
+        </g>
         {/* T04 */}
         <g
           style={{
