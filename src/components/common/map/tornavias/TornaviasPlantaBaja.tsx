@@ -1187,15 +1187,15 @@ export default function TornaviasPlantaBaja({
             </tspan>
           </text>
         </g>
-        {/*  */}
+        {/* T02 */}
         <g
           style={{
             fill: mapColors.classrooms.fill,
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('T0?')}
-          className={`classRoom ${isSelected('T0?') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('T02')}
+          className={`classRoom ${isSelected('T02') ? 'selected' : ''}`}
         >
           <path
             d="M206.728211,601.544616c-9.097845-10.027013-19.662447-23.690339-24.771094-33.577133L137.358318,596.66205c9.959006,15.197656,23.748828,33.087613,31.349973,40.76146l38.01992-35.878894Z"
@@ -1211,7 +1211,7 @@ export default function TornaviasPlantaBaja({
             strokeWidth="0"
           >
             <tspan y="0" fontWeight="700" strokeWidth="0">
-              T0??
+              T02
             </tspan>
           </text>
         </g>
@@ -1428,7 +1428,6 @@ export default function TornaviasPlantaBaja({
           </text>
         </g>
         {/* Laboratorio de Termodinámica*/}{' '}
-        {/* //! ota opcion es poner el nombre completo y girarlo*/}
         <g
           style={{
             fill: mapColors.lab.fill,
