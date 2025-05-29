@@ -1204,7 +1204,7 @@ export default function TornaviasPlantaBaja({
             fontFamily='"eBHsLTiXjpU1:::Roboto"'
             fontSize="15"
             fontWeight="400"
-            transform="translate(95 447)"
+            transform="translate(92 417)"
             strokeWidth="0"
           >
             <tspan y="0" fontWeight="700" strokeWidth="0">
