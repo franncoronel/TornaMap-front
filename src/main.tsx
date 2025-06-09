@@ -49,6 +49,17 @@ let unsamTheme = createTheme(
           disableRipple: true,
           disableFocusRipple: true
         }
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          input: {
+            '&:-webkit-autofill': {
+              boxShadow: '0 0 0 1000px white inset',
+              WebkitTextFillColor: '#000',
+              transition: 'background-color 5000s ease-in-out 0s',
+            }
+          }
+        }
       }
     }
   },

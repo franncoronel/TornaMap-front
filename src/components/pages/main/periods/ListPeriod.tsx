@@ -11,6 +11,7 @@ import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import EventIcon from '@mui/icons-material/Event'
 import { format, parseISO } from 'date-fns'
 import { ClockClockwise } from '@phosphor-icons/react/dist/icons/ClockClockwise'
+import BackButton from '@/components/common/BackButton'
 
 export default function ListPeriod() {
   const {
@@ -44,11 +45,14 @@ export default function ListPeriod() {
   )
 
   return (
-    <Box sx={{ mt: 5, px: 3, overflowY: 'auto', pb: 1 }} width="100%">
-      <Typography variant="h1" gutterBottom>
-        <ClockClockwise size={32} />
-        Periodos
-      </Typography>
+    <Box sx={{ mt:1.5, px: 3, overflowY: 'auto', pb: 1 }} width="100%">
+      <header className="interactive-page-header">
+        <BackButton />
+        <Typography variant="h1" gutterBottom>
+          <ClockClockwise size={32} style={{ marginRight: 8 }}/>
+          Periodos
+        </Typography>
+      </header>
 
       <Box
         position="sticky"
