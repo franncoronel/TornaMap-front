@@ -90,6 +90,13 @@ type FormValues = Omit<IEventCreate, 'periodID' | 'courseID'> & {
   schedules: ScheduleForm[]
 }
 
+/* ---------- helpers de tipo ---------- */
+const isExamType = (type: EventType | '') => type === 'FINAL' || type === 'PARCIAL'
+const needsCourse = (type: EventType | '') => type === 'CURSADA' || isExamType(type)
+const needsPeriod = (type: EventType | '') => type === 'CURSADA'
+const allowsCustomPeriod = (type: EventType | '') =>
+  !!type && type !== 'CURSADA' && !isExamType(type)
+
 /* ---------- componente ---------- */
 export default function EventForm() {
   const location = useLocation()
@@ -172,12 +179,13 @@ export default function EventForm() {
 
       /* Derivar scheduleMode a partir de los datos existentes */
       const evtIsCursada = evt.type === 'CURSADA'
+      const evtIsExam = isExamType(evt.type)
       let derivedMode: ScheduleMode = 'single'
       let derivedDays: string[] = []
       let derivedStart: Date | null = null
       let derivedEnd: Date | null = null
 
-      if (!evtIsCursada && evt.schedules.length > 0) {
+      if (!evtIsCursada && !evtIsExam && evt.schedules.length > 0) {
         const hasWeekDays = evt.schedules.some((s) => !!s.weekDay)
         if (hasWeekDays) {
           derivedMode = 'custom_period'
@@ -205,7 +213,7 @@ export default function EventForm() {
         courseID: evt.courseID ?? '',
         type: evt.type,
         details: evt.details ?? '',
-        scheduleMode: evtIsCursada ? 'single' : derivedMode,
+        scheduleMode: (evtIsCursada || evtIsExam) ? 'single' : derivedMode,
         customPeriodStart: derivedStart,
         customPeriodEnd: derivedEnd,
         customPeriodDays: derivedDays,
@@ -235,6 +243,7 @@ export default function EventForm() {
       return
     }
 
+    /* CURSADA: periodo + asignatura obligatorios */
     if (data.type === 'CURSADA') {
       if (!data.periodID || !data.courseID) {
         setNotificationState({
@@ -246,7 +255,20 @@ export default function EventForm() {
       }
     }
 
-    if (data.type !== 'CURSADA' && data.scheduleMode === 'custom_period') {
+    /* FINAL / PARCIAL: asignatura obligatoria */
+    if (isExamType(data.type)) {
+      if (!data.courseID) {
+        setNotificationState({
+          title: 'Error',
+          description: 'Asignatura es obligatoria para Final/Parcial',
+          type: 'error'
+        })
+        return
+      }
+    }
+
+    /* Periodo personalizado: validar rango y días */
+    if (allowsCustomPeriod(data.type) && data.scheduleMode === 'custom_period') {
       if (!data.customPeriodStart || !data.customPeriodEnd) {
         setNotificationState({
           title: 'Error',
@@ -265,6 +287,7 @@ export default function EventForm() {
       }
     }
 
+    /* Aula obligatoria si no es virtual */
     for (const sch of data.schedules) {
       if (!sch.isVirtual && !sch.classroomId) {
         setNotificationState({
@@ -276,7 +299,12 @@ export default function EventForm() {
       }
     }
 
-    if (data.type !== 'CURSADA' && data.scheduleMode === 'single') {
+    /* Evento único / examen: cada horario debe tener fecha */
+    const isSingleMode =
+      (data.type !== 'CURSADA' && data.scheduleMode === 'single') ||
+      isExamType(data.type)
+
+    if (isSingleMode) {
       for (const sch of data.schedules) {
         if (!sch.date) {
           setNotificationState({
@@ -292,23 +320,20 @@ export default function EventForm() {
     try {
       setLoader(true)
 
+      const sendCustomPeriod =
+        allowsCustomPeriod(data.type) && data.scheduleMode === 'custom_period'
+
       const payload: IEventCreateDto & { id: string | undefined } = {
         id,
         name: data.name,
         isApproved: data.isApproved,
         isCancelled: data.isCancelled,
         type: data.type,
-        details: data.type !== 'CURSADA' ? data.details : '',
-        periodID: data.type === 'CURSADA' ? data.periodID : '',
-        courseID: data.type === 'CURSADA' ? data.courseID : '',
-        customPeriodStart:
-          data.type !== 'CURSADA' && data.scheduleMode === 'custom_period'
-            ? data.customPeriodStart
-            : null,
-        customPeriodEnd:
-          data.type !== 'CURSADA' && data.scheduleMode === 'custom_period'
-            ? data.customPeriodEnd
-            : null,
+        details: !isCursada ? data.details : '',
+        periodID: needsPeriod(data.type) ? data.periodID : '',
+        courseID: needsCourse(data.type) ? data.courseID : '',
+        customPeriodStart: sendCustomPeriod ? data.customPeriodStart : null,
+        customPeriodEnd: sendCustomPeriod ? data.customPeriodEnd : null,
         schedules: data.schedules.map(mapScheduleToBackend)
       }
 
@@ -351,13 +376,23 @@ export default function EventForm() {
   /* ---------- side-effects al cambiar tipo ---------- */
   useEffect(() => {
     if (!eventType) return
+
     if (eventType === 'CURSADA') {
+      /* Limpiar campos no-cursada */
       setValue('details', '')
       setValue('customPeriodStart', null)
       setValue('customPeriodEnd', null)
       setValue('customPeriodDays', [])
       setValue('scheduleMode', 'single')
+    } else if (isExamType(eventType)) {
+      /* Final/Parcial: forzar evento único, limpiar periodo */
+      setValue('periodID', '')
+      setValue('scheduleMode', 'single')
+      setValue('customPeriodStart', null)
+      setValue('customPeriodEnd', null)
+      setValue('customPeriodDays', [])
     } else {
+      /* Charla/Seminario/Conferencia: limpiar periodo y asignatura */
       setValue('periodID', '')
       setValue('courseID', '')
     }
@@ -395,6 +430,14 @@ export default function EventForm() {
       professors: []
     })
   }
+
+  /* ---------- derivar qué mostrar en horarios ---------- */
+  const showWeekDayInSchedule =
+    isCursada || (allowsCustomPeriod(eventType) && scheduleMode === 'custom_period')
+  const showDateInSchedule =
+    isExamType(eventType) ||
+    (!isCursada && !allowsCustomPeriod(eventType)) || /* fallback */
+    (!isCursada && scheduleMode === 'single' && allowsCustomPeriod(eventType))
 
   /* ---------- UI ---------- */
   return (
@@ -525,25 +568,52 @@ export default function EventForm() {
             </>
           )}
 
-          {/* ═══════════ NO CURSADA: Detalle + Modo de programación ═══════════ */}
-          {eventType && !isCursada && (
-            <>
-              {/* Detalle */}
-              <Controller
-                name="details"
-                control={control}
-                render={({ field }) => (
-                  <TextField
-                    {...field}
-                    label="Detalle"
-                    fullWidth
-                    multiline
-                    minRows={3}
-                  />
-                )}
-              />
+          {/* ═══════════ FINAL / PARCIAL: solo Asignatura ═══════════ */}
+          {isExamType(eventType) && (
+            <Controller
+              name="courseID"
+              control={control}
+              rules={{ required: true }}
+              render={({ field }) => (
+                <Autocomplete
+                  options={courses}
+                  getOptionLabel={optionLabelCourse}
+                  isOptionEqualToValue={(o, v) => o.id === v.id}
+                  value={courses.find((c) => c.id === field.value) ?? null}
+                  onChange={(_, v) => field.onChange(v ? v.id : '')}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Asignatura"
+                      error={!!errors.courseID}
+                      helperText={errors.courseID && 'Obligatorio'}
+                    />
+                  )}
+                />
+              )}
+            />
+          )}
 
-              {/* Modo: evento único o periodo personalizado */}
+          {/* ═══════════ NO CURSADA: Detalle ═══════════ */}
+          {eventType && !isCursada && (
+            <Controller
+              name="details"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Detalle"
+                  fullWidth
+                  multiline
+                  minRows={3}
+                />
+              )}
+            />
+          )}
+
+          {/* ═══════════ CHARLA/SEMINARIO/CONFERENCIA: Modo de programación ═══════════ */}
+          {allowsCustomPeriod(eventType) && (
+            <>
               <Controller
                 name="scheduleMode"
                 control={control}
@@ -654,14 +724,6 @@ export default function EventForm() {
               (c) => c.buildingId === buildingIdSel
             )
 
-            /*
-             * CURSADA → solo día de la semana
-             * No CURSADA + evento único → solo fecha
-             * No CURSADA + periodo personalizado → solo día de la semana
-             */
-            const showWeekDay = isCursada || (!isCursada && scheduleMode === 'custom_period')
-            const showDate = !isCursada && scheduleMode === 'single'
-
             return (
               <Stack
                 key={f.id}
@@ -670,7 +732,7 @@ export default function EventForm() {
               >
                 {/* fila 1: día o fecha */}
                 <Stack direction="row" spacing={1}>
-                  {showWeekDay && (
+                  {showWeekDayInSchedule && (
                     <Controller
                       name={`schedules.${idx}.weekDay`}
                       control={control}
@@ -697,7 +759,7 @@ export default function EventForm() {
                     />
                   )}
 
-                  {showDate && (
+                  {showDateInSchedule && (
                     <Controller
                       name={`schedules.${idx}.date`}
                       control={control}
