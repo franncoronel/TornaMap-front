@@ -75,6 +75,7 @@ export default function Map() {
   const fetchEvents = async (classRoomId: string | null, date: Date) => {
     try {
       setLoader(true)
+      console.log('classroom id:', classRoomId)
       const eventsResponse = await eventService.getAll(
         classRoomId,
         new Date(date)

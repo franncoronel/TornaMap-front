@@ -10,6 +10,7 @@ import {
   Autocomplete,
   Box,
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
@@ -19,6 +20,8 @@ import {
   FormControlLabel,
   InputLabel,
   MenuItem,
+  Radio,
+  RadioGroup,
   Select,
   Stack,
   Switch,
@@ -45,7 +48,7 @@ import {
 
 import { IPeriod } from '@/data/domain/Period'
 import { ICourseList } from '@/data/domain/Course'
-import { IEventCreate, IEventCreateDto } from '@/data/domain/Event'
+import { EventType, IEventCreate, IEventCreateDto } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
@@ -58,9 +61,13 @@ import { CalendarDots } from '@phosphor-icons/react/dist/icons/CalendarDots'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { TimePicker } from '@mui/x-date-pickers'
 
+/** Modo de programación para eventos no-CURSADA */
+type ScheduleMode = 'single' | 'custom_period'
+
 interface LocationState {
   courseID?: string
 }
+
 /* ---------- tipos ---------- */
 export type ScheduleForm = Omit<IScheduleCreate, 'id' | 'date'> & {
   id?: string
@@ -73,6 +80,13 @@ type FormValues = Omit<IEventCreate, 'periodID' | 'courseID'> & {
   id?: string
   periodID: string
   courseID: string
+  type: EventType
+  details: string
+  /* campos para modo no-CURSADA */
+  scheduleMode: ScheduleMode
+  customPeriodStart: Date | null
+  customPeriodEnd: Date | null
+  customPeriodDays: string[]
   schedules: ScheduleForm[]
 }
 
@@ -109,6 +123,12 @@ export default function EventForm() {
       isCancelled: false,
       periodID: '',
       courseID: initialCourseID ?? '',
+      type: 'CURSADA',
+      details: '',
+      scheduleMode: 'single',
+      customPeriodStart: new Date(),
+      customPeriodEnd: new Date(),
+      customPeriodDays: [],
       schedules: []
     }
   })
@@ -117,6 +137,11 @@ export default function EventForm() {
     control,
     name: 'schedules'
   })
+
+  /* watchers */
+  const eventType = watch('type')
+  const scheduleMode = watch('scheduleMode')
+  const isCursada = eventType === 'CURSADA'
 
   /* helpers */
   const optionLabelPeriod = (p: IPeriod) => p.title
@@ -129,7 +154,7 @@ export default function EventForm() {
     }))
   )
 
-  /* fetch */
+  /* ---------- fetch ---------- */
   const fetchInfo = async () => {
     setLoader(true)
     const [{ data: periodList }, { data: courseList }, { data: buildingList }] =
@@ -144,18 +169,52 @@ export default function EventForm() {
 
     if (id) {
       const { data: evt } = await eventService.getDetailById(id)
+
+      /* Derivar scheduleMode a partir de los datos existentes */
+      const evtIsCursada = evt.type === 'CURSADA'
+      let derivedMode: ScheduleMode = 'single'
+      let derivedDays: string[] = []
+      let derivedStart: Date | null = null
+      let derivedEnd: Date | null = null
+
+      if (!evtIsCursada && evt.schedules.length > 0) {
+        const hasWeekDays = evt.schedules.some((s) => !!s.weekDay)
+        if (hasWeekDays) {
+          derivedMode = 'custom_period'
+          derivedDays = [
+            ...new Set(evt.schedules.map((s) => s.weekDay).filter(Boolean))
+          ] as string[]
+          derivedStart = evt.customPeriodStart
+            ? typeof evt.customPeriodStart === 'string'
+              ? parseISO(evt.customPeriodStart)
+              : evt.customPeriodStart
+            : null
+          derivedEnd = evt.customPeriodEnd
+            ? typeof evt.customPeriodEnd === 'string'
+              ? parseISO(evt.customPeriodEnd)
+              : evt.customPeriodEnd
+            : null
+        }
+      }
+
       reset({
         name: evt.name,
         isApproved: evt.isApproved,
         isCancelled: evt.isCancelled,
-        periodID: evt.periodID,
-        courseID: evt.courseID,
+        periodID: evt.periodID ?? '',
+        courseID: evt.courseID ?? '',
+        type: evt.type,
+        details: evt.details ?? '',
+        scheduleMode: evtIsCursada ? 'single' : derivedMode,
+        customPeriodStart: derivedStart,
+        customPeriodEnd: derivedEnd,
+        customPeriodDays: derivedDays,
         schedules: evt.schedules.map((s) => ({
           ...s,
           date:
             typeof s.date === 'string'
-              ? parseISO(s.date) // string  -> Date
-              : s.date, // Date    -> Date
+              ? parseISO(s.date)
+              : s.date,
           buildingId: s.classroom?.building.id ?? '',
           classroomId: s.classroom?.id ?? ''
         }))
@@ -164,20 +223,49 @@ export default function EventForm() {
     setLoader(false)
   }
 
-  /* submit */
+  /* ---------- submit ---------- */
   const submit: SubmitHandler<FormValues> = async (data) => {
-    /* validación rápida */
-    for (const sch of data.schedules) {
-      const hasWeek = !!sch.weekDay
-      const hasDate = !!sch.date
-      if ((hasWeek && hasDate) || (!hasWeek && !hasDate)) {
+    /* ── Validaciones ── */
+    if (!data.type) {
+      setNotificationState({
+        title: 'Error',
+        description: 'Seleccione un tipo de evento',
+        type: 'error'
+      })
+      return
+    }
+
+    if (data.type === 'CURSADA') {
+      if (!data.periodID || !data.courseID) {
         setNotificationState({
           title: 'Error',
-          description: 'Cada horario debe tener día o fecha (no ambos)',
+          description: 'Periodo y Asignatura son obligatorios para Cursada',
           type: 'error'
         })
         return
       }
+    }
+
+    if (data.type !== 'CURSADA' && data.scheduleMode === 'custom_period') {
+      if (!data.customPeriodStart || !data.customPeriodEnd) {
+        setNotificationState({
+          title: 'Error',
+          description: 'Seleccione fecha de inicio y fin del periodo',
+          type: 'error'
+        })
+        return
+      }
+      if (data.customPeriodDays.length === 0) {
+        setNotificationState({
+          title: 'Error',
+          description: 'Seleccione al menos un día de la semana',
+          type: 'error'
+        })
+        return
+      }
+    }
+
+    for (const sch of data.schedules) {
       if (!sch.isVirtual && !sch.classroomId) {
         setNotificationState({
           title: 'Error',
@@ -185,6 +273,19 @@ export default function EventForm() {
           type: 'error'
         })
         return
+      }
+    }
+
+    if (data.type !== 'CURSADA' && data.scheduleMode === 'single') {
+      for (const sch of data.schedules) {
+        if (!sch.date) {
+          setNotificationState({
+            title: 'Error',
+            description: 'Seleccione una fecha para el evento',
+            type: 'error'
+          })
+          return
+        }
       }
     }
 
@@ -196,13 +297,22 @@ export default function EventForm() {
         name: data.name,
         isApproved: data.isApproved,
         isCancelled: data.isCancelled,
-        periodID: data.periodID,
-        courseID: data.courseID,
+        type: data.type,
+        details: data.type !== 'CURSADA' ? data.details : '',
+        periodID: data.type === 'CURSADA' ? data.periodID : '',
+        courseID: data.type === 'CURSADA' ? data.courseID : '',
+        customPeriodStart:
+          data.type !== 'CURSADA' && data.scheduleMode === 'custom_period'
+            ? data.customPeriodStart
+            : null,
+        customPeriodEnd:
+          data.type !== 'CURSADA' && data.scheduleMode === 'custom_period'
+            ? data.customPeriodEnd
+            : null,
         schedules: data.schedules.map(mapScheduleToBackend)
       }
 
-      if (id)
-        await eventService.update(payload) // update espera IEventCreate
+      if (id) await eventService.update(payload)
       else await eventService.create(payload)
       navigate('/buscar')
       setNotificationState({
@@ -221,7 +331,7 @@ export default function EventForm() {
     }
   }
 
-  /* delete */
+  /* ---------- delete ---------- */
   const onDelete = async () => {
     if (!id) return
     try {
@@ -238,27 +348,33 @@ export default function EventForm() {
     }
   }
 
-  /* reglas: observar schedules para limpiar campos */
+  /* ---------- side-effects al cambiar tipo ---------- */
+  useEffect(() => {
+    if (!eventType) return
+    if (eventType === 'CURSADA') {
+      setValue('details', '')
+      setValue('customPeriodStart', null)
+      setValue('customPeriodEnd', null)
+      setValue('customPeriodDays', [])
+      setValue('scheduleMode', 'single')
+    } else {
+      setValue('periodID', '')
+      setValue('courseID', '')
+    }
+  }, [eventType, setValue])
+
+  /* ---------- efectos iniciales ---------- */
   const schedulesWatch = watch('schedules')
 
-  /* efectos */
   useEffect(() => {
     setTitle('Evento')
     setIcon(<CalendarStar size={32} />)
     fetchInfo()
-    if (!id /* estamos creando, no editando */ && initialCourseID) {
-      // marcamos el valor en el form
+    if (!id && initialCourseID) {
       setValue('courseID', initialCourseID)
     }
 
     schedulesWatch.forEach((s, idx) => {
-      if (s.weekDay && s.date) {
-        setValue(`schedules.${idx}.date`, null)
-      }
-      if (!s.weekDay && s.date) {
-        setValue(`schedules.${idx}.date`, s.date)
-      }
-      /* virtual => limpia building & classroom */
       if (s.isVirtual && s.classroom) {
         setValue(`schedules.${idx}.buildingId`, '')
         setValue(`schedules.${idx}.classroomId`, '')
@@ -266,7 +382,21 @@ export default function EventForm() {
     })
   }, [])
 
-  /* ui */
+  /* ---------- helper para agregar horario ---------- */
+  const appendSchedule = () => {
+    append({
+      weekDay: '',
+      startTime: '08:00',
+      endTime: '10:00',
+      date: null,
+      isVirtual: true,
+      buildingId: '',
+      classroomId: '',
+      professors: []
+    })
+  }
+
+  /* ---------- UI ---------- */
   return (
     <>
       <Box
@@ -275,7 +405,7 @@ export default function EventForm() {
         sx={{ maxWidth: 650, mx: 'auto', mt: 2 }}
       >
         <Stack spacing={3}>
-          {/* nombre */}
+          {/* ═══════════ Nombre ═══════════ */}
           <Controller
             name="name"
             control={control}
@@ -291,7 +421,35 @@ export default function EventForm() {
             )}
           />
 
-          {/* switches */}
+          {/* ═══════════ Tipo de evento ═══════════ */}
+          <Controller
+            name="type"
+            control={control}
+            rules={{ required: 'Obligatorio' }}
+            render={({ field }) => (
+              <FormControl fullWidth error={!!errors.type}>
+                <InputLabel id="type-lbl">Tipo de evento</InputLabel>
+                <Select
+                  labelId="type-lbl"
+                  label="Tipo de evento"
+                  {...field}
+                >
+                  {EVENT_TYPES.map((t) => (
+                    <MenuItem key={t.value} value={t.value}>
+                      {t.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+                {errors.type && (
+                  <Typography variant="caption" color="error" sx={{ mt: 0.5, ml: 1.5 }}>
+                    {errors.type.message}
+                  </Typography>
+                )}
+              </FormControl>
+            )}
+          />
+
+          {/* ═══════════ Switches ═══════════ */}
           <Stack direction="row" spacing={2}>
             <Controller
               name="isApproved"
@@ -316,162 +474,278 @@ export default function EventForm() {
             />
           </Stack>
 
-          {/* periodo */}
-          <Controller
-            name="periodID"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Autocomplete
-                options={periods}
-                getOptionLabel={optionLabelPeriod}
-                isOptionEqualToValue={(o, v) => o.id === v.id}
-                value={periods.find((p) => p.id === field.value) ?? null}
-                onChange={(_, val) => field.onChange(val ? val.id : '')}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Periodo"
-                    error={!!errors.periodID}
-                    helperText={errors.periodID && 'Obligatorio'}
+          {/* ═══════════ CURSADA: Periodo + Asignatura ═══════════ */}
+          {isCursada && (
+            <>
+              <Controller
+                name="periodID"
+                control={control}
+                rules={{ required: isCursada }}
+                render={({ field }) => (
+                  <Autocomplete
+                    options={periods}
+                    getOptionLabel={optionLabelPeriod}
+                    isOptionEqualToValue={(o, v) => o.id === v.id}
+                    value={periods.find((p) => p.id === field.value) ?? null}
+                    onChange={(_, val) => field.onChange(val ? val.id : '')}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Periodo"
+                        error={!!errors.periodID}
+                        helperText={errors.periodID && 'Obligatorio'}
+                      />
+                    )}
                   />
                 )}
               />
-            )}
-          />
 
-          {/* curso */}
-          <Controller
-            name="courseID"
-            control={control}
-            rules={{ required: true }}
-            render={({ field }) => (
-              <Autocomplete
-                options={courses}
-                getOptionLabel={optionLabelCourse}
-                isOptionEqualToValue={(o, v) => o.id === v.id}
-                value={courses.find((c) => c.id === field.value) ?? null}
-                onChange={(_, v) => field.onChange(v ? v.id : '')}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Asignatura"
-                    error={!!errors.courseID}
-                    helperText={errors.courseID && 'Obligatorio'}
+              <Controller
+                name="courseID"
+                control={control}
+                rules={{ required: isCursada }}
+                render={({ field }) => (
+                  <Autocomplete
+                    options={courses}
+                    getOptionLabel={optionLabelCourse}
+                    isOptionEqualToValue={(o, v) => o.id === v.id}
+                    value={courses.find((c) => c.id === field.value) ?? null}
+                    onChange={(_, v) => field.onChange(v ? v.id : '')}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Asignatura"
+                        error={!!errors.courseID}
+                        helperText={errors.courseID && 'Obligatorio'}
+                      />
+                    )}
                   />
                 )}
               />
-            )}
-          />
+            </>
+          )}
 
-          {/* Separator */}
+          {/* ═══════════ NO CURSADA: Detalle + Modo de programación ═══════════ */}
+          {eventType && !isCursada && (
+            <>
+              {/* Detalle */}
+              <Controller
+                name="details"
+                control={control}
+                render={({ field }) => (
+                  <TextField
+                    {...field}
+                    label="Detalle"
+                    fullWidth
+                    multiline
+                    minRows={3}
+                  />
+                )}
+              />
 
-          {/* horarios */}
+              {/* Modo: evento único o periodo personalizado */}
+              <Controller
+                name="scheduleMode"
+                control={control}
+                render={({ field }) => (
+                  <FormControl>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>
+                      Programación
+                    </Typography>
+                    <RadioGroup
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                    >
+                      <FormControlLabel
+                        value="single"
+                        control={<Radio />}
+                        label="Evento único (fecha puntual)"
+                      />
+                      <FormControlLabel
+                        value="custom_period"
+                        control={<Radio />}
+                        label="Periodo personalizado (rango de fechas + días)"
+                      />
+                    </RadioGroup>
+                  </FormControl>
+                )}
+              />
+
+              {/* ── Periodo personalizado: desde / hasta / días ── */}
+              {scheduleMode === 'custom_period' && (
+                <Stack spacing={2} sx={{ pl: 2, borderLeft: '3px solid #1976d2' }}>
+                  <Stack direction="row" spacing={2}>
+                    <Controller
+                      name="customPeriodStart"
+                      control={control}
+                      render={({ field }) => (
+                        <DatePicker
+                          label="Desde"
+                          disablePast
+                          value={field.value}
+                          onChange={(val) => field.onChange(val)}
+                          slotProps={{
+                            textField: { fullWidth: true },
+                            actionBar: { actions: ['cancel', 'clear', 'accept'] }
+                          }}
+                        />
+                      )}
+                    />
+                    <Controller
+                      name="customPeriodEnd"
+                      control={control}
+                      render={({ field }) => (
+                        <DatePicker
+                          label="Hasta"
+                          disablePast
+                          value={field.value}
+                          onChange={(val) => field.onChange(val)}
+                          slotProps={{
+                            textField: { fullWidth: true },
+                            actionBar: { actions: ['cancel', 'clear', 'accept'] }
+                          }}
+                        />
+                      )}
+                    />
+                  </Stack>
+
+                  {/* Días de la semana */}
+                  <Controller
+                    name="customPeriodDays"
+                    control={control}
+                    render={({ field }) => (
+                      <Stack direction="row" spacing={1} flexWrap="wrap">
+                        {weekDayES.map((day) => (
+                          <FormControlLabel
+                            key={day}
+                            control={
+                              <Checkbox
+                                checked={field.value.includes(day)}
+                                onChange={(e) => {
+                                  const updated = e.target.checked
+                                    ? [...field.value, day]
+                                    : field.value.filter((d) => d !== day)
+                                  field.onChange(updated)
+                                }}
+                              />
+                            }
+                            label={weekDayShort[day]}
+                          />
+                        ))}
+                      </Stack>
+                    )}
+                  />
+                </Stack>
+              )}
+            </>
+          )}
+
+          {/* ═══════════ HORARIOS ═══════════ */}
           <Typography variant="h2">
             <CalendarDots size={32} />
             Horarios
           </Typography>
+
           {fields.map((f, idx) => {
             const buildField = `schedules.${idx}.buildingId` as const
             const classField = `schedules.${idx}.classroomId` as const
-            /* const isVirtual = watch(`schedules.${idx}.isVirtual`) */
             const buildingIdSel = watch(buildField)
             const classroomsFiltered = classroomsFlat.filter(
               (c) => c.buildingId === buildingIdSel
             )
 
+            /*
+             * CURSADA → solo día de la semana
+             * No CURSADA + evento único → solo fecha
+             * No CURSADA + periodo personalizado → solo día de la semana
+             */
+            const showWeekDay = isCursada || (!isCursada && scheduleMode === 'custom_period')
+            const showDate = !isCursada && scheduleMode === 'single'
+
             return (
               <Stack
                 key={f.id}
                 spacing={1}
-                sx={{ border: '1px solid #ddd', p: 1 }}
+                sx={{ border: '1px solid #ddd', p: 1, borderRadius: 1 }}
               >
-                {/* fila 1 */}
+                {/* fila 1: día o fecha */}
                 <Stack direction="row" spacing={1}>
-                  {/* weekday */}
-                  <Controller
-                    name={`schedules.${idx}.weekDay`}
-                    control={control}
-                    render={({ field }) => (
-                      <FormControl
-                        sx={{ flex: 1 }}
-                        disabled={Boolean(watch(`schedules.${idx}.date`))}
-                      >
-                        <InputLabel id={`weekday-lbl-${idx}`}>Día</InputLabel>
-
-                        <Select
-                          labelId={`weekday-lbl-${idx}`}
-                          label="Día"
-                          displayEmpty
-                          {...field}
-                        >
-                          <MenuItem value="">
-                            <em>---</em>
-                          </MenuItem>
-
-                          {weekDayES.map((d) => (
-                            <MenuItem key={d} value={d}>
-                              {weekDayShort[d]}
+                  {showWeekDay && (
+                    <Controller
+                      name={`schedules.${idx}.weekDay`}
+                      control={control}
+                      render={({ field }) => (
+                        <FormControl sx={{ flex: 1 }}>
+                          <InputLabel id={`weekday-lbl-${idx}`}>Día</InputLabel>
+                          <Select
+                            labelId={`weekday-lbl-${idx}`}
+                            label="Día"
+                            displayEmpty
+                            {...field}
+                          >
+                            <MenuItem value="">
+                              <em>---</em>
                             </MenuItem>
-                          ))}
-                        </Select>
-                      </FormControl>
-                    )}
-                  />
-                  {/* date */}
-                  <Controller
-                    name={`schedules.${idx}.date`}
-                    control={control}
-                    render={({ field }) => (
-                      <Box sx={{ flex: 1 }}>
-                        <DatePicker
-                          label="Fecha"
-                          disablePast
-                          value={field.value}
-                          onChange={(val) => field.onChange(val)}
-                          disabled={watch(`schedules.${idx}.weekDay`) !== ''}
-                          slotProps={{
-                            textField: { fullWidth: true },
-                            actionBar: {
-                              actions: ['cancel', 'clear', 'accept']
-                            }
-                          }}
-                        />
-                      </Box>
-                    )}
-                  />
+                            {weekDayES.map((d) => (
+                              <MenuItem key={d} value={d}>
+                                {weekDayShort[d]}
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
+                  )}
+
+                  {showDate && (
+                    <Controller
+                      name={`schedules.${idx}.date`}
+                      control={control}
+                      render={({ field }) => (
+                        <Box sx={{ flex: 1 }}>
+                          <DatePicker
+                            label="Fecha"
+                            disablePast
+                            value={field.value}
+                            onChange={(val) => field.onChange(val)}
+                            slotProps={{
+                              textField: { fullWidth: true },
+                              actionBar: {
+                                actions: ['cancel', 'clear', 'accept']
+                              }
+                            }}
+                          />
+                        </Box>
+                      )}
+                    />
+                  )}
                 </Stack>
 
-                {/* fila 2 */}
+                {/* fila 2: hora inicio / fin */}
                 <Stack direction="row" spacing={1}>
-                  {/* ─── Hora inicio ───────────────────────────────────────────── */}
                   <Controller
-                    name={`schedules.${idx}.startTime`} // string "18:00"
+                    name={`schedules.${idx}.startTime`}
                     control={control}
                     rules={{ required: true }}
                     render={({ field }) => (
                       <TimePicker
                         label="Inicio"
-                        /*  value: convierte el string guardado a Date  */
                         value={
-                          field.value // '' | '18:00' …
+                          field.value
                             ? parse(field.value, 'HH:mm', new Date())
-                            : null // ←  TimePicker acepta null
+                            : null
                         }
-                        /*  onChange: vuelve a string "HH:mm" para el form  */
                         onChange={(val) =>
                           field.onChange(
                             val ? format(val as Date, 'HH:mm') : ''
                           )
                         }
                         slotProps={{
-                          textField: { fullWidth: true } // mismo aspecto
+                          textField: { fullWidth: true }
                         }}
                       />
                     )}
                   />
-
-                  {/* ─── Hora fin ──────────────────────────────────────────────── */}
                   <Controller
                     name={`schedules.${idx}.endTime`}
                     control={control}
@@ -497,12 +771,12 @@ export default function EventForm() {
                   />
                 </Stack>
 
+                {/* fila 3: virtual / edificio / aula */}
                 <Stack
                   direction={{ xs: 'column', sm: 'row' }}
                   spacing={1}
                   alignItems="center"
                 >
-                  {/* Virtual */}
                   <Controller
                     name={`schedules.${idx}.isVirtual`}
                     control={control}
@@ -515,7 +789,6 @@ export default function EventForm() {
                     )}
                   />
 
-                  {/* Edificio */}
                   <Controller
                     name={buildField}
                     control={control}
@@ -537,10 +810,7 @@ export default function EventForm() {
                             {...params}
                             label="Edificio"
                             fullWidth
-                            sx={{
-                              // en móvil, ocupa 100%; en sm+ fija width si lo quieres
-                              width: { xs: '100%' }
-                            }}
+                            sx={{ width: { xs: '100%' } }}
                             disabled={watch(`schedules.${idx}.isVirtual`)}
                           />
                         )}
@@ -548,7 +818,6 @@ export default function EventForm() {
                     )}
                   />
 
-                  {/* Aula */}
                   <Controller
                     name={classField}
                     control={control}
@@ -569,9 +838,7 @@ export default function EventForm() {
                             {...params}
                             label="Aula"
                             fullWidth
-                            sx={{
-                              width: { xs: '100%' }
-                            }}
+                            sx={{ width: { xs: '100%' } }}
                             disabled={
                               watch(`schedules.${idx}.isVirtual`) ||
                               !buildingIdSel
@@ -582,6 +849,7 @@ export default function EventForm() {
                     )}
                   />
                 </Stack>
+
                 <Stack direction="row" spacing={1} alignItems="center">
                   <Button color="error" onClick={() => remove(idx)}>
                     <Trash size={32} />
@@ -592,25 +860,12 @@ export default function EventForm() {
             )
           })}
 
-          <Button
-            onClick={() =>
-              append({
-                weekDay: '',
-                startTime: '08:00',
-                endTime: '10:00',
-                date: null,
-                isVirtual: true,
-                buildingId: '',
-                classroomId: '',
-                professors: []
-              })
-            }
-          >
+          <Button onClick={appendSchedule}>
             <CalendarPlus size={32} />
             Añadir horario
           </Button>
 
-          {/* acciones */}
+          {/* ═══════════ Acciones ═══════════ */}
           <Stack direction="column" spacing={2}>
             <Button variant="contained" type="submit">
               <FloppyDisk size={32} />
@@ -634,7 +889,7 @@ export default function EventForm() {
         </Stack>
       </Box>
 
-      {/* confirmación */}
+      {/* ═══════════ Diálogo confirmación eliminar ═══════════ */}
       <Dialog open={openConfirm} onClose={() => setOpenConfirm(false)}>
         <DialogTitle>¿Eliminar evento?</DialogTitle>
         <DialogContent>
@@ -661,4 +916,4 @@ export default function EventForm() {
       </Dialog>
     </>
   )
-}
+}e
