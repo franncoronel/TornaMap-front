@@ -21,8 +21,8 @@ export interface IEventCreate extends Entity {
   schedules: ISchedule[]
   type: EventType
   details: string
-  customPeriodStart: Date
-  customPeriodEnd: Date
+  customPeriodStart?: Date | null
+  customPeriodEnd?: Date | null
 
 
 }
@@ -35,8 +35,8 @@ export interface IEventCreateDto extends Entity {
   schedules: BackendSchedule[]
   type: EventType
   details: string
-  customPeriodStart: Date
-  customPeriodEnd: Date
+  customPeriodStart?: Date | null
+  customPeriodEnd?: Date | null
 }
 
 export interface IEventList extends IEvent {

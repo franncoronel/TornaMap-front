@@ -48,7 +48,7 @@ import {
 
 import { IPeriod } from '@/data/domain/Period'
 import { ICourseList } from '@/data/domain/Course'
-import { EventType, IEventCreate, IEventCreateDto } from '@/data/domain/Event'
+import { EVENT_TYPES, EventType, IEventCreate, IEventCreateDto } from '@/data/domain/Event'
 import { IBuildingList } from '@/data/domain/Building'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { IScheduleCreate } from '@/data/domain/Schedule'
@@ -126,8 +126,8 @@ export default function EventForm() {
       type: 'CURSADA',
       details: '',
       scheduleMode: 'single',
-      customPeriodStart: new Date(),
-      customPeriodEnd: new Date(),
+      customPeriodStart: null,
+      customPeriodEnd: null,
       customPeriodDays: [],
       schedules: []
     }
@@ -916,4 +916,4 @@ export default function EventForm() {
       </Dialog>
     </>
   )
-}e
+}
