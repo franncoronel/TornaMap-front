@@ -15,6 +15,7 @@ type InfoModalProps = {
   handleClose: () => void // Función para cerrar el Modal
   title: string
   subtitle?: string
+  capacity?: string
   type: 'course' | 'event' | 'schedule'
 }
 
@@ -23,9 +24,9 @@ export default function InfoModal({
   open,
   handleClose,
   title,
-  subtitle
+  subtitle,
+  capacity
 }: InfoModalProps) {
-
   return (
     <Modal
       open={open}
@@ -63,15 +64,36 @@ export default function InfoModal({
               backgroundColor: 'background.paper'
             }}
           >
-            <Typography
-              sx={{ display: 'flex', flexDirection: 'column' }}
-              id="modal-modal-title"
-              variant="h6"
-              component="h2"
-            >
-              <span>{title}</span>
-              <span>{subtitle}</span>
-            </Typography>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="h6" component="h2" fontWeight="bold">
+                    {title}
+                  </Typography>
+                  {capacity && (
+                    <Box
+                      sx={{
+                        px: 1,
+                        py: 0.25,
+                        borderRadius: '999px',
+                        backgroundColor: 'action.hover',
+                        display: 'inline-flex',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <Typography variant="caption" color="text.secondary">
+                        Capacidad: {capacity} personas
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+                {subtitle && (
+                  <Typography variant="subtitle1" color="text.secondary">
+                    {subtitle}
+                  </Typography>
+                )}
+              </Box>
+            </Box>
             <IconButton
               aria-label="Cerrar Ventana"
               onClick={handleClose}

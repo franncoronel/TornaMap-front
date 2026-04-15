@@ -36,6 +36,8 @@ import { eventService } from '@/data/services/EventService'
 // Contexts
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { IClassroom } from '@/data/domain/Classroom'
+import { classroomService } from '@/data/services/ClassroomService'
 
 export default function Map() {
   const { control } = useForm({
@@ -53,6 +55,7 @@ export default function Map() {
 
   // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | string>(null)
+  const [classroom, setClassroom] = useState<IClassroom | null>(null)
   const [date, setDate] = useState<Date | null>(null)
   const [open, setOpen] = useState(false)
   const [pickerOpen, setPickerOpen] = useState(false)
@@ -94,12 +97,34 @@ export default function Map() {
     }
   }
 
+  const fetchClassroom = async (classRoomId: string) => {
+    try {
+      setLoader(true)
+      const classroomResponse = await classroomService.getById(classRoomId)
+      setLoader(false)
+      setClassroom(classroomResponse.data)
+    } catch (error) {
+      setLoader(false)
+      setOpen(false)
+      console.error('Error fetching classroom:', error)
+      setNotificationState({
+        title: 'Error al obtener aula',
+        type: 'error',
+        description: 'Ocurrió un error al cargar los datos del aula',
+        action: () => {}
+      })
+    }
+  }
+
   // Manejo del modal
   const handleOpen = async (newClassRoomId: string) => {
     const today = new Date()
     setDate(today)
     setClassRoomId(newClassRoomId)
-    await fetchEvents(newClassRoomId, today)
+    await Promise.all([
+      fetchClassroom(newClassRoomId),
+      fetchEvents(newClassRoomId, today)
+    ])
     setOpen(true)
   }
 
@@ -203,6 +228,7 @@ export default function Map() {
           handleClose={handleClose}
           title={classRoomId}
           subtitle={currentBuilding?.text}
+          capacity={classroom?.capacity?.toString()}
           type="schedule"
         >
           <DatePicker
