@@ -14,7 +14,7 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
     <>
       <svg id="ewPY0fJzILd1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="-220 -25 1000 360" 
+      viewBox="-220 -25 1000 365" 
       shape-rendering="geometricPrecision" 
       text-rendering="geometricPrecision" 
       project-id="dad7e7c888d34c45a454bf474854790e" 
