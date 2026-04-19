@@ -2,15 +2,17 @@
 import { useState } from 'react'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { useNotification } from '@/context/NotificationContext'
 
 // Components
 import MapSelector from '@/components/common/map/MapSelector'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 
 // Material UI
-import { Box, Tabs, Tab, Typography, IconButton } from '@mui/material'
+import { Box, Tabs, Tab, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material'
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
 import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
+import { Share } from '@phosphor-icons/react'
 
 // Interfaces
 import { ISchedule } from '@/data/domain/Schedule'
@@ -45,15 +47,36 @@ function CustomTabPanel(props: TabPanelProps) {
 
 export default function EventTabs({ events }: { events: IEvent[] }) {
   const [tabStates, setTabStates] = useState<{ [eventId: string]: number }>({})
+  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const [currentEventId, setCurrentEventId] = useState<string>('')
 
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
+  const { setNotificationState } = useNotification()
 
   const handleTabChange = (eventId: string, newValue: number) => {
     setTabStates((prev) => ({
       ...prev,
       [eventId]: newValue
     }))
+  }
+
+  const handleCopyLink = async () => {
+    const link = `${window.location.origin}/evento/${currentEventId}`
+    try {
+      await navigator.clipboard.writeText(link)
+      setNotificationState({
+        title: 'Enlace copiado',
+        description: 'El enlace se ha copiado al portapapeles.',
+        type: 'success'
+      })
+    } catch (err) {
+      setNotificationState({
+        title: 'Error',
+        description: 'No se pudo copiar el enlace.',
+        type: 'error'
+      })
+    }
   }
 
   const createLabel = (schedule: ISchedule) => {
@@ -98,7 +121,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                 sx={{
                   position: 'absolute',
                   top: 0,
-                  right: 15,
+                  right: 50,
                   padding: 0,
                   zIndex: 2
                 }}
@@ -107,10 +130,26 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                 <PencilSimple size={24} />
               </IconButton>
             )}
+            <IconButton
+              onClick={() => {
+                setCurrentEventId(event.id ?? '')
+                setShareModalOpen(true)
+              }}
+              sx={{
+                position: 'absolute',
+                top: 0,
+                right: 15,
+                padding: 0,
+                zIndex: 2
+              }}
+              aria-label="Compartir"
+            >
+              <Share size={24} />
+            </IconButton>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
-                onChange={(e, newValue) =>
+                onChange={(_, newValue) =>
                   handleTabChange(event.id ?? '', newValue)
                 }
                 variant="fullWidth"
@@ -184,6 +223,18 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
           </Box>
         )
       })}
+      <Dialog open={shareModalOpen} onClose={() => setShareModalOpen(false)}>
+        <DialogTitle>Compartir Evento</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Link para compartir: {window.location.origin}/evento/{currentEventId}
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCopyLink}>Copiar Link</Button>
+          <Button onClick={() => setShareModalOpen(false)}>Cerrar</Button>
+        </DialogActions>
+      </Dialog>
     </>
   )
 }
