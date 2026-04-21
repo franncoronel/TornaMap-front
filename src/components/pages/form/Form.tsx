@@ -1,8 +1,8 @@
 import { Box, Typography } from '@mui/material'
 import '../interactive-page.css'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation,} from 'react-router-dom'
 import { useState } from 'react'
-import { CaretLeft } from '@phosphor-icons/react/dist/icons/CaretLeft'
+import BackButton from '@/components/common/BackButton'
 export interface FormContext {
   setTitle: (title: string) => void
   setIcon: (icon: JSX.Element | null) => void
@@ -14,12 +14,11 @@ export default function Form() {
   const [icon, setIcon] = useState<JSX.Element | null>(null)
 
   const isEditing = useLocation().pathname.includes('/editar')
-  const navigate = useNavigate()
 
   return (
     <Box className="interactive-page">
       <header className="interactive-page-header">
-        <CaretLeft size={32} onClick={() => navigate(-1)} />
+        <BackButton />
         <Typography variant="h1" className="interactive-page-title">
           {icon}
           {isEditing ? 'Editar' : 'Agregar'}

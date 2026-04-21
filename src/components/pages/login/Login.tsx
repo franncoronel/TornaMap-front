@@ -1,16 +1,6 @@
 import { MouseEvent } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import {
-  TextField,
-  Button,
-  Box,
-  FormControl,
-  IconButton,
-  InputAdornment,
-  InputLabel,
-  OutlinedInput,
-  FormHelperText
-} from '@mui/material'
+import {TextField, Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, FormHelperText, Tooltip} from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../context/AuthContext.tsx'
 import { LoginRequest } from '../../../data/domain/User.ts'
@@ -148,20 +138,22 @@ export default function Login() {
                 data-testid="password-input"
                 endAdornment={
                   <InputAdornment position="end">
-                    <IconButton
-                      aria-label={
-                        showPassword
-                          ? 'hide the password'
-                          : 'display the password'
-                      }
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      onMouseUp={handleMouseUpPassword}
-                      edge="end"
-                      color="default"
-                    >
-                      {showPassword ? <Eye /> : <EyeSlash />}
-                    </IconButton>
+                    <Tooltip title={showPassword? 'Ocultar':'Mostrar'} arrow>
+                      <IconButton
+                        aria-label={
+                          showPassword
+                            ? 'hide the password'
+                            : 'display the password'
+                        }
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                        onMouseUp={handleMouseUpPassword}
+                        edge="end"
+                        color="default"
+                      >
+                        {showPassword ? <Eye /> : <EyeSlash />}
+                      </IconButton>
+                    </Tooltip>
                   </InputAdornment>
                 }
                 label="Password"
@@ -179,15 +171,16 @@ export default function Login() {
         </Button>
 
         {/* Register Button */}
-        <Button
-          disabled
-          variant="outlined"
-          color="primary"
-          fullWidth
-          onClick={() => navigate('/registrar')}
-        >
-          <FingerprintSimple size={32} alt="Registrarse" /> Registrarse
-        </Button>
+        <span style={{ cursor: 'not-allowed' }}>
+          <Button
+            disabled
+            variant="outlined"
+            color="primary"
+            fullWidth
+            onClick={() => navigate('/registrar')}>
+            <FingerprintSimple size={32} alt="Registrarse" /> Registrarse
+          </Button>
+        </span>
       </Box>
     </main>
   )
