@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import EventForm from './components/pages/form/components/EventForm'
+import Register from './components/pages/register/Register'
 
 // Lazy Components
 // const Register = lazy(() => import('@/components/pages/register/Register'))
@@ -22,7 +23,7 @@ const Periods = lazy(() => import('@/components/pages/main/periods/ListPeriod'))
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
   { path: '/ingresar', element: <Login /> },
-  /* { path: '/registrar', element: <Register /> }, */
+  { path: '/registrar', element: <Register /> },
   { path: '/buscar', element: <Search /> },
   {
     path: '/mapa/:building/:level',
