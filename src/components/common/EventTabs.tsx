@@ -9,7 +9,7 @@ import MapSelector from '@/components/common/map/MapSelector'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 
 // Material UI
-import { Box, Tabs, Tab, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@mui/material'
+import { Box, Tabs, Tab, Typography, IconButton, Dialog, DialogTitle, DialogContent, DialogActions, Button, Tooltip, Divider } from '@mui/material'
 import { PencilSimple } from '@phosphor-icons/react/dist/ssr/PencilSimple'
 import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
 import { Share } from '@phosphor-icons/react'
@@ -130,6 +130,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                 <PencilSimple size={24} />
               </IconButton>
             )}
+            <Tooltip title="Compartir" arrow>
             <IconButton
               onClick={() => {
                 setCurrentEventId(event.id ?? '')
@@ -144,8 +145,9 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
               }}
               aria-label="Compartir"
             >
-              <Share size={24} />
+              <Share size={27} />
             </IconButton>
+            </Tooltip>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
               <Tabs
                 value={activeTab}
@@ -223,16 +225,20 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
           </Box>
         )
       })}
-      <Dialog open={shareModalOpen} onClose={() => setShareModalOpen(false)}>
-        <DialogTitle>Compartir Evento</DialogTitle>
+      <Dialog open={shareModalOpen} onClose={() => setShareModalOpen(false)} PaperProps={{sx: {borderRadius: 2,boxShadow: 6,}}}>
+        <DialogTitle sx={{ pb: 1.5 }}>Compartir Evento</DialogTitle>
         <DialogContent>
-          <Typography>
-            Link para compartir: {window.location.origin}/evento/{currentEventId}
+          <Divider sx={{ mb: 1 }} />
+          <Typography sx={{ mb: 1 }}>
+            Link para compartir:
+          </Typography>
+          <Typography variant="body2" sx={{ wordBreak: "break-all", backgroundColor: "#f5f5f5", padding: 1,  borderRadius: 2, }}>
+            {window.location.origin}/evento/{currentEventId}
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCopyLink}>Copiar Link</Button>
-          <Button onClick={() => setShareModalOpen(false)}>Cerrar</Button>
+          <Button variant="contained" sx={{ textTransform: "none" }} onClick={handleCopyLink}>Copiar Link</Button>
+          <Button sx={{ textTransform: "none" }} onClick={() => setShareModalOpen(false)}>Cerrar</Button>
         </DialogActions>
       </Dialog>
     </>
