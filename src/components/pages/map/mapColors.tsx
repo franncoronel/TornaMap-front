@@ -111,12 +111,5 @@ export const mapColors = {
     stroke: '#505050',
     strokeWidth: 0.7
   }
-  /*
 
-  //maintenance:{
-    fill:'#ececed',
-    stroke:'#79787d',
-    strokeWidth: 0.7,
-  }
-*/
 }
