@@ -13,7 +13,7 @@ import { ICourse, ICourseList } from '@/data/domain/Course'
 
 import { WarningCircle, Plus } from '@phosphor-icons/react'
 import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
-import SearchBar from '@/components/common/SearchBar'
+import SearchTagsInput from '@/components/common/SearchTagsInput'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import InfoModal from '@/components/common/InfoModal'
 import EventTabs from '@/components/common/EventTabs'
@@ -22,12 +22,13 @@ export default function Search() {
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
+  const [searchTags, setSearchTags] = useState<string[]>([])
 
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
-  const fetchCourses = async (query?: string) => {
+  const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
       const courses = await courseService.getAll(query)
@@ -89,12 +90,13 @@ export default function Search() {
     setOpen(false)
   }
 
-  const search = (query: string) => {
-    fetchCourses(query)
+  const search = (tags: string[]) => {
+    setSearchTags(tags)
+    fetchCourses(tags)
   }
 
   useEffect(() => {
-    fetchCourses()
+    fetchCourses([])
   }, [])
 
   return (
@@ -102,8 +104,9 @@ export default function Search() {
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
       <Box position="sticky" top="0" zIndex="10">
-        <SearchBar
+        <SearchTagsInput
           onSearch={search}
+          value={searchTags}
           options={courses.map((course) => course.name)}
         />
         <Divider variant="middle" flexItem />

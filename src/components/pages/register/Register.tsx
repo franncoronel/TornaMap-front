@@ -4,7 +4,6 @@ import {
   TextField,
   Button,
   Typography,
-  Container,
   Link
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
@@ -78,17 +77,24 @@ export default function Register() {
   }
 
   return (
-    <main className="register-page">
-      <Container
+    <main className="register-page" style={{ height: '100%', overflowY: 'auto' }}>
+      {/*Contenedor general de la vista */}
+      <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'center',
           padding: '2rem',
           backgroundColor: 'white',
-          borderRadius: 2
+          borderRadius: { xs: 0, sm: 2 },
+          mt: { xs: '8rem', sm: '20rem', md:'9rem'},
+          mb: { xs: 0, sm: '2rem' },
+          maxWidth: { sm: 500, md: 700 },
+          width: { xs: '100%', sm: '90%' },
+          mx: 'auto',
         }}
+        aria-label="Formulario de registro"
       >
+        {/*Contenedor de la imagen*/}
         <Box
           component="img"
           sx={{
@@ -101,6 +107,8 @@ export default function Register() {
           alt="Logo de la universidad."
           src="/logo-unsam-largo.png"
         />
+
+        {/*Contenedor del titulo e inputs*/}
         <Box
           sx={{
             display: 'flex',
@@ -289,7 +297,7 @@ export default function Register() {
             </Typography>
           </Box>
         </Box>
-      </Container>
+      </Box>
     </main>
   )
 }
