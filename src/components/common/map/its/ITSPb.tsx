@@ -14,15 +14,15 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
     <>
       <svg id="ewPY0fJzILd1"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="-220 -25 1000 365" 
-      shape-rendering="geometricPrecision" 
-      text-rendering="geometricPrecision" 
-      project-id="dad7e7c888d34c45a454bf474854790e" 
+      viewBox="-220 -25 1000 365"
+      shape-rendering="geometricPrecision"
+      text-rendering="geometricPrecision"
+      project-id="dad7e7c888d34c45a454bf474854790e"
       export-id="52140fb7d2a347c89e550d96a567ee8c">
-        
+
         {/* Contorno */}
         <g transform="matrix(0 -1 1 0 0 330)" style={{fill: mapColors.outline.fill,stroke: mapColors.outline.stroke,strokeWidth: mapColors.outline.strokeWidth}}>
-          <path d="M154.233595,599.999998L483.432776,600v-600.000001l-329.101765-.000001-.097416,600Z" 
+          <path d="M154.233595,599.999998L483.432776,600v-600.000001l-329.101765-.000001-.097416,600Z"
           transform="translate(-154.233595 0.000002)"/>
           <path d="M340.433574,568.991416l-147.755505-.487642.000001-43.862576h147.755504l-.000011,23.999976" transform="translate(-154.233597 0)"/>
           <path d="M261.423148,470.172174h79.010426v54.469024l-79.010426-54.469024Z" transform="translate(-154.233597 0)"/>
@@ -33,12 +33,12 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
         {/* Escaleras */}
         <g transform="matrix(0 -1 1 0 0 330)">
           <g transform="translate(-401.965163 367.676473)">
-            <g style={{ fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth }} 
+            <g style={{ fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth }}
                 transform="matrix(0.005617 0.533677 -0.523562 0.005511 515.835627 216.333313)">
               <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0 -1 0 0)" strokeLinecap="round" strokeLinejoin="round"/>
               <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0 -1 0 0)" strokeLinecap="round" strokeLinejoin="round"/>
             </g>
-            <g style={{ fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth }} 
+            <g style={{ fill: mapColors.arrow.fill, stroke: mapColors.arrow.stroke, strokeWidth: mapColors.arrow.strokeWidth }}
                 transform="matrix(0 -0.533707 0.523591 0 460.578022 -371.718216)">
               <line x1="50.06" y1="77.95" x2="50.06" y2="47.3" transform="matrix(-1 0 0 -1 0 0)" strokeLinecap="round" strokeLinejoin="round"/>
               <polyline points="37.76,60.46 50.06,45.74 62.36,60.46" transform="matrix(-1 0 0 -1 0 0)" strokeLinecap="round" strokeLinejoin="round"/>
@@ -68,9 +68,9 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
               <path d="M440.63488,177.72591h92.96v23.10139h-92.96v-23.10139Zm.00001,0" />
               <path d="M0,210.719824h45.351256v77.055034h-45.351255L0,210.719824Z" transform="matrix(0 -1 1 0 231.472659 -322.325217)"/>
             </g>
-            
+
           </g>
-        </g> 
+        </g>
         <g transform="matrix(0-1 1 0 0 330)" style={{fill: mapColors.classRooms.fill,stroke: mapColors.classRooms.stroke,strokeWidth: mapColors.classRooms.strokeWidth}}>
           <g>
             <path d="M421.248955,600.000002v-54.109977l62.183823-.000001-.000003,54.109977-62.18382.000001Z" transform="translate(-154.233593 0.000001)"/>
@@ -83,14 +83,14 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
             <path d="M484.395997,222.163048L483.432781,300h-67.885864l-.000001-77.836951l68.849081-.000001Z" transform="matrix(0.831403 0 0 1.234108 -72.728285 -154.276255)"/>
             <text transform="translate(310 150) rotate(90)" dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0" >
               <tspan y="0" fontWeight="700" strokeWidth="0">
-                Baños 
+                Baños
               </tspan>
             </text>
             <Toilet className="icon-common" x="0" y="0" transform="translate(305 155) rotate(90)" size={25} />
           </g>
           <g>
             <path d="M484.395997,222.163048L483.432781,300h-67.885864l-.000001-77.836951l68.849081-.000001Z" transform="matrix(0 0.703167 -1.995567 0 772.540427 -292.198878)"/>
-            
+
           </g>
           {/*.......................................................:Aulas:...........................................................*/}
           {/* Aula 1*/}
@@ -158,7 +158,7 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0-.142567 0.140807 0 96.867093 593.733797)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 0.142567-.140807 0 118.586101 579.432577)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0-.142567 0.140807 0 27.623455 593.325667)"/>
-          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 0.142567-.140807 0 49.265492 579.068967)"/> 
+          <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 0.142567-.140807 0 49.265492 579.068967)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0.001787 0.142556 -0.140796 0.001765 10.67596 80.26901)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 0.142567 -0.140807 0 10.820961 11.127701)"/>
           <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0 -0.142567 0.140807 0 -10.723633 25.384403)"/>

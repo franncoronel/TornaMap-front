@@ -4,7 +4,6 @@
   /* gap:0.7rem; */
 }
 
-
 .levels-radio-group {
   display: flex;
 }
@@ -20,6 +19,7 @@
   font-weight: regular;
   color: #213547;
 }
+
 .libraryRestrictedZone path,
 .maintenance path {
   fill: #aaa;
@@ -48,7 +48,6 @@
 /* BuildingMap.css */
 svg path,
 svg text {
-  /* fill: #ddd; */
   cursor: pointer;
 }
 
@@ -69,33 +68,10 @@ svg text {
 
 /* MAPA */
 
-.classRoom path {
-  fill: white !important;
-  stroke: #cccccc !important;
-  stroke-width: 1px !important;
-}
-.classRoom.selected text{
-  fill: #fff !important;
-  /* font-weight: bold !important;
-  font-size: 1.2rem !important;
-  line-height: 1.2rem !important; */
-}
-/* Aula seleccionada con colores originales */
-.classRoom.selected path {
-  fill: var(--danger-color-dark) !important;
-  stroke: initial !important;
-  stroke-width: initial !important;
-}
 .classRoom:hover path {
-  fill: var(--primary-color-light) !important;
-  stroke: initial !important;
-  stroke-width: initial !important;
-}
-
-/* Mantener colores especiales (biblioteca, baños, etc.) */
-.g-special path {
-  fill: initial !important;
-  stroke: initial !important;
+  fill: var(--primary-color-light);
+  stroke: initial;
+  stroke-width: initial;
 }
 
 @Media (min-width: 601px) {
