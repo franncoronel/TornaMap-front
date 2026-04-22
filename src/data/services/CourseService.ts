@@ -12,8 +12,20 @@ import { API_URL } from '@/config'
 export class CourseService implements ServiceInterface {
   baseUrl: string = `${API_URL}/courses`
 
-  async getAll(query?: string): Promise<Response<ICourseList[]>> {
-    const url = query ? `${this.baseUrl}?query=${query}` : this.baseUrl
+  async getAll(query?: string | string[]): Promise<Response<ICourseList[]>> {
+    const normalizedQuery =
+      typeof query === 'string'
+        ? query
+          ? [query]
+          : []
+        : (query ?? []).filter((q) => q.trim().length > 0)
+
+    const url = normalizedQuery.length
+      ? `${this.baseUrl}?${new URLSearchParams(
+          normalizedQuery.map((q) => ['query', q])
+        ).toString()}`
+      : this.baseUrl
+
     const courseDTOs = await axios.get<Response<ICourseList[]>>(url)
     const courses = courseDTOs.data
     return courses
