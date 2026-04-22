@@ -22,7 +22,7 @@ import { useNotification } from '@/context/NotificationContext'
 import { eventService } from '@/data/services/EventService'
 import { IEvent } from '@/data/domain/Event'
 
-// ─── helpers ────────────────────────────────────────────────────────────────
+// helpers
 
 const weekDayLabel: Record<string, string> = {
   MONDAY: 'Lunes',
@@ -48,7 +48,7 @@ function formatScheduleSummary(schedules: IEvent['schedules']): string {
     .join(' / ')
 }
 
-// ─── sub-componente: tarjeta de solicitud ───────────────────────────────────
+// tarjeta individual de solicitud, con info básica del evento y botones de aprobar/rechazar
 
 interface RequestCardProps {
   event: IEvent
@@ -199,7 +199,7 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
   )
 }
 
-// ─── componente principal ────────────────────────────────────────────────────
+//componente principal: lista de solicitudes
 
 export default function EventRequestsList() {
   const [requests, setRequests] = useState<IEvent[]>([])
@@ -214,8 +214,6 @@ export default function EventRequestsList() {
   const fetchRequests = async () => {
     setLoader(true)
     try {
-      // Asumimos que existe eventService.getPendingRequests()
-      // Si no existe aún, ver nota al pie del archivo
       const { data } = await eventService.getPendingRequests()
       setRequests(data)
     } catch {
