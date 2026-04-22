@@ -18,6 +18,7 @@ const Form = lazy(() => import('@/components/pages/form/Form'))
 const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
 const Programs = lazy(() => import('@/components/pages/main/programs/ListPrograms'))
 const Periods = lazy(() => import('@/components/pages/main/periods/ListPeriod'))
+const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -27,6 +28,10 @@ export const routes: RouteObject[] = [
   {
     path: '/mapa/:building/:level',
     element: <Map />
+  },
+  {
+    path: '/evento/:id',
+    element: <EventDetail />
   },
   {
     path: '/',
