@@ -15,9 +15,16 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/form/Form'))
-const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
-const Programs = lazy(() => import('@/components/pages/main/programs/ListPrograms'))
+const CourseForm = lazy(
+  () => import('@/components/pages/form/components/CourseForm')
+)
+const Programs = lazy(
+  () => import('@/components/pages/main/programs/ListPrograms')
+)
 const Periods = lazy(() => import('@/components/pages/main/periods/ListPeriod'))
+const EventRequestList = lazy(
+  () => import('@/components/pages/main/event/EventRequestList')
+)
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -69,6 +76,10 @@ export const routes: RouteObject[] = [
         ]
       },
       {
+        path: 'solicitudes',
+        element: <EventRequestList />
+      },
+      {
         path: 'horario',
         element: <Form />,
         children: [
@@ -98,14 +109,13 @@ export const routes: RouteObject[] = [
       // }
       {
         path: 'programas',
-        element: <Programs />,
+        element: <Programs />
       },
       {
         path: 'periodos',
-        element: <Periods />,
+        element: <Periods />
       }
-    ],
-
+    ]
   },
   { path: '*', element: <NotFound /> }
 ]
