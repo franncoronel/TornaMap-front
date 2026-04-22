@@ -1,6 +1,6 @@
 import { MouseEvent } from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import {TextField, Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, FormHelperText, Tooltip} from '@mui/material'
+import { TextField, Button, Box, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, FormHelperText, Tooltip } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../../context/AuthContext.tsx'
 import { LoginRequest } from '../../../data/domain/User.ts'
@@ -75,11 +75,11 @@ export default function Login() {
         component="form"
         onSubmit={handleSubmit(onSubmit)}
         className="form"
-        // sx={{
-        //     maxWidth: 400,
-        //     margin: '0 auto',
-        //     border: '1px solid #ccc',
-        // }}
+      // sx={{
+      //     maxWidth: 400,
+      //     margin: '0 auto',
+      //     border: '1px solid #ccc',
+      // }}
       >
         <img
           src={logoUnsam}
@@ -138,7 +138,7 @@ export default function Login() {
                 data-testid="password-input"
                 endAdornment={
                   <InputAdornment position="end">
-                    <Tooltip title={showPassword? 'Ocultar':'Mostrar'} arrow>
+                    <Tooltip title={showPassword ? 'Ocultar' : 'Mostrar'} arrow>
                       <IconButton
                         aria-label={
                           showPassword
@@ -171,16 +171,14 @@ export default function Login() {
         </Button>
 
         {/* Register Button */}
-        <span style={{ cursor: 'not-allowed' }}>
-          <Button
-            disabled
-            variant="outlined"
-            color="primary"
-            fullWidth
-            onClick={() => navigate('/registrar')}>
-            <FingerprintSimple size={32} alt="Registrarse" /> Registrarse
-          </Button>
-        </span>
+        <Button
+          variant="outlined"
+          color="primary"
+          fullWidth
+          onClick={() => navigate('/registrar')}>
+          <FingerprintSimple size={32} alt="Registrarse" /> Registrarse
+        </Button>
+
       </Box>
     </main>
   )
