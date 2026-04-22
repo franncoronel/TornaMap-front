@@ -185,10 +185,11 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
                             wordBreak: 'break-word',
                             whiteSpace: 'normal'
                           }}
-                        >
+                        >/{' '}
                           {schedule.classroom?.name} / Piso{' '}
                           {schedule.classroom?.floor} /{' '}
-                          {schedule.classroom?.building.name}
+                          {schedule.classroom?.building.name} /{' '}
+                          Capacidad: {schedule.classroom?.capacity}
                         </Typography>
                         <MapSelector
                           building={schedule.classroom?.building.name}

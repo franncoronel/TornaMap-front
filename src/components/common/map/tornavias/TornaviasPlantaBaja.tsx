@@ -155,8 +155,12 @@ export default function TornaviasPlantaBaja({
             transform="matrix(.612096 0.385465-.520674 0.8268 733.569399-682.973719)"
           />
           <path
-            d="M231.24261,601.122845l15.977745-14.179977c1.061258,1.145564,2.189604,2.318601,3.378225,3.514202c20.608867,20.729894,59.337712,48.24322,80.674972,56.956255l-9.349419,19.237647c-25.970083-11.204098-67.158688-41.127792-87.130707-61.713115-1.272938-1.312028-2.459688-2.58612-3.550816-3.815012Z"
-            transform="matrix(.666526 0.745482-.745482 0.666526 445.314557-198.414788)"
+            d="M290.336534,626.013412c10.925412,6.878169,31.738106,18.960895,41.064619,23.351154l-9.319505,20.30243c-12.951172-6.082853-35.074527-18.784399-43.920633-25.51722l12.175519-18.136364Z" 
+            transform="matrix(.659466 0.751734-.751734 0.659466 453.81695-197.885564)"
+          />
+          <path 
+            d="M244.542851,586.267732c6.848,7.186274,20.927867,20.071717,28.232859,26.09995l-12.851361,16.47663c-7.91767-6.02195-22.485599-19.591285-29.726453-27.279458l14.344955-15.297122Z" 
+            transform="matrix(.694346 0.719642-.719642 0.694346 423.492923-205.77548)" 
           />
         </g>
         {/* Escalones */}
@@ -203,10 +207,16 @@ export default function TornaviasPlantaBaja({
             d="M438.785458,753.693269l36.314535-2.5-.348555-3.399618-36.351445,2.314054-.15-3.443861l36.15-2.214983-.3-3.7-35.909387,2.312295-.190613-3.729482l35.811183-2.138909-.311183-3.32744-35.739068,2.05635"
             transform="matrix(.612096 0.385465-.520674 0.8268 732.837024-682.097836)"
           />
-          <path
-            d="M318.000828,664.855625l9.262802-19.174452-4.588326-2.229948-9.689356,18.9644-4.26512-2.32l10.033188-18.765055-4.1-2.311817-10.471971,18.574217-4.36-2.6l10.720501-18.449721-4.18-2.62-10.676865,18.469308-4.62-2.9L302.261124,631.345l-3.812304-2.302247-11.51496,17.791395-4.160576-2.765281l11.895869-17.841925-4.014358-2.82-11.611849,17.923628-4.753228-3.337467l12.644142-17.206161-4.160576-3.118066-12.575682,17.115529-3.885168-2.564514l12.730512-17.295667-3.78-2.949762L262.3767,629.042753l-4.459943-3.36l13.55673-16.839106-3.38-2.635409-13.485359,16.608553-4.432196-3.677467l14.487161-15.791613-3.425149-2.971271-14.428149,16.013295-3.982647-3.675694l15.089609-15.255315-3.974734-3.665881-15.221415,15.050802-3.927196-3.905797l15.805154-14.480787"
-            transform="matrix(.666526 0.745482-.745482 0.666526 445.314557-198.414788)"
+          
+          <path 
+            d="M283.012316,617.574928l-12.32295,17.004268-3.873284-2.783551l12.32031-17.127571-4.064183-3.082083-12.426295,17.084088-4.406627-3.473773l13.169955-16.499264-3.853523-3.122442-13.090526,16.505579-4.118591-3.370009l13.394191-16.260808-3.723637-3.087794-13.522243,16.060243" 
+            transform="matrix(.659874 0.751377-.751377 0.659874 449.224303-208.454361)" 
           />
+          <path 
+            d="M299.528255,628.379483L286.93386,646.834148l-4.160576-2.765281l13.064862-18.107882-3.701565-2.628389-12.905793,18.375162-4.556078-3.101905l13.044793-18.326948-3.770481-2.736328-13.194773,18.200435-4.303198-3.15872l13.706259-17.824097-4.040337-2.990207-13.807135,17.707228-4.109687-3.265005l13.856556-17.458552-3.664676-2.785346-14.037041,17.077205"
+            transform="matrix(.751991 0.659173-.659173 0.751991 372.45558-193.910733)" 
+          />
+          
         </g>
         {/* Flechas */}
         <g
@@ -386,19 +396,35 @@ export default function TornaviasPlantaBaja({
               strokeLinejoin="round"
             />
           </g>
-          <g transform="matrix(.194472 0.024385-.021798 0.173847 172.017484 380.774509)">
-            <line
-              x1="50.06"
-              y1="77.95"
-              x2="50.06"
-              y2="47.3"
+          <g transform="matrix(-.195415 0.015066-.013468-.17469 151.590987 411.618509)">
+            <line 
+              x1="50.06" 
+              y1="77.95" 
+              x2="50.06" 
+              y2="47.3" 
               transform="matrix(-1 0 0-1 0 0)"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <polyline
-              points="37.76,60.46 50.06,45.74 62.36,60.46"
-              transform="matrix(-1 0 0-1 0 0)"
+            <polyline 
+              points="37.76,60.46 50.06,45.74 62.36,60.46" 
+              transform="matrix(-1 0 0-1 0 0)" 
+              strokeLinecap="round"
+              strokeLinejoin="round"/>
+          </g>
+          <g transform="matrix(.195462-.014451 0.012918 0.174731 173.486054 440.235259)">
+            <line 
+              x1="50.06" 
+              y1="77.95" 
+              x2="50.06" 
+              y2="47.3" 
+              transform="matrix(-1 0 0-1 0 0)" 
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <polyline 
+              points="37.76,60.46 50.06,45.74 62.36,60.46" 
+              transform="matrix(-1 0 0-1 0 0)" 
               strokeLinecap="round"
               strokeLinejoin="round"
             />
@@ -997,8 +1023,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A18')}
-          className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('A19')}
+          className={`classRoom ${isSelected('A19') ? 'selected' : ''}`}
         >
           <path
             d="M273.111053,512.080725c7.415474,13.710616,29.198574,36.776487,42.263239,46.648422l-32.492883,42.731182c-16.481705-10.310838-41.869802-41.583753-54.170306-60.848775l44.39995-28.530829Z"
@@ -1158,19 +1184,18 @@ export default function TornaviasPlantaBaja({
             </tspan>
           </text>
         </g>
-        {/* //!Aulas Nuevas averiguar el nombre  -> Verificar si están bien diseñadas en el plano */}
-        {/* T01 */}
+        {/* T02 */}
         <g
           style={{
             fill: mapColors.classrooms.fill,
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('T01')}
-          className={`classRoom ${isSelected('T01') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('T02')}
+          className={`classRoom ${isSelected('T02') ? 'selected' : ''}`}
         >
-          <path
-            d="M188.542523,385.461567L225.810828,385.5c-.881459,17.006431,1.614107,56.807516,7.724323,74.410884l-38.110792,8.605507c-6.029744-19.316402-7.60134-63.513123-6.881836-83.054824Z"
+          <path 
+            d="M193.081265,337.040194l37.621152,8.768888c-.444433,8.574659-4.023992,29.358207-3.371608,53.987308.641513,24.218685,3.174903,51.386761,6.204342,60.114494l-38.110792,8.605507c0,0-6.192266-30.878079-7.028844-63.124789-.867736-33.447721,3.637227-68.30874,4.68575-68.351408Z" 
             transform="matrix(1.336062-.027544 0.02583 1.252917-182.263316-88.960178)"
           />
           <text
@@ -1179,67 +1204,39 @@ export default function TornaviasPlantaBaja({
             fontFamily='"eBHsLTiXjpU1:::Roboto"'
             fontSize="15"
             fontWeight="400"
-            transform="translate(95 447)"
+            transform="translate(92 417)"
+            strokeWidth="0"
+          >
+            <tspan y="0" fontWeight="700" strokeWidth="0">
+              T02
+            </tspan>
+          </text>
+        </g>
+        {/* T01 */}
+        <g
+          style={{
+            fill: mapColors.classrooms.fill,
+            stroke: mapColors.classrooms.stroke,
+            strokeWidth: mapColors.classrooms.strokeWidth
+          }}
+          onClick={() => handleOpen?.('T02')}
+          className={`classRoom ${isSelected('T02') ? 'selected' : ''}`}
+        >
+          <path 
+            d="M196.60254,465.685622l50.865692-12.175651c-9.214473-23.830131-8.10238-73.480939-2.042407-98.684328l-49.816977-9.13175c-7.254887,31.549944-8.404497,91.491921.993692,119.991729Z" 
+            transform="translate(0 0.000001)"
+          />
+          <text
+            dx="0"
+            dy="0"
+            fontFamily='"eBHsLTiXjpU1:::Roboto"'
+            fontSize="15"
+            fontWeight="400"
+            transform="translate(201 410)"
             strokeWidth="0"
           >
             <tspan y="0" fontWeight="700" strokeWidth="0">
               T01
-            </tspan>
-          </text>
-        </g>
-        {/*  */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
-          onClick={() => handleOpen?.('T0?')}
-          className={`classRoom ${isSelected('T0?') ? 'selected' : ''}`}
-        >
-          <path
-            d="M206.728211,601.544616c-9.097845-10.027013-19.662447-23.690339-24.771094-33.577133L137.358318,596.66205c9.959006,15.197656,23.748828,33.087613,31.349973,40.76146l38.01992-35.878894Z"
-            transform="matrix(.733845 0.679317-.679317 0.733845 497.727602-185.580932)"
-          />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="15"
-            fontWeight="400"
-            transform="translate(197 380)"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              T0??
-            </tspan>
-          </text>
-        </g>
-        {/*  */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
-          onClick={() => handleOpen?.('T0??')}
-          className={`classRoom ${isSelected('T0??') ? 'selected' : ''}`}
-        >
-          <path
-            d="M196.60254,465.68562l50.865688-12.17565c-5.105963-11.43358-7.718256-40.273648-6.673792-57.216493l-52.27387.501955c-.189533,17.245473,3.132068,51.609567,8.081974,68.890188Z"
-            transform="translate(.000004 0.000001)"
-          />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="15"
-            fontWeight="400"
-            transform="translate(207 432)"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              T0?
             </tspan>
           </text>
         </g>
@@ -1400,8 +1397,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LEII')}
-          className={`classRoom ${isSelected('LEII') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('LE2')}
+          className={`classRoom ${isSelected('LE2') ? 'selected' : ''}`}
         >
           <path
             d="M806.954264,423.529654l-53.458398-3.163908c-.183917,9.706394-3.47723,34.08643-6.41688,48.847472l51.689861,11.624104c3.768401-15.776431,7.844646-44.125494,8.185417-57.307668Z"
@@ -1428,7 +1425,6 @@ export default function TornaviasPlantaBaja({
           </text>
         </g>
         {/* Laboratorio de Termodinámica*/}{' '}
-        {/* //! ota opcion es poner el nombre completo y girarlo*/}
         <g
           style={{
             fill: mapColors.lab.fill,

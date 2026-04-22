@@ -8,6 +8,7 @@ import FloatingButton from '@/components/common/FloatingButton'
 import FormProgram from './FormProgram'
 import { useFetchPrograms } from './useFetchPrograms'
 import { GraduationCap } from '@phosphor-icons/react/dist/icons/GraduationCap'
+import BackButton from '@/components/common/BackButton'
 
 export default function ListPrograms() {
   const {
@@ -39,17 +40,19 @@ export default function ListPrograms() {
   const filteredPrograms = programs.filter((program) =>
     program.name.toLowerCase().includes(searchQuery.toLowerCase())
   )
-
+  
   return (
     <Box
-      sx={{ mt: 5, px: 3, overflowY: 'auto', pb: 1, gap: '1rem' }}
+      sx={{mt:1.5,px:3, overflowY: 'auto', pb: 1, gap: '1rem' }}
       width="100%"
     >
-      <Typography variant="h1" gutterBottom>
-        <GraduationCap size={32} />
+      <header className="interactive-page-header">
+      <BackButton />
+      <Typography variant="h1" gutterBottom className="interactive-page-title">
+        <GraduationCap size={32} style={{ marginRight: 8 }}/>
         Carreras o Programas
       </Typography>
-
+    </header>
       <Box
         position="sticky"
         top="0"
