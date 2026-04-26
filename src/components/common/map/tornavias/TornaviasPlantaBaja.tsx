@@ -497,8 +497,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A1')}
-          className={`classRoom ${isSelected('A1') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A1')}
+          className={`classRoom ${isSelected('TOR-A1') ? 'selected' : ''}`}
         >
           <path
             d="M512.928028,93.672453c11.944716,2.700362,33.777158,9.044196,43.752717,12.656299l18.764596-50.127411c-8.200311-4.278074-34.013126-11.725643-50.332496-15.637496L512.928028,93.672453Z"
@@ -525,8 +525,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A2')}
-          className={`classRoom ${isSelected('A2') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A2')}
+          className={`classRoom ${isSelected('TOR-A2') ? 'selected' : ''}`}
         >
           <path
             d="M500.31631,149.081046c7.487088,1.447509,23.304624,6.225106,36.478944,11.277523l-20.054092,50.364672c-6.084496-2.321571-20.384546-6.492754-28.453168-8.526029l12.028316-53.116166Z"
@@ -553,8 +553,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A3')}
-          className={`classRoom ${isSelected('A3') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A3')}
+          className={`classRoom ${isSelected('TOR-A3') ? 'selected' : ''}`}
         >
           <path
             d="M462.940163,86.346184c13.500263.914865,38.542423,4.508335,49.987862,7.326267l12.184821-53.108607c-12.061925-4.018794-41.301389-8.09695-58.770125-8.507654l-3.402558,54.289994Z"
@@ -581,8 +581,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A4')}
-          className={`classRoom ${isSelected('A4') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A4')}
+          className={`classRoom ${isSelected('TOR-A4') ? 'selected' : ''}`}
         >
           <path
             d="M488.287993,202.197212l12.028315-53.116164c-8.528883-2.155273-29.141575-5.194721-41.299114-6.09872l-3.115184,54.371848c8.891574.462243,25.003016,2.993172,32.385983,4.843036Z"
@@ -609,8 +609,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A5')}
-          className={`classRoom ${isSelected('A5') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A5')}
+          className={`classRoom ${isSelected('TOR-A5') ? 'selected' : ''}`}
         >
           <path
             d="M414.02035,87.281622c15.191994-1.305193,39.09013-1.427763,48.919812-.935439l3.402561-54.289992c-9.272594-1.564911-38.654138.022679-57.683908,1.256636l5.361535,53.968795Z"
@@ -637,8 +637,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A6')}
-          className={`classRoom ${isSelected('A6') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A6')}
+          className={`classRoom ${isSelected('TOR-A6') ? 'selected' : ''}`}
         >
           <path
             d="M319.565748,111.604373c5.835238-2.746279,17.436838-7.337733,23.233501-9.336112L325.27775,51.909095c-7.582971,2.530409-21.144366,7.63813-27.080693,10.468016l21.368691,49.227262Z"
@@ -665,8 +665,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A6BIS')}
-          className={`classRoom ${isSelected('A6BIS') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A6BIS')}
+          className={`classRoom ${isSelected('TOR-A6BIS') ? 'selected' : ''}`}
         >
           <path
             d="M342.799247,102.268263c6.875444-2.239378,18.985974-6.002836,24.402775-7.43606L353.61515,42.803115c-6.272459,1.739658-20.398462,6.360967-28.337402,9.105982l17.521499,50.359166Z"
@@ -696,8 +696,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A7')}
-          className={`classRoom ${isSelected('A7') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A7')}
+          className={`classRoom ${isSelected('TOR-A7') ? 'selected' : ''}`}
         >
           <path d="M367.202026,94.832203c12.128687-3.332884,35.343102-6.854257,46.818324-7.550581l-5.361534-53.968794c-15.444814.626046-42.958866,4.702859-55.043662,9.490287l13.586872,52.029088Z" />
           <text
@@ -721,8 +721,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A8')}
-          className={`classRoom ${isSelected('A8') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A8')}
+          className={`classRoom ${isSelected('TOR-A8') ? 'selected' : ''}`}
         >
           <path d="M274.022341,206.945029l36.421292,39.43539c12.009296-11.719406,39.171505-28.241097,52.284151-33.101789l-21.052872-49.627238c-20.489948,7.526624-54.173738,29.397889-67.652571,43.293637Z" />
           <text
@@ -746,8 +746,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A9')}
-          className={`classRoom ${isSelected('A9') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A9')}
+          className={`classRoom ${isSelected('TOR-A9') ? 'selected' : ''}`}
         >
           <path
             d="M678.508829,300.299481c-6.750477-18.250848-28.604657-53.927891-44.340733-71.400199l-40.215014,36.675111c14.542258,16.666771,32.101285,46.469553,35.759525,56.169205l48.796222-21.444117Z"
@@ -774,8 +774,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A10')}
-          className={`classRoom ${isSelected('A10') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A10')}
+          className={`classRoom ${isSelected('TOR-A10') ? 'selected' : ''}`}
         >
           <path
             d="M644.09529,382.015267c-1.143131-16.660468-7.247018-46.999495-14.38268-60.27167l48.796222-21.444117c8.528969,16.897166,16.931624,55.142991,19.204673,76.566629q-53.618214,5.14916-53.618215,5.149158Z"
@@ -802,8 +802,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A11')}
-          className={`classRoom ${isSelected('A11') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A11')}
+          className={`classRoom ${isSelected('TOR-A11') ? 'selected' : ''}`}
         >
           <path
             d="M678.508834,607.669105c10.83975-11.924186,26.232385-34.621776,32.556889-46.200462l46.020955,27.564616c-8.038058,15.057455-29.171153,41.719859-38.637724,53.513214l-39.94012-34.877368Z"
@@ -830,8 +830,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A12')}
-          className={`classRoom ${isSelected('A12') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A12')}
+          className={`classRoom ${isSelected('TOR-A12') ? 'selected' : ''}`}
         >
           <path
             d="M644.095295,642.546472c10.865644-10.141861,28.540689-27.642982,34.413538-34.877368l39.940122,34.877366c-8.605296,10.437152-28.384119,30.520616-39.940121,40.166927l-34.413539-40.166925Z"
@@ -858,8 +858,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A13')}
-          className={`classRoom ${isSelected('A13') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A13')}
+          className={`classRoom ${isSelected('TOR-A13') ? 'selected' : ''}`}
         >
           <path
             d="M606.976976,669.871815c9.99314-5.75313,27.663689-19.641026,37.118317-27.325345l34.413539,40.166925c-9.094788,8.601062-31.479735,24.638633-44.340732,32.743725l-27.191124-45.585305Z"
@@ -886,8 +886,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A14')}
-          className={`classRoom ${isSelected('A14') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A14')}
+          className={`classRoom ${isSelected('TOR-A14') ? 'selected' : ''}`}
         >
           <path
             d="M568.624129,690.619306c9.952047-4.587485,29.083602-14.993279,38.352847-20.747493l27.191125,45.585307c-8.810896,5.985619-30.994482,17.909293-44.016319,24.373626l-21.527653-49.21144Z"
@@ -914,8 +914,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A15')}
-          className={`classRoom ${isSelected('A15') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A15')}
+          className={`classRoom ${isSelected('TOR-A15') ? 'selected' : ''}`}
         >
           <path
             d="M617.136608,504.764575l46.100119,27.544393c-7.646298,13.91578-34.708485,48.088947-55.340079,66.941042l-34.460787-41.641807c15.506934-14.894561,38.840897-40.351288,43.700747-52.843628Z"
@@ -942,8 +942,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A16')}
-          className={`classRoom ${isSelected('A16') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A16')}
+          className={`classRoom ${isSelected('TOR-A16') ? 'selected' : ''}`}
         >
           <path
             d="M546.215801,638.271223c4.743694-1.705548,15.928883-7.090259,31.101849-17.275224l-28.148399-45.610223c-5.938943,3.846215-18.418792,10.238881-24.943969,12.838807l21.990519,50.04664Z"
@@ -970,8 +970,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A17')}
-          className={`classRoom ${isSelected('A17') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A17')}
+          className={`classRoom ${isSelected('TOR-A17') ? 'selected' : ''}`}
         >
           <path d="M506.683509,651.420698c12.746688-3.315106,33.15614-9.511429,39.532292-13.149475l-21.990516-50.04664c-6.930454,3.36937-21.745469,8.808824-30.377302,11.025427l12.835526,52.170688Z" />
           <text
@@ -995,8 +995,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A18')}
-          className={`classRoom ${isSelected('A18') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A18')}
+          className={`classRoom ${isSelected('TOR-A18') ? 'selected' : ''}`}
         >
           <path
             d="M350.016558,641.5878c-21.031572-9.02946-55.435434-28.160415-67.135151-40.127471l32.492885-42.731182c14.19937,12.084084,40.952526,29.634505,53.343151,32.309266L350.016558,641.5878Z"
@@ -1023,8 +1023,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A19')}
-          className={`classRoom ${isSelected('A19') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A19')}
+          className={`classRoom ${isSelected('TOR-A19') ? 'selected' : ''}`}
         >
           <path
             d="M273.111053,512.080725c7.415474,13.710616,29.198574,36.776487,42.263239,46.648422l-32.492883,42.731182c-16.481705-10.310838-41.869802-41.583753-54.170306-60.848775l44.39995-28.530829Z"
@@ -1051,8 +1051,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A20')}
-          className={`classRoom ${isSelected('A20') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A20')}
+          className={`classRoom ${isSelected('TOR-A20') ? 'selected' : ''}`}
         >
           <path
             d="M196.602536,465.685617l50.865693-12.175648c1.435027,6.533366,6.728039,20.357491,10.107866,28.166256l-48.033844,21.352206c-5.056943-8.523918-11.310316-27.238622-12.939715-37.342814Z"
@@ -1079,8 +1079,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A21')}
-          className={`classRoom ${isSelected('A21') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A21')}
+          className={`classRoom ${isSelected('TOR-A21') ? 'selected' : ''}`}
         >
           <path
             d="M330.122036,695.331972c-22.285376-7.317999-63.381103-32.18658-82.6538-48.795675l-33.578057,41.01391c18.882655,17.399928,68.1131,44.809819,96.860671,56.841456l19.371186-49.059691Z"
@@ -1107,8 +1107,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A22')}
-          className={`classRoom ${isSelected('A22') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A22')}
+          className={`classRoom ${isSelected('TOR-A22') ? 'selected' : ''}`}
         >
           <path
             d="M213.890178,687.550207l33.578054-41.013909c-11.556562-9.838524-28.950623-26.267106-35.213015-34.320464l-38.31775,35.937731c8.938435,10.011457,28.902021,29.599324,39.952711,39.396642Z"
@@ -1135,8 +1135,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A23')}
-          className={`classRoom ${isSelected('A23') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A23')}
+          className={`classRoom ${isSelected('TOR-A23') ? 'selected' : ''}`}
         >
           <path
             d="M173.937466,648.153564l38.317752-35.937731c-9.149931-9.618086-25.062728-30.766437-31.832377-42.291372l-44.224124,29.325548c6.823715,11.321972,25.667713,35.145244,37.738749,48.903555"
@@ -1163,8 +1163,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A24')}
-          className={`classRoom ${isSelected('A24') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-A24')}
+          className={`classRoom ${isSelected('TOR-A24') ? 'selected' : ''}`}
         >
           <path
             d="M180.422842,569.924463c-6.675661-9.907866-18.062322-31.719714-23.152769-43.393871l-47.953242,20.965115c5.261847,12.984189,18.343033,39.000345,26.881885,51.754301l44.224126-29.325545Z"
@@ -1191,8 +1191,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('T02')}
-          className={`classRoom ${isSelected('T02') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-T02')}
+          className={`classRoom ${isSelected('TOR-T02') ? 'selected' : ''}`}
         >
           <path 
             d="M193.081265,337.040194l37.621152,8.768888c-.444433,8.574659-4.023992,29.358207-3.371608,53.987308.641513,24.218685,3.174903,51.386761,6.204342,60.114494l-38.110792,8.605507c0,0-6.192266-30.878079-7.028844-63.124789-.867736-33.447721,3.637227-68.30874,4.68575-68.351408Z" 
@@ -1219,8 +1219,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('T02')}
-          className={`classRoom ${isSelected('T02') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-T01')}
+          className={`classRoom ${isSelected('TOR-T01') ? 'selected' : ''}`}
         >
           <path 
             d="M196.60254,465.685622l50.865692-12.175651c-9.214473-23.830131-8.10238-73.480939-2.042407-98.684328l-49.816977-9.13175c-7.254887,31.549944-8.404497,91.491921.993692,119.991729Z" 
@@ -1248,8 +1248,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LF')}
-          className={`classRoom ${isSelected('LF') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LF')}
+          className={`classRoom ${isSelected('TOR-LF') ? 'selected' : ''}`}
         >
           <path d="M644.09529,382.015267l53.618216-5.149157c1.870369,18.730835-1.177904,58.107014-5.036627,78.911346l-52.049281-12.019333c4.238038-13.417239,4.905592-44.175459,3.467692-61.742856Z" />
           <text
@@ -1276,8 +1276,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LQ')}
-          className={`classRoom ${isSelected('LQ') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LQ')}
+          className={`classRoom ${isSelected('TOR-LQ') ? 'selected' : ''}`}
         >
           <path
             d="M729.848675,278.040692l48.94499-20.837043c-9.462383-25.487248-39.384806-77.18636-63.413498-101.97265l-39.715411,35.671472c19.331483,21.545873,46.764892,65.068423,54.183919,87.138221Z"
@@ -1307,8 +1307,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LBI')}
-          className={`classRoom ${isSelected('LBI') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LB')}
+          className={`classRoom ${isSelected('TOR-LB') ? 'selected' : ''}`}
         >
           <path d="M746.031684,326.011547l51.308606-12.619248c-2.866748-11.853755-11.084149-40.174065-18.546625-56.18865l-48.944987,20.837043c4.31331,8.225915,11.748444,32.619197,16.183006,47.970855Z" />
           <text
@@ -1335,8 +1335,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LBII')}
-          className={`classRoom ${isSelected('LBII') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LB')}
+          className={`classRoom ${isSelected('TOR-LB') ? 'selected' : ''}`}
         >
           <path
             d="M753.495865,371.627002l52.786904-4.576492c-1.383803-13.661818-4.626156-40.553235-8.942481-53.658211l-51.308606,12.619245c3.302905,11.848883,6.68986,34.641635,7.464183,45.615458Z"
@@ -1366,8 +1366,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LN')}
-          className={`classRoom ${isSelected('LN') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LN')}
+          className={`classRoom ${isSelected('TOR-LN') ? 'selected' : ''}`}
         >
           <path
             d="M753.495866,420.365744c.866196-11.731911,1.126698-36.204853,0-48.738742l52.786903-4.576493c1.894257,10.955076,1.385946,39.068081.671495,56.479143l-53.458398-3.163908Z"
@@ -1397,8 +1397,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LE2')}
-          className={`classRoom ${isSelected('LE2') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LE2')}
+          className={`classRoom ${isSelected('TOR-LE2') ? 'selected' : ''}`}
         >
           <path
             d="M806.954264,423.529654l-53.458398-3.163908c-.183917,9.706394-3.47723,34.08643-6.41688,48.847472l51.689861,11.624104c3.768401-15.776431,7.844646-44.125494,8.185417-57.307668Z"
@@ -1431,8 +1431,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LT')}
-          className={`classRoom ${isSelected('LT') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LT')}
+          className={`classRoom ${isSelected('TOR-LT') ? 'selected' : ''}`}
         >
           <path
             d="M783.07873,534.9998c5.932501-15.033337,14.360219-42.04395,15.690118-54.162479l-51.689863-11.624103c-1.893856,7.781901-8.059372,30.423946-13.686508,45.907206L783.07873,534.9998Z"
@@ -1462,8 +1462,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('LC4')}
-          className={`classRoom ${isSelected('LC4') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-LC4')}
+          className={`classRoom ${isSelected('TOR-LC4') ? 'selected' : ''}`}
         >
           <path
             d="M711.065724,561.468643c7.928198-14.428356,19.708134-38.131889,22.326755-46.34822L783.07873,534.9998c-3.919149,11.468931-16.242515,38.379238-25.992051,54.033457l-46.020955-27.564614Z"
@@ -1493,8 +1493,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.lab.stroke,
             strokeWidth: mapColors.lab.strokeWidth
           }}
-          onClick={() => handleOpen?.('IEN')}
-          className={`classRoom ${isSelected('IEN') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-IEN')}
+          className={`classRoom ${isSelected('TOR-IEN') ? 'selected' : ''}`}
         >
           <path d="M549.169254,575.385776c7.898751-4.666319,19.759674-13.837344,24.26661-17.77757l34.460785,41.641804c-8.888181,7.251522-23.190236,18.453662-30.578996,21.745986" />
           <text
@@ -1523,8 +1523,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.bedelia.stroke_CyT,
             strokeWidth: mapColors.bedelia.strokeWidth
           }}
-          onClick={() => handleOpen?.('BCYT')}
-          className={`classRoom ${isSelected('BCYT') ? 'selected' : ''}`}
+          // onClick={() => handleOpen?.('BCYT')}
+          // className={`classRoom ${isSelected('BCYT') ? 'selected' : ''}`}
         >
           <path
             d="M471.780968,715.457118c8.228336-.095124,24.952529-2.622144,33.222227-4.098234l2.253972,15.779415-33.899855,4.822651-1.576344-16.503832Z"
@@ -1551,8 +1551,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.bedelia.stroke_ExHumanidades,
             strokeWidth: mapColors.bedelia.strokeWidth
           }}
-          onClick={() => handleOpen?.('BAYP')}
-          className={`classRoom ${isSelected('BAYP') ? 'selected' : ''}`}
+          // onClick={() => handleOpen?.('BAYP')}
+          // className={`classRoom ${isSelected('BAYP') ? 'selected' : ''}`}
         >
           <path
             d="M570.230642,112.530043c8.056228,3.876982,22.968092,11.55762,29.754353,15.384401l7.911652-13.748092-30.578999-15.464616-7.087006,13.828307Z"
@@ -1642,8 +1642,8 @@ export default function TornaviasPlantaBaja({
             stroke: mapColors.humanidades.stroke,
             strokeWidth: mapColors.humanidades.strokeWidth
           }}
-          onClick={() => handleOpen?.('CGES')}
-          className={`classRoom ${isSelected('CGES') ? 'selected' : ''}`}
+          onClick={() => handleOpen?.('TOR-CG')}
+          className={`classRoom ${isSelected('TOR-CG') ? 'selected' : ''}`}
         >
           <path
             d="M418.408606,143.517274c-8.253008.539874-26.610644,3.298821-38.512331,6.416424l13.919479,52.79692c7.804107-2.107954,22.325769-4.690337,29.453731-4.898115"
