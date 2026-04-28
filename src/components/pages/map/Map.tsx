@@ -30,6 +30,7 @@ import { buildingService } from '@/data/services/BuildingService'
 // Mapper
 import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/mapper/buildingMapper'
 import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
+import Campus from '@/components/common/map/campus/Campus'
 
 export default function Map() {
   const { control } = useForm({
@@ -40,9 +41,10 @@ export default function Map() {
   })
   const navigate = useNavigate()
   const { building: buildingPath, level: levelPath } = useParams() //leo la url del map para saber a qué edificio y nivel mostrar, ej: /mapa/tornavias/primer-piso => buildingPath = 'tornavias', levelPath = 'primer-piso'
-
+  
   // edificios desde back
   const [buildings, setBuildings] = useState<UIBuilding[]>([])
+  const [selectedCampusBuilding, setSelectedCampusBuilding] = useState<string>('')
 
   // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | string>(null)
@@ -79,7 +81,9 @@ export default function Map() {
 
     fetchBuildings()
   }, [])
-
+  
+  const isCampus = buildingPath === 'campus'
+  
   const currentBuilding = buildings.find( (b) => b.path === buildingPath ) //edificio actual
   
   const currentLevel = pathToFloor(levelPath || '')// nivel actual -> numero
@@ -209,8 +213,38 @@ export default function Map() {
             </FormControl>
           )}
         />
+
+      {/* Select del campus */}
+        {isCampus && (
+          <Box display="flex" gap={2}>
+            {/* Checklist de los edificios */}
+            <FormControl>
+              <FormLabel>Edificios</FormLabel>
+              <RadioGroup
+                value={selectedCampusBuilding}
+                onChange={(e) =>
+                  setSelectedCampusBuilding(e.target.value)
+                }
+              >
+                {buildings.map((b) => (
+                  <FormControlLabel
+                    key={b.id}
+                    value={b.path}
+                    control={<Radio />}
+                    label={b.text}
+                  />
+                ))}
+              </RadioGroup>
+            </FormControl>
+
+            {/* MAPA CAMPUS */}
+            <Campus selectedBuilding={selectedCampusBuilding} />
+          </Box>
+        )}
+
+        {/* Select de los edificios */}
         {/* RadioGroup de niveles */}
-        {currentBuilding && (
+        {!isCampus && currentBuilding && (
           <Controller
             name="level"
             control={control}
@@ -245,14 +279,15 @@ export default function Map() {
       </Box>
 
       <Divider variant="middle" flexItem sx={{}} />
-
-      <section className="map-container">
-        <MapSelector
-          building={buildingPath}
-          level={currentLevel?.toString()}
-          handleOpen={handleOpen}
-        />
-      </section>
+      {!isCampus && (
+        <section className="map-container">
+          <MapSelector
+            building={buildingPath}
+            level={currentLevel?.toString()}
+            handleOpen={handleOpen}
+          />
+        </section>
+    )}
 
       {/* Modal */}
       {classRoomId !== null && (
