@@ -91,6 +91,12 @@ export default function Map() {
 
   // Manejo del mapa -> navegación edificios
   const handleBuildingChange = (newBuildingPath: string) => {
+    //caso campus
+    if (newBuildingPath === 'campus') {
+      navigate(`/mapa/campus/0`)
+      return
+    }
+
     const newBuilding = buildings.find((b) => normalize(b.text) === newBuildingPath )
 
     if (!newBuilding) return
@@ -193,6 +199,7 @@ export default function Map() {
                   handleBuildingChange(`${e.target.value}`) // Redirige a la ruta
                 }}
               >
+                <MenuItem value="campus">Campus</MenuItem>
                 {buildings.map((b) => (
                   <MenuItem key={b.id} value={b.path}>
                     {b.text}

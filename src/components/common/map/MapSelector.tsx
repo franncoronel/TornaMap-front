@@ -12,6 +12,7 @@ import '@/components/pages/map/map.css'
 //React
 import { FC } from 'react'
 import { normalize } from '@/data/mapper/buildingMapper'
+import Campus from './campus/Campus'
 
 
 
@@ -36,11 +37,17 @@ const its: Record<string, FC<FloorMapProps>> = {
   '0': ITSPb
 }
 
+const campus: Record<string, FC<FloorMapProps>> = {
+  '0': Campus
+}
+
+
 // 2. agrúpalos en un selector de edificios
 const buildingMaps: Record<string, typeof tornavias> = {
   tornavias: tornavias,
   aularionave3: aulario,
-  its: its
+  its: its,
+  campus
 }
 
 interface MapSelectorProps {
@@ -50,16 +57,14 @@ interface MapSelectorProps {
   classRoom?: string // e.g. 'A1'
 }
 
-export default function MapSelector({
-  building,
-  level,
-  handleOpen,
-  classRoom
-}: MapSelectorProps) {
+export default function MapSelector({ building, level, handleOpen, classRoom }: MapSelectorProps) {
   const mapSet = buildingMaps[normalize(building ?? '')]
+
   if (!mapSet) return <p>Edificio desconocido</p>
   // obtengo el componente concreto para el floor
-  const MapComponent = mapSet[level ?? ''] // e.g. '0', '1', '2', …
+
+  const MapComponent = mapSet[level ?? '0'] // e.g. '0', '1', '2', …
+
   if (!MapComponent) return <p>Piso “{level}” no disponible</p>
 
   return (
