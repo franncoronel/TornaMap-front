@@ -28,8 +28,8 @@ import { classroomService } from '@/data/services/ClassroomService'
 import { buildingService } from '@/data/services/BuildingService'
 
 // Mapper
-import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/utils/mapper/buildingMapper'
-import { pathToFloor, floorToPath } from '@/data/utils/mapper/levelMapper'
+import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/mapper/buildingMapper'
+import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
 
 export default function Map() {
   const { control } = useForm({

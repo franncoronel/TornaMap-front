@@ -11,7 +11,7 @@ import { Box } from '@mui/material'
 import '@/components/pages/map/map.css'
 //React
 import { FC } from 'react'
-import { normalize } from '@/data/utils/mapper/buildingMapper'
+import { normalize } from '@/data/mapper/buildingMapper'
 
 
 
