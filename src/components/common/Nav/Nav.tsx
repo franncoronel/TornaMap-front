@@ -3,15 +3,9 @@ import { styled } from '@mui/material/styles'
 import './nav.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
-import {
-  HouseSimple,
-  MagnifyingGlass,
-  MapTrifold,
-  SignIn,
-  UserCircle
-} from '@phosphor-icons/react'
+import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from '@phosphor-icons/react'
 import logo from '@/assets/logos/logo-unsam-negro-crop.png'
-import { buildingData } from '@/data/mock/BuildingData'
+
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   variant: 'body2',
@@ -87,11 +81,7 @@ export default function Nav() {
           <StyledTypography className="logo-label">BUSCAR</StyledTypography>
         </IconButton>
         <IconButton
-          onClick={() =>
-            navigate(
-              `/mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`
-            )
-          }
+          onClick={() => navigate('/mapa/tornavias/planta-baja')}
           className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
           aria-label="Ir al mapa interactivo"
         >
