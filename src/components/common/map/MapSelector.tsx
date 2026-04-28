@@ -12,7 +12,6 @@ import '@/components/pages/map/map.css'
 //React
 import { FC } from 'react'
 import { normalize } from '@/data/mapper/buildingMapper'
-import Campus from './campus/Campus'
 
 
 
@@ -37,17 +36,14 @@ const its: Record<string, FC<FloorMapProps>> = {
   '0': ITSPb
 }
 
-const campus: Record<string, FC<FloorMapProps>> = {
-  '0': Campus
-}
-
 
 // 2. agrúpalos en un selector de edificios
-const buildingMaps: Record<string, typeof tornavias> = {
+type BuildingMap = Record<string, FC<FloorMapProps>>
+
+const buildingMaps: Record<string, BuildingMap> = {
   tornavias: tornavias,
   aularionave3: aulario,
   its: its,
-  campus
 }
 
 interface MapSelectorProps {
