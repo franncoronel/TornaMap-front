@@ -4,19 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Components
-import {
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  InputLabel,
-  MenuItem,
-  Radio,
-  RadioGroup,
-  Select,
-  Box,
-  Typography,
-  Divider
-} from '@mui/material'
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -26,8 +14,7 @@ import MapSelector from '@/components/common/map/MapSelector'
 import './map.css'
 import '../interactive-page.css'
 
-// Data
-import { buildingData } from '@/data/mock/BuildingData'
+// Types
 import { IEventList } from '@/data/domain/Event'
 
 // Services
@@ -38,20 +25,24 @@ import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
 import { IClassroom } from '@/data/domain/Classroom'
 import { classroomService } from '@/data/services/ClassroomService'
+import { buildingService } from '@/data/services/BuildingService'
+
+// Mapper
+import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/utils/mapper/buildingMapper'
+import { pathToFloor, floorToPath } from '@/data/utils/mapper/levelMapper'
 
 export default function Map() {
   const { control } = useForm({
     defaultValues: {
-      building: 0, // Valor inicial, índice del array de componentes
-      level: 0 // Valor inicial, índice del array de componentes
+      building: '', // Valor inicial, índice del array de componentes
+      level: '' // Valor inicial, índice del array de componentes
     }
   })
   const navigate = useNavigate()
-  const params = useParams()
-  const { building: buildingPath, level: levelPath } = params
+  const { building: buildingPath, level: levelPath } = useParams() //leo la url del map para saber a qué edificio y nivel mostrar, ej: /mapa/tornavias/primer-piso => buildingPath = 'tornavias', levelPath = 'primer-piso'
 
-  const currentBuilding = buildingData.find((b) => b.path === buildingPath)
-  const currentLevel = currentBuilding?.levels.find((l) => l.path === levelPath)
+  // edificios desde back
+  const [buildings, setBuildings] = useState<UIBuilding[]>([])
 
   // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | string>(null)
@@ -65,24 +56,55 @@ export default function Map() {
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
 
-  // Manejo del mapa
+  // carga de edificios
+  useEffect(() => {
+    const fetchBuildings = async () => {
+      try {
+        setLoader(true)
+        const res = await buildingService.getAll()
+        setBuildings(mapBuildingsToUI(res.data))
+
+      } catch (e) {
+        console.error('Error fetching Buildings:', e)
+        setNotificationState({
+          title: 'Error al obtener edificios',
+          type: 'error',
+          description: 'Ocurrió un error al cargar los edificios',
+          action: () => {}
+        })
+      } finally {
+        setLoader(false)
+      }
+    }
+
+    fetchBuildings()
+  }, [])
+
+  const currentBuilding = buildings.find( (b) => b.path === buildingPath ) //edificio actual
+  
+  const currentLevel = pathToFloor(levelPath || '')// nivel actual -> numero
+
+  // Manejo del mapa -> navegación niveles
   const handleLevelChange = (levelPath: string) => {
     navigate(`/mapa/${buildingPath}/${levelPath}`)
   }
+
+  // Manejo del mapa -> navegación edificios
   const handleBuildingChange = (newBuildingPath: string) => {
-    const newLevelPath = buildingData.find((b) => b.path == newBuildingPath)
-      ?.levels[0].path
-    navigate(`/mapa/${newBuildingPath}/${newLevelPath}`)
+    const newBuilding = buildings.find((b) => normalize(b.text) === newBuildingPath )
+
+    if (!newBuilding) return
+
+    const firstLevel = newBuilding.levels[0]?.level ?? 0
+
+    navigate(`/mapa/${newBuildingPath}/${floorToPath(firstLevel)}`)
   }
 
   const fetchEvents = async (classRoomId: string | null, date: Date) => {
     try {
       setLoader(true)
       console.log('classroom id:', classRoomId)
-      const eventsResponse = await eventService.getAll(
-        classRoomId,
-        new Date(date)
-      )
+      const eventsResponse = await eventService.getAll( classRoomId, new Date(date) )
       setLoader(false)
       setEvents(eventsResponse.data)
     } catch (error) {
@@ -143,10 +165,13 @@ export default function Map() {
   }
 
   useEffect(() => {
-    if (!buildingPath) {
-      navigate(`mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`)
-    }
-  }, [])
+  if (!buildingPath && buildings.length > 0) {
+    const first = buildings[0]
+    const firstLevel = first.levels[0]?.level ?? 0
+
+    navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
+  }
+}, [buildings])
 
   return (
     <main className="interactive-page map-page">
@@ -160,7 +185,7 @@ export default function Map() {
               <InputLabel id="building-select-label">Edificio</InputLabel>
               <Select
                 {...field}
-                value={currentBuilding?.path || ''}
+                value={buildingPath || ''}
                 labelId="building-select-label"
                 label="Edificio"
                 onChange={(e) => {
@@ -168,9 +193,9 @@ export default function Map() {
                   handleBuildingChange(`${e.target.value}`) // Redirige a la ruta
                 }}
               >
-                {buildingData.map((building) => (
-                  <MenuItem key={building.id} value={building.path}>
-                    {building.text}
+                {buildings.map((b) => (
+                  <MenuItem key={b.id} value={b.path}>
+                    {b.text}
                   </MenuItem>
                 ))}
               </Select>
@@ -189,20 +214,20 @@ export default function Map() {
                   {...field}
                   aria-labelledby="building-levels-label"
                   name="levels-group"
-                  value={currentLevel?.path || ''}
+                  value={levelPath || ''}
                   onChange={(e) => {
                     field.onChange(e.target.value) // Actualiza el valor en react-hook-form
-                    handleLevelChange(`${e.target.value}`) // Redirige a la ruta
+                    handleLevelChange(e.target.value) // Redirige a la ruta
                   }}
                   className="levels-radio-group"
                 >
-                  {currentBuilding.levels.map((level, index) => (
+                  {currentBuilding.levels.map((lvl) =>(
                     <FormControlLabel
-                      key={index}
-                      value={level.path}
+                      key={lvl.level}
+                      value={floorToPath(lvl.level)}
                       control={<Radio />}
-                      label={level.text}
-                      checked={level.path === levelPath ? true : false}
+                      label={lvl.text}
+                      // checked={level.path === levelPath ? true : false}
                     />
                   ))}
                 </RadioGroup>
@@ -217,7 +242,7 @@ export default function Map() {
       <section className="map-container">
         <MapSelector
           building={buildingPath}
-          level={currentLevel?.level.toString()}
+          level={currentLevel?.toString()}
           handleOpen={handleOpen}
         />
       </section>
