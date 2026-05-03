@@ -133,9 +133,9 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A17')}
+          onClick={() => handleOpen?.('AN3-A17')}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected('A17') ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('AN3-A17') ? 'selected' : ''}`}
         >
           <path
             d="M80.277596,39.238172h244.655514l.16554,42.911613h-28.836108v101.936404h28.670568v43.948748l-244.655514.428984v-189.225749Z"
@@ -162,9 +162,9 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A16')}
+          onClick={() => handleOpen?.('AN3-A16')}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected('A16') ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('AN3-A16') ? 'selected' : ''}`}
         >
           <path
             d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z"
@@ -191,9 +191,9 @@ export default function AularioNave3PlantaBaja({
             stroke: mapColors.classrooms.stroke,
             strokeWidth: mapColors.classrooms.strokeWidth
           }}
-          onClick={() => handleOpen?.('A15')}
+          onClick={() => handleOpen?.('AN3-A15')}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected('A15') ? 'selected' : ''}`}
+          className={`classRoom ${isSelected('AN3-A15') ? 'selected' : ''}`}
         >
           <path
             d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z"
