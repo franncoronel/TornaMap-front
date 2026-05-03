@@ -57,6 +57,21 @@ export class EventService implements ServiceInterface {
 
   delete = async (id: string) =>
     await axios.delete(`${this.baseUrl}/${id}`, { withCredentials: true })
+
+  async getPendingRequests(): Promise<Response<IEventList[]>> {
+    const { data } = await axios.get<Response<IEventList[]>>(
+      `${this.baseUrl}/pending`
+    )
+    return data
+  }
+
+  async approve(id: string): Promise<void> {
+    await axios.post(`${this.baseUrl}/${id}/approve`)
+  }
+
+  async reject(id: string): Promise<void> {
+    await axios.post(`${this.baseUrl}/${id}/reject`)
+  }
 }
 
 export function mapScheduleToBackend(s: ScheduleForm): BackendSchedule {

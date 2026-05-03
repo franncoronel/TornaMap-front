@@ -13,6 +13,7 @@ import { useLoader } from '@/context/LoaderContext'
 import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeacher'
 import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
+import { CalendarPlus } from '@phosphor-icons/react/dist/ssr/CalendarPlus'
 import { ClockClockwise } from '@phosphor-icons/react/dist/ssr/ClockClockwise'
 import { ActionCard } from './ActionCard'
 
@@ -88,45 +89,52 @@ export default function Profile() {
           {/* <ProfileButton>Agregar Tipo de Aula</ProfileButton>
           <ProfileButton>Editar Aula</ProfileButton> */}
           {/* <ProfileButton>Habilitar Solicitud Clase</ProfileButton> */}
-        {isMobile ? (
-          <>
-            <ProfileButton
-              onClick={() => navigate('/programas')}
-              startIcon={<GraduationCap size={32} />}
-            >
-              Carreras o Programas
-            </ProfileButton>
-            <ProfileButton
-              onClick={() => navigate('/asignatura/agregar')}
-              startIcon={<ChalkboardTeacher size={32} />}
-            >
-              Agregar Asignatura
-            </ProfileButton>
-            <ProfileButton
-              onClick={() => navigate('/evento/agregar')}
-              startIcon={<CalendarStar size={32} />}
-            >
-              Agregar Evento / Clase
-            </ProfileButton>
-            <ProfileButton
-              onClick={() => navigate('/periodos')}
-              startIcon={<ClockClockwise size={32} />}
-            >
-              Periodos
-            </ProfileButton>
-          </>) : (
-            <Box
-                sx={{
-                  display: 'grid',
-                  gridTemplateColumns:{
-                    sm: 'repeat(2, 1fr)',
-                    md: 'repeat(3, 1fr)'
-                  },
-                  gap: 3,
-                  mb: 4,
-                  px: { xs: 2, sm: 3 }
-                }}
+          {isMobile ? (
+            <>
+              <ProfileButton
+                onClick={() => navigate('/programas')}
+                startIcon={<GraduationCap size={32} />}
               >
+                Carreras o Programas
+              </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/asignatura/agregar')}
+                startIcon={<ChalkboardTeacher size={32} />}
+              >
+                Agregar Asignatura
+              </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/evento/agregar')}
+                startIcon={<CalendarStar size={32} />}
+              >
+                Agregar Evento / Clase
+              </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/solicitudes')}
+                startIcon={<CalendarPlus size={32} />}
+              >
+                Solicitudes de eventos
+              </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/periodos')}
+                startIcon={<ClockClockwise size={32} />}
+              >
+                Periodos
+              </ProfileButton>
+            </>
+          ) : (
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(3, 1fr)'
+                },
+                gap: 3,
+                mb: 4,
+                px: { xs: 2, sm: 3 }
+              }}
+            >
               <ActionCard
                 title="Carreras o Programas"
                 icon={<GraduationCap size={60} />}
@@ -143,11 +151,16 @@ export default function Profile() {
                 onClick={() => navigate('/evento/agregar')}
               />
               <ActionCard
+                title="Solicitudes de eventos"
+                icon={<CalendarPlus size={60} />}
+                onClick={() => navigate('/solicitudes')}
+              />
+              <ActionCard
                 title="Periodos"
                 icon={<ClockClockwise size={60} />}
                 onClick={() => navigate('/periodos')}
               />
-          </Box>
+            </Box>
           )}
         </>
       )}
