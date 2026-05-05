@@ -1,20 +1,21 @@
 import { mapColors } from '../../../pages/map/mapColors'
+import RoomText from '../RoomText'
 
 interface CampusProps {
   selectedBuilding?: string
 }
+
+
 
 export default function Campus({ selectedBuilding }: CampusProps) {
   const isSelected = (id: string) => id === selectedBuilding
 
   return (
     <>
-      <svg 
-    width="700"
-    height="800"
-    viewBox="0 0 3000 3870"
-    style={{ border: "1px solid red" }}>
-
+      <svg  width="900" height="780"
+            viewBox="-50 50 3000 3870"
+            style={{ border: "1px solid red" }}>
+      {/* <g  transform="rotate(-90 500.5 640)" > */}
         {/* Contorno */}
         <g  style={{ fill: "#BEBEBE" ,stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth }}>
           <path d="M273.737802,127.521638q-.114886-.256085,45.212282-24.328141l764.529153,325.556419L808.910771,2238.106318l163.307127,673.469118l49.467813,884.550665-10.954303,29.211475-724.350147-302.286094-13.215755-12.720166q.68718-3382.553597.572296-3382.809678Z" transform="translate(0.000003 0.000004)" />
@@ -106,19 +107,36 @@ export default function Campus({ selectedBuilding }: CampusProps) {
       <g style={{ fill: isSelected('aularionave3') ? '#FF0000' : '#8D6E63' }} >
         <path d="M594.512073,3028.574328l42.85074.34013.000001-3.834026h23.615296v4.566916h15.121975l-.178225-4.566916l11.626458.048383.064605,4.998073h14.423425v-5.046456h12.758031l.061186,5.272677h15.835506v-5.272677h11.732626v5.272677h25.476643v29.328752l-26.238743-.157118v4.556427l-12.098105.000001v-3.927957l-14.769113-.000001v3.927957h-12.412342v-3.613723l-14.769114-.157119-.000001,4.39931-11.512837.000003v-4.613517h-16.100106v4.570692l-22.637166.042825.000001-4.613517-42.850741.214204v-31.736Z" transform="translate(0.000026 0.000015)"/>
       </g>
+
         {/* ITS */}
       <g style={{ fill: isSelected('its') ? '#FF0000' : '#8D6E63' }} >
         <path d="M475.552776,3398.952577h-31.922976v23.555942h-72.817025v-201.872489l16.893547-.000003v-47.574349l87.846454,1.013612v224.877287Z" transform="translate(0.000005 0.000004)"/>
       </g>
 
+      {/* Flechas de las entradas */}
       <g style={{ fill: mapColors.entry.fill }}>
         <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(0.685402 0.32973 -0.305886 0.635838 692.377979 3655.637651)"/>
         <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 313.394798 746.367243)"/>
         <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 312.893025 3065.405728)"/>
         <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 314.398344 2553.53756)"/>
-        <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 307.078574 1364.422505)"/>
-      </g>        
+        {/* <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 307.078574 1364.422505)"/> */}
+        <polygon points="50,23.15 19,76.85 81,76.85 50,23.15" transform="matrix(-0.016186 0.760418 -0.771643 -0.016425 306.075028 1816.834633)"/>
+      </g>  
+      {/* </g>       */}
+
+      {/* Nombre de las calles */}
+      <RoomText x={-600} y={800} fontSize={80}
+        lines={[{ text: 'AV. 25 DE MAYO 1405' },{ text: 'Y FRANCIA' },]} />
+      <RoomText x={-600} y={1880} fontSize={80}
+        lines={[{ text: 'AV. 25 DE MAYO 1169' }]} />
+      <RoomText x={-600} y={2620} fontSize={80}
+        lines={[{ text: 'AV. 25 DE MAYO 1021' }]} />
+      <RoomText x={-600} y={3130} fontSize={80}
+        lines={[{ text: 'AV. 25 DE MAYO 901' }]} />
+      <RoomText x={-270} y={3750} fontSize={80}
+        lines={[{ text: 'RODRIGUEZ PEÑA 2860' }]} />
       </svg>
+      
     </>
   )
 }
