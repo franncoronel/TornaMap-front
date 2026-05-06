@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Components
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider } from '@mui/material'
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider, Paper} from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -175,13 +175,13 @@ export default function Map() {
   }
 
   useEffect(() => {
-  if (!buildingPath && buildings.length > 0) {
-    const first = buildings[0]
-    const firstLevel = first.levels[0]?.level ?? 0
+    if (!buildingPath && buildings.length > 0) {
+      const first = buildings[0]
+      const firstLevel = first.levels[0]?.level ?? 0
 
-    navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
-  }
-}, [buildings])
+      navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
+    }
+  }, [buildings])
 
   return (
     <main className="interactive-page map-page">
@@ -216,29 +216,93 @@ export default function Map() {
 
       {/* Select del campus */}
         {isCampus && (
-          <Box display="flex" gap={2}>
-            {/* Checklist de los edificios */}
-            <FormControl>
-              <FormLabel>Edificios</FormLabel>
-              <RadioGroup
-                value={selectedCampusBuilding}
-                onChange={(e) =>
-                  setSelectedCampusBuilding(e.target.value)
-                }
-              >
-                {buildings.map((b) => (
-                  <FormControlLabel
-                    key={b.id}
-                    value={b.path}
-                    control={<Radio />}
-                    label={b.text}
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
+          <Box  display="flex" 
+                flexDirection={{ xs: "column", md: "row" }} 
+                gap={3} 
+                alignItems="stretch" 
+                justifyContent="center"
+                maxWidth="1300px" 
+                margin="0 auto"
+                padding={2}>
+            {/* Panel de Control -> arriba en movil, izquierda en web*/}
+            <Paper 
+              elevation={2} 
+              sx={{ 
+                width: { xs: "100%", md: "300px" }, 
+                padding: 2.5, 
+                borderRadius: 2, 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: 1.5,
+                maxHeight: { xs: "220px", md: "none" },//limite la altura para que no empuje el mapa demasiado abajo
+                overflowY: "auto",
+                alignSelf: { md: "flex-start" }
+              }}
+            >
+              <FormLabel sx={{ fontWeight: "bold", fontSize: "1rem", color: "text.primary" }}>
+                Edificios
+              </FormLabel>
+              <FormControl fullWidth>
+                <RadioGroup
+                  value={selectedCampusBuilding}
+                  onChange={(e) => setSelectedCampusBuilding(e.target.value)}
+                  //movil-> se ordena las opciones horizontalmente para ahorrar espacio vertical
+                  sx={{ 
+                    display: "flex", 
+                    flexDirection: { xs: "row", md: "column" }, 
+                    flexWrap: "wrap",
+                    gap: 1 
+                  }}
+                >
+                  {buildings.map((b) => {
+                    const isSelected = selectedCampusBuilding === b.path;
+                    return (
+                      <Box
+                        key={b.id}
+                        sx={{
+                          flex: { xs: "1 1 120px", md: "none" }, // Se estiran en móvil para rellenar filas
+                          border: "1px solid",
+                          borderColor: isSelected ? "primary.main" : "divider",
+                          borderRadius: 1.5,
+                          backgroundColor: isSelected ? "action.selected" : "transparent",
+                          transition: "0.2s ease",
+                          "&:hover": { 
+                            backgroundColor: "action.hover"
+                          }
+                        }}
+                      >
+                        <FormControlLabel
+                          value={b.path}
+                          control={<Radio size="small" />}
+                          label={b.text}
+                          sx={{ 
+                            width: "100%", 
+                            margin: 0, 
+                            paddingY: 0.5, 
+                            paddingX: 1.5,
+                            "& .MuiFormControlLabel-label": { fontSize: "0.9rem" }
+                          }}
+                        />
+                      </Box>
+                    );
+                  })}
+                </RadioGroup>
+              </FormControl>
+            </Paper>
 
             {/* MAPA CAMPUS */}
-            <Campus selectedBuilding={selectedCampusBuilding} />
+            <Box  flexGrow={1} display="flex" justifyContent="center" alignItems="center"
+              sx={{ 
+                border: "1px solid", 
+                borderColor: "divider", 
+                borderRadius: 2, 
+                overflow: "hidden",
+                backgroundColor: "#fafafa",
+                minHeight: { xs: "350px", md: "500px" } 
+              }}
+            >
+              <Campus selectedBuilding={selectedCampusBuilding} />
+            </Box>
           </Box>
         )}
 
