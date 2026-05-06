@@ -1,4 +1,4 @@
-import { Toilet, File, BookOpenText, ForkKnife } from '@phosphor-icons/react'
+import { Toilet, File, BookOpenText, ForkKnife, CaretCircleUpDown } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
 
 interface TornaviasPlantaBajaProps {
@@ -61,6 +61,7 @@ export default function TornaviasPlantaBaja({
             transform="translate(.000001 0.000001)"
           />
         </g>
+        <CaretCircleUpDown className="icon-common" x="0" y="0" transform="translate(658 560)" size={20}/>
         {/*Entradas*/}
         <g style={{ fill: mapColors.entry.fill }}>
           <polygon

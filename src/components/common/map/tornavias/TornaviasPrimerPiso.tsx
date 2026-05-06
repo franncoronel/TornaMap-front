@@ -1,4 +1,4 @@
-import { BookOpenText, ForkKnife, Toilet } from '@phosphor-icons/react'
+import { BookOpenText, CaretCircleUpDown, ForkKnife, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
 import RoomText from '../RoomText'
 
@@ -91,6 +91,7 @@ export default function TornaviasPrimerPiso({
               d="M631.386375,596.365258l15.070559,15.899439c21.885037-20.040174,56.131752-65.791469,66.500715-94.534986l-20.087891-8.48217c-8.203727,23.263382-40.368184,65.740939-61.483383,87.117717Z"
               transform="translate(.000001 0.000001)"
             />
+            <CaretCircleUpDown className="icon-common" x="0" y="0" transform="translate(665 550)" size={20}/>
             <path
               d="M696.386577,298.82018q20.757574-7.868519,20.809573-7.72927c11.81881,31.649476,12.707202,40.98898,17.688136,68.37431l-21.926638,2.972796c-1.775803-15.513462-10.072104-47.324036-16.571071-63.617836Z"
               transform="translate(.000004 0)"

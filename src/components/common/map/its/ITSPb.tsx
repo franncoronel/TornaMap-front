@@ -1,4 +1,4 @@
-import { Toilet } from '@phosphor-icons/react'
+import { CaretCircleUpDown, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
 
 interface ITSPbProps {
@@ -90,6 +90,14 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
           </g>
           <g>
             <path d="M484.395997,222.163048L483.432781,300h-67.885864l-.000001-77.836951l68.849081-.000001Z" transform="matrix(0.831403 0 0 1.234108 -72.728285 -250.33546)"/>
+            <text transform="translate(310 49) rotate(90)" dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0" >
+              <tspan y="0" fontWeight="700" strokeWidth="0">
+                Ascensor
+              </tspan>
+            </text>
+            <CaretCircleUpDown className="icon-common" x="0" y="0" transform="translate(305 60) rotate(90)" size={25}/>
+          </g>
+          <g>
             <path d="M484.002301,222.163049v81.686041h-68.455385v-81.686041h68.455385Z" transform="matrix(0 0.703167 -1.995567 0 772.540427 -340.322084)"/>
             <path d="M0.012362,24.638559l23.825374.000001v-23.837737h-23.825374v23.837736Z" transform="translate(305.361441 -0.800822)"/>
           </g>
