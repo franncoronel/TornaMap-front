@@ -73,8 +73,8 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
         </g>
         <g transform="matrix(0-1 1 0 0 330)" style={{fill: mapColors.classRooms.fill,stroke: mapColors.classRooms.stroke,strokeWidth: mapColors.classRooms.strokeWidth}}>
           <g>
-            <path d="M421.248955,600.000002v-54.109977l62.183823-.000001-.000003,54.109977-62.18382.000001Z" transform="translate(-154.233593 0.000001)"/>
-            <path d="M483.432781,545.890025l-81.121806.000001v-83.896968l81.121801-.259134.000005,84.156101Z" transform="translate(-154.233597 0)" />
+            <path d="M426.99226,599.871801v-54.469419l56.440518.487642-.000003,54.109977-56.440515-.1282Z" transform="translate(-154.233593 0.000001)"/>
+            <path d="M491.626183,545.890027l-90.910204-.490665-.000001-83.92614l90.910205-.260739v84.677544Z" transform="matrix(0.620838 0 0 0.993842 23.978961 3.36159)"/>
           </g>
           <g>
             <path d="M483.432776,383.896967v77.836957l-56.440512.259133v-78.096091l56.440512.000001Z" transform="translate(-154.233597 0.000003)" />
@@ -89,8 +89,9 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
             <Toilet className="icon-common" x="0" y="0" transform="translate(305 155) rotate(90)" size={25} />
           </g>
           <g>
-            <path d="M484.395997,222.163048L483.432781,300h-67.885864l-.000001-77.836951l68.849081-.000001Z" transform="matrix(0 0.703167 -1.995567 0 772.540427 -292.198878)"/>
-
+            <path d="M484.395997,222.163048L483.432781,300h-67.885864l-.000001-77.836951l68.849081-.000001Z" transform="matrix(0.831403 0 0 1.234108 -72.728285 -250.33546)"/>
+            <path d="M484.002301,222.163049v81.686041h-68.455385v-81.686041h68.455385Z" transform="matrix(0 0.703167 -1.995567 0 772.540427 -340.322084)"/>
+            <path d="M0.012362,24.638559l23.825374.000001v-23.837737h-23.825374v23.837736Z" transform="translate(305.361441 -0.800822)"/>
           </g>
           {/*.......................................................:Aulas:...........................................................*/}
           {/* Aula 1*/}
@@ -137,21 +138,6 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
               </tspan>
             </text>
           </g>
-
-          {/* Este es el Lab */}
-          {/* <g onClick={() => handleOpen?.('LabLCD')}
-            className={`classRoom ${isSelected('LabLCD') ? 'selected' : ''}`}>
-            <path d="M154.428427,447.647782h107.493281l-.000001-76.993606h-107.590697l.097417,76.993606Z" transform="translate(-154.233595 0)"/>
-            <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
-                  transform="translate(50 400) rotate(90)" >
-              <tspan y="0" fontWeight="700" strokeWidth="0">
-                LAB
-              </tspan>
-            </text>
-          </g>
-          <g>
-            <path d="M154.428429,370.654176h107.493279l.000001-76.993606h-107.493281l.000001,76.993606Z" transform="translate(-154.233594 0)"/>
-          </g> */}
         </g>
         {/* Flechas de los accesos */}
         <g transform="matrix(0 -1 1 0 0 330)" style={{ fill: mapColors.entry.fill }}>
