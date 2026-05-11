@@ -334,7 +334,12 @@ export default function EventForm() {
         courseID: needsCourse(data.type) ? data.courseID : '',
         customPeriodStart: sendCustomPeriod ? data.customPeriodStart : null,
         customPeriodEnd: sendCustomPeriod ? data.customPeriodEnd : null,
-        schedules: data.schedules.map(mapScheduleToBackend)
+        schedules: data.schedules.map((sch) => {
+          const cleaned = sch.isVirtual
+            ? { ...sch, buildingId: '', classroomId: '' }
+            : sch
+          return mapScheduleToBackend(cleaned)
+        })
       }
 
       if (id) await eventService.update(payload)
@@ -840,28 +845,28 @@ export default function EventForm() {
                   alignItems="center"
                 >
                   <Controller
-  name={`schedules.${idx}.isVirtual`}
-  control={control}
-  render={({ field }) => (
-    <FormControlLabel
-      sx={{ alignSelf: 'start' }}
-      control={
-        <Switch
-          {...field}
-          checked={field.value}
-          onChange={(e) => {
-            field.onChange(e.target.checked)
-            if (e.target.checked) {
-              setValue(buildField, '')
-              setValue(classField, '')
-            }
-          }}
-        />
-      }
-      label="Virtual"
-    />
-  )}
-/>
+                    name={`schedules.${idx}.isVirtual`}
+                    control={control}
+                    render={({ field }) => (
+                      <FormControlLabel
+                        sx={{ alignSelf: 'start' }}
+                        control={
+                          <Switch
+                            {...field}
+                            checked={field.value}
+                            onChange={(e) => {
+                              field.onChange(e.target.checked)
+                              if (e.target.checked) {
+                                setValue(buildField, '')
+                                setValue(classField, '')
+                              }
+                            }}
+                          />
+                        }
+                        label="Virtual"
+                      />
+                    )}
+                  />
 
                   <Controller
                     name={buildField}
