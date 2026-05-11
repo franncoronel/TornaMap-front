@@ -840,16 +840,28 @@ export default function EventForm() {
                   alignItems="center"
                 >
                   <Controller
-                    name={`schedules.${idx}.isVirtual`}
-                    control={control}
-                    render={({ field }) => (
-                      <FormControlLabel
-                        sx={{ alignSelf: 'start' }}
-                        control={<Switch {...field} checked={field.value} />}
-                        label="Virtual"
-                      />
-                    )}
-                  />
+  name={`schedules.${idx}.isVirtual`}
+  control={control}
+  render={({ field }) => (
+    <FormControlLabel
+      sx={{ alignSelf: 'start' }}
+      control={
+        <Switch
+          {...field}
+          checked={field.value}
+          onChange={(e) => {
+            field.onChange(e.target.checked)
+            if (e.target.checked) {
+              setValue(buildField, '')
+              setValue(classField, '')
+            }
+          }}
+        />
+      }
+      label="Virtual"
+    />
+  )}
+/>
 
                   <Controller
                     name={buildField}
@@ -860,6 +872,7 @@ export default function EventForm() {
                         sx={{ flex: 1, width: { xs: '100%' } }}
                         getOptionLabel={(b) => b.name}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
+                        disabled={watch(`schedules.${idx}.isVirtual`)}
                         value={
                           buildings.find((b) => b.id === field.value) ?? null
                         }
@@ -889,6 +902,9 @@ export default function EventForm() {
                         options={classroomsFiltered}
                         getOptionLabel={(o) => o.label}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
+                        disabled={
+                          watch(`schedules.${idx}.isVirtual`) || !buildingIdSel
+                        }
                         value={
                           classroomsFiltered.find(
                             (c) => c.id === field.value
