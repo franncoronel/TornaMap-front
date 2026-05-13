@@ -20,6 +20,9 @@ export class EventService implements ServiceInterface {
         : this.baseUrl
     const eventsDTOs = await axios.get<Response<IEventList[]>>(url)
     const events = eventsDTOs.data
+    const originalLength = events.data.length
+    events.data = events.data.filter((event) => event.isApproved)
+    console.log(`[Filtrado] Total: ${originalLength} | Aprobados: ${events.data.length} | Ocultados: ${originalLength - events.data.length}`)
     return events
   }
 

@@ -22,8 +22,8 @@ export class CourseService implements ServiceInterface {
 
     const url = normalizedQuery.length
       ? `${this.baseUrl}?${new URLSearchParams(
-          normalizedQuery.map((q) => ['query', q])
-        ).toString()}`
+        normalizedQuery.map((q) => ['query', q])
+      ).toString()}`
       : this.baseUrl
 
     const courseDTOs = await axios.get<Response<ICourseList[]>>(url)
@@ -36,6 +36,11 @@ export class CourseService implements ServiceInterface {
       `${this.baseUrl}/${id}`
     )
     const course = courseDTO.data
+    if (course.data && course.data.events) {
+      const originalLength = course.data.events.length
+      course.data.events = course.data.events.filter((event) => event.isApproved)
+      console.log(`[Búsqueda - Filtrado de Eventos] Total: ${originalLength} | Aprobados: ${course.data.events.length} | Ocultados: ${originalLength - course.data.events.length}`)
+    }
     return course
   }
 
