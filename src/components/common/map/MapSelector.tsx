@@ -36,11 +36,14 @@ const its: Record<string, FC<FloorMapProps>> = {
   '0': ITSPb
 }
 
+
 // 2. agrúpalos en un selector de edificios
-const buildingMaps: Record<string, typeof tornavias> = {
+type BuildingMap = Record<string, FC<FloorMapProps>>
+
+const buildingMaps: Record<string, BuildingMap> = {
   tornavias: tornavias,
   aularionave3: aulario,
-  its: its
+  its: its,
 }
 
 interface MapSelectorProps {
@@ -50,16 +53,14 @@ interface MapSelectorProps {
   classRoom?: string // e.g. 'A1'
 }
 
-export default function MapSelector({
-  building,
-  level,
-  handleOpen,
-  classRoom
-}: MapSelectorProps) {
+export default function MapSelector({ building, level, handleOpen, classRoom }: MapSelectorProps) {
   const mapSet = buildingMaps[normalize(building ?? '')]
+
   if (!mapSet) return <p>Edificio desconocido</p>
   // obtengo el componente concreto para el floor
-  const MapComponent = mapSet[level ?? ''] // e.g. '0', '1', '2', …
+
+  const MapComponent = mapSet[level ?? '0'] // e.g. '0', '1', '2', …
+
   if (!MapComponent) return <p>Piso “{level}” no disponible</p>
 
   return (

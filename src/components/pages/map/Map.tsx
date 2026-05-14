@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Components
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider } from '@mui/material'
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider, Paper} from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -30,6 +30,7 @@ import { buildingService } from '@/data/services/BuildingService'
 // Mapper
 import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/mapper/buildingMapper'
 import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
+import Campus from '@/components/common/map/campus/Campus'
 
 export default function Map() {
   const { control } = useForm({
@@ -40,9 +41,10 @@ export default function Map() {
   })
   const navigate = useNavigate()
   const { building: buildingPath, level: levelPath } = useParams() //leo la url del map para saber a qué edificio y nivel mostrar, ej: /mapa/tornavias/primer-piso => buildingPath = 'tornavias', levelPath = 'primer-piso'
-
+  
   // edificios desde back
   const [buildings, setBuildings] = useState<UIBuilding[]>([])
+  const [selectedCampusBuilding, setSelectedCampusBuilding] = useState<string>('')
 
   // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | string>(null)
@@ -79,7 +81,9 @@ export default function Map() {
 
     fetchBuildings()
   }, [])
-
+  
+  const isCampus = buildingPath === 'campus'
+  
   const currentBuilding = buildings.find( (b) => b.path === buildingPath ) //edificio actual
   
   const currentLevel = pathToFloor(levelPath || '')// nivel actual -> numero
@@ -91,6 +95,12 @@ export default function Map() {
 
   // Manejo del mapa -> navegación edificios
   const handleBuildingChange = (newBuildingPath: string) => {
+    //caso campus
+    if (newBuildingPath === 'campus') {
+      navigate(`/mapa/campus/0`)
+      return
+    }
+
     const newBuilding = buildings.find((b) => normalize(b.text) === newBuildingPath )
 
     if (!newBuilding) return
@@ -165,13 +175,13 @@ export default function Map() {
   }
 
   useEffect(() => {
-  if (!buildingPath && buildings.length > 0) {
-    const first = buildings[0]
-    const firstLevel = first.levels[0]?.level ?? 0
+    if (!buildingPath && buildings.length > 0) {
+      const first = buildings[0]
+      const firstLevel = first.levels[0]?.level ?? 0
 
-    navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
-  }
-}, [buildings])
+      navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
+    }
+  }, [buildings])
 
   return (
     <main className="interactive-page map-page">
@@ -193,6 +203,7 @@ export default function Map() {
                   handleBuildingChange(`${e.target.value}`) // Redirige a la ruta
                 }}
               >
+                <MenuItem value="campus">Campus</MenuItem>
                 {buildings.map((b) => (
                   <MenuItem key={b.id} value={b.path}>
                     {b.text}
@@ -202,8 +213,102 @@ export default function Map() {
             </FormControl>
           )}
         />
+
+      {/* Select del campus */}
+        {isCampus && (
+          <Box  display="flex" 
+                flexDirection={{ xs: "column", md: "row" }} 
+                gap={3} 
+                alignItems="stretch" 
+                justifyContent="center"
+                maxWidth="1300px" 
+                margin="0 auto"
+                padding={2}>
+            {/* Panel de Control -> arriba en movil, izquierda en web*/}
+            <Paper 
+              elevation={2} 
+              sx={{ 
+                width: { xs: "100%", md: "300px" }, 
+                padding: 2.5, 
+                borderRadius: 2, 
+                display: "flex", 
+                flexDirection: "column", 
+                gap: 1.5,
+                maxHeight: { xs: "220px", md: "none" },//limite la altura para que no empuje el mapa demasiado abajo
+                overflowY: "auto",
+                alignSelf: { md: "flex-start" }
+              }}
+            >
+              <FormLabel sx={{ fontWeight: "bold", fontSize: "1rem", color: "text.primary" }}>
+                Edificios
+              </FormLabel>
+              <FormControl fullWidth>
+                <RadioGroup
+                  value={selectedCampusBuilding}
+                  onChange={(e) => setSelectedCampusBuilding(e.target.value)}
+                  //movil-> se ordena las opciones horizontalmente para ahorrar espacio vertical
+                  sx={{ 
+                    display: "flex", 
+                    flexDirection: { xs: "row", md: "column" }, 
+                    flexWrap: "wrap",
+                    gap: 1 
+                  }}
+                >
+                  {buildings.map((b) => {
+                    const isSelected = selectedCampusBuilding === b.path;
+                    return (
+                      <Box
+                        key={b.id}
+                        sx={{
+                          flex: { xs: "1 1 120px", md: "none" }, // Se estiran en móvil para rellenar filas
+                          border: "1px solid",
+                          borderColor: isSelected ? "primary.main" : "divider",
+                          borderRadius: 1.5,
+                          backgroundColor: isSelected ? "action.selected" : "transparent",
+                          transition: "0.2s ease",
+                          "&:hover": { 
+                            backgroundColor: "action.hover"
+                          }
+                        }}
+                      >
+                        <FormControlLabel
+                          value={b.path}
+                          control={<Radio size="small" />}
+                          label={b.text}
+                          sx={{ 
+                            width: "100%", 
+                            margin: 0, 
+                            paddingY: 0.5, 
+                            paddingX: 1.5,
+                            "& .MuiFormControlLabel-label": { fontSize: "0.9rem" }
+                          }}
+                        />
+                      </Box>
+                    );
+                  })}
+                </RadioGroup>
+              </FormControl>
+            </Paper>
+
+            {/* MAPA CAMPUS */}
+            <Box  flexGrow={1} display="flex" justifyContent="center" alignItems="center"
+              sx={{ 
+                border: "1px solid", 
+                borderColor: "divider", 
+                borderRadius: 2, 
+                overflow: "hidden",
+                backgroundColor: "#fafafa",
+                minHeight: { xs: "350px", md: "500px" } 
+              }}
+            >
+              <Campus selectedBuilding={selectedCampusBuilding} />
+            </Box>
+          </Box>
+        )}
+
+        {/* Select de los edificios */}
         {/* RadioGroup de niveles */}
-        {currentBuilding && (
+        {!isCampus && currentBuilding && (
           <Controller
             name="level"
             control={control}
@@ -238,14 +343,15 @@ export default function Map() {
       </Box>
 
       <Divider variant="middle" flexItem sx={{}} />
-
-      <section className="map-container">
-        <MapSelector
-          building={buildingPath}
-          level={currentLevel?.toString()}
-          handleOpen={handleOpen}
-        />
-      </section>
+      {!isCampus && (
+        <section className="map-container">
+          <MapSelector
+            building={buildingPath}
+            level={currentLevel?.toString()}
+            handleOpen={handleOpen}
+          />
+        </section>
+    )}
 
       {/* Modal */}
       {classRoomId !== null && (
