@@ -245,7 +245,7 @@ export default function ClassRoomCard({
                     {course && !hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h2"
+                          variant="h4"
                           sx={{
                             fontWeight: 'bold',
                             whiteSpace: 'nowrap',
