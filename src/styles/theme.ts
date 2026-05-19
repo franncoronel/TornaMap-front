@@ -11,8 +11,7 @@ let unsamTheme = createTheme(
         palette: {
           primary: {
             main: '#7DA1C4' /*Pantone 645 como indica la UNSAM, si cambia es por #00DC8C (color de ECyT).*/,
-            contrastText:
-              '#0F0F0F' /* Azul oscuro/casi negro para el texto en el color principal*/
+            contrastText: '#0F0F0F' /* Azul oscuro/casi negro para el texto en el color principal*/
           },
           secondary: {
             main: '#0F0F0F'
@@ -26,19 +25,18 @@ let unsamTheme = createTheme(
           tonalOffset: 0.1
         }
       }
-      /* dark: {
-      palette: {
-        primary: {
-          main:'#7DA1C4',
-          contrastText: '#FFFFFF'
-        },
-        secondary:{
-          main:'#FFFFFF'
-        }
-      }
-    } */
     },
     components: {
+      /* === Inyecta las variables CSS del tema para que index.css y el theme.ts compartan la misma fuente de verdad === */
+      MuiCssBaseline: {
+        styleOverrides: (theme) => ({
+          ':root': {
+            '--primary-color': theme.palette.primary.main,
+            '--primary-color-light': theme.palette.primary.light,
+            '--primary-color-dark': theme.palette.primary.dark,
+          }
+        })
+      },
       MuiIconButton: {
         defaultProps: {
           color: 'secondary',

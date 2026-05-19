@@ -1,3 +1,5 @@
+/* font-size: 10px sirve como base para unidades em en componentes propios.
+   No afecta rem, que siempre toma html como referencia. */
 #root {
   width: 100vw;
   height: 100vh;
@@ -6,22 +8,8 @@
   font-size: 10px;
 }
 
-
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
-
+/* Reset de headings nativos (sin MUI). Evita que rompan el layout si se usan fuera de Typography.
+   Los headings con .MuiTypography-root tienen su propia escala en interactive-page.css. */
 h1,
 h2,
 h3,
@@ -34,46 +22,14 @@ p {
   padding: 0;
 }
 
-h2 {
-  font-size: 0.9rem;
-}
+h2 { font-size: 0.9rem; }
+h3 { font-size: 0.8rem; }
+h4 { font-size: 0.7rem; }
+h5 { font-size: 0.6rem; }
+h6 { font-size: 0.5rem; }
+p  { font-size: 0.4rem; }
 
-h3 {
-  font-size: 0.8rem;
-}
-
-h4 {
-  font-size: 0.7rem;
-}
-
-h5 {
-  font-size: 0.6rem;
-}
-
-h6 {
-  font-size: 0.5rem;
-}
-
-p {
-  font-size: 0.4rem;
-}
-
-.layout-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.page-structure {
-  display: flex;
-  flex: 1 1 auto;      /* crece y se encoge según necesidad */
-  min-height: 0;       /* evita que el “bounce” comprima el hijo */
-  overscroll-behavior: contain;
-  max-height: 90vh;
-  max-height: 90dvh;
-  -webkit-overflow-scrolling:touch;
-}
-
+/* Overlay de carga global usado por LoaderContext. Se superpone a toda la app. */
 .loader-container {
   display: flex;
   justify-content: center;
@@ -124,28 +80,6 @@ p {
 }
 
 @keyframes animloader {
-  0% {
-    height: 100%;
-  }
-
-  100% {
-    height: 0%;
-  }
-}
-
-@Media (min-width: 601px) {
-  .layout-container {
-    flex-direction: column-reverse;
-  }
-
-  .page-structure {
-    height: auto;
-  }
-}
-
-@Media (min-width: 1200px) {
-  .page-structure {
-    min-height: 92vh;
-    /*Relativo a los 8vh que mide el Nav en mobile*/
-  }
+  0%   { height: 100%; }
+  100% { height: 0%; }
 }
