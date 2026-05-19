@@ -103,7 +103,7 @@ export default function Search() {
     // Contenedor principal que organiza la disposición de los elementos
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
-      <Box position="sticky" top="0" zIndex="10">
+      <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
         <SearchTagsInput
           onSearch={search}
           value={searchTags}
