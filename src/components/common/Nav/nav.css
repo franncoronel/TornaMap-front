@@ -115,6 +115,13 @@
 
   .logo-label {
     display: flex;
+    font-size: 0.6rem;
+  }
+}
+
+/* Desktop (≥ 900px): texto del nav un poco más grande que en tablet */
+@media (min-width: 900px) {
+  .logo-label {
     font-size: 0.7rem;
   }
 }

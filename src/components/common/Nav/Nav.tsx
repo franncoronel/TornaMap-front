@@ -20,7 +20,7 @@ export default function Nav() {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
-  const iconSize = (isMobile || isDesktop) ? 26 : 20
+  const iconSize = isMobile ? 30 : isDesktop ? 26 : 22
 
   const isActive = (paths: string | string[]) => {
     if (typeof paths === 'string') {
