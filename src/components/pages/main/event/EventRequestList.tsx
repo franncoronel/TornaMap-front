@@ -21,6 +21,8 @@ import { useLoader } from '@/context/LoaderContext'
 import { useNotification } from '@/context/NotificationContext'
 import { eventService } from '@/data/services/EventService'
 import { IEvent } from '@/data/domain/Event'
+import BackButton from '@/components/common/BackButton'
+import '../../interactive-page.css'
 
 // helpers
 
@@ -267,38 +269,24 @@ export default function EventRequestsList() {
   }
 
   return (
-    <Box sx={{ height: '100vh', overflowY: 'auto', width: '100%', pb: 5 }}>
-      <Box sx={{ maxWidth: 750, mx: 'auto', mt: 2, pb: 6 }}>
-        {/* Header */}
-        <Stack
-          spacing={0.5}
-          mb={3}
-          alignItems="center"
-          textAlign="center"
-          mt={5}
-        >
-          <Stack spacing={1} alignItems="center" direction="row">
-            <CalendarPlus size={40} weight="duotone" />
-            <Typography variant="h1" fontWeight={700}>
-              Solicitudes de eventos
-            </Typography>
-          </Stack>
-          <Typography variant="body2" color="text.secondary">
-            {requests.length === 0
-              ? ''
-              : `${requests.length} solicitud${requests.length !== 1 ? 'es' : ''} esperando aprobación`}
-          </Typography>
+    <Box className="interactive-page">
+      <header className="interactive-page-header">
+        <BackButton />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <CalendarPlus size={32} weight="duotone" />
+          <Typography variant="h1">Solicitudes de eventos</Typography>
         </Stack>
+      </header>
 
-        {/* Lista */}
+      <Box sx={{ maxWidth: 750, mx: 'auto', width: '100%', pb: 6 }}>
+        {requests.length > 0 && (
+          <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
+            {requests.length} solicitud{requests.length !== 1 ? 'es' : ''} esperando aprobación
+          </Typography>
+        )}
+
         {requests.length === 0 ? (
-          <Box
-            sx={{
-              textAlign: 'center',
-              py: 10,
-              px: 4
-            }}
-          >
+          <Box sx={{ textAlign: 'center', py: 10, px: 4 }}>
             <CalendarDots
               size={52}
               weight="thin"
