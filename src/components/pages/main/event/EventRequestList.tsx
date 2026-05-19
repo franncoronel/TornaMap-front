@@ -94,7 +94,6 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
               variant="subtitle1"
               fontWeight={600}
               noWrap
-              sx={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               {event.name}
             </Typography>
