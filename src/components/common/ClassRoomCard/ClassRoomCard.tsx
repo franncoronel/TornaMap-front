@@ -414,7 +414,7 @@ export default function ClassRoomCard({
                         <Typography
                           variant="body2"
                           sx={{
-                            color: '#1976d2',
+                            color: '#666',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
