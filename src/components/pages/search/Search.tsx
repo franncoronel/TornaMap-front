@@ -1,5 +1,5 @@
 import './search.css'
-import '../interactive-page.css'
+import '@/styles/interactive-page.css'
 
 import { useEffect, useState } from 'react'
 import { useNotification } from '@/context/NotificationContext'

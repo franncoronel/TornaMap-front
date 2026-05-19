@@ -22,7 +22,7 @@ import { useNotification } from '@/context/NotificationContext'
 import { eventService } from '@/data/services/EventService'
 import { IEvent } from '@/data/domain/Event'
 import BackButton from '@/components/common/BackButton'
-import '../../interactive-page.css'
+import '@/styles/interactive-page.css'
 
 // helpers
 

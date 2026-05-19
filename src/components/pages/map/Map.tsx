@@ -11,7 +11,7 @@ import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import MapSelector from '@/components/common/map/MapSelector'
 
 // Styles
-import '../interactive-page.css'
+import '@/styles/interactive-page.css'
 import './map.css'
 
 // Types
