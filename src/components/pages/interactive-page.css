@@ -1,3 +1,6 @@
+/* Clase base para todas las páginas interactivas (Form, ListPrograms, ListPeriod, etc.).
+   Centraliza el padding responsivo y el scroll para no repetirlo en cada componente. */
+
 .interactive-page {
   padding-top: 1.5rem;
   padding-left: 1rem;
@@ -6,80 +9,83 @@
   width: 100%;
   overflow-y: scroll;
 }
-.interactive-page-header{
+
+/* Header de página: BackButton + título.
+   En mobile va en columna (botón arriba, título abajo).
+   En tablet/desktop pasa a row con el botón absolute a la izquierda
+   para que el título quede centrado respecto al ancho total, no al espacio restante. */
+.interactive-page-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
 }
-.interactive-page-header > svg{
+
+.interactive-page-header > svg {
   align-self: flex-start;
   cursor: pointer;
 }
-h1.MuiTypography-root{
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--color-primary);
-}
-h2.MuiTypography-root{
-  font-size: 1.5rem;
-  font-weight: 400;
-  color: var(--color-primary);
-}
-h3.MuiTypography-root{
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--color-primary);
-}
+
+/* Escala tipográfica para MUI Typography renderizado como h1–h6.
+   El color lo define text.primary del tema, no se sobreescribe acá. */
+h1.MuiTypography-root { font-size: 2rem;   font-weight: 600; }
+h2.MuiTypography-root { font-size: 1.5rem; font-weight: 400; }
+h3.MuiTypography-root { font-size: 1.25rem; font-weight: 400; }
 h4.MuiTypography-root,
 h5.MuiTypography-root,
-h6.MuiTypography-root{
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--color-primary);
-}
+h6.MuiTypography-root { font-size: 1rem;  font-weight: 400; }
 
+/* Botones y typographies centran ícono + texto. Párrafos alinean a la izquierda. */
 .interactive-page .MuiButtonBase-root,
-.interactive-page .MuiTypography-root{
+.interactive-page .MuiTypography-root {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
-.interactive-page p.MuiTypography-root{
+
+.interactive-page p.MuiTypography-root {
   justify-content: flex-start;
 }
-.MuiTypography-root{
-  color: var(--color-primary);
-}
-.MuiCardContent-root{
+
+/* MuiCardContent no tiene width 100% por defecto, esto lo corrige. */
+.MuiCardContent-root {
   width: 100%;
 }
 
-@Media (min-width: 601px) {
+/* Tablet (≥ 601px) */
+@media (min-width: 601px) {
   .interactive-page {
     padding-top: 1rem;
     padding-left: 2rem;
     padding-right: 2rem;
   }
 
-  h1.MuiTypography-root{
-    font-size: 2.3rem;
+  .interactive-page-header {
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
   }
-  h2.MuiTypography-root{
-    font-size: 2rem;
+
+  /* position: relative en el header + absolute acá = botón anclado a la izquierda
+     sin sacar al título del centro. */
+  .interactive-page-header > button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
   }
-  h3.MuiTypography-root{
-    font-size: 1.5rem;
-  }
+
+  h1.MuiTypography-root { font-size: 2.3rem; }
+  h2.MuiTypography-root { font-size: 2rem; }
+  h3.MuiTypography-root { font-size: 1.5rem; }
   h4.MuiTypography-root,
   h5.MuiTypography-root,
-  h6.MuiTypography-root{
-    font-size: 1.2rem;
-  }
+  h6.MuiTypography-root { font-size: 1.2rem; }
 }
 
-@Media (min-width: 1201px) {
+/* Desktop grande (≥ 1201px) */
+@media (min-width: 1201px) {
   .interactive-page {
     padding-top: 2rem;
   }
