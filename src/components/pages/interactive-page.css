@@ -35,9 +35,10 @@ h4.MuiTypography-root,
 h5.MuiTypography-root,
 h6.MuiTypography-root { font-size: 1rem;  font-weight: 400; }
 
-/* Botones y typographies centran ícono + texto. Párrafos alinean a la izquierda. */
+/* Botones y typographies centran ícono + texto.
+   Typography dentro de cards se excluye para no pisar su propio layout. */
 .interactive-page .MuiButtonBase-root,
-.interactive-page .MuiTypography-root {
+.interactive-page .MuiTypography-root:not(.MuiCard-root .MuiTypography-root) {
   display: flex;
   align-items: center;
   justify-content: center;
