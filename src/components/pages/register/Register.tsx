@@ -86,9 +86,9 @@ export default function Register() {
           padding: '2rem',
           backgroundColor: 'white',
           borderRadius: { xs: 0, sm: 2 },
-          mt: { xs: '8rem', sm: '20rem', md:'9rem'},
+          height: { xs: '100%', sm: 'auto' },
           mb: { xs: 0, sm: '2rem' },
-          maxWidth: { sm: 500, md: 700 },
+          maxWidth: { sm: 500, md: 520 },
           width: { xs: '100%', sm: '90%' },
           mx: 'auto',
         }}

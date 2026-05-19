@@ -1,3 +1,5 @@
+/* Estilos compartidos por Welcome, Login y Register: fondo fotográfico del campus y centrado del formulario. */
+
 .welcome-page,
 .register-page,
 .login-page {
@@ -12,6 +14,23 @@
   gap: 1rem;
 }
 
+/* justify-content: center clipea el contenido por arriba cuando crece (ej. errores de validación),
+   rompiendo el scroll. Register usa flex-start para evitarlo.
+   En mobile es fullscreen, sin padding, el Box cubre todo el alto. */
+.register-page {
+  justify-content: flex-start;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+@media (min-width: 601px) {
+  .register-page {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Tarjeta blanca flotante sobre el fondo. */
 .form {
   display: flex;
   height: 100%;
@@ -22,7 +41,8 @@
   background-color: white;
 }
 
-@Media (min-width: 601px) {
+/* Tablet (≥ 601px) */
+@media (min-width: 601px) {
   .welcome-page,
   .register-page,
   .login-page {
@@ -36,20 +56,22 @@
   }
 }
 
-@Media (min-width: 901px) {
+/* Desktop (≥ 901px) */
+@media (min-width: 901px) {
   .form {
     max-width: 40%;
   }
 }
 
-@Media (min-width: 1201px) {
+/* Desktop grande (≥ 1201px) */
+@media (min-width: 1201px) {
   .form {
     min-width: 30%;
   }
 }
 
-
-@Media (min-width: 1537px) {
+/* Pantalla muy grande (≥ 1537px) */
+@media (min-width: 1537px) {
   .form {
     max-width: 20%;
   }
