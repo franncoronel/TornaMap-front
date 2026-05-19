@@ -273,7 +273,7 @@ export default function ClassRoomCard({
                       </Tooltip>
                     )}
                   </Box>
-                  <Divider sx={{ mb: 0.5 }} />
+                  <Divider sx={{ mb: 1.5 }} />
                 </>
               )}
 
