@@ -215,7 +215,7 @@ export default function ClassRoomCard({
                       <Typography
                         variant="h3"
                         noWrap
-                        sx={{ fontWeight: 'bold', maxWidth: '90%' }}
+                        sx={{ fontWeight: 400, maxWidth: '90%' }}
                       >
                         {courseName()}
                       </Typography>
@@ -225,7 +225,7 @@ export default function ClassRoomCard({
                         <Typography
                           variant="h4"
                           noWrap
-                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
+                          sx={{ fontWeight: 400, maxWidth: '90%', color: 'text.secondary' }}
                         >
                           {course?.events}
                         </Typography>
@@ -236,7 +236,7 @@ export default function ClassRoomCard({
                         <Typography
                           variant="h4"
                           noWrap
-                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
+                          sx={{ fontWeight: 400, maxWidth: '90%', color: 'text.secondary' }}
                         >
                           Sin eventos
                         </Typography>
@@ -248,7 +248,8 @@ export default function ClassRoomCard({
                         <Typography
                           variant="h4"
                           sx={{
-                            fontWeight: 'bold'
+                            fontWeight: 400,
+                            color: 'text.secondary'
                           }}
                         >
                           {event?.name}
