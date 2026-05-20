@@ -1,14 +1,19 @@
+/* === NAV — CONTENEDOR EXTERNO (AppBar) ===
+   En mobile: ocupa 10dvh fijo al fondo (column layout del layout-container).
+   En desktop: height auto al tope (column-reverse layout). */
+
 .outer-container {
   display: flex;
   width: 100%;
   justify-content: center;
   height: 10vh;
-  height: 10dvh; /* Para pantallas de iPhone 14 Pro Max */
-  flex: 0 0 10dvh; /* no se estira ni se achica */
-  touch-action: none; /* Deshabilitar el desplazamiento táctil */
+  height: 10dvh;
+  flex: 0 0 10dvh;
+  touch-action: none;
   -webkit-user-select: none;
 }
 
+/* === NAV — CONTENEDOR INTERNO (Toolbar) === */
 .inner-container {
   height: 100%;
   display: flex;
@@ -16,6 +21,8 @@
   align-items: center;
 }
 
+/* === ESTADO ACTIVO DEL ÍCONO ===
+   Limpia el borde/outline que MUI agrega por defecto al botón activo. */
 .outer-container *.active,
 .inner-container *.active {
   border-color: transparent;
@@ -25,6 +32,7 @@
   outline: none;
 }
 
+/* === BOTONES DEL NAV === */
 .outer-container button {
   height: 100%;
 }
@@ -37,6 +45,9 @@
   position: relative;
 }
 
+/* === INDICADOR DE PÁGINA ACTIVA (barra) ===
+   Mobile: barra en el top del botón (nav está abajo).
+   Desktop/tablet: barra en el bottom — ver media query. */
 .inner-container .active.nav-icon::after,
 .inner-container .active.home-icon::after {
   content: '';
@@ -49,42 +60,48 @@
   transform: translateX(-50%);
 }
 
+/* El ícono activo escala ligeramente */
 .outer-container .active svg {
   transform: scale(1.2);
 }
 
-.wide-screen-logo {
-  display: none;
-}
+/* === ELEMENTOS SOLO VISIBLES EN DESKTOP === */
+.wide-screen-logo { display: none; }
+.spacing          { display: none; }
+.logo-label       { display: none; }
 
-.spacing {
-  display: none;
-}
+/* === ELEMENTOS SOLO VISIBLES EN MOBILE === */
+.mobile-logo { display: flex; }
 
-.mobile-logo {
-  display: flex;
-}
-
-.logo-label {
-  display: none;
-}
-
-@Media (min-width: 601px) {
+/* === DESKTOP / TABLET (≥ 601px) === */
+@media (min-width: 601px) {
   .outer-container {
+    flex: 0 0 auto;   /* resetea el 0 0 10dvh del mobile para que el AppBar crezca a su contenido */
     min-height: 6vh;
-    height: auto; /* Anular la altura fija de móvil */
+    height: auto;
   }
 
+  /* Barra activa: box-shadow inset en lugar de ::after — siempre contenido,
+     sin depender de que el botón coincida exactamente con la altura del AppBar. */
   .inner-container .active.nav-icon::after {
-    width: 100%;
-    top: auto;
-    bottom: 0;
+    content: none;
   }
 
   .inner-container .active.home-icon::after {
     content: none;
-    display: none;
   }
+
+  .inner-container .active.nav-icon {
+    box-shadow: inset 0 -3px 0 0 #0f0f0f;
+  }
+
+  .logo-container.nav-icon {
+    margin: 0 1.5rem;
+    border-radius: 0;
+  }
+
+  .logo-container.nav-icon:first-of-type { margin-left: 0; }
+  .logo-container.nav-icon:last-of-type  { margin-right: 0; }
 
   .logo-container {
     display: flex;
@@ -92,41 +109,25 @@
     flex-direction: column;
   }
 
-  .mobile-logo {
-    display: none;
-  }
-
-  .wide-screen-logo {
-    display: flex;
-  }
-
-  /*
-    Espaciado entre los botones de navegación sin
-    tener que agregar otro contenedor flex a la estructura.
-  */
-  .logo-container.nav-icon {
-    margin: 0 1.5rem;
-  }
-
-  .logo-container.nav-icon:first-of-type {
-    margin-left: 0;
-  }
-
-  .logo-container.nav-icon:last-of-type {
-    margin-right: 0;
-  }
-
-  .spacing {
-    display: flex;
-  }
+  .mobile-logo    { display: none; }
+  .wide-screen-logo { display: flex; }
+  .spacing        { display: flex; }
 
   .logo-label {
     display: flex;
+    font-size: 0.6rem;
   }
 }
 
-/* Pantallas grandes (1200px en adelante) */
-@Media (min-width: 1200px) {
+/* Desktop (≥ 900px): texto del nav un poco más grande que en tablet */
+@media (min-width: 900px) {
+  .logo-label {
+    font-size: 0.7rem;
+  }
+}
+
+/* === DESKTOP GRANDE (≥ 1200px) === */
+@media (min-width: 1200px) {
   .outer-container {
     min-height: 8vh;
   }

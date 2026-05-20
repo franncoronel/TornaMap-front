@@ -21,15 +21,12 @@ import { routes } from '@/routes'
 
 // Componentes
 import { CircularProgress } from '@mui/material'
-import Nav from './components/common/Nav/Nav'
+import Layout from './components/common/Layout/Layout'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { es } from 'date-fns/locale/es'
 
 function App() {
-  // const theme = useTheme()
-  // const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
-
   return (
     <>
       <CssBaseline />
@@ -44,12 +41,9 @@ function App() {
                     v7_relativeSplatPath: true
                   }}
                 >
-                  <div className="layout-container">
-                    <div className="page-structure">
-                      <RoutesWrapper />
-                    </div>
-                    <Nav />
-                  </div>
+                  <Layout>
+                    <RoutesWrapper />
+                  </Layout>
                 </BrowserRouter>
               </LocalizationProvider>
             </MuiDateProvider>

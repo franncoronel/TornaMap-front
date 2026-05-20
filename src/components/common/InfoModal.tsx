@@ -109,7 +109,9 @@ export default function InfoModal({
               flexDirection: 'column',
               gap: 2,
               maxHeight: '70vh',
-              overflowY: 'auto'
+              overflowY: 'auto',
+              p: 2,
+              pb: 3
             }}
           >
             {children}

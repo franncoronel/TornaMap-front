@@ -6,7 +6,8 @@ import {
   CardActions,
   IconButton,
   Typography,
-  Tooltip
+  Tooltip,
+  Stack
 } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -78,7 +79,7 @@ export default function CustomCard({
         ) : (
           <span />
         )}
-        <div>
+        <Stack direction="row" alignItems="center">
           {onEdit && (
             <Tooltip title="Editar">
               <IconButton color="primary" onClick={onEdit} aria-label="edit">
@@ -93,7 +94,7 @@ export default function CustomCard({
               </IconButton>
             </Tooltip>
           )}
-        </div>
+        </Stack>
       </CardActions>
     </Card>
   )

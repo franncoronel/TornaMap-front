@@ -21,6 +21,8 @@ import { useLoader } from '@/context/LoaderContext'
 import { useNotification } from '@/context/NotificationContext'
 import { eventService } from '@/data/services/EventService'
 import { IEvent } from '@/data/domain/Event'
+import BackButton from '@/components/common/BackButton'
+import '@/styles/interactive-page.css'
 
 // helpers
 
@@ -80,7 +82,7 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
         spacing={2}
       >
         {/* Info principal */}
-        <Stack spacing={0.75} flex={1} minWidth={0}>
+        <Stack spacing={1.25} flex={1} minWidth={0}>
           {/* Nombre del evento */}
           <Stack direction="row" spacing={1} alignItems="center">
             <CalendarDots
@@ -92,32 +94,28 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
               variant="subtitle1"
               fontWeight={600}
               noWrap
-              sx={{ fontFamily: "'DM Sans', sans-serif" }}
             >
               {event.name}
             </Typography>
           </Stack>
 
           {/* Asignatura */}
-          <Stack direction="row" spacing={0.75} alignItems="center">
-            <BookOpen size={15} color={theme.palette.text.secondary} />
-            <Typography variant="body2" color="text.secondary" noWrap>
-              {event.courseName}
-            </Typography>
-            {event.programNames?.length > 0 && (
-              <>
-                <Typography variant="body2" color="text.disabled">
-                  ·
-                </Typography>
-                <Typography variant="body2" color="text.disabled" noWrap>
-                  {event.programNames.join(', ')}
-                </Typography>
-              </>
-            )}
+          <Stack direction="row" spacing={1.25} alignItems="flex-start">
+            <BookOpen size={15} color={theme.palette.text.secondary} style={{ marginTop: 2, flexShrink: 0 }} />
+            <Box sx={{ minWidth: 0, typography: 'body2', textAlign: 'left' }}>
+              <Box component="span" sx={{ color: 'text.secondary' }}>
+                {event.courseName}
+              </Box>
+              {event.programNames?.length > 0 && (
+                <Box component="span" sx={{ color: 'text.disabled' }}>
+                  {' · '}{event.programNames.join(', ')}
+                </Box>
+              )}
+            </Box>
           </Stack>
 
           {/* Horarios */}
-          <Stack direction="row" spacing={0.75} alignItems="flex-start">
+          <Stack direction="row" spacing={1.25} alignItems="flex-start">
             <Clock
               size={15}
               color={theme.palette.text.secondary}
@@ -267,38 +265,24 @@ export default function EventRequestsList() {
   }
 
   return (
-    <Box sx={{ height: '100vh', overflowY: 'auto', width: '100%', pb: 5 }}>
-      <Box sx={{ maxWidth: 750, mx: 'auto', mt: 2, pb: 6 }}>
-        {/* Header */}
-        <Stack
-          spacing={0.5}
-          mb={3}
-          alignItems="center"
-          textAlign="center"
-          mt={5}
-        >
-          <Stack spacing={1} alignItems="center" direction="row">
-            <CalendarPlus size={40} weight="duotone" />
-            <Typography variant="h1" fontWeight={700}>
-              Solicitudes de eventos
-            </Typography>
-          </Stack>
-          <Typography variant="body2" color="text.secondary">
-            {requests.length === 0
-              ? ''
-              : `${requests.length} solicitud${requests.length !== 1 ? 'es' : ''} esperando aprobación`}
-          </Typography>
+    <Box className="interactive-page">
+      <header className="interactive-page-header">
+        <BackButton />
+        <Stack direction="row" spacing={1} alignItems="center">
+          <CalendarPlus size={32} weight="duotone" />
+          <Typography variant="h1">Solicitudes de eventos</Typography>
         </Stack>
+      </header>
 
-        {/* Lista */}
+      <Box sx={{ maxWidth: 750, mx: 'auto', width: '100%', pb: 6 }}>
+        {requests.length > 0 && (
+          <Typography variant="body2" color="text.secondary" textAlign="center" mb={3}>
+            {requests.length} solicitud{requests.length !== 1 ? 'es' : ''} esperando aprobación
+          </Typography>
+        )}
+
         {requests.length === 0 ? (
-          <Box
-            sx={{
-              textAlign: 'center',
-              py: 10,
-              px: 4
-            }}
-          >
+          <Box sx={{ textAlign: 'center', py: 10, px: 4 }}>
             <CalendarDots
               size={52}
               weight="thin"

@@ -11,8 +11,8 @@ import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
 import MapSelector from '@/components/common/map/MapSelector'
 
 // Styles
+import '@/styles/interactive-page.css'
 import './map.css'
-import '../interactive-page.css'
 
 // Types
 import { IEventList } from '@/data/domain/Event'
@@ -184,7 +184,7 @@ export default function Map() {
   }, [buildings])
 
   return (
-    <main className="interactive-page map-page">
+    <main className={`interactive-page${!isCampus ? ' map-page' : ''}`}>
       <Box>
         {/* Select del edificio */}
         <Controller

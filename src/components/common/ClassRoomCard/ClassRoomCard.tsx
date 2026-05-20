@@ -172,7 +172,7 @@ export default function ClassRoomCard({
               top: 8,
               right: 8,
               zIndex: 2,
-              color: '#666',
+              color: 'text.secondary',
               transition: 'all 0.3s ease',
               '&:hover': {
                 color: 'primary.main',
@@ -214,13 +214,8 @@ export default function ClassRoomCard({
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
                         variant="h3"
-                        sx={{
-                          fontWeight: 'bold',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '90%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ fontWeight: 'bold', maxWidth: '90%' }}
                       >
                         {courseName()}
                       </Typography>
@@ -229,14 +224,8 @@ export default function ClassRoomCard({
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
                           variant="h4"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           {course?.events}
                         </Typography>
@@ -245,15 +234,9 @@ export default function ClassRoomCard({
                     {course && !hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h2"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          variant="h4"
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           Sin eventos
                         </Typography>
@@ -273,7 +256,7 @@ export default function ClassRoomCard({
                       </Tooltip>
                     )}
                   </Box>
-                  <Divider sx={{ mb: 0.5 }} />
+                  <Divider sx={{ mb: 1.5 }} />
                 </>
               )}
 
@@ -299,7 +282,7 @@ export default function ClassRoomCard({
                         alignItems: 'center'
                       }}
                     >
-                      <MapPin size={24} color="#1976d2" />
+                      <MapPin size={24} color="var(--info-color-dark)" />
                     </Box>
                     <Box
                       sx={{
@@ -311,22 +294,16 @@ export default function ClassRoomCard({
                     >
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: '#666',
-                          display: 'block',
-                          textAlign: 'left',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '100%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Aula: {classroom()}
                       </Typography>
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#666',
+                          color: 'text.secondary',
+                          fontWeight: 500,
                           display: 'flex',
                           textAlign: 'left'
                         }}
@@ -340,19 +317,13 @@ export default function ClassRoomCard({
                 {/* Profesor */}
                 {hasEvents() && (
                   <>
-                    <User size={24} color="#1976d2" />
+                    <User size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={professors()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: '#666',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Profesor: {professors()}
                         </Typography>
@@ -363,19 +334,19 @@ export default function ClassRoomCard({
 
                 {/* Modalidad */}
                 {hasEvents() && isPresential() && !isVirtual() && (
-                  <Building size={24} color="#1976d2" />
+                  <Building size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isVirtual() && !isPresential() && (
-                  <Laptop size={24} color="#1976d2" />
+                  <Laptop size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isHybrid() && (
-                  <ArrowsClockwise color="#1976d2" size={24} />
+                  <ArrowsClockwise color="var(--info-color-dark)" size={24} />
                 )}
 
                 {hasEvents() && (
                   <Typography
                     variant="body2"
-                    sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
+                    sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}
                   >
                     Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
                     {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
@@ -384,20 +355,14 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Horario */}
-                {hasEvents() && <Clock size={24} color="#1976d2" />}
+                {hasEvents() && <Clock size={24} color="var(--info-color-dark)" />}
                 {hasEvents() && (
                   <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                     <Tooltip title={timeSchedule()} arrow>
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: '#666',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: 'block',
-                          textAlign: 'left'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Horario: {timeSchedule()}
                       </Typography>
@@ -408,19 +373,13 @@ export default function ClassRoomCard({
                 {/* Carreras */}
                 {programs() && (
                   <>
-                    <BookOpenText size={24} color="#1976d2" />
+                    <BookOpenText size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={programs()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: '#1976d2',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Carreras: {programs()}
                         </Typography>

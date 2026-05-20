@@ -1,0 +1,92 @@
+/* Estilos compartidos por Welcome, Login y Register: fondo fotográfico del campus y centrado del formulario. */
+
+.welcome-page,
+.register-page,
+.login-page {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-image: url('@/assets/fondos/fondo-tornavias.jpg');
+  background-size: cover;
+  background-position: center;
+  gap: 1rem;
+}
+
+/* justify-content: center clipea el contenido por arriba cuando crece (ej. errores de validación),
+   rompiendo el scroll. Register usa flex-start para evitarlo.
+   En mobile es fullscreen, sin padding, el Box cubre todo el alto. */
+/* Mobile: fondo blanco en el main directamente, sin foto.
+   La foto no es visible en mobile de todas formas (card fullscreen).
+   El Box puede ser height: auto y crecer sin conflictos de porcentajes. */
+.register-page {
+  justify-content: flex-start;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-image: none;
+  background-color: white;
+  height: 100%;
+  overflow-y: auto;
+}
+
+@media (min-width: 601px) {
+  .register-page {
+    padding-top: 1.5rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Tarjeta blanca flotante sobre el fondo. */
+.form {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+  background-color: white;
+}
+
+/* Tablet (≥ 601px) */
+@media (min-width: 601px) {
+  .welcome-page,
+  .register-page,
+  .login-page {
+    height: auto;
+  }
+
+  /* Tablet+: restaurar la foto de fondo. height: 100% y overflow-y: auto
+     siguen activos — el scroll funciona cuando el contenido supera el viewport. */
+  .register-page {
+    background-image: url('@/assets/fondos/fondo-tornavias.jpg');
+    background-color: transparent;
+  }
+
+  .form {
+    height: auto;
+    max-width: 60%;
+    border-radius: 0.5rem;
+  }
+}
+
+/* Desktop (≥ 901px) */
+@media (min-width: 901px) {
+  .form {
+    max-width: 40%;
+  }
+}
+
+/* Desktop grande (≥ 1201px) */
+@media (min-width: 1201px) {
+  .form {
+    min-width: 30%;
+  }
+}
+
+/* Pantalla muy grande (≥ 1537px) */
+@media (min-width: 1537px) {
+  .form {
+    max-width: 20%;
+  }
+}

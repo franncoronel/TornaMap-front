@@ -77,18 +77,17 @@ export default function Register() {
   }
 
   return (
-    <main className="register-page" style={{ height: '100%', overflowY: 'auto' }}>
+    <main className="register-page">
       {/*Contenedor general de la vista */}
       <Box
         sx={{
           display: 'flex',
           flexDirection: 'column',
           padding: '2rem',
-          backgroundColor: 'white',
+          backgroundColor: { xs: 'transparent', sm: 'white' },
           borderRadius: { xs: 0, sm: 2 },
-          mt: { xs: '8rem', sm: '20rem', md:'9rem'},
           mb: { xs: 0, sm: '2rem' },
-          maxWidth: { sm: 500, md: 700 },
+          maxWidth: { sm: 500, md: 520 },
           width: { xs: '100%', sm: '90%' },
           mx: 'auto',
         }}

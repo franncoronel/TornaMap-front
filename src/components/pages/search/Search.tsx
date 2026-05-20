@@ -1,5 +1,5 @@
 import './search.css'
-import '../interactive-page.css'
+import '@/styles/interactive-page.css'
 
 import { useEffect, useState } from 'react'
 import { useNotification } from '@/context/NotificationContext'
@@ -103,7 +103,7 @@ export default function Search() {
     // Contenedor principal que organiza la disposición de los elementos
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
-      <Box position="sticky" top="0" zIndex="10">
+      <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
         <SearchTagsInput
           onSearch={search}
           value={searchTags}
@@ -118,8 +118,6 @@ export default function Search() {
         rowSpacing="1rem"
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        height="100%"
-        sx={{ overflowY: 'auto' }}
       >
         {courses &&
           courses.length > 0 &&
