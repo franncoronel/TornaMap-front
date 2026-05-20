@@ -1,4 +1,8 @@
-// utils/helpers.ts
+export function toMins(time: string): number {
+  const [h, m] = time.split(':').map(Number)
+  return h * 60 + m
+}
+
 export const weekDayES = [
   'LUNES',
   'MARTES',

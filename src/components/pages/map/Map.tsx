@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams } from 'react-router-dom'
 
 // Components
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider, Paper} from '@mui/material'
+import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio, RadioGroup, Select, Box, Typography, Divider, Paper, Button } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -23,14 +23,32 @@ import { eventService } from '@/data/services/EventService'
 // Contexts
 import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
+import { useAuth } from '@/context/AuthContext'
 import { IClassroom } from '@/data/domain/Classroom'
 import { classroomService } from '@/data/services/ClassroomService'
 import { buildingService } from '@/data/services/BuildingService'
 
 // Mapper
 import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/mapper/buildingMapper'
+import { OccupiedInterval } from '@/data/domain/Schedule'
+import { toMins } from '@/utils/helpers'
 import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
 import Campus from '@/components/common/map/campus/Campus'
+
+function hasAvailableSlot(occupied: OccupiedInterval[]): boolean {
+  const DAY_START = 6 * 60
+  const DAY_END = 22 * 60
+  const MIN_SLOT = 30
+  const sorted = [...occupied]
+    .map(o => ({ start: toMins(o.startTime), end: toMins(o.endTime) }))
+    .sort((a, b) => a.start - b.start)
+  let cursor = DAY_START
+  for (const { start, end } of sorted) {
+    if (start - cursor >= MIN_SLOT) return true
+    cursor = Math.max(cursor, end)
+  }
+  return DAY_END - cursor >= MIN_SLOT
+}
 
 export default function Map() {
   const { control } = useForm({
@@ -57,6 +75,12 @@ export default function Map() {
 
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
+  const { isAuthenticated } = useAuth()
+
+  const occupiedIntervals: OccupiedInterval[] = events.flatMap(e =>
+    e.schedules.map(s => ({ startTime: s.startTime, endTime: s.endTime }))
+  )
+  const canReserve = classroom !== null && hasAvailableSlot(occupiedIntervals)
 
   // carga de edificios
   useEffect(() => {
@@ -394,6 +418,33 @@ export default function Map() {
             <Typography variant="body2" px="1rem">
               No hay eventos en la fecha seleccionada.
             </Typography>
+          )}
+
+          {isAuthenticated && classroom && (
+            <Box px="1rem" pb="1rem">
+              <Button
+                variant="contained"
+                fullWidth
+                disabled={!canReserve}
+                onClick={() => {
+                  handleClose()
+                  navigate('/reserva/agregar', {
+                    state: {
+                      classroom,
+                      date: date ? date.toISOString() : null,
+                      occupiedIntervals
+                    }
+                  })
+                }}
+              >
+                Reservar espacio
+              </Button>
+              {!canReserve && (
+                <Typography variant="caption" color="text.secondary" display="block" textAlign="center" mt={0.5}>
+                  Sin disponibilidad horaria para este día (06:00–22:00)
+                </Typography>
+              )}
+            </Box>
           )}
         </InfoModal>
       )}
