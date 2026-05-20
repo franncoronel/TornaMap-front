@@ -312,7 +312,8 @@ export default function ClassRoomCard({
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#666',
+                          color: 'text.secondary',
+                          fontWeight: 500,
                           display: 'block',
                           textAlign: 'left',
                           whiteSpace: 'nowrap',
@@ -326,7 +327,8 @@ export default function ClassRoomCard({
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#666',
+                          color: 'text.secondary',
+                          fontWeight: 500,
                           display: 'flex',
                           textAlign: 'left'
                         }}
@@ -346,7 +348,8 @@ export default function ClassRoomCard({
                         <Typography
                           variant="body2"
                           sx={{
-                            color: '#666',
+                            color: 'text.secondary',
+                            fontWeight: 500,
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
@@ -375,7 +378,7 @@ export default function ClassRoomCard({
                 {hasEvents() && (
                   <Typography
                     variant="body2"
-                    sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
+                    sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}
                   >
                     Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
                     {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
@@ -391,7 +394,8 @@ export default function ClassRoomCard({
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#666',
+                          color: 'text.secondary',
+                          fontWeight: 500,
                           whiteSpace: 'nowrap',
                           overflow: 'hidden',
                           textOverflow: 'ellipsis',
@@ -414,7 +418,8 @@ export default function ClassRoomCard({
                         <Typography
                           variant="body2"
                           sx={{
-                            color: '#666',
+                            color: 'text.secondary',
+                            fontWeight: 500,
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
                             textOverflow: 'ellipsis',
