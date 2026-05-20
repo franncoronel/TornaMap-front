@@ -82,7 +82,7 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
         spacing={2}
       >
         {/* Info principal */}
-        <Stack spacing={0.75} flex={1} minWidth={0}>
+        <Stack spacing={1.25} flex={1} minWidth={0}>
           {/* Nombre del evento */}
           <Stack direction="row" spacing={1} alignItems="center">
             <CalendarDots
@@ -100,7 +100,7 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
           </Stack>
 
           {/* Asignatura */}
-          <Stack direction="row" spacing={0.75} alignItems="flex-start">
+          <Stack direction="row" spacing={1.25} alignItems="flex-start">
             <BookOpen size={15} color={theme.palette.text.secondary} style={{ marginTop: 2, flexShrink: 0 }} />
             <Box sx={{ minWidth: 0, typography: 'body2', textAlign: 'left' }}>
               <Box component="span" sx={{ color: 'text.secondary' }}>
@@ -115,7 +115,7 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
           </Stack>
 
           {/* Horarios */}
-          <Stack direction="row" spacing={0.75} alignItems="flex-start">
+          <Stack direction="row" spacing={1.25} alignItems="flex-start">
             <Clock
               size={15}
               color={theme.palette.text.secondary}
