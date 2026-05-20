@@ -1,10 +1,16 @@
-import { createTheme, responsiveFontSizes } from '@mui/material'
+import { createTheme } from '@mui/material'
 import { esES } from '@mui/x-date-pickers/locales'
 
 let unsamTheme = createTheme(
   {
     typography: {
-      fontFamily: ['Saira' /*Fuente que usa la UNSAM*/, 'sans-serif'].join(',')
+      fontFamily: ['Saira' /*Fuente que usa la UNSAM*/, 'sans-serif'].join(','),
+      h1: { fontSize: '2rem',   fontWeight: 600 },
+      h2: { fontSize: '1.5rem', fontWeight: 400 },
+      h3: { fontSize: '1.5rem', fontWeight: 400 },
+      h4: { fontSize: '1.1rem', fontWeight: 400 },
+      h5: { fontSize: '1rem',   fontWeight: 400 },
+      h6: { fontSize: '1.1rem', fontWeight: 400 },
     },
     colorSchemes: {
       light: {
@@ -61,6 +67,14 @@ let unsamTheme = createTheme(
 )
 
 unsamTheme = createTheme(unsamTheme, {
+  typography: {
+    h1: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '2.3rem' } },
+    h2: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '2rem' } },
+    h3: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '1.75rem' } },
+    h4: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '1.35rem' } },
+    h5: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '1.1rem' } },
+    h6: { [unsamTheme.breakpoints.up('sm')]: { fontSize: '1.25rem' } },
+  },
   components: {
     MuiButton: {
       styleOverrides: {
@@ -75,4 +89,4 @@ unsamTheme = createTheme(unsamTheme, {
   }
 })
 
-export default unsamTheme = responsiveFontSizes(unsamTheme)
+export default unsamTheme
