@@ -214,13 +214,8 @@ export default function ClassRoomCard({
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
                         variant="h3"
-                        sx={{
-                          fontWeight: 'bold',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '90%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ fontWeight: 'bold', maxWidth: '90%' }}
                       >
                         {courseName()}
                       </Typography>
@@ -229,14 +224,8 @@ export default function ClassRoomCard({
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
                           variant="h4"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: '#666' }}
                         >
                           {course?.events}
                         </Typography>
@@ -246,14 +235,8 @@ export default function ClassRoomCard({
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
                           variant="h4"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: '#666' }}
                         >
                           Sin eventos
                         </Typography>
@@ -311,16 +294,8 @@ export default function ClassRoomCard({
                     >
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: 'text.secondary',
-                          fontWeight: 500,
-                          display: 'block',
-                          textAlign: 'left',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '100%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Aula: {classroom()}
                       </Typography>
@@ -347,15 +322,8 @@ export default function ClassRoomCard({
                       <Tooltip title={professors()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: 'text.secondary',
-                            fontWeight: 500,
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Profesor: {professors()}
                         </Typography>
@@ -393,15 +361,8 @@ export default function ClassRoomCard({
                     <Tooltip title={timeSchedule()} arrow>
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: 'text.secondary',
-                          fontWeight: 500,
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: 'block',
-                          textAlign: 'left'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Horario: {timeSchedule()}
                       </Typography>
@@ -417,15 +378,8 @@ export default function ClassRoomCard({
                       <Tooltip title={programs()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: 'text.secondary',
-                            fontWeight: 500,
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Carreras: {programs()}
                         </Typography>
