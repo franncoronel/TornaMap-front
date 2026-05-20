@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import EventForm from './components/pages/form/components/EventForm'
+import SpaceRequestForm from './components/pages/form/components/SpaceRequestForm'
 import Register from './components/pages/register/Register'
 
 // Lazy Components
@@ -84,6 +85,16 @@ export const routes: RouteObject[] = [
       {
         path: 'solicitudes',
         element: <EventRequestList />
+      },
+      {
+        path: 'reserva',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <SpaceRequestForm />
+          }
+        ]
       },
       {
         path: 'horario',
