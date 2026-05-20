@@ -118,8 +118,6 @@ export default function Search() {
         rowSpacing="1rem"
         columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
         columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        height="100%"
-        sx={{ overflowY: 'auto' }}
       >
         {courses &&
           courses.length > 0 &&
