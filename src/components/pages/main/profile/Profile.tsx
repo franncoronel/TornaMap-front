@@ -74,11 +74,11 @@ export default function Profile() {
       <header>
         {/* Agregar datos de mail y nombre de usuario */}
         {/* Usar typography */}
-        <Typography variant="h2" component="h1" gutterBottom>
+        <Typography variant="h1" gutterBottom>
           Perfil
         </Typography>
         {user && (
-          <Typography variant="h4" component="h2" gutterBottom>
+          <Typography variant="h2" gutterBottom>
             {user.name} {user.lastName}
           </Typography>
         )}
