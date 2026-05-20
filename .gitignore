@@ -35,3 +35,6 @@ dist-ssr
 
 # VSC - Git Lens
 .history
+
+# Contexto de Claude
+CLAUDE.md
