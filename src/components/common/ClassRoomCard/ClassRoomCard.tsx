@@ -172,7 +172,7 @@ export default function ClassRoomCard({
               top: 8,
               right: 8,
               zIndex: 2,
-              color: '#666',
+              color: 'text.secondary',
               transition: 'all 0.3s ease',
               '&:hover': {
                 color: 'primary.main',
@@ -225,7 +225,7 @@ export default function ClassRoomCard({
                         <Typography
                           variant="h4"
                           noWrap
-                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: '#666' }}
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           {course?.events}
                         </Typography>
@@ -236,7 +236,7 @@ export default function ClassRoomCard({
                         <Typography
                           variant="h4"
                           noWrap
-                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: '#666' }}
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           Sin eventos
                         </Typography>
@@ -282,7 +282,7 @@ export default function ClassRoomCard({
                         alignItems: 'center'
                       }}
                     >
-                      <MapPin size={24} color="#1976d2" />
+                      <MapPin size={24} color="var(--info-color-dark)" />
                     </Box>
                     <Box
                       sx={{
@@ -317,7 +317,7 @@ export default function ClassRoomCard({
                 {/* Profesor */}
                 {hasEvents() && (
                   <>
-                    <User size={24} color="#1976d2" />
+                    <User size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={professors()} arrow>
                         <Typography
@@ -334,13 +334,13 @@ export default function ClassRoomCard({
 
                 {/* Modalidad */}
                 {hasEvents() && isPresential() && !isVirtual() && (
-                  <Building size={24} color="#1976d2" />
+                  <Building size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isVirtual() && !isPresential() && (
-                  <Laptop size={24} color="#1976d2" />
+                  <Laptop size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isHybrid() && (
-                  <ArrowsClockwise color="#1976d2" size={24} />
+                  <ArrowsClockwise color="var(--info-color-dark)" size={24} />
                 )}
 
                 {hasEvents() && (
@@ -355,7 +355,7 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Horario */}
-                {hasEvents() && <Clock size={24} color="#1976d2" />}
+                {hasEvents() && <Clock size={24} color="var(--info-color-dark)" />}
                 {hasEvents() && (
                   <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                     <Tooltip title={timeSchedule()} arrow>
@@ -373,7 +373,7 @@ export default function ClassRoomCard({
                 {/* Carreras */}
                 {programs() && (
                   <>
-                    <BookOpenText size={24} color="#1976d2" />
+                    <BookOpenText size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={programs()} arrow>
                         <Typography
