@@ -100,21 +100,18 @@ function RequestCard({ event, onApprove, onReject }: RequestCardProps) {
           </Stack>
 
           {/* Asignatura */}
-          <Stack direction="row" spacing={0.75} alignItems="center">
-            <BookOpen size={15} color={theme.palette.text.secondary} />
-            <Typography variant="body2" color="text.secondary" noWrap>
-              {event.courseName}
-            </Typography>
-            {event.programNames?.length > 0 && (
-              <>
-                <Typography variant="body2" color="text.disabled">
-                  ·
-                </Typography>
-                <Typography variant="body2" color="text.disabled" noWrap>
-                  {event.programNames.join(', ')}
-                </Typography>
-              </>
-            )}
+          <Stack direction="row" spacing={0.75} alignItems="flex-start">
+            <BookOpen size={15} color={theme.palette.text.secondary} style={{ marginTop: 2, flexShrink: 0 }} />
+            <Box sx={{ minWidth: 0, typography: 'body2', textAlign: 'left' }}>
+              <Box component="span" sx={{ color: 'text.secondary' }}>
+                {event.courseName}
+              </Box>
+              {event.programNames?.length > 0 && (
+                <Box component="span" sx={{ color: 'text.disabled' }}>
+                  {' · '}{event.programNames.join(', ')}
+                </Box>
+              )}
+            </Box>
           </Stack>
 
           {/* Horarios */}
