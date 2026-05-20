@@ -334,7 +334,12 @@ export default function EventForm() {
         courseID: needsCourse(data.type) ? data.courseID : '',
         customPeriodStart: sendCustomPeriod ? data.customPeriodStart : null,
         customPeriodEnd: sendCustomPeriod ? data.customPeriodEnd : null,
-        schedules: data.schedules.map(mapScheduleToBackend)
+        schedules: data.schedules.map((sch) => {
+          const cleaned = sch.isVirtual
+            ? { ...sch, buildingId: '', classroomId: '' }
+            : sch
+          return mapScheduleToBackend(cleaned)
+        })
       }
 
       if (id) await eventService.update(payload)
@@ -845,7 +850,19 @@ export default function EventForm() {
                     render={({ field }) => (
                       <FormControlLabel
                         sx={{ alignSelf: 'start' }}
-                        control={<Switch {...field} checked={field.value} />}
+                        control={
+                          <Switch
+                            {...field}
+                            checked={field.value}
+                            onChange={(e) => {
+                              field.onChange(e.target.checked)
+                              if (e.target.checked) {
+                                setValue(buildField, '')
+                                setValue(classField, '')
+                              }
+                            }}
+                          />
+                        }
                         label="Virtual"
                       />
                     )}
@@ -860,6 +877,7 @@ export default function EventForm() {
                         sx={{ flex: 1, width: { xs: '100%' } }}
                         getOptionLabel={(b) => b.name}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
+                        disabled={watch(`schedules.${idx}.isVirtual`)}
                         value={
                           buildings.find((b) => b.id === field.value) ?? null
                         }
@@ -889,6 +907,9 @@ export default function EventForm() {
                         options={classroomsFiltered}
                         getOptionLabel={(o) => o.label}
                         isOptionEqualToValue={(o, v) => o.id === v.id}
+                        disabled={
+                          watch(`schedules.${idx}.isVirtual`) || !buildingIdSel
+                        }
                         value={
                           classroomsFiltered.find(
                             (c) => c.id === field.value
