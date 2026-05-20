@@ -4,19 +4,25 @@ import {
   Typography,
   Divider,
   IconButton,
-  Fade
+  Fade,
+  Tooltip,
+  Button
 } from '@mui/material'
-import { ReactNode } from 'react'
-import { X } from '@phosphor-icons/react'
+import { ReactNode, useState } from 'react'
+import { Bell, X } from '@phosphor-icons/react'
+import { useAuth } from '@/context/AuthContext'
+import NewsletterPopover from './NewsletterPopover' // ajustá el path si es necesario
 
 type InfoModalProps = {
-  children: ReactNode // Permite múltiples hijos de cualquier tipo
-  open: boolean // Propiedad para manejar el estado del Modal
-  handleClose: () => void // Función para cerrar el Modal
+  children: ReactNode
+  open: boolean
+  handleClose: () => void
   title: string
   subtitle?: string
   capacity?: string
   type: 'course' | 'event' | 'schedule'
+  onSubscribe?: () => void
+  onSubscribeNewsletter?: (email: string) => void
 }
 
 export default function InfoModal({
@@ -25,8 +31,19 @@ export default function InfoModal({
   handleClose,
   title,
   subtitle,
-  capacity
+  capacity,
+  onSubscribe = () => {},
+  onSubscribeNewsletter = () => {}
 }: InfoModalProps) {
+  const { isAuthenticated } = useAuth()
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
+
+  const handleBellClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget)
+  }
+
+  const handlePopoverClose = () => setAnchorEl(null)
+
   return (
     <Modal
       open={open}
@@ -64,45 +81,82 @@ export default function InfoModal({
               backgroundColor: 'background.paper'
             }}
           >
+            {/* Título y subtítulo */}
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="h6" component="h2" fontWeight="bold">
-                    {title}
-                  </Typography>
-                  {capacity && (
-                    <Box
-                      sx={{
-                        px: 1,
-                        py: 0.25,
-                        borderRadius: '999px',
-                        backgroundColor: 'action.hover',
-                        display: 'inline-flex',
-                        alignItems: 'center'
-                      }}
-                    >
-                      <Typography variant="caption" color="text.secondary">
-                        Capacidad: {capacity} personas
-                      </Typography>
-                    </Box>
-                  )}
-                </Box>
-                {subtitle && (
-                  <Typography variant="subtitle1" color="text.secondary">
-                    {subtitle}
-                  </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Typography variant="h6" component="h2" fontWeight="bold">
+                  {title}
+                </Typography>
+                {capacity && (
+                  <Box
+                    sx={{
+                      px: 1,
+                      py: 0.25,
+                      borderRadius: '999px',
+                      backgroundColor: 'action.hover',
+                      display: 'inline-flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    <Typography variant="caption" color="text.secondary">
+                      Capacidad: {capacity} personas
+                    </Typography>
+                  </Box>
                 )}
               </Box>
+              {subtitle && (
+                <Typography variant="subtitle1" color="text.secondary">
+                  {subtitle}
+                </Typography>
+              )}
             </Box>
-            <IconButton
-              aria-label="Cerrar Ventana"
-              onClick={handleClose}
-              edge="end"
-            >
-              <X weight="bold" />
-            </IconButton>
+
+            {/* Botones */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+             {/* Campana newsletter - solo para no logueados */}
+              {!isAuthenticated && (
+                <Tooltip title="Suscribirse al newsletter">
+                  <IconButton
+                    aria-label="Suscribirse al newsletter"
+                    color="secondary"
+                    onClick={handleBellClick}
+                  >
+                    <Bell size={24} />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              <NewsletterPopover
+                anchorEl={anchorEl}
+                onClose={handlePopoverClose}
+                onSubmit={onSubscribeNewsletter}
+              />
+
+              {/* Suscripción al curso/evento - solo logueados */}
+              {isAuthenticated && (
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={onSubscribe}
+                  sx={{ borderRadius: '999px' }}
+                >
+                  Suscribirse
+                </Button>
+              )}
+
+              <IconButton
+                aria-label="Cerrar Ventana"
+                onClick={handleClose}
+                edge="end"
+              >
+                <X weight="bold" />
+              </IconButton>
+            </Box>
+
           </Box>
+
           <Divider />
+
           <Box
             sx={{
               display: 'flex',
@@ -116,6 +170,7 @@ export default function InfoModal({
           >
             {children}
           </Box>
+
         </Box>
       </Fade>
     </Modal>
