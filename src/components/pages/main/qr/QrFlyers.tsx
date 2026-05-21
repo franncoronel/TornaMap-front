@@ -3,6 +3,7 @@ import { DownloadSimple, QrCode, Eye, X } from '@phosphor-icons/react'
 import { useRef, useState, useEffect } from 'react'
 import campusPhoto from '@/assets/fondos/fondo-tornavias.jpg'
 import BackButton from '@/components/common/BackButton'
+import QrClassrooms from './QrClassrooms'
 
 // ─── Constantes ─────────────────────────────────────────────────────────────
 
@@ -176,7 +177,7 @@ export default function QrFlyers() {
         Descargá el flyer oficial de TornaMap para imprimir y pegar en carteleras del campus.
       </Typography>
 
-      <Divider sx={{ mb: 4 }} />
+      <Divider sx={{ mb: 2 }} />
 
       {/* Acciones */}
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { xs: 'stretch', sm: 'flex-start' } }}>
@@ -269,7 +270,9 @@ export default function QrFlyers() {
           </Box>
         </DialogContent>
       </Dialog>
-
+      {/* ── Sección QR por aula ── */}
+      <Divider sx={{ my: 2 }} />
+      <QrClassrooms />
     </Box>
   )
 }
