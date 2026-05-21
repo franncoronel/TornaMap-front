@@ -12,7 +12,7 @@ const CAMPUS_PHOTO_URL = campusPhoto
 const QR_B64 =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASIAAAEiAQAAAAB1xeIbAAAByUlEQVR4nO2aQY7bMAxFH2sDXcrAHGCOYt+sV7NuZC0HkPG7oDTJdNNZ1JUdSwsjsh6QD4khKTIm/j7ij29A0KlOXYhKVsaSzIDdiDZS346tdN2CGiRJgpCB9FPMyjBLkrZ2uu5BFfMGbKkP/0EsTXW9NjU+T9KESLtBesttdd2Xiu/5G9S//MY7Um73NdEc8vM0CEhtdN2F2j2hAcAWBtmSRohmZja10/XqFHoa2yCtQeIz9/GxnlX9tSl8x7UNdcd9+mW17/2RVHz/MK2ALeHDzKZ6AB51T67+ohRSvUeVG9UG7ngeF6xu94dQFHcTJK1Ux+OfgurCWdVfm0La6gHM1elXk8/gR3FW9demajQFtIZMqew8FrrdH0bVHHMDt3u39pDRCt3fH0mVvV9DrhHWrb24m+7vD6TGUkEDDMasOA1AGgF2Y17b6LoD9fVeW0KvG7/fsrrPOZJ69K0A4lRCr08b6roF9dy3sl9b2Xat7L13ciTlNWTz8nF6k8VpqA2UlrpuR3l2s1up4gSJ2Hvl/4nardSQ0wjztlvJNlvrek3qj76VjAAQNiwalOlZ1V+f+uxbubWXlRJ/U/c5R1HW/xPYqRtSvwFVMkCdrubZwAAAAABJRU5ErkJggg=='
 
-const APP_URL = 'https://tornamap.web.app/'
+const APP_URL = 'http://localhost:5173/' // Reemplazar con URL real de la app cuando esté desplegada
 
 const FLYER_W = 794  // px ~ A4 ancho a 96dpi
 const FLYER_H = 1123 // px ~ A4 alto  a 96dpi

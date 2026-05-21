@@ -52,10 +52,9 @@ function ClassroomCard({ classroom, qrDataUrl }: { classroom: IClassroom; qrData
         {classroom.name && classroom.name !== classroom.code && (
           <div style={{ fontSize: 13, color: '#555', lineHeight: 1.3 }}>{classroom.name}</div>
         )}
-        <div style={{ fontSize: 12, color: '#888' }}>{floorToLabel(classroom.floor)} · Cap. {classroom.capacity} personas</div>
+        <div style={{ fontSize: 12, color: '#888' }}>{floorToLabel(classroom.floor)} · Capacidad aproximada: {classroom.capacity} personas</div>
         <div style={{ marginTop: 'auto', paddingTop: 8, borderTop: '1px solid #f0f0f0', fontSize: 11, color: '#2b7de9', fontWeight: 500, lineHeight: 1.4 }}>
-          📅 Escaneá para ver qué pasa<br />
-          <span style={{ color: '#aaa', fontWeight: 400 }}>en esta aula hoy</span>
+          📅 Escaneá para ver qué pasa en esta aula hoy<br />
         </div>
       </div>
     </div>
