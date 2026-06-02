@@ -1,5 +1,6 @@
 import { Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
+import { getRoomStyle } from '../RoomStyle'
 
 interface AularioNaveProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -7,11 +8,9 @@ interface AularioNaveProps {
   handleOpen?: (classRoomId: string) => void
 }
 
-export default function AularioNave3PlantaBaja({
-  selectedCode,
-  handleOpen
-}: AularioNaveProps) {
+export default function AularioNave3PlantaBaja({ selectedCode, handleOpen }: AularioNaveProps) {
   const isSelected = (id: string) => id === selectedCode
+  const hasSelection = !!selectedCode
 
   return (
     <>
@@ -127,12 +126,7 @@ export default function AularioNave3PlantaBaja({
         </g>
 
         {/* A17 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A17'), hasSelection)}
           onClick={() => handleOpen?.('AN3-A17')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('AN3-A17') ? 'selected' : ''}`}
@@ -156,16 +150,10 @@ export default function AularioNave3PlantaBaja({
           </text>
         </g>
         {/* A16 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A16') , hasSelection)}
           onClick={() => handleOpen?.('AN3-A16')}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected('AN3-A16') ? 'selected' : ''}`}
-        >
+          className={`classRoom ${isSelected('AN3-A16') ? 'selected' : ''}`}>
           <path
             d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z"
             transform="translate(0 0.000002)"
@@ -185,12 +173,7 @@ export default function AularioNave3PlantaBaja({
           </text>
         </g>
         {/* A15 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A15'), hasSelection)}
           onClick={() => handleOpen?.('AN3-A15')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('AN3-A15') ? 'selected' : ''}`}
