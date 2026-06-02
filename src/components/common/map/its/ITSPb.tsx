@@ -1,5 +1,6 @@
 import { CaretCircleUpDown, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
+import { getRoomStyle } from '../RoomStyle'
 
 interface ITSPbProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -9,6 +10,7 @@ interface ITSPbProps {
 
 export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
   const isSelected = (id: string) => id === selectedCode
+    const hasSelection = !!selectedCode   //convierte selectedCode a boolean
 
   return (
     <>
@@ -103,7 +105,8 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
           </g>
           {/*.......................................................:Aulas:...........................................................*/}
           {/* Aula 1*/}
-          <g onClick={() => handleOpen?.('ITS-A1')}
+          <g style={getRoomStyle('classroom', isSelected('ITS-A1'), hasSelection)}
+            onClick={() => handleOpen?.('ITS-A1')}
             className={`classRoom ${isSelected('ITS-A1') ? 'selected' : ''}`}>
             <path d="M154.773811,447.647782v76.993416h107.493282v-76.993416h-107.493282Z" transform="matrix(0.98668 0 0 1.335732 -152.616153 -484.823892)"/>
             <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
@@ -114,7 +117,8 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
             </text>
           </g>
           {/* Aula 2*/}
-          <g onClick={() => handleOpen?.('ITS-A2')}
+          <g style={getRoomStyle('lab', isSelected('ITS-A2'), hasSelection)}
+            onClick={() => handleOpen?.('ITS-A2')}
             className={`classRoom ${isSelected('ITS-A2') ? 'selected' : ''}`}>
             <path d="M154.773811,447.647782v76.993416h107.493282v-76.993416h-107.493282Z" transform="matrix(0.984893 0 0 1.335732 -152.339548 -381.981322)"/>
             <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
@@ -125,7 +129,8 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
             </text>
           </g>
           {/* Aula 3*/}
-          <g onClick={() => handleOpen?.('ITS-A3')}
+          <g style={getRoomStyle('lab', isSelected('ITS-A3'), hasSelection)}
+            onClick={() => handleOpen?.('ITS-A3')}
             className={`classRoom ${isSelected('ITS-A3') ? 'selected' : ''}`}>
             <path d="M154.773811,447.647782v76.993416h107.493282v-76.993416h-107.493282Z" transform="matrix(0.984881 0 0 1.335732 -152.336401 -279.138752)"/>
             <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
@@ -136,7 +141,8 @@ export default function ITSPb({selectedCode,handleOpen}: ITSPbProps) {
             </text>
           </g>
           {/* Aula 4*/}
-          <g onClick={() => handleOpen?.('ITS-A4')}
+          <g  style={getRoomStyle('classroom', isSelected('ITS-A4'), hasSelection)}
+            onClick={() => handleOpen?.('ITS-A4')}
             className={`classRoom ${isSelected('ITS-A4') ? 'selected' : ''}`}>
             <path d="M154.428424,447.647782l.000001,76.993416h106.484852l1.008429-76.993416h-107.493282Z" transform="matrix(0.986682 0 0 1.339819 -152.371803 -178.125711)"/>
             <text dx="0" dy="0" fontFamily='"eBHsLTiXjpU1:::Roboto"' fontSize="12" fontWeight="400" strokeWidth="0"
