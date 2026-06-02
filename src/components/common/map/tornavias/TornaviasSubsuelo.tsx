@@ -1,17 +1,16 @@
 import { BookOpenText, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
+import { getRoomStyle } from '../RoomStyle'
 
 interface TornaviasSubsueloProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
   handleOpen?: (classRoomId: string) => void
 }
 
-export default function TornaviasSubsuelo({
-  selectedCode,
-  handleOpen
-}: TornaviasSubsueloProps) {
+export default function TornaviasSubsuelo({ selectedCode, handleOpen }: TornaviasSubsueloProps) {
   const isSelected = (id: string) => id === selectedCode
-
+  const hasSelection = !!selectedCode //convierte selectedCode a boolean
+  
   // !important: Si se quiere volver a la posición original, sacar el rotate y reemplazar las coordenadas comentadas por las actuales.
   // todo-> viewBox="minX minY width height"    (minX;minY) ancho alto
   return (
@@ -270,7 +269,7 @@ export default function TornaviasSubsuelo({
           </g>
           {/* ......................................................:Aulas:........................................................................... */}
           {/* A27 */}
-          <g style={{ fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth }}
+          <g style={getRoomStyle('classroom', isSelected('TOR-A27'), hasSelection)}
             onClick={() => handleOpen?.('TOR-A27')} transform="translate(.000001 0)"
             className={`classRoom ${isSelected('TOR-A27') ? 'selected' : ''}`} >
             <path
@@ -291,16 +290,10 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* A26 */}
-          <g
-            style={{
-              fill: mapColors.classrooms.fill,
-              stroke: mapColors.classrooms.stroke,
-              strokeWidth: mapColors.classrooms.strokeWidth
-            }}
+          <g style={getRoomStyle('classroom', isSelected('TOR-A26'), hasSelection)}
             onClick={() => handleOpen?.('TOR-A26')}
             transform="translate(.000001 0)"
-            className={`classRoom ${isSelected('TOR-A26') ? 'selected' : ''}`}
-          >
+            className={`classRoom ${isSelected('TOR-A26') ? 'selected' : ''}`} >
             <path
               d="M390.627876,467.883894l12.963961,47.297694c17.514813-5.107595,47.937744-18.736399,60.46326-27.892047l-28.689661-39.3772c-10.428627,7.307407-32.766706,17.369936-44.737562,19.971553"
               transform="translate(.000003 0)"
@@ -320,15 +313,9 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* A25 Lab. de Artes Digitales*/}
-          <g
-            style={{
-              fill: mapColors.classrooms.fill,
-              stroke: mapColors.classrooms.stroke,
-              strokeWidth: mapColors.classrooms.strokeWidth
-            }}
+          <g style={getRoomStyle('classroom', isSelected('TOR-A25'), hasSelection)}
             onClick={() => handleOpen?.('TOR-A25')}
-            className={`classRoom ${isSelected('TOR-A25') ? 'selected' : ''}`}
-          >
+            className={`classRoom ${isSelected('TOR-A25') ? 'selected' : ''}`} >
             <path
               d="M464.0551,487.289541c22.515861-13.872036,54.947443-50.182526,63.920489-73.397303l-45.488801-20.764782c-7.012486,17.055566-30.99735,44.06238-47.121349,54.784883L464.0551,487.289538"
               transform="translate(0 0.000004)"
@@ -354,7 +341,7 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* A28 */}
-          <g style={{ fill: mapColors.classrooms.fill, stroke: mapColors.classrooms.stroke, strokeWidth: mapColors.classrooms.strokeWidth }}
+          <g style={getRoomStyle('classroom', isSelected('TOR-A28'), hasSelection)}
             onClick={() => handleOpen?.('TOR-A28')} transform="translate(.000001 0)"
             className={`classRoom ${isSelected('TOR-A28') ? 'selected' : ''}`}>
             <path
@@ -375,12 +362,7 @@ export default function TornaviasSubsuelo({
             </text>
           </g>
           {/* A29 */}
-          <g
-            style={{
-              fill: mapColors.classrooms.fill,
-              stroke: mapColors.classrooms.stroke,
-              strokeWidth: mapColors.classrooms.strokeWidth
-            }}
+          <g style={getRoomStyle('classroom', isSelected('TOR-A29'), hasSelection)}
             onClick={() => handleOpen?.('TOR-A29')}
             transform="translate(.000001 0)"
             className={`classRoom ${isSelected('TOR-A29') ? 'selected' : ''}`}
