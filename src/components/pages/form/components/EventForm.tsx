@@ -66,6 +66,7 @@ type ScheduleMode = 'single' | 'custom_period'
 
 interface LocationState {
   courseID?: string
+  preselectedClassroomId?: string
 }
 
 /* ---------- tipos ---------- */
@@ -100,7 +101,7 @@ const allowsCustomPeriod = (type: EventType | '') =>
 /* ---------- componente ---------- */
 export default function EventForm() {
   const location = useLocation()
-  const { courseID: initialCourseID } = (location.state ?? {}) as LocationState
+  const { courseID: initialCourseID, preselectedClassroomId } = (location.state ?? {}) as LocationState
 
   /* state */
   const [periods, setPeriods] = useState<IPeriod[]>([])
@@ -409,10 +410,43 @@ export default function EventForm() {
   useEffect(() => {
     setTitle('Evento')
     setIcon(<CalendarStar size={32} />)
-    fetchInfo()
-    if (!id && initialCourseID) {
-      setValue('courseID', initialCourseID)
+
+    const init = async () => {
+      await fetchInfo()
+
+      if (!id && initialCourseID) {
+        setValue('courseID', initialCourseID)
+      }
+
+      // Si viene un aula pre-seleccionada desde el modal (rol PROFESSOR),
+      // agregamos un horario con ese edificio/aula ya cargados
+      if (!id && preselectedClassroomId) {
+        const allBuildings = await import('@/data/services/BuildingService')
+          .then(m => m.buildingService.getAll())
+          .then(r => r.data)
+
+        let foundBuildingId = ''
+        for (const b of allBuildings) {
+          if (b.classrooms.some(c => c.id === preselectedClassroomId)) {
+            foundBuildingId = b.id
+            break
+          }
+        }
+
+        append({
+          weekDay: '',
+          startTime: '08:00',
+          endTime: '10:00',
+          date: null,
+          isVirtual: false,
+          buildingId: foundBuildingId,
+          classroomId: preselectedClassroomId,
+          professors: []
+        })
+      }
     }
+
+    init()
 
     schedulesWatch.forEach((s, idx) => {
       if (s.isVirtual && s.classroom) {

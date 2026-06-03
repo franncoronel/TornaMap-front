@@ -84,7 +84,7 @@ export default function Profile() {
         )}
       </header>
 
-      {user?.isAdmin && (
+      {user?.role == 'ADMIN' && (
         <>
           {/* <ProfileButton>Agregar Tipo de Aula</ProfileButton>
           <ProfileButton>Editar Aula</ProfileButton> */}

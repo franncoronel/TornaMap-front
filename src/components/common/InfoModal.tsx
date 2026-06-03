@@ -9,9 +9,9 @@ import {
   Button
 } from '@mui/material'
 import { ReactNode, useState } from 'react'
-import { Bell, X } from '@phosphor-icons/react'
+import { Bell, X, BookBookmark, CalendarPlus } from '@phosphor-icons/react'
 import { useAuth } from '@/context/AuthContext'
-import NewsletterPopover from './NewsletterPopover' // ajustá el path si es necesario
+import NewsletterPopover from './NewsletterPopover'
 
 type InfoModalProps = {
   children: ReactNode
@@ -23,6 +23,7 @@ type InfoModalProps = {
   type: 'course' | 'event' | 'schedule'
   onSubscribe?: () => void
   onSubscribeNewsletter?: (email: string) => void
+  onReserveClassroom?: () => void
 }
 
 export default function InfoModal({
@@ -33,9 +34,10 @@ export default function InfoModal({
   subtitle,
   capacity,
   onSubscribe = () => {},
-  onSubscribeNewsletter = () => {}
+  onSubscribeNewsletter = () => {},
+  onReserveClassroom = () => {}
 }: InfoModalProps) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   const handleBellClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,6 +45,9 @@ export default function InfoModal({
   }
 
   const handlePopoverClose = () => setAnchorEl(null)
+
+  const isStudent = user?.role === 'STUDENT'
+  const isProfessor = user?.role === 'PROFESSOR'
 
   return (
     <Modal
@@ -113,17 +118,33 @@ export default function InfoModal({
 
             {/* Botones */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-             {/* Campana newsletter - solo para no logueados */}
+
+              {/* No logueado: campana newsletter + botón suscribirse deshabilitado */}
               {!isAuthenticated && (
-                <Tooltip title="Suscribirse al newsletter">
-                  <IconButton
-                    aria-label="Suscribirse al newsletter"
-                    color="secondary"
-                    onClick={handleBellClick}
-                  >
-                    <Bell size={24} />
-                  </IconButton>
-                </Tooltip>
+                <>
+                  <Tooltip title="Suscribirse al newsletter">
+                    <IconButton
+                      aria-label="Suscribirse al newsletter"
+                      color="secondary"
+                      onClick={handleBellClick}
+                    >
+                      <Bell size={24} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip title="Iniciá sesión para suscribirte" arrow>
+                    <span>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        disabled
+                        startIcon={<BookBookmark size={18} />}
+                        sx={{ borderRadius: '999px' }}
+                      >
+                        Suscribirse
+                      </Button>
+                    </span>
+                  </Tooltip>
+                </>
               )}
 
               <NewsletterPopover
@@ -132,16 +153,33 @@ export default function InfoModal({
                 onSubmit={onSubscribeNewsletter}
               />
 
-              {/* Suscripción al curso/evento - solo logueados */}
-              {isAuthenticated && (
+              {/* Estudiante: botón suscribirse activo */}
+              {isAuthenticated && isStudent && (
                 <Button
                   variant="contained"
                   size="small"
                   onClick={onSubscribe}
+                  startIcon={<BookBookmark size={18} />}
                   sx={{ borderRadius: '999px' }}
                 >
                   Suscribirse
                 </Button>
+              )}
+
+              {/* Profesor: botón reservar aula */}
+              {isAuthenticated && isProfessor && (
+                <Tooltip title="Crear un evento en esta aula" arrow>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={onReserveClassroom}
+                    startIcon={<CalendarPlus size={18} />}
+                    sx={{ borderRadius: '999px' }}
+                  >
+                    Reservar aula
+                  </Button>
+                </Tooltip>
               )}
 
               <IconButton
@@ -152,7 +190,6 @@ export default function InfoModal({
                 <X weight="bold" />
               </IconButton>
             </Box>
-
           </Box>
 
           <Divider />
@@ -170,7 +207,6 @@ export default function InfoModal({
           >
             {children}
           </Box>
-
         </Box>
       </Fade>
     </Modal>
