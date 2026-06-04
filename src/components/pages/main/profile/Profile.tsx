@@ -2,7 +2,7 @@ import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { SignOut } from '@phosphor-icons/react'
+import { QrCode, SignOut } from '@phosphor-icons/react'
 import { userService } from '@/data/services/UserService'
 import { useEffect, useState } from 'react'
 import { User } from '@/data/domain/User'
@@ -121,6 +121,12 @@ export default function Profile() {
               >
                 Periodos
               </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/qr')}
+                startIcon={<QrCode size={32} />}
+              >
+                QR y Flyers
+              </ProfileButton>
             </>
           ) : (
             <Box
@@ -159,6 +165,11 @@ export default function Profile() {
                 title="Periodos"
                 icon={<ClockClockwise size={60} />}
                 onClick={() => navigate('/periodos')}
+              />
+              <ActionCard
+                title="QR y Flyers"
+                icon={<QrCode size={60} />}
+                onClick={() => navigate('/qr')}
               />
             </Box>
           )}
