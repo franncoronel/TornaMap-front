@@ -1,7 +1,7 @@
 // Hooks
 import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 // Components
 import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider, Paper} from '@mui/material'
@@ -40,6 +40,8 @@ export default function Map() {
     }
   })
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const [autoOpenDone, setAutoOpenDone] = useState(false)
   const { building: buildingPath, level: levelPath } = useParams() //leo la url del map para saber a qué edificio y nivel mostrar, ej: /mapa/tornavias/primer-piso => buildingPath = 'tornavias', levelPath = 'primer-piso'
   
   // edificios desde back
@@ -65,7 +67,6 @@ export default function Map() {
         setLoader(true)
         const res = await buildingService.getAll()
         setBuildings(mapBuildingsToUI(res.data))
-
       } catch (e) {
         console.error('Error fetching Buildings:', e)
         setNotificationState({
@@ -182,6 +183,15 @@ export default function Map() {
       navigate(`/mapa/${normalize(first.text)}/${floorToPath(firstLevel)}`)
     }
   }, [buildings])
+
+
+    useEffect(() => {
+    const aulaParam = searchParams.get('aula')
+    if (aulaParam && !open && !autoOpenDone) {
+      setAutoOpenDone(true)
+      handleOpen(aulaParam)
+    }
+  }, [searchParams, handleOpen])
 
   return (
     <main className={`interactive-page${!isCampus ? ' map-page' : ''}`}>

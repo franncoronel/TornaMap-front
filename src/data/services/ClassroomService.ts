@@ -14,6 +14,11 @@ export class ClassroomService implements ServiceInterface {
     const classroom = classroomDto.data
     return classroom
   }
+
+  async getAll(): Promise<Response<IClassroom[]>> {
+  const res = await axios.get<Response<IClassroom[]>>(this.baseUrl)
+  return res.data
+}
 }
 
 export const classroomService = new ClassroomService()

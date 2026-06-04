@@ -27,9 +27,7 @@ const EventRequestList = lazy(
   () => import('@/components/pages/main/event/EventRequestList')
 )
 const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
-const QrFlyers = lazy(
-  () => import('@/components/pages/main/qr/QrFlyers')
-)
+const QrFlyers = lazy(() => import('@/components/pages/main/qr/QrFlyers'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -125,8 +123,12 @@ export const routes: RouteObject[] = [
         element: <Periods />
       },
       {
-        path: 'qr',
-        element: <QrFlyers />
+        path: '/qr',
+        element: (
+          <ProtectedRoute>
+            <QrFlyers />
+          </ProtectedRoute>
+        )
       }
     ]
   },
