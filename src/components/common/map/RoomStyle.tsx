@@ -1,14 +1,16 @@
 import { mapColors } from "@/components/pages/map/mapColors"
 
 
-type RoomType = 'classroom' | 'lab' | 'lab_h'
+type RoomType = 'classroom' | 'lab' | 'lab_h' | 'eCyT' | 'intsTrans'
 
 
 export function getRoomStyle(type: RoomType, isSelected: boolean, hasSelection: boolean) {
   const baseStyles = {
     classroom: mapColors.classrooms,
     lab: mapColors.lab,
-    lab_h: mapColors.humanidades
+    lab_h: mapColors.humanidades,
+    eCyT: mapColors.escuelaCyt,
+    intsTrans: mapColors.institutoTransporte
   }
 
   const base = baseStyles[type]
