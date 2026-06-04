@@ -1,6 +1,7 @@
 import { BookOpenText, Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
 import { getRoomStyle } from '../RoomStyle'
+import { getMapStyle } from '../MapStyle'
 
 interface TornaviasSubsueloProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -208,12 +209,7 @@ export default function TornaviasSubsuelo({ selectedCode, handleOpen }: Tornavia
             </text>
           </g>
           {/* Lectura Mundi Comunicación Identidad Visual */}
-          <g
-            style={{
-              fill: mapColors.lecturaMundi.fill,
-              stroke: mapColors.lecturaMundi.stroke,
-              strokeWidth: mapColors.lecturaMundi.strokeWidth
-            }}
+          <g style={getMapStyle( mapColors.lecturaMundi, hasSelection )}
             transform="translate(.000001 0.000001)">
             <path
               d="M163.777204,367.564469c3.994251,27.061452,27.310193,73.710364,47.051268,93.109102l36.751213-32.672082c-13.962233-13.477412-31.78846-47.477558-34.827329-68.698472l-48.975152,8.261452Z"
@@ -386,20 +382,11 @@ export default function TornaviasSubsuelo({ selectedCode, handleOpen }: Tornavia
             </text>
           </g>
           {/* Gerencia de Informática Soporte Técnico */}
-          <g
-            style={{
-              fill: mapColors.commonAreas.fill,
-              stroke: mapColors.commonAreas.stroke,
-              strokeWidth: mapColors.commonAreas.strokeWidth
-            }}
+          <g style={getMapStyle( mapColors.commonAreas, hasSelection )}
             transform="translate(0 0.000001)">
             <path
               d="M573.606346,434.718077l-20.752469,34.760868l45.815688,31.628575c7.996447-10.747864,20.887156-32.37141,25.652834-43.268522l-50.716053-23.120921Z"
-              transform="translate(.000001-.028904)"
-              fill="#9699a1"
-              stroke="#505050"
-              strokeWidth="0.7"
-            />
+              transform="translate(.000001-.028904)"/>
             <text
               dx="0"
               dy="0"
@@ -419,14 +406,7 @@ export default function TornaviasSubsuelo({ selectedCode, handleOpen }: Tornavia
           </g>
           {/* .........................................:IAMK:........................................................................*/}
           {/* IAMK */}
-          <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
-            transform="translate(0 0.000001)"
-          >
+          <g style={getMapStyle( mapColors.iAMK, hasSelection )} transform="translate(0 0.000001)" >
             <path
               d="M552.853878,469.450041c-5.199325,6.945144-18.767134,22.428585-27.127554,30.962849l39.909481,39.322713c10.065025-9.651156,26.734904-28.9414,33.03376-38.656988l-45.815687-31.628574Z"
               transform="translate(.000001 0.000001)"
@@ -447,14 +427,7 @@ export default function TornaviasSubsuelo({ selectedCode, handleOpen }: Tornavia
             </text>
           </g>
           {/* IAMK Servicios */}
-          <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
-            transform="translate(0 0.000001)"
-          >
+          <g style={getMapStyle( mapColors.iAMK, hasSelection )} transform="translate(0 0.000001)" >
             <path d="M456.583909,547.452094c-9.774067,4.179228-29.597963,11.308888-39.669812,14.215282L430.42164,614.12842c13.015658-2.971658,37.650561-11.502414,49.290329-17.027303l-23.12806-49.649023Z" />
             <text
               dx="0"
@@ -475,13 +448,7 @@ export default function TornaviasSubsuelo({ selectedCode, handleOpen }: Tornavia
             </text>
           </g>
           {/* IAMK Decanato */}
-          <g
-            style={{
-              fill: mapColors.iAMK.fill,
-              stroke: mapColors.iAMK.stroke,
-              strokeWidth: mapColors.iAMK.strokeWidth
-            }}
-            transform="translate(0 0.000001)">
+          <g style={getMapStyle( mapColors.iAMK, hasSelection )} transform="translate(0 0.000001)">
             <path
               d="M416.914097,561.667376c-11.052498,2.765574-31.966516,6.307018-42.064177,6.551575l4.119723,54.91027c13.045229-.839876,38.75822-5.389702,51.451995-9.000803l-13.507541-52.461042Z"
               transform="translate(.000002 0.000004)"

@@ -1,6 +1,7 @@
 import { Toilet, File, BookOpenText, ForkKnife, CaretCircleUpDown } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
 import { getRoomStyle } from '../RoomStyle'
+import { getMapStyle } from '../MapStyle'
 
 interface TornaviasPlantaBajaProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -1283,8 +1284,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
         {/* Ingeniería en Energía */}
         <g style={getRoomStyle('lab', isSelected('TOR-IEN'), hasSelection)}
           onClick={() => handleOpen?.('TOR-IEN')}
-          className={`classRoom ${isSelected('TOR-IEN') ? 'selected' : ''}`}
-        >
+          className={`classRoom ${isSelected('TOR-IEN') ? 'selected' : ''}`}>
           <path d="M549.169254,575.385776c7.898751-4.666319,19.759674-13.837344,24.26661-17.77757l34.460785,41.641804c-8.888181,7.251522-23.190236,18.453662-30.578996,21.745986" />
           <text
             dx="0"
@@ -1364,13 +1364,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
         </g>
         {/* ..................................AyP //! Hay que actualizar los datos de la sección de ex-Humanidades */}
         {/* Sala de Prof AyP */}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )} >
           <path
             d="M525.112846,190.449754l30.809784,14.566452l16.085864-28.032859c-7.029046-5.013683-24.83861-13.608648-35.213244-16.624776l-11.682404,30.091183Z"
             transform="translate(.000004 0.000001)"
@@ -1393,13 +1387,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
           </text>
         </g>
         {/* Departamento de servicios académicos EH */}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )} >
           <path
             d="M459.017196,142.982326c-11.98079-.941199-31.695726-.447048-40.60859.534947l4.860879,54.315229c8.598158-.948591,24.775352-1.450442,32.632527-.478327l3.115184-54.371849Z"
             transform="translate(0 0.000003)"
@@ -1425,15 +1413,9 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
           </text>
         </g>
         {/* Cámara Gesell*/}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
+        <g style={getRoomStyle('lab_h', isSelected('TOR-CG'), hasSelection)}
           onClick={() => handleOpen?.('TOR-CG')}
-          className={`classRoom ${isSelected('TOR-CG') ? 'selected' : ''}`}
-        >
+          className={`classRoom ${isSelected('TOR-CG') ? 'selected' : ''}`}>
           <path
             d="M418.408606,143.517274c-8.253008.539874-26.610644,3.298821-38.512331,6.416424l13.919479,52.79692c7.804107-2.107954,22.325769-4.690337,29.453731-4.898115"
             transform="translate(0 0.000002)"
@@ -1457,13 +1439,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
         </g>
         {/* ..........................................:Consultorías:.......................................... */}
         {/* Información estudiantil */}
-        <g
-          style={{
-            fill: mapColors.consultancy.fill,
-            stroke: mapColors.consultancy.stroke,
-            strokeWidth: mapColors.consultancy.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.consultancy, hasSelection )}>
           <path
             d="M611.255379,249.956345l22.912717-21.057066c-5.249803-6.594222-18.944855-19.660462-27.191123-26.168659l-20.500679,24.569214l24.779085,22.656511Z"
             transform="translate(.000002 0.000003)"
@@ -1487,13 +1463,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
         </g>
         {/* Becas Unsam o algo así  */}
         {/* //todo: Fijarse el nombre de esta aula.... lo cambiaron hace poco */}
-        <g
-          style={{
-            fill: mapColors.consultancy.fill,
-            stroke: mapColors.consultancy.stroke,
-            strokeWidth: mapColors.consultancy.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.consultancy, hasSelection )}>
           <path
             d="M617.136611,504.764578c4.524517-7.497886,11.742026-22.010435,14.308387-29.018766l50.42274,19.884001c-2.903436,8.247081-12.515773,26.58666-18.631011,36.679158l-46.100116-27.544393Z"
             transform="translate(.000003 0)"
@@ -1516,13 +1486,7 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
           </text>
         </g>
         {/* Punto Bienestar */}
-        <g
-          style={{
-            fill: mapColors.consultancy.fill,
-            stroke: mapColors.consultancy.stroke,
-            strokeWidth: mapColors.consultancy.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.consultancy, hasSelection )}>
           <path
             d="M330.122037,695.331971c11.404956,4.134074,33.007349,11.189303,43.357359,13.332271l-12.089435,52.349969c-8.548164-2.158496-24.903146-5.585735-50.63911-16.622549l19.371186-49.059691Z"
             transform="translate(.000002 0.000002)"
@@ -1764,8 +1728,9 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
               </tspan>
             </text>
           </g>
-          {/* Limpieza */}
-          <g>
+        </g>
+        {/* Limpieza */}
+          <g style={getMapStyle( mapColors.banios, hasSelection )}>
             <path
               d="M545.398145,700.77347c8.721971-2.993329,19.984774-8.696205,23.225983-10.154164l21.527653,49.211442c-2.752341,1.595955-14.168785,5.958494-27.59247,10.07287L545.398145,700.77347Z"
               transform="translate(.000001 0)"
@@ -1784,7 +1749,6 @@ export default function TornaviasPlantaBaja({ selectedCode, handleOpen }: Tornav
               </tspan>
             </text>
           </g>
-        </g>
       </svg>
     </>
   )

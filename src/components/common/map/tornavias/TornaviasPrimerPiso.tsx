@@ -2,6 +2,7 @@ import { BookOpenText, CaretCircleUpDown, ForkKnife, Toilet } from '@phosphor-ic
 import { mapColors } from '../../../pages/map/mapColors'
 import RoomText from '../RoomText'
 import { getRoomStyle } from '../RoomStyle'
+import { getMapStyle } from '../MapStyle'
 
 interface TornaviasPrimerPisoProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -491,13 +492,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/* .....................................:Escuela de Ciencia y Tecnología:........................................................ */}
         {/* Ecyt Decanato */}
-        <g
-          style={{
-            fill: mapColors.escuelaCyt.fill,
-            stroke: mapColors.escuelaCyt.stroke,
-            strokeWidth: mapColors.escuelaCyt.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.escuelaCyt, hasSelection )}>
           <path
             d="M757.760344,419.902162c2.008742-22.670625-2.526518-75.058429-10.989724-105.113442-6.74222-30.964592-39.239565-92.6416-65.560797-122.367408l39.061306-34.540929c33.301992,34.547907,65.020307,90.654422,78.984958,148.918585c10.03177,33.294534,12.601966,76.997017,11.57922,116.73559l-53.074963-3.632396Z"
             transform="translate(.000001 0.000005)"
@@ -511,13 +506,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Alumnos */}
-        <g
-          style={{
-            fill: mapColors.escuelaCyt.fill,
-            stroke: mapColors.escuelaCyt.stroke,
-            strokeWidth: mapColors.escuelaCyt.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.escuelaCyt, hasSelection )}>
           <path
             d="M646.970343,314.108769l34.239481-14.591046c3.972581,8.543808,10.270582,26.74574,12.876093,36.403864l-36.56069,8.680129c-2.411722-6.579224-6.865825-22.142615-10.554884-30.492947Z"
             transform="translate(.000001 0.000002)"
@@ -531,15 +520,9 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Instituto Colomb */}
-        <g
-          style={{
-            fill: mapColors.escuelaCyt.fill,
-            stroke: mapColors.escuelaCyt.stroke,
-            strokeWidth: mapColors.escuelaCyt.strokeWidth
-          }}
+        <g style={getRoomStyle('eCyT', isSelected('IC'), hasSelection)}
           onClick={() => handleOpen?.('IC')}
-          className={`classRoom ${isSelected('IC') ? 'selected' : ''}`}
-        >
+          className={`classRoom ${isSelected('IC') ? 'selected' : ''}`}>
           <path
             d="M589.265362,565.005193l23.788344,28.230525c-13.601894,12.714696-46.693126,33.629922-65.911393,42.136836l-14.421822-33.78161c15.985983-6.49366,44.071082-25.056245,56.544871-36.585751Z"
             transform="translate(.000002 0)"
@@ -554,13 +537,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Sala de profesores Cyt */}
-        <g
-          style={{
-            fill: mapColors.escuelaCyt.fill,
-            stroke: mapColors.escuelaCyt.stroke,
-            strokeWidth: mapColors.escuelaCyt.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.escuelaCyt, hasSelection )}>
           <path d="M613.937146,540.085921l-24.671782,24.919272l17.225526,20.438799l28.450627-28.45947-21.004371-16.898601Z" />
           <RoomText
             x={600} y={570}
@@ -617,13 +594,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* OSUNSAM */}
-        <g
-          style={{
-            fill: mapColors.commonAreas.fill,
-            stroke: mapColors.commonAreas.stroke,
-            strokeWidth: mapColors.commonAreas.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.commonAreas, hasSelection )}>
           <path
             d="M259.381702,519.189596c10.935457,15.841837,34.929202,41.640842,48.261207,51.125226l-24.869613,29.443841c-12.782995-10.876047-40.871718-40.026007-53.624121-59.672745l30.232527-20.896322Z"
             transform="translate(.000004 0.000003)"
@@ -638,13 +609,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/* ..............................................:IAMK:............................................................... */}
         {/* IECJ IAMK Administración */}
-        <g
-          style={{
-            fill: mapColors.iAMK.fill,
-            stroke: mapColors.iAMK.stroke,
-            strokeWidth: mapColors.iAMK.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.iAMK, hasSelection )}>
           <path
             d="M234.730854,633.622503c-7.380325-6.56406-19.527527-19.227165-24.388226-25.772566l-40.138234,36.763466c5.856737,8.003894,20.655397,22.143183,28.403533,28.551429l36.122927-39.542329Z"
             transform="translate(.000001 0.000002)"
@@ -664,12 +629,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/* .................................................:Instituto Transporte IT:.................................................................................................................... */}
         {/* Instituto de Transporte IT */}
-        <g
-          style={{
-            fill: mapColors.institutoTransporte.fill,
-            stroke: mapColors.institutoTransporte.stroke,
-            strokeWidth: mapColors.institutoTransporte.strokeWidth
-          }}
+        <g style={getRoomStyle('intsTrans', isSelected('TOR-IDT'), hasSelection)}
           onClick={() => handleOpen?.('TOR-IDT')}
           className={`classRoom ${isSelected('TOR-IDT') ? 'selected' : ''}`}
         >
@@ -691,13 +651,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Depto. de Servicios Académicos IT */}
-        <g
-          style={{
-            fill: mapColors.institutoTransporte.fill,
-            stroke: mapColors.institutoTransporte.stroke,
-            strokeWidth: mapColors.institutoTransporte.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.institutoTransporte, hasSelection )}>
           <path
             d="M210.342629,607.849939c-8.95236-10.244195-24.001911-29.443305-29.630071-38.554563l-45.059782,29.14993c9.959006,15.197656,26.950464,38.49425,34.551609,46.168097l40.138244-36.763464Z"
             transform="translate(0 0.000002)"
@@ -718,13 +672,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/* Centro de Atención Psicoanalítica UIS */}{' '}
         {/* //todo: Buscar la nueva ubicación de este departamanto*/ }
-        <g
-          style={{
-            fill: mapColors.centroDeAtencionPsico.fill,
-            stroke: mapColors.centroDeAtencionPsico.stroke,
-            strokeWidth: mapColors.centroDeAtencionPsico.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.centroDeAtencionPsico, hasSelection )}>
           <path
             d="M231.242577,455.079984c1.547165,7.554654,7.064444,23.381722,10.675336,31.773873l-33.635827,14.863117-12.725862-36.438078l35.686353-10.198912Z"
             transform="translate(.000002 0.000003)"
@@ -739,13 +687,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/*// todo: Verificar que aulas y distribucion tiene ex Escuela de Humanidades  */}
         {/* Escuela de Humanidades - Decanato*/}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )}>
           <path
             d="M319.840144,111.346257c75.14256-34.144216,183.160217-29.752161,239.623599-3.504649l19.94034-49.606132C554.43168,46.828812,520.222742,38.507192,482.348861,35.34659c-20.97359-1.750261-41.726158-3.452838-64.697033-2.5074-14.082876.579625-29.690977,2.864605-43.522461,5.394067-26.892728,4.918064-52.840999,13.426065-76.215197,24.628328l21.925974,48.484672Z"
             transform="translate(.000004 0.000003)"
@@ -759,13 +701,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Escuela de Humanidades*/}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )}>
           <path
             d="M327.263643,213.98662c16.985138-8.970746,34.362269-18.323031,36.394122-18.70457c11.712036-4.510797,34.255949-10.272256,46.21096-12.246308c7.598843-.999778,23.499964-2.008385,34.331006-2.464214c5.499249-.587354,21.258824.049948,32.234073,1.17926c28.40594,4.353976,35.561281,8.44946,46.523058,12.146875l15.369602-33.261027c-7.626555-4.065091-26.271836-8.845666-38.519817-11.23854-10.108397-2.185029-27.761434-4.746005-37.801534-5.616096-27.100144-3.028411-37.227419-.996925-54.511777,1.251753-13.277425,1.82056-41.226825,9.255387-57.244986,15.602882-12.396231,4.411002-33.85388,14.752745-42.605448,21.114152l19.620734,32.235832"
             transform="translate(.000007 0.000001)"
@@ -780,13 +716,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Dirección de Gérenro y Diversidad Sexual */}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )}>
           <path
             d="M340.355463,695.709143c-6.597881-2.317223-21.233509-8.03886-29.32171-11.342363l-10.972266,22.254985-29.096213-15.520702-14.116982,24.37659c18.184017,11.267016,51.055151,24.728614,65.59174,30.073223l17.915431-49.841733Z"
             transform="translate(.000001 0.000002)"
@@ -804,13 +734,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Centro de Estudios Latinos-Americanos */}
-        <g
-          style={{
-            fill: mapColors.humanidades.fill,
-            stroke: mapColors.humanidades.stroke,
-            strokeWidth: mapColors.humanidades.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.humanidades, hasSelection )}>
           <path
             d="M283.571377,670.087322c5.84398,3.656365,19.830554,10.673608,27.462375,14.279456l-10.972267,22.254987-29.096213-15.520706l12.606105-21.013737Z"
             transform="translate(.000002 0.000004)"
@@ -1183,13 +1107,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
         </g>
         {/*........................................:Lectura Mundi:.................................................. */}
         {/* Lectura Mundi - Coordinación */}
-        <g
-          style={{
-            fill: mapColors.lecturaMundi.fill,
-            stroke: mapColors.lecturaMundi.stroke,
-            strokeWidth: mapColors.lecturaMundi.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.lecturaMundi, hasSelection )}>
           <path
             d="M364.376435,604.764542c-12.799056-4.543638-40.762397-18.829981-56.733526-34.449722l-24.869612,29.443841c16.473654,12.511506,49.854622,31.813607,67.47506,38.701918l14.128078-33.696037Z"
             transform="translate(0 0.000002)"
@@ -1206,13 +1124,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Lectura Mundi Dirección */}
-        <g
-          style={{
-            fill: mapColors.lecturaMundi.fill,
-            stroke: mapColors.lecturaMundi.stroke,
-            strokeWidth: mapColors.lecturaMundi.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.lecturaMundi, hasSelection )}>
           <path
             d="M283.571379,670.087325c-5.305198-3.196616-16.584683-11.207046-22.601314-15.851484l-31.820886,43.112352c7.853285,5.623603,21.47811,14.845647,27.699114,18.129461l26.723086-45.390329Z"
             transform="translate(0 0.000001)"
@@ -1230,13 +1142,7 @@ export default function TornaviasPrimerPiso({ selectedCode, handleOpen }: Tornav
           />
         </g>
         {/* Lectura Mundi Administración */}
-        <g
-          style={{
-            fill: mapColors.lecturaMundi.fill,
-            stroke: mapColors.lecturaMundi.stroke,
-            strokeWidth: mapColors.lecturaMundi.strokeWidth
-          }}
-        >
+        <g style={getMapStyle( mapColors.lecturaMundi, hasSelection )}>
           <path
             d="M260.970064,654.235841l-26.23921-20.613338-36.122927,39.542329c8.558428,7.5473,24.015107,19.628812,30.541251,24.183361l31.820886-43.112352Z"
             transform="translate(.000001 0.000001)"
