@@ -53,3 +53,15 @@ export const EVENT_TYPES = [
 ] as const
  
 export type EventType = (typeof EVENT_TYPES)[number]['value']
+
+export interface InstitutionalEvent {
+  id: string
+  name: string
+  type: 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA'
+  date: string
+  startTime: string
+  endTime: string
+  courseName?: string
+  speakers?: string[],
+  location: string
+}
