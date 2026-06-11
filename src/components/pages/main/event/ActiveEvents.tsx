@@ -1,14 +1,44 @@
+import { useEffect, useState } from 'react'
 import { Box, Stack, Typography } from '@mui/material'
 import { CalendarCheck } from '@phosphor-icons/react'
-
-import { todayEvents, finishedTodayEvents, upcomingEvents } from '@/data/mock/ActiveEvents'
-
 import BackButton from '@/components/common/BackButton'
 import { EventSection } from '@/components/common/EventSection'
 import '@/styles/interactive-page.css'
+import { InstitutionalEventsResponse } from '@/data/domain/Event'
+import { eventService } from '@/data/services/EventService'
+import { useNotification } from '@/context/NotificationContext'
+
 
 
 export default function ActiveEvents() {
+  const { setNotificationState } = useNotification()
+  const [events, setEvents] = useState<InstitutionalEventsResponse>({
+    current: [],
+    pendingToday: [],
+    finished: [],
+    upcoming: [],
+  })
+
+  useEffect(() => {
+    fetchEvents()
+  }, [])
+
+  const fetchEvents = async () => {
+    try {
+      const response = await eventService.getInstitutionalEvents()
+
+      setEvents(response.data)
+    } catch (error) {
+      console.error('Error al obtener eventos institucionales', error)
+      setNotificationState({
+        title: 'Error al obtener eventos institucionales',
+        type: 'error',
+        description: 'Ocurrió un error al cargar los eventos',
+        action: () => {}
+      })
+    }
+  }
+
   return (
     <Box className="interactive-page">
       <header className="interactive-page-header">
@@ -29,20 +59,25 @@ export default function ActiveEvents() {
         </Typography>
 
         <EventSection 
-          title="En Curso Hoy"
-          count={todayEvents.length}
-          events={todayEvents}
+          title="En Curso"
+          count={events.current.length}
+          events={events.current}
           defaultExpanded/>
 
         <EventSection
-          title="Finalizados Hoy"
-          count={finishedTodayEvents.length}
-          events={finishedTodayEvents}/>
+          title="Sin Iniciar"
+          count={events.pendingToday.length}
+          events={events.pendingToday}/>
+
+        <EventSection
+          title="Finalizados"
+          count={events.finished.length}
+          events={events.finished}/>
 
         <EventSection
           title="Próximos Eventos"
-          count={upcomingEvents.length}
-          events={upcomingEvents}/>
+          count={events.upcoming.length}
+          events={events.upcoming}/>
       </Box>
     </Box>
   )
