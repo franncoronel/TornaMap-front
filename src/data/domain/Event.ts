@@ -65,7 +65,6 @@ export interface InstitutionalEvent {
   courseName?: string
   location?: string
   isVirtual: boolean
-  professors: string[]
 }
 
 export interface InstitutionalEventsResponse {
