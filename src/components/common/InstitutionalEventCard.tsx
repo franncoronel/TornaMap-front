@@ -1,6 +1,6 @@
 import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
-import { CalendarBlank, Clock, GraduationCap, MapPinLine, User } from '@phosphor-icons/react'
+import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
 
 interface InstitutionalEventCardProps {
   event: InstitutionalEvent
