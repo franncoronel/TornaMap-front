@@ -58,10 +58,19 @@ export interface InstitutionalEvent {
   id: string
   name: string
   type: 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA'
-  date: string
-  startTime: string
-  endTime: string
+  details: string
+  startDate?: string
+  startTime?: string
+  endTime?: string
   courseName?: string
-  speakers?: string[],
-  location: string
+  location?: string
+  isVirtual: boolean
+  professors: string[]
+}
+
+export interface InstitutionalEventsResponse {
+  current: InstitutionalEvent[]
+  pendingToday: InstitutionalEvent[]
+  finished: InstitutionalEvent[]
+  upcoming: InstitutionalEvent[]
 }
