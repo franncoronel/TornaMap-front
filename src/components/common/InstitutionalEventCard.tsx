@@ -46,15 +46,6 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
             {event.name}
           </Typography>
 
-          {/* Materia asociada */}
-          {/* <Stack direction="row" spacing={1} alignItems="center"
-                 sx={{ minHeight: 24, color: 'text.secondary' }} >
-            <GraduationCap size={20} />
-            <Typography variant="body2">
-              {event.courseName ?? ' '}
-            </Typography>
-          </Stack> */}
-
           {/* Locacion */}
           <Stack direction="row"  spacing={1} alignItems="center"
               sx={{  minHeight: 24, color: 'text.secondary' }} >
@@ -62,17 +53,6 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
               <Typography variant="body2">
                 {event.location ?? ' '}
               </Typography>
-          </Stack>
-
-          {/* Docentes */}
-          <Stack spacing={0.5} sx={{ minHeight: 30 }} direction="row">
-            <User size={20} />
-            <Typography variant="body2" color="text.secondary" >
-              Docentes : 
-            </Typography>
-            <Typography variant="body2">
-              {event.professors?.length ? event.professors.join(', ') : ' '}
-            </Typography>
           </Stack>
 
           {/* Fecha */}
