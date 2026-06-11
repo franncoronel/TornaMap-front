@@ -1,6 +1,6 @@
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
-import { IEventCreate, IEventCreateDto, IEventList } from '../domain/Event'
+import { IEventCreate, IEventCreateDto, IEventList, InstitutionalEventsResponse } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
 import { format } from 'date-fns'
@@ -71,6 +71,13 @@ export class EventService implements ServiceInterface {
 
   async reject(id: string): Promise<void> {
     await axios.post(`${this.baseUrl}/${id}/reject`)
+  }
+
+  async getInstitutionalEvents(): Promise<Response<InstitutionalEventsResponse>> {
+    const { data } = await axios.get<Response<InstitutionalEventsResponse>>(
+      `${this.baseUrl}/institutional` )
+
+    return data
   }
 }
 
