@@ -1,18 +1,10 @@
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
+import { Card, CardContent, Stack, Typography } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
 import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
+import { ChipEventType } from './ChipEventType'
 
 interface InstitutionalEventCardProps {
   event: InstitutionalEvent
-}
-
-const getEventTypeColor = ( type: InstitutionalEvent['type'] ): 'primary' | 'success' | 'warning' => {
-  switch (type) {
-    case 'CHARLA': return 'primary'
-    case 'SEMINARIO': return 'success'
-    case 'CONFERENCIA': return 'warning'
-    default: return 'primary'
-  }
 }
 
 const formatDate = (date: string) => {
@@ -28,11 +20,8 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
         <Stack spacing={2}>
           {/* Header */}
           <Stack direction="row" justifyContent="space-between" alignItems="center" >
-            <Chip label={event.type} 
-                  color={getEventTypeColor(event.type)}
-                  size="small"
-                  sx={{ fontWeight: 600 }} />
-
+            <ChipEventType type={event.type} />
+            
             <Stack direction="row" spacing={0.5} alignItems="center" >
               <Clock size={20}/>
               <Typography variant="body2">
