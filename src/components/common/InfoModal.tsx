@@ -120,6 +120,38 @@ export default function InfoModal({
             {/* Botones */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 
+              {/* No logueado: solo campana newsletter, sin botón suscribirse */}
+              {!isAuthenticated && type === 'event' && (
+                <Tooltip title="Suscribirse al newsletter">
+                  <IconButton
+                    aria-label="Suscribirse al newsletter"
+                    color="secondary"
+                    onClick={handleBellClick}
+                  >
+                    <Bell size={24} />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              <NewsletterPopover
+                anchorEl={anchorEl}
+                onClose={handlePopoverClose}
+                onSubmit={onSubscribeNewsletter}
+              />
+
+              {/* Estudiante: botón suscribirse activo */}
+              {isAuthenticated && isStudent && type === 'event' &&(
+                <Button
+                  variant="contained"
+                  size="small"
+                  onClick={onSubscribe}
+                  startIcon={<BookBookmark size={18} />}
+                  sx={{ borderRadius: '999px' }}
+                >
+                  Suscribirse
+                </Button>
+              )}
+
               {/* Profesor: botón reservar aula, solo en cards de aulas */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
                 <Tooltip title="Crear un evento en esta aula" arrow>
