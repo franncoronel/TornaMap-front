@@ -33,6 +33,7 @@ export default function InfoModal({
   title,
   subtitle,
   capacity,
+  type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
   onReserveClassroom = () => {}
@@ -119,32 +120,17 @@ export default function InfoModal({
             {/* Botones */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
 
-              {/* No logueado: campana newsletter + botón suscribirse deshabilitado */}
+              {/* No logueado: solo campana newsletter, sin botón suscribirse */}
               {!isAuthenticated && (
-                <>
-                  <Tooltip title="Suscribirse al newsletter">
-                    <IconButton
-                      aria-label="Suscribirse al newsletter"
-                      color="secondary"
-                      onClick={handleBellClick}
-                    >
-                      <Bell size={24} />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip title="Iniciá sesión para suscribirte" arrow>
-                    <span>
-                      <Button
-                        variant="outlined"
-                        size="small"
-                        disabled
-                        startIcon={<BookBookmark size={18} />}
-                        sx={{ borderRadius: '999px' }}
-                      >
-                        Suscribirse
-                      </Button>
-                    </span>
-                  </Tooltip>
-                </>
+                <Tooltip title="Suscribirse al newsletter">
+                  <IconButton
+                    aria-label="Suscribirse al newsletter"
+                    color="secondary"
+                    onClick={handleBellClick}
+                  >
+                    <Bell size={24} />
+                  </IconButton>
+                </Tooltip>
               )}
 
               <NewsletterPopover
@@ -166,14 +152,14 @@ export default function InfoModal({
                 </Button>
               )}
 
-              {/* Profesor: botón reservar aula */}
-              {isAuthenticated && isProfessor && (
+              {/* Profesor: botón reservar aula, solo en cards de aulas */}
+              {isAuthenticated && isProfessor && type === 'schedule' && (
                 <Tooltip title="Crear un evento en esta aula" arrow>
                   <Button
                     variant="contained"
                     size="small"
                     color="secondary"
-                    onClick={onReserveClassroom}
+                    onClick={() => {}}
                     startIcon={<CalendarPlus size={18} />}
                     sx={{ borderRadius: '999px' }}
                   >
