@@ -22,7 +22,8 @@ import { classroomService } from '@/data/services/ClassroomService'
 import { aiAssistantService } from '@/data/services/AiAssistantService'
 import {
   geminiService,
-  AssignmentSuggestion
+  AssignmentSuggestion,
+  FreeClassroom
 } from '@/data/services/GeminiService'
 import { IPeriod } from '@/data/domain/Period'
 import { jsPDF } from 'jspdf'
@@ -36,6 +37,7 @@ export default function AiAssistant() {
   const [loading, setLoading] = useState(false)
   const [loadingPeriods, setLoadingPeriods] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [freeClassrooms, setFreeClassrooms] = useState<FreeClassroom[]>([])
 
   useEffect(() => {
     periodsService.getAll().then((res) => {
@@ -80,8 +82,8 @@ export default function AiAssistant() {
         courses,
         classrooms
       )
-
-      setSuggestions(result)
+      setSuggestions(result.assignments)
+      setFreeClassrooms(result.freeClassrooms)
     } catch (e) {
       setError('Ocurrió un error al generar la sugerencia. Intentá de nuevo.')
       console.error(e)
@@ -115,6 +117,20 @@ export default function AiAssistant() {
       columnStyles: { 4: { cellWidth: 60 } }
     })
 
+    if (freeClassrooms.length > 0) {
+      const finalY = (doc as any).lastAutoTable.finalY + 10
+      doc.setFontSize(13)
+      doc.text('Aulas disponibles sin asignar', 14, finalY)
+
+      autoTable(doc, {
+        startY: finalY + 6,
+        head: [['Código', 'Aula', 'Capacidad', 'Tipo']],
+        body: freeClassrooms.map((c) => [c.code, c.name, c.capacity, c.type]),
+        styles: { fontSize: 8, cellPadding: 3 },
+        headStyles: { fillColor: [76, 175, 80] }
+      })
+    }
+
     doc.save(`distribucion-${selectedPeriod?.title ?? 'periodo'}.pdf`)
   }
 
@@ -125,7 +141,10 @@ export default function AiAssistant() {
   }
 
   return (
-    <Box className="profile-page" sx={{ p: { xs: 2, md: 4 }, maxWidth: 1100, mx: 'auto' }}>
+    <Box
+      className="profile-page"
+      sx={{ p: { xs: 2, md: 4 }, maxWidth: 1100, mx: 'auto' }}
+    >
       <BackButton />
 
       <Typography variant="h4" gutterBottom mt={2}>
@@ -246,6 +265,41 @@ export default function AiAssistant() {
           </Table>
         </Paper>
       )}
+      {/*   CUADRO PARA MOSTRAR AULAS LIBRES - POR AHORA SOLO SE VEN EN EL PDF
+      {freeClassrooms.length > 0 && (
+        <>
+          <Typography variant="h6" mt={4} mb={2}>
+            Aulas disponibles sin asignar
+          </Typography>
+          <Paper elevation={2} sx={{ overflowX: 'auto' }}>
+            <Table sx={{ minWidth: 500 }}>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: 'success.main' }}>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Código</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Aula</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Capacidad</TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Tipo</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {freeClassrooms.map((c, i) => (
+                  <TableRow key={i} hover>
+                    <TableCell>
+                      <Typography variant="body2" fontWeight="bold">{c.code}</Typography>
+                    </TableCell>
+                    <TableCell>{c.name}</TableCell>
+                    <TableCell>{c.capacity}</TableCell>
+                    <TableCell>
+                      <Chip label={c.type} size="small" variant="outlined" />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        </>
+      )}
+      */}
     </Box>
   )
 }

@@ -10,39 +10,62 @@ export interface AssignmentSuggestion {
   justification: string
 }
 
+export interface GeminiResponse {
+  assignments: AssignmentSuggestion[]
+  freeClassrooms: FreeClassroom[]
+}
+
+export interface FreeClassroom {
+  code: string
+  name: string
+  capacity: number
+  type: string
+}
+
 export const geminiService = {
   async suggestDistribution(
     periodTitle: string,
     courses: { name: string; students: number }[],
     classrooms: { code: string; name: string; capacity: number; type: string }[]
-  ): Promise<AssignmentSuggestion[]> {
+  ): Promise<GeminiResponse> {
     const prompt = `
 Eres un asistente académico que ayuda a distribuir materias en aulas universitarias.
 
 Período: ${periodTitle}
 
 Materias a asignar (con cantidad de alumnos inscriptos):
-${courses.map(c => `- ${c.name}: ${c.students} alumnos`).join('\n')}
+${courses.map((c) => `- ${c.name}: ${c.students} alumnos`).join('\n')}
 
 Aulas disponibles (con capacidad):
-${classrooms.map(c => `- [${c.code}] ${c.name}: capacidad ${c.capacity} personas, tipo: ${c.type}`).join('\n')}
+${classrooms.map((c) => `- [${c.code}] ${c.name}: capacidad ${c.capacity} personas, tipo: ${c.type}`).join('\n')}
 
 Tu tarea es sugerir la mejor asignación de aulas para cada materia, priorizando:
 1. Que la capacidad del aula sea suficiente para los alumnos inscriptos
 2. Que no se desperdicie capacidad innecesariamente
-3. Preferir aulas de tipo CLASSROOM para cursadas regulares
+3. Preferir aulas de tipo CLASSROOM o LABORATORY. Evitar AUDITORIUM y LECTURE salvo que no haya otra opción.
+4. Las aulas que no fueron asignadas a ninguna materia deben aparecer en "freeClassrooms".
 
-Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional, sin bloques de código markdown, sin explicaciones fuera del JSON. Formato exacto:
-[
-  {
-    "courseName": "nombre de la materia",
-    "classroomCode": "código del aula",
-    "classroomName": "nombre del aula",
-    "capacity": 70,
-    "students": 45,
-    "justification": "breve explicación"
-  }
-]
+Respondé ÚNICAMENTE con un objeto JSON válido, sin texto adicional, sin bloques de código markdown. Formato exacto:
+{
+  "assignments": [
+    {
+      "courseName": "nombre de la materia",
+      "classroomCode": "código del aula",
+      "classroomName": "nombre del aula",
+      "capacity": 70,
+      "students": 45,
+      "justification": "breve explicación"
+    }
+  ],
+  "freeClassrooms": [
+    {
+      "code": "código del aula",
+      "name": "nombre del aula",
+      "capacity": 70,
+      "type": "tipo"
+    }
+  ]
+}
 `
     const response = await fetch(GEMINI_URL, {
       method: 'POST',
@@ -58,6 +81,6 @@ Respondé ÚNICAMENTE con un array JSON válido, sin texto adicional, sin bloque
     const data = await response.json()
     const text = data.candidates[0].content.parts[0].text
     const clean = text.replace(/```json|```/g, '').trim()
-    return JSON.parse(clean) as AssignmentSuggestion[]
+    return JSON.parse(clean) as GeminiResponse
   }
 }
