@@ -91,8 +91,8 @@ export const mapColors = {
     strokeWidth: 0.7
   },
   institutoTransporte: {
-    fill: '#10245b',
-    stroke: '#b8ddff', //#10245b
+    fill: '#b8ddff',  //#b8ddff
+    stroke: '#10245b', //#10245b
     strokeWidth: 0.7
   },
   centroDeAtencionPsico: {
@@ -101,7 +101,7 @@ export const mapColors = {
     strokeWidth: 0.7
   },
   iAMK: {
-    fill: '#7a2bc5',
+    fill: '#8f3de0', //#7a2bc5',
     stroke: '#552281',
     strokeWidth: 0.7
   },

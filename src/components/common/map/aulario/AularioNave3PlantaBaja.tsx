@@ -1,5 +1,7 @@
 import { Toilet } from '@phosphor-icons/react'
 import { mapColors } from '../../../pages/map/mapColors'
+import { getRoomStyle } from '../RoomStyle'
+import RoomText from '../RoomText'
 
 interface AularioNaveProps {
   selectedCode?: string // Cambiado de selectedClassRoomId
@@ -7,11 +9,9 @@ interface AularioNaveProps {
   handleOpen?: (classRoomId: string) => void
 }
 
-export default function AularioNave3PlantaBaja({
-  selectedCode,
-  handleOpen
-}: AularioNaveProps) {
+export default function AularioNave3PlantaBaja({ selectedCode, handleOpen }: AularioNaveProps) {
   const isSelected = (id: string) => id === selectedCode
+  const hasSelection = !!selectedCode
 
   return (
     <>
@@ -127,12 +127,7 @@ export default function AularioNave3PlantaBaja({
         </g>
 
         {/* A17 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A17'), hasSelection)}
           onClick={() => handleOpen?.('AN3-A17')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('AN3-A17') ? 'selected' : ''}`}
@@ -141,56 +136,21 @@ export default function AularioNave3PlantaBaja({
             d="M80.277596,39.238172h244.655514l.16554,42.911613h-28.836108v101.936404h28.670568v43.948748l-244.655514.428984v-189.225749Z"
             transform="translate(0 0.000001)"
           />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="25"
-            fontWeight="400"
-            transform="translate(165 135)"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              A17
-            </tspan>
-          </text>
+          <RoomText x={165} y={135} lineHeight={15} fontSize={25} lines={[ { text: 'A17' }, ]} />
         </g>
         {/* A16 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A16') , hasSelection)}
           onClick={() => handleOpen?.('AN3-A16')}
           transform="translate(.000001 0)"
-          className={`classRoom ${isSelected('AN3-A16') ? 'selected' : ''}`}
-        >
+          className={`classRoom ${isSelected('AN3-A16') ? 'selected' : ''}`}>
           <path
             d="M571.5,87.978136h166.289298v140.485784h-166.289298v-140.485784Z"
             transform="translate(0 0.000002)"
           />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="25"
-            fontWeight="400"
-            transform="translate(635 165)"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              A16
-            </tspan>
-          </text>
+          <RoomText x={635} y={165} lineHeight={15} fontSize={25} lines={[ { text: 'A16' }, ]} />
         </g>
         {/* A15 */}
-        <g
-          style={{
-            fill: mapColors.classrooms.fill,
-            stroke: mapColors.classrooms.stroke,
-            strokeWidth: mapColors.classrooms.strokeWidth
-          }}
+        <g style={getRoomStyle('classroom', isSelected('AN3-A15'), hasSelection)}
           onClick={() => handleOpen?.('AN3-A15')}
           transform="translate(.000001 0)"
           className={`classRoom ${isSelected('AN3-A15') ? 'selected' : ''}`}
@@ -199,19 +159,7 @@ export default function AularioNave3PlantaBaja({
             d="M737.789297,39.238172h327.800168v189.225749l-327.800168-.428984v-188.796765Z"
             transform="translate(.000001 0.000001)"
           />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="25"
-            fontWeight="400"
-            transform="translate(895 140)"
-            strokeWidth="0"
-          >
-            <tspan y="0" fontWeight="700" strokeWidth="0">
-              A15
-            </tspan>
-          </text>
+          <RoomText x={895} y={140} lineHeight={15} fontSize={25} lines={[ { text: 'A15' }, ]} />
         </g>
         {/* Baños */}
         <g
@@ -225,35 +173,14 @@ export default function AularioNave3PlantaBaja({
             d="M296.26254,82.149783h53.518396v101.936404h-53.518396v-101.936404Z"
             transform="translate(.000002 0.000003)"
           />
-          <text
-            dx="0"
-            dy="0"
-            fontFamily='"eBHsLTiXjpU1:::Roboto"'
-            fontSize="25"
-            fontWeight="400"
-            transform="translate(300 109)"
-            strokeWidth="0"
-          >
-            <tspan x="0" y="0" fontWeight="700" strokeWidth="0">
-              B
-            </tspan>
-            <tspan x="0" y="16" fontWeight="700" strokeWidth="0">
-              a
-            </tspan>
-            <tspan x="0" y="36" fontWeight="700" strokeWidth="0">
-              ñ
-            </tspan>
-            <tspan x="0" y="52" fontWeight="700" strokeWidth="0">
-              o
-            </tspan>
-            <tspan x="0" y="68" fontWeight="700" strokeWidth="0">
-              s
-            </tspan>
-          </text>
+          <RoomText x={300} y={109} lineHeight={16} fontSize={25} 
+          lines={[ { text: 'B' }, { text: 'a' } ]} />
+          <RoomText x={300} y={145} lineHeight={16} fontSize={25} 
+          lines={[ { text: 'ñ' }, { text: 'o' } , { text: 's' } ]} />
           <Toilet
             /* transform="translate(315 115)" */
             x="320"
-            y="90"
+            y="115"
             className="icon-common"
             size={30}
           />
