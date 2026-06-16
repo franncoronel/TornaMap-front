@@ -6,11 +6,11 @@ import {
   Fade,
   Button,
   useMediaQuery,
-  useTheme
+  useTheme,
+  Tooltip
 } from '@mui/material'
-import { ReactNode, useRef, useState, useCallback, useEffect } from 'react'
-import { Bell, X } from '@phosphor-icons/react'
-import { ReactNode, useState } from 'react'
+import { ReactNode, useRef,useCallback, useEffect } from 'react'
+import { useState } from 'react'
 import { Bell, X, BookBookmark, CalendarPlus } from '@phosphor-icons/react'
 import { useAuth } from '@/context/AuthContext'
 import NewsletterPopover from './NewsletterPopover'
@@ -38,7 +38,6 @@ export default function InfoModal({
   type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
-  onReserveClassroom = () => {}
 }: InfoModalProps) {
   const { isAuthenticated, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
