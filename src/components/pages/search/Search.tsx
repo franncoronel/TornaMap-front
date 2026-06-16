@@ -11,17 +11,20 @@ import { courseService } from '@/data/services/CourseService'
 import { eventService } from '@/data/services/EventService'
 
 import { ICourse, ICourseList } from '@/data/domain/Course'
-import { IEventList } from '@/data/domain/Event'
+import { IEventCreate, IEventList } from '@/data/domain/Event'
+import { ISchedule } from '@/data/domain/Schedule'
 
-import { WarningCircle, Plus } from '@phosphor-icons/react'
-import { Box, Divider, Grid2, Tooltip, Typography, Tabs, Tab } from '@mui/material'
+import { WarningCircle, Plus, MapPin } from '@phosphor-icons/react'
+import { Box, Divider, Grid2, Tooltip, Typography, Tabs, Tab, Stack} from '@mui/material'
+import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
 import SearchTagsInput from '@/components/common/SearchTagsInput'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
+import MapSelector from '@/components/common/map/MapSelector'
 import InfoModal from '@/components/common/InfoModal'
-import EventTabs from '@/components/common/EventTabs'
+import CourseModalContent from '@/components/common/CourseModalContent'
 import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
+import { ChipEventType } from '@/components/common/ChipEventType'
 
-// ─── Tab panel genérico ───────────────────────────────
 interface TabPanelProps {
   children?: React.ReactNode
   index: number
@@ -36,27 +39,25 @@ function TabPanel({ children, value, index }: TabPanelProps) {
   )
 }
 
-// ─── Componente principal ─────────────────────────────
 export default function Search() {
-  // Solapa activa: 0 = Cursos, 1 = Eventos
   const [activeTab, setActiveTab] = useState(0)
 
-  // Estado de cursos (solapa 0)
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
   const [courseSearchTags, setCourseSearchTags] = useState<string[]>([])
 
-  // Estado de eventos institucionales (solapa 1)
   const [institutionalEvents, setInstitutionalEvents] = useState<IEventList[]>([])
   const [eventSearchTags, setEventSearchTags] = useState<string[]>([])
 
+  // Modal de evento institucional
+  const [selectedEvent, setSelectedEvent] = useState<IEventCreate | null>(null)
+  const [eventOpen, setEventOpen] = useState(false)
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
   const { isAuthenticated } = useAuth()
 
-  // ─── Fetch cursos ─────────────────────────────────
   const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
@@ -83,7 +84,6 @@ export default function Search() {
     }
   }
 
-  // ─── Fetch eventos institucionales ────────────────
   const fetchInstitutionalEvents = async (query?: string) => {
     setLoader(true)
     try {
@@ -110,7 +110,6 @@ export default function Search() {
     }
   }
 
-  // ─── Handlers de modal de curso ───────────────────
   const handleOpen = async (course: ICourseList) => {
     try {
       if (!course?.id) {
@@ -144,7 +143,6 @@ export default function Search() {
     setOpen(false)
   }
 
-  // ─── Búsquedas según solapa ───────────────────────
   const handleCourseSearch = (tags: string[]) => {
     setCourseSearchTags(tags)
     fetchCourses(tags)
@@ -152,12 +150,35 @@ export default function Search() {
 
   const handleEventSearch = (tags: string[]) => {
     setEventSearchTags(tags)
-    // Usamos el primer tag como query; si no hay tags, traemos todos
     const query = tags.length > 0 ? tags.join(' ') : undefined
     fetchInstitutionalEvents(query)
   }
 
-  // ─── Carga inicial según solapa activa ────────────
+  // ─── Modal de evento institucional ────────────
+  const handleEventOpen = async (eventId: string) => {
+    try {
+      setLoader(true)
+      const response = await eventService.getDetailById(eventId)
+      setSelectedEvent(response.data)
+      setEventOpen(true)
+    } catch (error) {
+      console.error('Error fetching event details:', error)
+      setNotificationState({
+        title: 'Error al cargar evento',
+        type: 'error',
+        description: 'No se pudo obtener la información del evento',
+        action: () => {}
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
+
+  const handleEventClose = () => {
+    setSelectedEvent(null)
+    setEventOpen(false)
+  }
+
   useEffect(() => {
     if (activeTab === 0 && courses.length === 0) {
       fetchCourses([])
@@ -167,15 +188,12 @@ export default function Search() {
     }
   }, [activeTab])
 
-  // Carga inicial de cursos
   useEffect(() => {
     fetchCourses([])
   }, [])
 
-  // ─── Render ───────────────────────────────────────
   return (
     <Box className="interactive-page">
-      {/* Solapas principales */}
       <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
         <Tabs
           value={activeTab}
@@ -187,7 +205,6 @@ export default function Search() {
           <Tab label="Eventos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
         </Tabs>
 
-        {/* Barra de búsqueda — cambia según la solapa */}
         {activeTab === 0 && (
           <SearchTagsInput
             onSearch={handleCourseSearch}
@@ -230,23 +247,25 @@ export default function Search() {
           <EmptyState message="No se encontraron cursos" />
         )}
 
-        {/* Modal detalle de curso con sus eventos académicos */}
         {open && selectedCourse && (
           <InfoModal
             open={open}
             handleClose={handleClose}
             title={selectedCourse.name}
-            subtitle="Cursadas y exámenes"
+
             type="course"
           >
             <section className="class-info-container">
               <Typography variant="h6" fontWeight="medium" px="1rem">
                 {selectedCourse?.programs?.map((program) => program).join(', ')}
               </Typography>
-              <EventTabs events={selectedCourse.events} />
+
+              {/* Nuevo componente: cursadas con mapa + exámenes colapsables */}
+              <CourseModalContent events={selectedCourse.events} />
             </section>
+
             {isAuthenticated && (
-              <Tooltip title="Agregar evento al curso" arrow placement="top">
+              <Tooltip title="Agregar evento" arrow placement="top">
                 <Plus
                   className="floating-button modal"
                   onClick={() =>
@@ -294,25 +313,85 @@ export default function Search() {
           {institutionalEvents.length > 0 &&
             institutionalEvents.map((event: IEventList) => (
               <Grid2 size={1} key={event.id}>
-                <InstitutionalEventCard
-                  event={{
-                    id: event.id ?? '',
-                    name: event.name,
-                    type: event.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA',
-                    details: '',
-                    startDate: event.schedules?.[0]?.date?.toString(),
-                    startTime: event.schedules?.[0]?.startTime,
-                    endTime: event.schedules?.[0]?.endTime,
-                    location: event.schedules?.[0]?.classroom?.name,
-                    isVirtual: event.schedules?.[0]?.isVirtual ?? false
-                  }}
-                />
+                <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer' }}>
+                  <InstitutionalEventCard
+                    event={{
+                      id: event.id ?? '',
+                      name: event.name,
+                      type: event.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA',
+                      details: '',
+                      startDate: event.schedules?.[0]?.date?.toString(),
+                      startTime: event.schedules?.[0]?.startTime,
+                      endTime: event.schedules?.[0]?.endTime,
+                      location: event.schedules?.[0]?.classroom?.name,
+                      isVirtual: event.schedules?.[0]?.isVirtual ?? false
+                    }}
+                  />
+                </Box>
               </Grid2>
             ))}
         </Grid2>
 
         {institutionalEvents.length === 0 && (
           <EmptyState message="No se encontraron eventos institucionales" />
+        )}
+
+        {/* Modal de evento institucional */}
+        {eventOpen && selectedEvent && (
+          <InfoModal
+            open={eventOpen}
+            handleClose={handleEventClose}
+            title={selectedEvent.name}
+            type="event"
+          >
+            <Stack spacing={2}>
+              <Box>
+                <ChipEventType type={selectedEvent.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA'} />
+              </Box>
+
+              {selectedEvent.details && (
+                <Typography variant="body2" color="text.secondary">
+                  {selectedEvent.details}
+                </Typography>
+              )}
+
+              {selectedEvent.schedules.map((schedule: ISchedule, idx: number) => (
+                <Box key={schedule.id ?? idx}>
+                  {!schedule.isVirtual ? (
+                    <Stack spacing={2}>
+                      <Stack
+                        direction="row" spacing={1} alignItems="center"
+                        sx={{ bgcolor: 'action.hover', borderRadius: '8px', px: 1.5, py: 1 }}
+                      >
+                        <MapPin size={18} />
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                          {schedule.classroom?.name} · Piso {schedule.classroom?.floor} · {schedule.classroom?.building.name}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
+                          Cap. {schedule.classroom?.capacity}
+                        </Typography>
+                      </Stack>
+                      <MapSelector
+                        building={schedule.classroom?.building.name}
+                        level={schedule.classroom?.floor.toString()}
+                        classRoom={schedule.classroom?.code}
+                      />
+                    </Stack>
+                  ) : (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 2, bgcolor: 'action.hover', borderRadius: '8px' }}>
+                      <Laptop size={64} color="#2e4b7d" weight="duotone" />
+                      <Typography variant="body2" sx={{ mt: 1, fontWeight: 500 }}>
+                        Clase virtual
+                      </Typography>
+                    </Box>
+                  )}
+                  <Box sx={{ mt: 2 }}>
+                    <ClassRoomCard schedule={schedule} viewType="modal" />
+                  </Box>
+                </Box>
+              ))}
+            </Stack>
+          </InfoModal>
         )}
 
         {isAuthenticated && (
@@ -330,7 +409,9 @@ export default function Search() {
           >
             <Plus
               className="floating-button"
-              onClick={() => navigate('/evento/agregar')}
+              onClick={() => navigate('/evento/agregar', {
+                state: { defaultType: 'CHARLA' }
+              })}
               role="button"
               aria-label="Agregar evento"
             />
@@ -341,7 +422,6 @@ export default function Search() {
   )
 }
 
-// ─── Componente auxiliar para estado vacío ─────────
 function EmptyState({ message }: { message: string }) {
   return (
     <Box

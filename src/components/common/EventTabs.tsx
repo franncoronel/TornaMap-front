@@ -88,7 +88,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
         description: 'El enlace se ha copiado al portapapeles.',
         type: 'success'
       })
-    } catch (_err) {
+    } catch (err) {
       setNotificationState({
         title: 'Error',
         description: 'No se pudo copiar el enlace.',
