@@ -1,6 +1,6 @@
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
-import { IEventCreate, IEventCreateDto, IEventList, InstitutionalEventsResponse } from '../domain/Event'
+import { IEventCreate, IEventCreateDto, IEventList } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
 import { format } from 'date-fns'
@@ -24,14 +24,14 @@ export class EventService implements ServiceInterface {
   }
 
   async getById(id: string) {
-    const { data } = await axios.get<Response<IEventCreate>>( // detail trae schedules
+    const { data } = await axios.get<Response<IEventCreate>>(
       `${this.baseUrl}/${id}`
     )
     return data
   }
 
   async getDetailById(id: string) {
-    const { data } = await axios.get<Response<IEventCreate>>( // detail trae schedules
+    const { data } = await axios.get<Response<IEventCreate>>(
       `${this.baseUrl}/detail/${id}`
     )
     return data
@@ -73,10 +73,15 @@ export class EventService implements ServiceInterface {
     await axios.post(`${this.baseUrl}/${id}/reject`)
   }
 
-  async getInstitutionalEvents(): Promise<Response<InstitutionalEventsResponse>> {
-    const { data } = await axios.get<Response<InstitutionalEventsResponse>>(
-      `${this.baseUrl}/institutional` )
+  // ──────────────────────────────────────────────
+  // Eventos institucionales con búsqueda opcional
+  // ──────────────────────────────────────────────
+  async getInstitutionalEvents(query?: string): Promise<Response<IEventList[]>> {
+    const url = query
+      ? `${this.baseUrl}/institutional?query=${encodeURIComponent(query)}`
+      : `${this.baseUrl}/institutional`
 
+    const { data } = await axios.get<Response<IEventList[]>>(url)
     return data
   }
 
@@ -89,22 +94,21 @@ export class EventService implements ServiceInterface {
 }
 
 export function mapScheduleToBackend(s: ScheduleForm): BackendSchedule {
-  // HH:mm ya viene en startTime / endTime
   return {
     weekDay: s.weekDay || null,
-    date: s.date ? format(s.date, 'yyyy-MM-dd') : null, // el DatePicker ya devuelve 'yyyy-MM-dd'
+    date: s.date ? format(s.date, 'yyyy-MM-dd') : null,
     startTime: s.startTime,
     endTime: s.endTime,
     isVirtual: s.isVirtual,
-    classroomId: s.classroomId || null // null si virtual o no seleccionado
+    classroomId: s.classroomId || null
   }
 }
 
 export type BackendSchedule = {
   weekDay: string | null
-  date: string | null // yyyy-MM-dd
-  startTime: string // HH:mm
-  endTime: string // HH:mm
+  date: string | null
+  startTime: string
+  endTime: string
   isVirtual: boolean
   classroomId: string | null
 }
