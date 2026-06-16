@@ -1,4 +1,5 @@
 import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
+import { InstitutionalEvent } from '@/data/domain/Event'
 import { Accordion, AccordionDetails, AccordionSummary, Grid2, Typography } from '@mui/material'
 import { CaretDown } from '@phosphor-icons/react'
 
@@ -6,7 +7,7 @@ import { CaretDown } from '@phosphor-icons/react'
 interface EventSectionProps {
   title: string
   count: number
-  events: any[]
+  events: InstitutionalEvent[]
   defaultExpanded?: boolean
 }
 

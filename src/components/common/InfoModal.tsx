@@ -10,6 +10,8 @@ import {
 } from '@mui/material'
 import { ReactNode, useRef, useState, useCallback, useEffect } from 'react'
 import { Bell, X } from '@phosphor-icons/react'
+import { ReactNode, useState } from 'react'
+import { Bell, X, BookBookmark, CalendarPlus } from '@phosphor-icons/react'
 import { useAuth } from '@/context/AuthContext'
 import NewsletterPopover from './NewsletterPopover'
 
@@ -23,6 +25,7 @@ type InfoModalProps = {
   type: 'course' | 'event' | 'schedule'
   onSubscribe?: () => void
   onSubscribeNewsletter?: (email: string) => void
+  onReserveClassroom?: () => void
 }
 
 export default function InfoModal({
@@ -32,10 +35,12 @@ export default function InfoModal({
   title,
   subtitle,
   capacity,
+  type,
   onSubscribe = () => {},
-  onSubscribeNewsletter = () => {}
+  onSubscribeNewsletter = () => {},
+  onReserveClassroom = () => {}
 }: InfoModalProps) {
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
   // Scroll shadow state
@@ -65,6 +70,8 @@ export default function InfoModal({
     const timer = setTimeout(updateScrollShadows, 100)
     return () => clearTimeout(timer)
   }, [open, updateScrollShadows])
+  const isStudent = user?.role === 'STUDENT'
+  const isProfessor = user?.role === 'PROFESSOR'
 
   return (
     <Modal
@@ -205,23 +212,36 @@ export default function InfoModal({
               )}
             </Box>
 
-            {/* Action buttons row */}
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-end',
-                gap: 1,
-                mt: 1.5
-              }}
-            >
-              {/* Suscripción — logueados */}
-              {isAuthenticated && (
+            {/* Botones */}
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
+
+              {/* No logueado: solo campana newsletter, sin botón suscribirse */}
+              {!isAuthenticated && type === 'event' && (
+                <Tooltip title="Suscribirse al newsletter">
+                  <IconButton
+                    aria-label="Suscribirse al newsletter"
+                    color="secondary"
+                    onClick={handleBellClick}
+                  >
+                    <Bell size={24} />
+                  </IconButton>
+                </Tooltip>
+              )}
+
+              <NewsletterPopover
+                anchorEl={anchorEl}
+                onClose={handlePopoverClose}
+                onSubmit={onSubscribeNewsletter}
+              />
+
+              {/* Estudiante: botón suscribirse activo */}
+              {isAuthenticated && isStudent && type === 'event' &&(
                 <Button
                   variant="contained"
                   size="small"
                   onClick={onSubscribe}
                   disableElevation
+                  startIcon={<BookBookmark size={18} />}
                   sx={{
                     borderRadius: '10px',
                     textTransform: 'none',
@@ -257,6 +277,29 @@ export default function InfoModal({
                   />
                 </>
               )}
+              {/* Profesor: botón reservar aula, solo en cards de aulas */}
+              {isAuthenticated && isProfessor && type === 'schedule' && (
+                <Tooltip title="Crear un evento en esta aula" arrow>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    color="secondary"
+                    onClick={() => {}}
+                    startIcon={<CalendarPlus size={18} />}
+                    sx={{ borderRadius: '999px' }}
+                  >
+                    Reservar aula
+                  </Button>
+                </Tooltip>
+              )}
+
+              <IconButton
+                aria-label="Cerrar Ventana"
+                onClick={handleClose}
+                edge="end"
+              >
+                <X weight="bold" />
+              </IconButton>
             </Box>
           </Box>
 

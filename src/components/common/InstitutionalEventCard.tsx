@@ -2,13 +2,10 @@ import { Card, CardContent, Stack, Typography } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
 import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
 import { ChipEventType } from './ChipEventType'
+import { formatDateFromBackend } from '@/data/utils/dateUtils'
 
 interface InstitutionalEventCardProps {
   event: InstitutionalEvent
-}
-
-const formatDate = (date: string) => {
-  return new Date(date).toLocaleDateString('es-AR')
 }
 
 export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
@@ -48,7 +45,7 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
           <Stack  direction="row" spacing={1} alignItems="center" >
             <CalendarBlank size={20} />
             <Typography variant="body2">
-              {formatDate(event.startDate ?? '')}
+              {formatDateFromBackend(event.startDate ?? '')}
             </Typography>
           </Stack>
         </Stack>

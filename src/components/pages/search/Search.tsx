@@ -56,12 +56,13 @@ export default function Search() {
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
 
   const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
       const response = await courseService.getAll(query)
+      setLoader(false)
       setCourses(response.data)
       if (response.data.length === 0) {
         setNotificationState({
@@ -187,10 +188,43 @@ export default function Search() {
       fetchInstitutionalEvents()
     }
   }, [activeTab])
+  // Obtiene el primer classroomId disponible en los schedules del curso
+  const getFirstClassroomId = (): string | undefined => {
+    if (!selectedCourse?.events) return undefined
+    for (const event of selectedCourse.events) {
+      for (const schedule of event.schedules) {
+        if (schedule.classroom?.id) return schedule.classroom.id
+      }
+    }
+    return undefined
+  }
 
-  useEffect(() => {
-    fetchCourses([])
-  }, [])
+  const handleReserveClassroom = () => {
+    const classroomId = getFirstClassroomId()
+    navigate('/evento/agregar', {
+      state: {
+        courseID: selectedCourse?.id,
+        preselectedClassroomId: classroomId
+      }
+    })
+    handleClose()
+  }
+
+  const handleSubscribe = () => {
+    // Lógica de suscripción existente — completar según el servicio
+    setNotificationState({
+      title: 'Suscripción',
+      description: 'Te suscribiste a la materia correctamente',
+      type: 'success'
+    })
+    handleClose()
+  }
+
+  // useEffect(() => {
+  //  fetchCourses([])
+  // }, [])
+
+  const isAdmin = user?.role === 'ADMIN'
 
   return (
     <Box className="interactive-page">
@@ -418,6 +452,64 @@ export default function Search() {
           </Tooltip>
         )}
       </TabPanel>
+      </Grid2>
+
+      {/* Modal detalle del curso */}
+      {open && selectedCourse && (
+        <InfoModal
+          open={open}
+          handleClose={handleClose}
+          title={selectedCourse.name}
+          subtitle="Cursadas y eventos"
+          type="event"
+          onSubscribe={handleSubscribe}
+          onReserveClassroom={handleReserveClassroom}
+        >
+          <section className="class-info-container">
+            <Typography variant="h6" fontWeight="medium" px="1rem">
+              {selectedCourse?.programs?.map((program) => program).join(', ')}
+            </Typography>
+            <EventTabs events={selectedCourse.events} />
+          </section>
+
+          {/* Botón flotante "+" para admin: navegar a agregar evento */}
+          {isAuthenticated && isAdmin && (
+            <Tooltip title="Agregar evento" arrow placement="top">
+              <Plus
+                className="floating-button modal"
+                onClick={() =>
+                  navigate('/evento/agregar', {
+                    state: { courseID: selectedCourse?.id }
+                  })
+                }
+              />
+            </Tooltip>
+          )}
+        </InfoModal>
+      )}
+
+      {/* Botón flotante "+" para admin: agregar asignatura */}
+      {isAuthenticated && isAdmin && (
+        <Tooltip
+          title="Agregar asignatura"
+          arrow
+          placement="top"
+          enterDelay={500}
+          leaveDelay={200}
+          slotProps={{
+            popper: {
+              modifiers: [{ name: 'offset', options: { offset: [0, -8] } }]
+            }
+          }}
+        >
+          <Plus
+            className="floating-button"
+            onClick={() => navigate('/asignatura/agregar')}
+            role="button"
+            aria-label="Agregar asignatura"
+          />
+        </Tooltip>
+      )}
     </Box>
   )
 }

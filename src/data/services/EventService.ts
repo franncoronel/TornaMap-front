@@ -84,6 +84,13 @@ export class EventService implements ServiceInterface {
     const { data } = await axios.get<Response<IEventList[]>>(url)
     return data
   }
+
+  async getInstitutionalEventsDashboard(): Promise<Response<InstitutionalEventsResponse>> {
+    const { data } = await axios.get<Response<InstitutionalEventsResponse>>(
+      `${this.baseUrl}/institutional/today` )
+
+    return data
+  }
 }
 
 export function mapScheduleToBackend(s: ScheduleForm): BackendSchedule {
