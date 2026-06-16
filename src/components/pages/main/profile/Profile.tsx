@@ -2,7 +2,7 @@ import { Typography } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { QrCode, SignOut } from '@phosphor-icons/react'
+import { SignOut } from '@phosphor-icons/react'
 import { userService } from '@/data/services/UserService'
 import { useEffect, useState } from 'react'
 import { User } from '@/data/domain/User'
@@ -81,6 +81,7 @@ export default function Profile() {
       {user?.role == 'ADMIN' && <AdminContent />}
       {user?.role == 'STUDENT' && <StudentContent />}
       {user?.role == 'PROFESSOR' && <TeacherContent />}
+      
       <ProfileButton
         onClick={() => handleLogout()}
         centerText={true}

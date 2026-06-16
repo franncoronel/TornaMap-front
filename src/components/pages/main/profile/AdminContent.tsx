@@ -1,5 +1,6 @@
 import { Box, useMediaQuery, useTheme } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import { QrCode } from '@phosphor-icons/react'
 import { ChalkboardTeacher } from '@phosphor-icons/react/dist/ssr/ChalkboardTeacher'
 import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
@@ -47,6 +48,12 @@ export function AdminContent() {
           >
             Periodos
           </ProfileButton>
+          <ProfileButton
+            onClick={() => navigate('/qr')}
+            startIcon={<QrCode size={32} />}
+          >
+            QR y Flyers
+          </ProfileButton>
         </>
       ) : (
         <Box
@@ -85,6 +92,11 @@ export function AdminContent() {
             title="Periodos"
             icon={<ClockClockwise size={60} />}
             onClick={() => navigate('/periodos')}
+          />
+          <ActionCard
+            title="QR y Flyers"
+            icon={<QrCode size={60} />}
+            onClick={() => navigate('/qr')}
           />
         </Box>
       )}
