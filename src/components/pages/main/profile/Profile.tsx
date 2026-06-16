@@ -2,7 +2,7 @@ import { Box, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
-import { QrCode, SignOut } from '@phosphor-icons/react'
+import { QrCode, CalendarCheck, SignOut } from '@phosphor-icons/react'
 import { userService } from '@/data/services/UserService'
 import { useEffect, useState } from 'react'
 import { User } from '@/data/domain/User'
@@ -104,6 +104,12 @@ export default function Profile() {
                 Agregar Asignatura
               </ProfileButton>
               <ProfileButton
+                onClick={() => navigate('/periodos')}
+                startIcon={<ClockClockwise size={32} />}
+              >
+                Periodos
+              </ProfileButton>
+              <ProfileButton
                 onClick={() => navigate('/evento/agregar')}
                 startIcon={<CalendarStar size={32} />}
               >
@@ -116,10 +122,10 @@ export default function Profile() {
                 Solicitudes de eventos
               </ProfileButton>
               <ProfileButton
-                onClick={() => navigate('/periodos')}
-                startIcon={<ClockClockwise size={32} />}
+                onClick={() => navigate('/eventos-activos')}
+                startIcon={<CalendarCheck size={32} />}
               >
-                Periodos
+                Eventos Activos
               </ProfileButton>
               <ProfileButton
                 onClick={() => navigate('/qr')}
@@ -152,6 +158,11 @@ export default function Profile() {
                 onClick={() => navigate('/asignatura/agregar')}
               />
               <ActionCard
+                title="Periodos"
+                icon={<ClockClockwise size={60} />}
+                onClick={() => navigate('/periodos')}
+              />
+              <ActionCard
                 title="Agregar Evento / Clase"
                 icon={<CalendarStar size={60} />}
                 onClick={() => navigate('/evento/agregar')}
@@ -162,9 +173,9 @@ export default function Profile() {
                 onClick={() => navigate('/solicitudes')}
               />
               <ActionCard
-                title="Periodos"
-                icon={<ClockClockwise size={60} />}
-                onClick={() => navigate('/periodos')}
+                title="Eventos Activos"
+                icon={<CalendarCheck size={60} />}
+                onClick={() => navigate('/eventos-activos')}
               />
               <ActionCard
                 title="QR y Flyers"
