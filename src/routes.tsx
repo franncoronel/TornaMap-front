@@ -29,6 +29,7 @@ const EventRequestList = lazy(
 const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
 const QrFlyers = lazy(() => import('@/components/pages/main/qr/QrFlyers'))
 const AiAssistant = lazy(() => import('@/components/pages/main/ai/AiAssistant'))
+const ActiveEvents = lazy( () => import('@/components/pages/main/event/ActiveEvents') )
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -86,6 +87,10 @@ export const routes: RouteObject[] = [
       {
         path: 'solicitudes',
         element: <EventRequestList />
+      },
+      {
+        path: 'eventos-activos',
+        element: <ActiveEvents />
       },
       {
         path: 'horario',
