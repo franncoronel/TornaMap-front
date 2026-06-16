@@ -12,7 +12,7 @@ import { useNotification } from '@/context/NotificationContext'
 import { useLoader } from '@/context/LoaderContext'
 import { AdminContent } from './AdminContent'
 import { StudentContent } from './StudentContent'
-import { TeacherContent } from './TeacherContent'
+import { ProfessorContent } from './ProfessorContent'
 
 export default function Profile() {
   const { logout } = useAuth()
@@ -80,8 +80,8 @@ export default function Profile() {
 
       {user?.role == 'ADMIN' && <AdminContent />}
       {user?.role == 'STUDENT' && <StudentContent />}
-      {user?.role == 'PROFESSOR' && <TeacherContent />}
-      
+      {user?.role == 'PROFESSOR' && <ProfessorContent />}
+
       <ProfileButton
         onClick={() => handleLogout()}
         centerText={true}
