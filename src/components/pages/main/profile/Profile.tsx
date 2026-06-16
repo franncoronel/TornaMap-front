@@ -15,6 +15,7 @@ import { GraduationCap } from '@phosphor-icons/react/dist/ssr/GraduationCap'
 import { CalendarStar } from '@phosphor-icons/react/dist/ssr/CalendarStar'
 import { CalendarPlus } from '@phosphor-icons/react/dist/ssr/CalendarPlus'
 import { ClockClockwise } from '@phosphor-icons/react/dist/ssr/ClockClockwise'
+import { Brain } from '@phosphor-icons/react'
 import { ActionCard } from './ActionCard'
 
 export default function Profile() {
@@ -133,6 +134,12 @@ export default function Profile() {
               >
                 QR y Flyers
               </ProfileButton>
+              <ProfileButton
+                onClick={() => navigate('/asistente-ia')}
+                startIcon={<Brain size={32} />}
+              >
+                Asistente de Aulas
+              </ProfileButton>
             </>
           ) : (
             <Box
@@ -181,6 +188,11 @@ export default function Profile() {
                 title="QR y Flyers"
                 icon={<QrCode size={60} />}
                 onClick={() => navigate('/qr')}
+              />
+              <ActionCard
+                title="Asistente de Aulas"
+                icon={<Brain size={60} />}
+                onClick={() => navigate('/asistente-ia')}
               />
             </Box>
           )}
