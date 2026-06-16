@@ -28,6 +28,7 @@ const EventRequestList = lazy(
 )
 const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
 const QrFlyers = lazy(() => import('@/components/pages/main/qr/QrFlyers'))
+const AiAssistant = lazy(() => import('@/components/pages/main/ai/AiAssistant'))
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -129,6 +130,10 @@ export const routes: RouteObject[] = [
             <QrFlyers />
           </ProtectedRoute>
         )
+      },
+      {
+        path: 'asistente-ia',
+        element: <AiAssistant />
       }
     ]
   },
