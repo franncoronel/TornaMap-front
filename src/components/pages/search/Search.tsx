@@ -27,7 +27,8 @@ export default function Search() {
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+
   const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
@@ -36,7 +37,6 @@ export default function Search() {
       const coursesData = courses.data
       setCourses(coursesData)
       if (coursesData.length === 0) {
-        // Notificar que no se encontraron resultados
         setNotificationState({
           title: 'No se encontraron resultados',
           type: 'info',
@@ -95,12 +95,45 @@ export default function Search() {
     fetchCourses(tags)
   }
 
+  // Obtiene el primer classroomId disponible en los schedules del curso
+  const getFirstClassroomId = (): string | undefined => {
+    if (!selectedCourse?.events) return undefined
+    for (const event of selectedCourse.events) {
+      for (const schedule of event.schedules) {
+        if (schedule.classroom?.id) return schedule.classroom.id
+      }
+    }
+    return undefined
+  }
+
+  const handleReserveClassroom = () => {
+    const classroomId = getFirstClassroomId()
+    navigate('/evento/agregar', {
+      state: {
+        courseID: selectedCourse?.id,
+        preselectedClassroomId: classroomId
+      }
+    })
+    handleClose()
+  }
+
+  const handleSubscribe = () => {
+    // Lógica de suscripción existente — completar según el servicio
+    setNotificationState({
+      title: 'Suscripción',
+      description: 'Te suscribiste a la materia correctamente',
+      type: 'success'
+    })
+    handleClose()
+  }
+
   useEffect(() => {
     fetchCourses([])
   }, [])
 
+  const isAdmin = user?.role === 'ADMIN'
+
   return (
-    // Contenedor principal que organiza la disposición de los elementos
     <Box className="interactive-page">
       {/* Barra de búsqueda fija */}
       <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
@@ -112,7 +145,7 @@ export default function Search() {
         <Divider variant="middle" flexItem />
       </Box>
 
-      {/* Grilla para organizar las tarjetas de las aulas de manera responsive */}
+      {/* Grilla de tarjetas */}
       <Grid2
         container
         rowSpacing="1rem"
@@ -158,7 +191,7 @@ export default function Search() {
         )}
       </Grid2>
 
-      {/* Modal que muestra detalles de la clase seleccionada y un mapa */}
+      {/* Modal detalle del curso */}
       {open && selectedCourse && (
         <InfoModal
           open={open}
@@ -166,6 +199,8 @@ export default function Search() {
           title={selectedCourse.name}
           subtitle="Cursadas y eventos"
           type="event"
+          onSubscribe={handleSubscribe}
+          onReserveClassroom={handleReserveClassroom}
         >
           <section className="class-info-container">
             <Typography variant="h6" fontWeight="medium" px="1rem">
@@ -173,12 +208,13 @@ export default function Search() {
             </Typography>
             <EventTabs events={selectedCourse.events} />
           </section>
-          {isAuthenticated && (
-            <Tooltip title={`Agregar evento`} arrow placement="top">
+
+          {/* Botón flotante "+" para admin: navegar a agregar evento */}
+          {isAuthenticated && isAdmin && (
+            <Tooltip title="Agregar evento" arrow placement="top">
               <Plus
                 className="floating-button modal"
                 onClick={() =>
-                  // suponiendo que tu ruta para crear evento es '/evento/nuevo'
                   navigate('/evento/agregar', {
                     state: { courseID: selectedCourse?.id }
                   })
@@ -189,9 +225,20 @@ export default function Search() {
         </InfoModal>
       )}
 
-      {isAuthenticated && (
-        <Tooltip title='Agregar asignatura' arrow placement="top" enterDelay={500} leaveDelay={200}
-                 slotProps={{popper: {modifiers: [{name: 'offset',options: {offset: [0,-8],},},],},}}>
+      {/* Botón flotante "+" para admin: agregar asignatura */}
+      {isAuthenticated && isAdmin && (
+        <Tooltip
+          title="Agregar asignatura"
+          arrow
+          placement="top"
+          enterDelay={500}
+          leaveDelay={200}
+          slotProps={{
+            popper: {
+              modifiers: [{ name: 'offset', options: { offset: [0, -8] } }]
+            }
+          }}
+        >
           <Plus
             className="floating-button"
             onClick={() => navigate('/asignatura/agregar')}

@@ -47,7 +47,8 @@ export default function ClassRoomCard({
   event
 }: ClassRoomCardProps) {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const isAdmin = user?.role === 'ADMIN'
   const handleEdit = (e: React.MouseEvent) => {
     // NEW
     e.stopPropagation() // evita disparar onClick del Card
@@ -164,7 +165,7 @@ export default function ClassRoomCard({
       className="classroom-card"
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
-        {isAuthenticated && viewType == 'standard' && (
+        {isAuthenticated && isAdmin && viewType == 'standard' && (
           <IconButton /* NEW */
             onClick={handleEdit}
             sx={{
