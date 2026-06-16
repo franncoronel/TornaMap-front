@@ -25,7 +25,7 @@ export default function ActiveEvents() {
 
   const fetchEvents = async () => {
     try {
-      const response = await eventService.getInstitutionalEvents()
+      const response = await eventService.getInstitutionalEventsDashboard()
 
       setEvents(response.data)
     } catch (error) {
