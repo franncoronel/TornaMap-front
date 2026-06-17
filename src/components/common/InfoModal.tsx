@@ -237,6 +237,7 @@ export default function InfoModal({
 
               {/* Profesor logueado: reservar aula */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
+                <>
                 <Tooltip title="Crear un evento en esta aula" arrow>
                   <Button
                     variant="contained"
@@ -254,6 +255,12 @@ export default function InfoModal({
                     Newsletter
                   </Button>
                   </Tooltip>
+                  <NewsletterPopover
+                    anchorEl={anchorEl}
+                    onClose={handlePopoverClose}
+                    onSubmit={onSubscribeNewsletter}
+                  />
+                </>
               )}
               {/* Profesor: botón reservar aula, solo en cards de aulas */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
