@@ -29,7 +29,12 @@ const EventRequestList = lazy(
 const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
 const QrFlyers = lazy(() => import('@/components/pages/main/qr/QrFlyers'))
 const AiAssistant = lazy(() => import('@/components/pages/main/ai/AiAssistant'))
-const ActiveEvents = lazy( () => import('@/components/pages/main/event/ActiveEvents') )
+const ActiveEvents = lazy(
+  () => import('@/components/pages/main/event/ActiveEvents')
+)
+const SpaceRequestForm = lazy(
+  () => import('./components/pages/form/components/SpaceRequestForm')
+)
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
@@ -103,6 +108,16 @@ export const routes: RouteObject[] = [
           {
             path: 'editar/:id',
             element: <EventForm />
+          }
+        ]
+      },
+      {
+        path: 'reserva',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <SpaceRequestForm />
           }
         ]
       },

@@ -24,6 +24,7 @@ import InfoModal from '@/components/common/InfoModal'
 import CourseModalContent from '@/components/common/CourseModalContent'
 import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
 import { ChipEventType } from '@/components/common/ChipEventType'
+import EventTabs from '@/components/common/EventTabs'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -452,7 +453,6 @@ export default function Search() {
           </Tooltip>
         )}
       </TabPanel>
-      </Grid2>
 
       {/* Modal detalle del curso */}
       {open && selectedCourse && (
