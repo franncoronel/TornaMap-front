@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from '@mui/material'
+import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
 import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
 import { ChipEventType } from './ChipEventType'
@@ -9,6 +9,9 @@ interface InstitutionalEventCardProps {
 }
 
 export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
   return (
     <Card variant="outlined"
       sx={{ height: '100%', borderRadius: 2, transition: '0.2s', 
@@ -28,10 +31,11 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
           </Stack>
 
           {/* Nombre */}
-          <Typography variant="h6" component="h2" sx={{ fontWeight: 600 }} >
-            {event.name}
-          </Typography>
-
+          <Tooltip title={event.name} arrow placement="top">
+            <Typography variant="h6" component="h2" noWrap={!isMobile} sx={{ fontWeight: 600 }} >
+              {event.name}
+            </Typography>
+          </Tooltip>
           {/* Locacion */}
           <Stack direction="row"  spacing={1} alignItems="center"
               sx={{  minHeight: 24, color: 'text.secondary' }} >

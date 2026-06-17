@@ -188,18 +188,19 @@ export default function ClassRoomCard({
             <PencilSimple size={24} />
           </IconButton>
         )}
-        <Card
-          sx={{
-            width: '100%',
-            flexGrow: 1,
-            borderRadius: 3,
-            boxShadow: 1,
-            border: '1px solid #e0e0e0',
-            '@Media (min-width: 1201px)': { width: '95%' }
-          }}
-        >
+        <Card variant="outlined"
+              sx={{
+                height: '100%',
+                borderRadius: 2,
+                transition: '0.2s',
+                display: 'flex',
+                flexDirection: 'column',
+                '&:hover': { 
+                  boxShadow: 3,
+                  borderColor: 'primary.light' // Feedback visual sutil al hacer hover
+                }}}>
           <CardActionArea onClick={onClick}>
-            <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
+            <CardContent sx={{ p: 3, flexGrow: 1 }}>
               {courseName() && (
                 <>
                   <Box
