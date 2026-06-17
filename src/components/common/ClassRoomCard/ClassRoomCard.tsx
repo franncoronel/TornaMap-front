@@ -17,7 +17,8 @@ import {
   Box,
   Divider,
   Tooltip,
-  IconButton
+  IconButton,
+  Stack
 } from '@mui/material'
 import {
   MapPin,
@@ -169,16 +170,19 @@ export default function ClassRoomCard({
           <IconButton /* NEW */
             onClick={handleEdit}
             sx={{
-              position: 'absolute',
-              top: 8,
-              right: 8,
-              zIndex: 2,
-              color: 'text.secondary',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                color: 'primary.main',
-                transform: 'scale(1.1)'
-              },
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            zIndex: 2,
+            color: 'text.secondary',
+            transition: 'all 0.3s ease',
+            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo sutil para legibilidad
+            backdropFilter: 'blur(4px)',
+            '&:hover': {
+              color: 'primary.main',
+              transform: 'scale(1.1)',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)'
+        },
               '&:active': {
                 transform: 'scale(1)'
               }
@@ -188,30 +192,28 @@ export default function ClassRoomCard({
             <PencilSimple size={24} />
           </IconButton>
         )}
-        <Card
-          sx={{
-            width: '100%',
-            flexGrow: 1,
-            borderRadius: 3,
-            boxShadow: 1,
-            border: '1px solid #e0e0e0',
-            '@Media (min-width: 1201px)': { width: '95%' }
-          }}
-        >
-          <CardActionArea onClick={onClick}>
-            <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
+        <Card variant="outlined"
+              sx={{
+                height: '100%',
+                borderRadius: 2,
+                transition: '0.2s',
+                display: 'flex',
+                flexDirection: 'column',
+                '&:hover': { 
+                  boxShadow: 3,
+                  borderColor: 'primary.light' // Feedback visual sutil al hacer hover
+                }}}>
+          <CardActionArea onClick={onClick} sx={{ 
+            height: '100%', 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'stretch',
+            justifyContent: 'flex-start' }}>
+            <CardContent   sx={{ p: 3, flexGrow: 1 }}>
+              <Stack spacing={2}>
               {courseName() && (
-                <>
-                  <Box
-                    sx={{
-                      display: 'grid',
-                      gridTemplateRows: 'auto auto',
-                      justifyItems: 'center',
-                      maxWidth: '100%',
-                      overflow: 'hidden',
-                      mb: 0.5
-                    }}
-                  >
+                <Stack spacing={1}>
+                  <Stack spacing={0.5} alignItems="center">
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
                         variant="h3"
@@ -224,7 +226,7 @@ export default function ClassRoomCard({
                     {hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h4"
+                          variant="h6"
                           noWrap
                           sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
@@ -243,7 +245,6 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
-                    {}
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
@@ -256,43 +257,21 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
-                  </Box>
+                  </Stack>
                   <Divider sx={{ mb: 1.5 }} />
-                </>
+                  </Stack>
               )}
 
-              <Box
-                sx={{
-                  display: 'grid',
-                  gridTemplateRows: 'auto auto',
-                  gridTemplateColumns: 'auto 1fr',
-                  columnGap: 1,
-                  maxHeight: '90vh',
-                  overflowY: 'auto',
-                  mb: 0.5,
-                  rowGap: 1
-                }}
-              >
+              <Stack spacing={1.5}>
                 {/* Aula y Edificio */}
                 {viewType === 'modal' && !isVirtual() && (
-                  <>
+                  <Stack direction="row" spacing={1} alignItems="flex-start" sx={{ color: 'text.secondary' }}>
                     <Box
-                      sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                      }}
+                      sx={{ display: 'flex', pt: '2px' }}
                     >
-                      <MapPin size={24} color="var(--info-color-dark)" />
+                      <MapPin size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }} />
                     </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        maxWidth: '100%',
-                        overflow: 'hidden'
-                      }}
-                    >
+                    <Stack>
                       <Typography
                         variant="body2"
                         noWrap
@@ -311,15 +290,15 @@ export default function ClassRoomCard({
                       >
                         Edificio: {building()}
                       </Typography>
-                    </Box>
-                  </>
+                    </Stack>
+                  </Stack>
                 )}
 
                 {/* Profesor */}
                 {hasEvents() && (
-                  <>
-                    <User size={24} color="var(--info-color-dark)" />
-                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
+                    <User size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
+                    
                       <Tooltip title={professors()} arrow>
                         <Typography
                           variant="body2"
@@ -329,53 +308,41 @@ export default function ClassRoomCard({
                           Profesor: {professors()}
                         </Typography>
                       </Tooltip>
-                    </Box>
-                  </>
+                   </Stack>
                 )}
 
                 {/* Modalidad */}
-                {hasEvents() && isPresential() && !isVirtual() && (
-                  <Building size={24} color="var(--info-color-dark)" />
-                )}
-                {hasEvents() && isVirtual() && !isPresential() && (
-                  <Laptop size={24} color="var(--info-color-dark)" />
-                )}
-                {hasEvents() && isHybrid() && (
-                  <ArrowsClockwise color="var(--info-color-dark)" size={24} />
-                )}
-
                 {hasEvents() && (
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}
-                  >
-                    Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
-                    {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
-                    {isPresential() ? 'Presencial' : ''}
-                  </Typography>
+              <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
+                {isPresential() && !isVirtual() && <Building size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>}
+                {isVirtual() && !isPresential() && <Laptop size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>}
+                {isHybrid() && <ArrowsClockwise color="var(--info-color-dark)" size={24} style={{ flexShrink: 0 }}/>}
+                
+                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}>
+                  Modalidad: {isVirtual() ? 'Virtual' : ''}
+                      {isHybrid() ? 'Virtual - Presencial' : ''}
+                      {isPresential() ? 'Presencial' : ''}
+                    </Typography>
+                  </Stack>
                 )}
+                
 
                 {/* Horario */}
-                {hasEvents() && <Clock size={24} color="var(--info-color-dark)" />}
                 {hasEvents() && (
-                  <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
-                    <Tooltip title={timeSchedule()} arrow>
-                      <Typography
-                        variant="body2"
-                        noWrap
-                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
-                      >
-                        Horario: {timeSchedule()}
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
+                <Clock size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
+                <Tooltip title={timeSchedule()} arrow>
+                  <Typography variant="body2" noWrap sx={{ fontWeight: 500 }}>
+                    Horario: {timeSchedule()}
                       </Typography>
                     </Tooltip>
-                  </Box>
+                  </Stack>
                 )}
 
                 {/* Carreras */}
                 {programs() && (
-                  <>
-                    <BookOpenText size={24} color="var(--info-color-dark)" />
-                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
+                    <BookOpenText size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
                       <Tooltip title={programs()} arrow>
                         <Typography
                           variant="body2"
@@ -385,10 +352,10 @@ export default function ClassRoomCard({
                           Carreras: {programs()}
                         </Typography>
                       </Tooltip>
-                    </Box>
-                  </>
+                  </Stack>
                 )}
-              </Box>
+                </Stack>
+              </Stack>
             </CardContent>
           </CardActionArea>
         </Card>
