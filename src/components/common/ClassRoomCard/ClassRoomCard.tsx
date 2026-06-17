@@ -17,8 +17,7 @@ import {
   Box,
   Divider,
   Tooltip,
-  IconButton,
-  Stack
+  IconButton
 } from '@mui/material'
 import {
   MapPin,
@@ -170,19 +169,16 @@ export default function ClassRoomCard({
           <IconButton /* NEW */
             onClick={handleEdit}
             sx={{
-            position: 'absolute',
-            top: 16,
-            right: 16,
-            zIndex: 2,
-            color: 'text.secondary',
-            transition: 'all 0.3s ease',
-            backgroundColor: 'rgba(255, 255, 255, 0.8)', // Fondo sutil para legibilidad
-            backdropFilter: 'blur(4px)',
-            '&:hover': {
-              color: 'primary.main',
-              transform: 'scale(1.1)',
-              backgroundColor: 'rgba(255, 255, 255, 0.95)'
-        },
+              position: 'absolute',
+              top: 8,
+              right: 8,
+              zIndex: 2,
+              color: 'text.secondary',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                color: 'primary.main',
+                transform: 'scale(1.1)'
+              },
               '&:active': {
                 transform: 'scale(1)'
               }
@@ -203,17 +199,20 @@ export default function ClassRoomCard({
                   boxShadow: 3,
                   borderColor: 'primary.light' // Feedback visual sutil al hacer hover
                 }}}>
-          <CardActionArea onClick={onClick} sx={{ 
-            height: '100%', 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'stretch',
-            justifyContent: 'flex-start' }}>
-            <CardContent   sx={{ p: 3, flexGrow: 1 }}>
-              <Stack spacing={2}>
+          <CardActionArea onClick={onClick}>
+            <CardContent sx={{ p: 3, flexGrow: 1 }}>
               {courseName() && (
-                <Stack spacing={1}>
-                  <Stack spacing={0.5} alignItems="center">
+                <>
+                  <Box
+                    sx={{
+                      display: 'grid',
+                      gridTemplateRows: 'auto auto',
+                      justifyItems: 'center',
+                      maxWidth: '100%',
+                      overflow: 'hidden',
+                      mb: 0.5
+                    }}
+                  >
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
                         variant="h3"
@@ -226,7 +225,7 @@ export default function ClassRoomCard({
                     {hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h6"
+                          variant="h4"
                           noWrap
                           sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
@@ -245,6 +244,7 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
+                    {}
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
@@ -257,21 +257,43 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
-                  </Stack>
+                  </Box>
                   <Divider sx={{ mb: 1.5 }} />
-                  </Stack>
+                </>
               )}
 
-              <Stack spacing={1.5}>
+              <Box
+                sx={{
+                  display: 'grid',
+                  gridTemplateRows: 'auto auto',
+                  gridTemplateColumns: 'auto 1fr',
+                  columnGap: 1,
+                  maxHeight: '90vh',
+                  overflowY: 'auto',
+                  mb: 0.5,
+                  rowGap: 1
+                }}
+              >
                 {/* Aula y Edificio */}
                 {viewType === 'modal' && !isVirtual() && (
-                  <Stack direction="row" spacing={1} alignItems="flex-start" sx={{ color: 'text.secondary' }}>
+                  <>
                     <Box
-                      sx={{ display: 'flex', pt: '2px' }}
+                      sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                      }}
                     >
-                      <MapPin size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }} />
+                      <MapPin size={24} color="var(--info-color-dark)" />
                     </Box>
-                    <Stack>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        maxWidth: '100%',
+                        overflow: 'hidden'
+                      }}
+                    >
                       <Typography
                         variant="body2"
                         noWrap
@@ -290,15 +312,15 @@ export default function ClassRoomCard({
                       >
                         Edificio: {building()}
                       </Typography>
-                    </Stack>
-                  </Stack>
+                    </Box>
+                  </>
                 )}
 
                 {/* Profesor */}
                 {hasEvents() && (
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-                    <User size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
-                    
+                  <>
+                    <User size={24} color="var(--info-color-dark)" />
+                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={professors()} arrow>
                         <Typography
                           variant="body2"
@@ -308,41 +330,53 @@ export default function ClassRoomCard({
                           Profesor: {professors()}
                         </Typography>
                       </Tooltip>
-                   </Stack>
+                    </Box>
+                  </>
                 )}
 
                 {/* Modalidad */}
-                {hasEvents() && (
-              <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-                {isPresential() && !isVirtual() && <Building size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>}
-                {isVirtual() && !isPresential() && <Laptop size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>}
-                {isHybrid() && <ArrowsClockwise color="var(--info-color-dark)" size={24} style={{ flexShrink: 0 }}/>}
-                
-                <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}>
-                  Modalidad: {isVirtual() ? 'Virtual' : ''}
-                      {isHybrid() ? 'Virtual - Presencial' : ''}
-                      {isPresential() ? 'Presencial' : ''}
-                    </Typography>
-                  </Stack>
+                {hasEvents() && isPresential() && !isVirtual() && (
+                  <Building size={24} color="var(--info-color-dark)" />
                 )}
-                
+                {hasEvents() && isVirtual() && !isPresential() && (
+                  <Laptop size={24} color="var(--info-color-dark)" />
+                )}
+                {hasEvents() && isHybrid() && (
+                  <ArrowsClockwise color="var(--info-color-dark)" size={24} />
+                )}
+
+                {hasEvents() && (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}
+                  >
+                    Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
+                    {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
+                    {isPresential() ? 'Presencial' : ''}
+                  </Typography>
+                )}
 
                 {/* Horario */}
+                {hasEvents() && <Clock size={24} color="var(--info-color-dark)" />}
                 {hasEvents() && (
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-                <Clock size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
-                <Tooltip title={timeSchedule()} arrow>
-                  <Typography variant="body2" noWrap sx={{ fontWeight: 500 }}>
-                    Horario: {timeSchedule()}
+                  <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
+                    <Tooltip title={timeSchedule()} arrow>
+                      <Typography
+                        variant="body2"
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
+                      >
+                        Horario: {timeSchedule()}
                       </Typography>
                     </Tooltip>
-                  </Stack>
+                  </Box>
                 )}
 
                 {/* Carreras */}
                 {programs() && (
-                  <Stack direction="row" spacing={1} alignItems="center" sx={{ color: 'text.secondary' }}>
-                    <BookOpenText size={24} color="var(--info-color-dark)" style={{ flexShrink: 0 }}/>
+                  <>
+                    <BookOpenText size={24} color="var(--info-color-dark)" />
+                    <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={programs()} arrow>
                         <Typography
                           variant="body2"
@@ -352,10 +386,10 @@ export default function ClassRoomCard({
                           Carreras: {programs()}
                         </Typography>
                       </Tooltip>
-                  </Stack>
+                    </Box>
+                  </>
                 )}
-                </Stack>
-              </Stack>
+              </Box>
             </CardContent>
           </CardActionArea>
         </Card>
