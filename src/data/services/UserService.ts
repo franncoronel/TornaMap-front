@@ -14,5 +14,22 @@ export const userService = {
       { withCredentials: true }
     ),
   logout: async () =>
-    await axios.post('users/logout', {}, { withCredentials: true })
+    await axios.post('users/logout', {}, { withCredentials: true }),
+
+  //Para Profile STUDENT
+  getMyCourses: async () =>
+    axios.get(`${API_URL}/users/me/courses`, { withCredentials: true }),
+
+
+
+  unsubscribeCourse: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/courses/${id}`, { withCredentials: true }),
+
+  // Para Profile PROFESSOR
+  getMyReservations: async () =>
+    axios.get(`${API_URL}/users/me/reservations`, { withCredentials: true }),
+
+  cancelReservation: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/reservations/${id}`, { withCredentials: true })
+
 }
