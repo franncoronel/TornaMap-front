@@ -1,36 +1,45 @@
 import { ICourseList } from '@/data/domain/Course'
+import { useLoader } from '@/context/LoaderContext'
 import { ProfileListEntry, ProfileListSection } from './ProfileListSection'
+import { useEffect, useState } from 'react'
+import { useNotification } from '@/context/NotificationContext'
+import { userService } from '@/data/services/UserService'
 
-// Data mockeada porque falta un endpoint para esto
-// GET /blabla que devuelva una lista de cursos a los que estoy suscripto (ICourseList[])
-const mockSubscribedCourses: ICourseList[] = [
-  {
-    id: '1',
-    name: 'Algoritmos I',
-    events: 'Cursada Algoritmos I',
-    professors: 'Juan José López',
-    modality: 'Presencial',
-    schedules: 'MARTES: 18:00 - 22:00 | JUEVES: 18:00 - 22:00',
-    programs: 'Tecnicatura en Programación Informática'
-  },
-  {
-    id: '2',
-    name: 'Conceptos de Arquitecturas y Sistemas Operativos',
-    events: 'Cursada CASO',
-    professors: 'Gaston Aguilera',
-    modality: 'Presencial',
-    schedules: 'LUNES: 19:00 - 22:00 | MIÉRCOLES: 19:00 - 22:00',
-    programs: 'Tecnicatura en Programación Informática'
-  }
-]
 
 export function StudentContent() {
-    //Deberia traermelos del backend, por ahora son la data mockeada
-  const subscribedCourses = mockSubscribedCourses
+  const [subscribedCourses, setSubscribedCourses] = useState<ICourseList[]>([])
+  const { setLoader } = useLoader()
+  const { setNotificationState } = useNotification()
 
-  const handleUnsubscribe = (id: string | number) => {
-    //Deberia llamar a otro endpoint que me borre la materia de mi lista
-    console.log('Te desuscribiste exitosamente de la materia con id: ', id)
+  const fetchCourses = async () => {
+    try {
+      setLoader(true)
+      const res = await userService.getMyCourses()
+      setSubscribedCourses(res.data.data) // Asumiendo que tu axios devuelve el CustomResponse
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setLoader(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchCourses()
+  }, [])
+
+
+  const handleUnsubscribe = async (id: string | number) => {
+    try {
+      setLoader(true)
+      await userService.unsubscribeCourse(id)
+      setNotificationState({ title: 'Te desuscribiste exitosamente', type: 'success' })
+      fetchCourses() // Recargamos la lista
+    } catch (error) {
+      setNotificationState({ title: 'Error al desuscribirse', type: 'error' })
+    } finally {
+      setLoader(false)
+    }
+
   }
 
   const items: ProfileListEntry[] = subscribedCourses
