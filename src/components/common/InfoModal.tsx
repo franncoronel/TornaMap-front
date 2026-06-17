@@ -9,11 +9,13 @@ import {
   useTheme,
   Tooltip
 } from '@mui/material'
-import { ReactNode, useRef,useCallback, useEffect } from 'react'
+import { ReactNode, useRef, useCallback, useEffect } from 'react'
 import { useState } from 'react'
 import { Bell, X, BookBookmark, CalendarPlus } from '@phosphor-icons/react'
 import { useAuth } from '@/context/AuthContext'
 import NewsletterPopover from './NewsletterPopover'
+import { useNavigate } from 'react-router-dom'
+import { IPossibleReservation } from '@/data/domain/ClassroomReservation'
 
 type InfoModalProps = {
   children: ReactNode
@@ -26,6 +28,7 @@ type InfoModalProps = {
   onSubscribe?: () => void
   onSubscribeNewsletter?: (email: string) => void
   onReserveClassroom?: () => void
+  possibleReservationData?: IPossibleReservation
 }
 
 export default function InfoModal({
@@ -38,7 +41,9 @@ export default function InfoModal({
   type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
+  possibleReservationData
 }: InfoModalProps) {
+  const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
@@ -54,6 +59,8 @@ export default function InfoModal({
     setAnchorEl(e.currentTarget)
   }
   const handlePopoverClose = () => setAnchorEl(null)
+
+
 
   // Track scroll position for shadow indicators
   const updateScrollShadows = useCallback(() => {
@@ -106,7 +113,8 @@ export default function InfoModal({
             // ─── Appearance ───
             bgcolor: 'background.paper',
             borderRadius: isMobile ? '16px' : '20px',
-            boxShadow: '0 24px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08)',
+            boxShadow:
+              '0 24px 80px rgba(0,0,0,0.18), 0 8px 24px rgba(0,0,0,0.08)',
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
@@ -130,7 +138,7 @@ export default function InfoModal({
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: 1,
+                height: "1px",
                 bgcolor: 'divider',
                 opacity: hasScrolled ? 1 : 0.4,
                 transition: 'opacity 0.2s ease'
@@ -212,8 +220,9 @@ export default function InfoModal({
             </Box>
 
             {/* Botones */}
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5 }}>
-
+            <Box
+              sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1.5}}
+            >
               {/* No logueado: solo campana newsletter, sin botón suscribirse */}
               {!isAuthenticated && type === 'event' && (
                 <Tooltip title="Suscribirse al newsletter">
@@ -234,7 +243,7 @@ export default function InfoModal({
               />
 
               {/* Estudiante: botón suscribirse activo */}
-              {isAuthenticated && isStudent && type === 'event' &&(
+              {isAuthenticated && isStudent && type === 'event' && (
                 <Button
                   variant="contained"
                   size="small"
@@ -282,10 +291,16 @@ export default function InfoModal({
                   <Button
                     variant="contained"
                     size="small"
-                    color="secondary"
-                    onClick={() => {}}
+                    color="primary"
                     startIcon={<CalendarPlus size={18} />}
                     sx={{ borderRadius: '999px' }}
+                    onClick={() => {
+                      if (!possibleReservationData) return
+                      handleClose()
+                      navigate('/reserva/agregar', {
+                        state: possibleReservationData
+                      })
+                    }}
                   >
                     Reservar aula
                   </Button>

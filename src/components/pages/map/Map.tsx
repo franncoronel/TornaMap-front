@@ -4,7 +4,21 @@ import { Controller, useForm } from 'react-hook-form'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 // Components
-import { FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem, Radio,  RadioGroup, Select, Box, Typography, Divider, Paper} from '@mui/material'
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  InputLabel,
+  MenuItem,
+  Radio,
+  RadioGroup,
+  Select,
+  Box,
+  Typography,
+  Divider,
+  Paper,
+  Button
+} from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -28,9 +42,15 @@ import { classroomService } from '@/data/services/ClassroomService'
 import { buildingService } from '@/data/services/BuildingService'
 
 // Mapper
-import { mapBuildingsToUI, UIBuilding, normalize } from '@/data/mapper/buildingMapper'
+import {
+  mapBuildingsToUI,
+  UIBuilding,
+  normalize
+} from '@/data/mapper/buildingMapper'
 import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
 import Campus from '@/components/common/map/campus/Campus'
+import { toMins } from '@/utils/helpers'
+import { OccupiedInterval } from '@/data/domain/Schedule'
 
 export default function Map() {
   const { control } = useForm({
@@ -43,10 +63,11 @@ export default function Map() {
   const [searchParams] = useSearchParams()
   const [autoOpenDone, setAutoOpenDone] = useState(false)
   const { building: buildingPath, level: levelPath } = useParams() //leo la url del map para saber a qué edificio y nivel mostrar, ej: /mapa/tornavias/primer-piso => buildingPath = 'tornavias', levelPath = 'primer-piso'
-  
+
   // edificios desde back
   const [buildings, setBuildings] = useState<UIBuilding[]>([])
-  const [selectedCampusBuilding, setSelectedCampusBuilding] = useState<string>('')
+  const [selectedCampusBuilding, setSelectedCampusBuilding] =
+    useState<string>('')
 
   // Estado del modal
   const [classRoomId, setClassRoomId] = useState<null | string>(null)
@@ -82,12 +103,12 @@ export default function Map() {
 
     fetchBuildings()
   }, [])
-  
+
   const isCampus = buildingPath === 'campus'
-  
-  const currentBuilding = buildings.find( (b) => b.path === buildingPath ) //edificio actual
-  
-  const currentLevel = pathToFloor(levelPath || '')// nivel actual -> numero
+
+  const currentBuilding = buildings.find((b) => b.path === buildingPath) //edificio actual
+
+  const currentLevel = pathToFloor(levelPath || '') // nivel actual -> numero
 
   // Manejo del mapa -> navegación niveles
   const handleLevelChange = (levelPath: string) => {
@@ -102,7 +123,9 @@ export default function Map() {
       return
     }
 
-    const newBuilding = buildings.find((b) => normalize(b.text) === newBuildingPath )
+    const newBuilding = buildings.find(
+      (b) => normalize(b.text) === newBuildingPath
+    )
 
     if (!newBuilding) return
 
@@ -115,7 +138,10 @@ export default function Map() {
     try {
       setLoader(true)
       console.log('classroom id:', classRoomId)
-      const eventsResponse = await eventService.getAll( classRoomId, new Date(date) )
+      const eventsResponse = await eventService.getAll(
+        classRoomId,
+        new Date(date)
+      )
       setLoader(false)
       setEvents(eventsResponse.data)
     } catch (error) {
@@ -184,14 +210,33 @@ export default function Map() {
     }
   }, [buildings])
 
-
-    useEffect(() => {
+  useEffect(() => {
     const aulaParam = searchParams.get('aula')
     if (aulaParam && !open && !autoOpenDone) {
       setAutoOpenDone(true)
       handleOpen(aulaParam)
     }
   }, [searchParams, handleOpen])
+
+  function hasAvailableSlot(occupied: OccupiedInterval[]): boolean {
+    const DAY_START = 6 * 60
+    const DAY_END = 22 * 60
+    const MIN_SLOT = 30
+    const sorted = [...occupied]
+      .map((o) => ({ start: toMins(o.startTime), end: toMins(o.endTime) }))
+      .sort((a, b) => a.start - b.start)
+    let cursor = DAY_START
+    for (const { start, end } of sorted) {
+      if (start - cursor >= MIN_SLOT) return true
+      cursor = Math.max(cursor, end)
+    }
+    return DAY_END - cursor >= MIN_SLOT
+  }
+
+  const occupiedIntervals: OccupiedInterval[] = events.flatMap((e) =>
+    e.schedules.map((s) => ({ startTime: s.startTime, endTime: s.endTime }))
+  )
+  const canReserve = classroom !== null && hasAvailableSlot(occupiedIntervals)
 
   return (
     <main className={`interactive-page${!isCampus ? ' map-page' : ''}`}>
@@ -224,32 +269,40 @@ export default function Map() {
           )}
         />
 
-      {/* Select del campus */}
+        {/* Select del campus */}
         {isCampus && (
-          <Box  display="flex" 
-                flexDirection={{ xs: "column", md: "row" }} 
-                gap={3} 
-                alignItems="stretch" 
-                justifyContent="center"
-                maxWidth="1300px" 
-                margin="0 auto"
-                padding={2}>
+          <Box
+            display="flex"
+            flexDirection={{ xs: 'column', md: 'row' }}
+            gap={3}
+            alignItems="stretch"
+            justifyContent="center"
+            maxWidth="1300px"
+            margin="0 auto"
+            padding={2}
+          >
             {/* Panel de Control -> arriba en movil, izquierda en web*/}
-            <Paper 
-              elevation={2} 
-              sx={{ 
-                width: { xs: "100%", md: "300px" }, 
-                padding: 2.5, 
-                borderRadius: 2, 
-                display: "flex", 
-                flexDirection: "column", 
+            <Paper
+              elevation={2}
+              sx={{
+                width: { xs: '100%', md: '300px' },
+                padding: 2.5,
+                borderRadius: 2,
+                display: 'flex',
+                flexDirection: 'column',
                 gap: 1.5,
-                maxHeight: { xs: "220px", md: "none" },//limite la altura para que no empuje el mapa demasiado abajo
-                overflowY: "auto",
-                alignSelf: { md: "flex-start" }
+                maxHeight: { xs: '220px', md: 'none' }, //limite la altura para que no empuje el mapa demasiado abajo
+                overflowY: 'auto',
+                alignSelf: { md: 'flex-start' }
               }}
             >
-              <FormLabel sx={{ fontWeight: "bold", fontSize: "1rem", color: "text.primary" }}>
+              <FormLabel
+                sx={{
+                  fontWeight: 'bold',
+                  fontSize: '1rem',
+                  color: 'text.primary'
+                }}
+              >
                 Edificios
               </FormLabel>
               <FormControl fullWidth>
@@ -257,27 +310,29 @@ export default function Map() {
                   value={selectedCampusBuilding}
                   onChange={(e) => setSelectedCampusBuilding(e.target.value)}
                   //movil-> se ordena las opciones horizontalmente para ahorrar espacio vertical
-                  sx={{ 
-                    display: "flex", 
-                    flexDirection: { xs: "row", md: "column" }, 
-                    flexWrap: "wrap",
-                    gap: 1 
+                  sx={{
+                    display: 'flex',
+                    flexDirection: { xs: 'row', md: 'column' },
+                    flexWrap: 'wrap',
+                    gap: 1
                   }}
                 >
                   {buildings.map((b) => {
-                    const isSelected = selectedCampusBuilding === b.path;
+                    const isSelected = selectedCampusBuilding === b.path
                     return (
                       <Box
                         key={b.id}
                         sx={{
-                          flex: { xs: "1 1 120px", md: "none" }, // Se estiran en móvil para rellenar filas
-                          border: "1px solid",
-                          borderColor: isSelected ? "primary.main" : "divider",
+                          flex: { xs: '1 1 120px', md: 'none' }, // Se estiran en móvil para rellenar filas
+                          border: '1px solid',
+                          borderColor: isSelected ? 'primary.main' : 'divider',
                           borderRadius: 1.5,
-                          backgroundColor: isSelected ? "action.selected" : "transparent",
-                          transition: "0.2s ease",
-                          "&:hover": { 
-                            backgroundColor: "action.hover"
+                          backgroundColor: isSelected
+                            ? 'action.selected'
+                            : 'transparent',
+                          transition: '0.2s ease',
+                          '&:hover': {
+                            backgroundColor: 'action.hover'
                           }
                         }}
                       >
@@ -285,30 +340,36 @@ export default function Map() {
                           value={b.path}
                           control={<Radio size="small" />}
                           label={b.text}
-                          sx={{ 
-                            width: "100%", 
-                            margin: 0, 
-                            paddingY: 0.5, 
+                          sx={{
+                            width: '100%',
+                            margin: 0,
+                            paddingY: 0.5,
                             paddingX: 1.5,
-                            "& .MuiFormControlLabel-label": { fontSize: "0.9rem" }
+                            '& .MuiFormControlLabel-label': {
+                              fontSize: '0.9rem'
+                            }
                           }}
                         />
                       </Box>
-                    );
+                    )
                   })}
                 </RadioGroup>
               </FormControl>
             </Paper>
 
             {/* MAPA CAMPUS */}
-            <Box  flexGrow={1} display="flex" justifyContent="center" alignItems="center"
-              sx={{ 
-                border: "1px solid", 
-                borderColor: "divider", 
-                borderRadius: 2, 
-                overflow: "hidden",
-                backgroundColor: "#fafafa",
-                minHeight: { xs: "350px", md: "500px" } 
+            <Box
+              flexGrow={1}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              sx={{
+                border: '1px solid',
+                borderColor: 'divider',
+                borderRadius: 2,
+                overflow: 'hidden',
+                backgroundColor: '#fafafa',
+                minHeight: { xs: '350px', md: '500px' }
               }}
             >
               <Campus selectedBuilding={selectedCampusBuilding} />
@@ -336,7 +397,7 @@ export default function Map() {
                   }}
                   className="levels-radio-group"
                 >
-                  {currentBuilding.levels.map((lvl) =>(
+                  {currentBuilding.levels.map((lvl) => (
                     <FormControlLabel
                       key={lvl.level}
                       value={floorToPath(lvl.level)}
@@ -361,7 +422,7 @@ export default function Map() {
             handleOpen={handleOpen}
           />
         </section>
-    )}
+      )}
 
       {/* Modal */}
       {classRoomId !== null && (
@@ -372,6 +433,15 @@ export default function Map() {
           subtitle={currentBuilding?.text}
           capacity={classroom?.capacity?.toString()}
           type="schedule"
+          possibleReservationData={
+            classroom
+              ? {
+                  classroom,
+                  date: date ? date.toISOString() : null,
+                  occupiedIntervals
+                }
+              : undefined
+          }
         >
           <DatePicker
             label="Elige una fecha"

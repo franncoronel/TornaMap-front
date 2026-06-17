@@ -13,3 +13,8 @@ export interface IScheduleCreate {
   professors: string[]
   classroom?: IClassroom | null
 }
+
+export interface OccupiedInterval {
+  startTime: string
+  endTime: string
+}
