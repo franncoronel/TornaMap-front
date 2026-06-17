@@ -36,6 +36,7 @@ export function StudentContent() {
       fetchCourses() // Recargamos la lista
     } catch (error) {
       setNotificationState({ title: 'Error al desuscribirse', type: 'error' })
+      console.error(error)
     } finally {
       setLoader(false)
     }
