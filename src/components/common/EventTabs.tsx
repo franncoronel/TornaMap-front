@@ -64,7 +64,8 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
   const [currentEventId, setCurrentEventId] = useState<string>('')
 
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const isAdmin = user?.role === 'ADMIN'
   const { setNotificationState } = useNotification()
 
   // Filtrar solo eventos académicos (CURSADA, PARCIAL, FINAL)
@@ -147,7 +148,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
               />
             </Box>
 
-            {isAuthenticated && (
+            {isAuthenticated && isAdmin && (
               <IconButton
                 onClick={() => navigate(`/evento/editar/${event.id}`)}
                 sx={{
