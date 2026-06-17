@@ -113,12 +113,13 @@ export default function CourseEventsPanel({ events }: CourseEventsPanelProps) {
         description: 'El enlace se ha copiado al portapapeles.',
         type: 'success'
       })
-    } catch (_err) {
+    } catch (error) {
       setNotificationState({
         title: 'Error',
         description: 'No se pudo copiar el enlace.',
         type: 'error'
       })
+      console.log(error)
     }
   }
 
