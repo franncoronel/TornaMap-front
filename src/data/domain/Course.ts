@@ -22,3 +22,9 @@ export interface ICourseList extends Entity {
   modality: string
   schedules: string
 }
+
+export interface ICourseAi {
+    id: string
+    name: string
+    students: number
+}
