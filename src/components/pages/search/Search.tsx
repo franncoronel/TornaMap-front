@@ -9,6 +9,7 @@ import { useAuth } from '@/context/AuthContext'
 
 import { courseService } from '@/data/services/CourseService'
 import { eventService } from '@/data/services/EventService'
+import { userService } from '@/data/services/UserService'
 
 import { ICourse, ICourseList } from '@/data/domain/Course'
 import { IEventCreate, IEventList } from '@/data/domain/Event'
@@ -43,6 +44,7 @@ export default function Search() {
   const [activeTab, setActiveTab] = useState(0)
 
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
+  const [selectedCourseListId, setSelectedCourseListId] = useState<string | number | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
   const [courseSearchTags, setCourseSearchTags] = useState<string[]>([])
@@ -125,6 +127,7 @@ export default function Search() {
         return
       }
       setLoader(true)
+      setSelectedCourseListId(course.id)
       const response = await courseService.getById(course.id)
       setSelectedCourse(response.data)
       setOpen(true)
@@ -143,16 +146,33 @@ export default function Search() {
 
   const handleClose = () => {
     setSelectedCourse(null)
+    setSelectedCourseListId(null)
     setOpen(false)
   }
 
-  const handleSubscribe = () => {
-    setNotificationState({
-      title: 'Suscripción',
-      description: 'Te suscribiste a la materia correctamente',
-      type: 'success'
-    })
-    handleClose()
+  const handleSubscribe = async () => {
+    if (!selectedCourseListId) return
+    try {
+      setLoader(true)
+      await userService.subscribeCourse(selectedCourseListId)
+      setNotificationState({
+        title: 'Suscripción',
+        description: 'Te suscribiste a la materia correctamente',
+        type: 'success'
+      })
+      handleClose()
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { status?: number; data?: { message?: string } } }
+      console.error('Subscribe error:', axiosErr?.response)
+      const msg = axiosErr?.response?.data?.message ?? 'No se pudo completar la suscripción'
+      setNotificationState({
+        title: 'Error al suscribirse',
+        description: msg,
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
   }
 
   const getFirstClassroomId = (): string | undefined => {
