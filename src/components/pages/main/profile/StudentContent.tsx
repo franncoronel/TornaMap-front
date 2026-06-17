@@ -1,6 +1,5 @@
-import { Box, List, Typography } from '@mui/material'
 import { ICourseList } from '@/data/domain/Course'
-import { SubscriptionItem } from './SubscriptionItem'
+import { ProfileListEntry, ProfileListSection } from './ProfileListSection'
 
 // Data mockeada porque falta un endpoint para esto
 // GET /blabla que devuelva una lista de cursos a los que estoy suscripto (ICourseList[])
@@ -26,38 +25,31 @@ const mockSubscribedCourses: ICourseList[] = [
 ]
 
 export function StudentContent() {
-  //Deberia traermelos del backend, por ahora son la data mockeada
+    //Deberia traermelos del backend, por ahora son la data mockeada
   const subscribedCourses = mockSubscribedCourses
 
-  const handleUnsubscribe = (id: string | number | undefined) => {
+  const handleUnsubscribe = (id: string | number) => {
     //Deberia llamar a otro endpoint que me borre la materia de mi lista
     console.log('Te desuscribiste exitosamente de la materia con id: ', id)
   }
 
-  return (
-    <Box sx={{ width: '100%', maxWidth: 1024, mx: 'auto', px: { xs: 2, sm: 3 }, mb: 4 }}>
-      <Typography variant="h3" gutterBottom>
-        Mis materias
-      </Typography>
+  const items: ProfileListEntry[] = subscribedCourses
+    .filter((c): c is ICourseList & { id: string | number } => c.id != null)
+    .map((c) => ({
+      id: c.id,
+      title: c.name,
+      subtitle: `${c.events} · ${c.professors}`,
+      attributes: [c.modality],
+      detail: c.schedules
+    }))
 
-      {subscribedCourses.length === 0 ? (
-        <Typography color="secondary">
-          No estás suscripto a ninguna materia.
-        </Typography>
-      ) : (
-        <List disablePadding>
-          {subscribedCourses.map((course) => (
-            <SubscriptionItem
-              key={course.id}
-              title={course.name}
-              subtitle={`${course.events} · ${course.professors}`}
-              attributes={[course.modality]}
-              detail={course.schedules}
-              onRemove={() => handleUnsubscribe(course.id)}
-            />
-          ))}
-        </List>
-      )}
-    </Box>
+  return (
+    <ProfileListSection
+      heading="Mis materias"
+      emptyMessage="No estás suscripto a ninguna materia."
+      items={items}
+      onRemove={handleUnsubscribe}
+      removeLabel="esta suscripción"
+    />
   )
 }
