@@ -20,7 +20,8 @@ export const userService = {
   getMyCourses: async () =>
     axios.get(`${API_URL}/users/me/courses`, { withCredentials: true }),
 
-
+  subscribeCourse: async (id: string | number) =>
+    axios.post(`${API_URL}/users/me/courses/${id}`, {}, { withCredentials: true }),
 
   unsubscribeCourse: async (id: string | number) =>
     axios.delete(`${API_URL}/users/me/courses/${id}`, { withCredentials: true }),
