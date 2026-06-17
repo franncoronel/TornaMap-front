@@ -40,7 +40,7 @@ export default function InfoModal({
   type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
-  onReserveClassroom = () => {}
+  onReserveClassroom = () => {},
   possibleReservationData
 }: InfoModalProps) {
   const navigate = useNavigate()
@@ -237,6 +237,7 @@ export default function InfoModal({
 
               {/* Profesor logueado: reservar aula */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
+                <>
                 <Tooltip title="Crear un evento en esta aula" arrow>
                   <Button
                     variant="contained"
@@ -253,6 +254,7 @@ export default function InfoModal({
                   >
                     Newsletter
                   </Button>
+                  </Tooltip>
                   <NewsletterPopover
                     anchorEl={anchorEl}
                     onClose={handlePopoverClose}
