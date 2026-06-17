@@ -235,7 +235,7 @@ export default function Search() {
           value={activeTab}
           onChange={(_, newValue) => setActiveTab(newValue)}
           variant="fullWidth"
-          sx={{ mb: 1 }}
+          sx={{ mb: 2 }}
         >
           <Tab label="Cursos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
           <Tab label="Eventos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
