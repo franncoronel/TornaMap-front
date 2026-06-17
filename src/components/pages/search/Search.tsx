@@ -15,7 +15,7 @@ import { IEventCreate, IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
 
 import { WarningCircle, Plus, MapPin } from '@phosphor-icons/react'
-import { Box, Divider, Grid2, Tooltip, Typography, Tabs, Tab, Stack} from '@mui/material'
+import { Box, Divider, Grid2, Tooltip, Typography, Tabs, Tab, Stack } from '@mui/material'
 import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
 import SearchTagsInput from '@/components/common/SearchTagsInput'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
@@ -24,7 +24,6 @@ import InfoModal from '@/components/common/InfoModal'
 import CourseModalContent from '@/components/common/CourseModalContent'
 import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
 import { ChipEventType } from '@/components/common/ChipEventType'
-import EventTabs from '@/components/common/EventTabs'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -51,19 +50,20 @@ export default function Search() {
   const [institutionalEvents, setInstitutionalEvents] = useState<IEventList[]>([])
   const [eventSearchTags, setEventSearchTags] = useState<string[]>([])
 
-  // Modal de evento institucional
   const [selectedEvent, setSelectedEvent] = useState<IEventCreate | null>(null)
   const [eventOpen, setEventOpen] = useState(false)
+
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
+  const isAdmin = user?.role === 'ADMIN'
 
+  // ─── Fetch ────────────────────────────────────
   const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
       const response = await courseService.getAll(query)
-      setLoader(false)
       setCourses(response.data)
       if (response.data.length === 0) {
         setNotificationState({
@@ -112,6 +112,7 @@ export default function Search() {
     }
   }
 
+  // ─── Modal curso ──────────────────────────────
   const handleOpen = async (course: ICourseList) => {
     try {
       if (!course?.id) {
@@ -145,18 +146,37 @@ export default function Search() {
     setOpen(false)
   }
 
-  const handleCourseSearch = (tags: string[]) => {
-    setCourseSearchTags(tags)
-    fetchCourses(tags)
+  const handleSubscribe = () => {
+    setNotificationState({
+      title: 'Suscripción',
+      description: 'Te suscribiste a la materia correctamente',
+      type: 'success'
+    })
+    handleClose()
   }
 
-  const handleEventSearch = (tags: string[]) => {
-    setEventSearchTags(tags)
-    const query = tags.length > 0 ? tags.join(' ') : undefined
-    fetchInstitutionalEvents(query)
+  const getFirstClassroomId = (): string | undefined => {
+    if (!selectedCourse?.events) return undefined
+    for (const event of selectedCourse.events) {
+      for (const schedule of event.schedules) {
+        if (schedule.classroom?.id) return schedule.classroom.id
+      }
+    }
+    return undefined
   }
 
-  // ─── Modal de evento institucional ────────────
+  const handleReserveClassroom = () => {
+    const classroomId = getFirstClassroomId()
+    navigate('/evento/agregar', {
+      state: {
+        courseID: selectedCourse?.id,
+        preselectedClassroomId: classroomId
+      }
+    })
+    handleClose()
+  }
+
+  // ─── Modal evento institucional ───────────────
   const handleEventOpen = async (eventId: string) => {
     try {
       setLoader(true)
@@ -181,6 +201,19 @@ export default function Search() {
     setEventOpen(false)
   }
 
+  // ─── Búsquedas ────────────────────────────────
+  const handleCourseSearch = (tags: string[]) => {
+    setCourseSearchTags(tags)
+    fetchCourses(tags)
+  }
+
+  const handleEventSearch = (tags: string[]) => {
+    setEventSearchTags(tags)
+    const query = tags.length > 0 ? tags.join(' ') : undefined
+    fetchInstitutionalEvents(query)
+  }
+
+  // ─── Carga inicial ────────────────────────────
   useEffect(() => {
     if (activeTab === 0 && courses.length === 0) {
       fetchCourses([])
@@ -189,47 +222,15 @@ export default function Search() {
       fetchInstitutionalEvents()
     }
   }, [activeTab])
-  // Obtiene el primer classroomId disponible en los schedules del curso
-  const getFirstClassroomId = (): string | undefined => {
-    if (!selectedCourse?.events) return undefined
-    for (const event of selectedCourse.events) {
-      for (const schedule of event.schedules) {
-        if (schedule.classroom?.id) return schedule.classroom.id
-      }
-    }
-    return undefined
-  }
 
-  const handleReserveClassroom = () => {
-    const classroomId = getFirstClassroomId()
-    navigate('/evento/agregar', {
-      state: {
-        courseID: selectedCourse?.id,
-        preselectedClassroomId: classroomId
-      }
-    })
-    handleClose()
-  }
+  useEffect(() => {
+    fetchCourses([])
+  }, [])
 
-  const handleSubscribe = () => {
-    // Lógica de suscripción existente — completar según el servicio
-    setNotificationState({
-      title: 'Suscripción',
-      description: 'Te suscribiste a la materia correctamente',
-      type: 'success'
-    })
-    handleClose()
-  }
-
-  // useEffect(() => {
-  //  fetchCourses([])
-  // }, [])
-
-  const isAdmin = user?.role === 'ADMIN'
-
+  // ─── Render ───────────────────────────────────
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-      {/* Header fijo fuera del contenedor scrolleable */}
+      {/* Header fijo */}
       <Box sx={{ backgroundColor: 'background.paper', pt: '0.75rem', pb: '0.25rem', px: { xs: '1rem', sm: '2rem' }, zIndex: 10 }}>
         <Tabs
           value={activeTab}
@@ -260,48 +261,84 @@ export default function Search() {
       </Box>
 
       <Box className="interactive-page">
-      {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
-      <TabPanel value={activeTab} index={0}>
-        <Grid2
-          container
-          rowSpacing="1rem"
-          columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
-          columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        >
-          {courses.length > 0 &&
-            courses.map((course: ICourseList) => (
-              <Grid2 size={1} key={course.id}>
-                <ClassRoomCard
-                  course={course}
-                  viewType="standard"
-                  onClick={() => handleOpen(course)}
-                />
-              </Grid2>
-            ))}
-        </Grid2>
+        {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
+        <TabPanel value={activeTab} index={0}>
+          <Grid2
+            container
+            rowSpacing="1rem"
+            columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
+            columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
+          >
+            {courses.length > 0 &&
+              courses.map((course: ICourseList) => (
+                <Grid2 size={1} key={course.id}>
+                  <ClassRoomCard
+                    course={course}
+                    viewType="standard"
+                    onClick={() => handleOpen(course)}
+                  />
+                </Grid2>
+              ))}
+          </Grid2>
 
-        {courses.length === 0 && (
-          <EmptyState message="No se encontraron cursos" />
-        )}
+          {courses.length === 0 && (
+            <EmptyState message="No se encontraron cursos" />
+          )}
+        </TabPanel>
 
+        {/* ═══════════════ SOLAPA EVENTOS ═══════════════ */}
+        <TabPanel value={activeTab} index={1}>
+          <Grid2
+            container
+            rowSpacing="1rem"
+            columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
+            columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
+          >
+            {institutionalEvents.length > 0 &&
+              institutionalEvents.map((event: IEventList) => (
+                <Grid2 size={1} key={event.id}>
+                  <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer', py: 1 }}>
+                    <InstitutionalEventCard
+                      event={{
+                        id: event.id ?? '',
+                        name: event.name,
+                        type: event.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA',
+                        details: '',
+                        startDate: event.schedules?.[0]?.date?.toString(),
+                        startTime: event.schedules?.[0]?.startTime,
+                        endTime: event.schedules?.[0]?.endTime,
+                        location: event.schedules?.[0]?.classroom?.name,
+                        isVirtual: event.schedules?.[0]?.isVirtual ?? false
+                      }}
+                    />
+                  </Box>
+                </Grid2>
+              ))}
+          </Grid2>
+
+          {institutionalEvents.length === 0 && (
+            <EmptyState message="No se encontraron eventos institucionales" />
+          )}
+        </TabPanel>
+
+        {/* ═══════════ MODAL CURSO (único) ═══════════ */}
         {open && selectedCourse && (
           <InfoModal
             open={open}
             handleClose={handleClose}
             title={selectedCourse.name}
-
-            type="course"
+            type="event"
+            onSubscribe={handleSubscribe}
+            onReserveClassroom={handleReserveClassroom}
           >
             <section className="class-info-container">
               <Typography variant="h6" fontWeight="medium" px="1rem">
                 {selectedCourse?.programs?.map((program) => program).join(', ')}
               </Typography>
-
-              {/* Nuevo componente: cursadas con mapa + exámenes colapsables */}
               <CourseModalContent events={selectedCourse.events} />
             </section>
 
-            {isAuthenticated && (
+            {isAuthenticated && isAdmin && (
               <Tooltip title="Agregar evento" arrow placement="top">
                 <Plus
                   className="floating-button modal"
@@ -316,64 +353,7 @@ export default function Search() {
           </InfoModal>
         )}
 
-        {isAuthenticated && (
-          <Tooltip
-            title="Agregar asignatura"
-            arrow
-            placement="top"
-            enterDelay={500}
-            leaveDelay={200}
-            slotProps={{
-              popper: {
-                modifiers: [{ name: 'offset', options: { offset: [0, -8] } }]
-              }
-            }}
-          >
-            <Plus
-              className="floating-button"
-              onClick={() => navigate('/asignatura/agregar')}
-              role="button"
-              aria-label="Agregar asignatura"
-            />
-          </Tooltip>
-        )}
-      </TabPanel>
-
-      {/* ═══════════════ SOLAPA EVENTOS ═══════════════ */}
-      <TabPanel value={activeTab} index={1}>
-        <Grid2
-          container
-          rowSpacing="1rem"
-          columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
-          columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        >
-          {institutionalEvents.length > 0 &&
-            institutionalEvents.map((event: IEventList) => (
-              <Grid2 size={1} key={event.id}>
-                <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer', py: 1 }}>
-                  <InstitutionalEventCard
-                    event={{
-                      id: event.id ?? '',
-                      name: event.name,
-                      type: event.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA',
-                      details: '',
-                      startDate: event.schedules?.[0]?.date?.toString(),
-                      startTime: event.schedules?.[0]?.startTime,
-                      endTime: event.schedules?.[0]?.endTime,
-                      location: event.schedules?.[0]?.classroom?.name,
-                      isVirtual: event.schedules?.[0]?.isVirtual ?? false
-                    }}
-                  />
-                </Box>
-              </Grid2>
-            ))}
-        </Grid2>
-
-        {institutionalEvents.length === 0 && (
-          <EmptyState message="No se encontraron eventos institucionales" />
-        )}
-
-        {/* Modal de evento institucional */}
+        {/* ═══════════ MODAL EVENTO INSTITUCIONAL (único) ═══════════ */}
         {eventOpen && selectedEvent && (
           <InfoModal
             open={eventOpen}
@@ -431,88 +411,32 @@ export default function Search() {
           </InfoModal>
         )}
 
-        {isAuthenticated && (
-          <Tooltip
-            title="Agregar evento"
-            arrow
-            placement="top"
-            enterDelay={500}
-            leaveDelay={200}
-            slotProps={{
-              popper: {
-                modifiers: [{ name: 'offset', options: { offset: [0, -8] } }]
-              }
-            }}
+        {/* ═══════════ BOTONES FLOTANTES ═══════════ */}
+        {isAuthenticated && isAdmin && activeTab === 0 && (
+          <Tooltip title="Agregar asignatura" arrow placement="top" enterDelay={500} leaveDelay={200}
+            slotProps={{ popper: { modifiers: [{ name: 'offset', options: { offset: [0, -8] } }] } }}
           >
             <Plus
               className="floating-button"
-              onClick={() => navigate('/evento/agregar', {
-                state: { defaultType: 'CHARLA' }
-              })}
+              onClick={() => navigate('/asignatura/agregar')}
+              role="button"
+              aria-label="Agregar asignatura"
+            />
+          </Tooltip>
+        )}
+
+        {isAuthenticated && isAdmin && activeTab === 1 && (
+          <Tooltip title="Agregar evento" arrow placement="top" enterDelay={500} leaveDelay={200}
+            slotProps={{ popper: { modifiers: [{ name: 'offset', options: { offset: [0, -8] } }] } }}
+          >
+            <Plus
+              className="floating-button"
+              onClick={() => navigate('/evento/agregar', { state: { defaultType: 'CHARLA' } })}
               role="button"
               aria-label="Agregar evento"
             />
           </Tooltip>
         )}
-      </TabPanel>
-
-
-      {/* Modal detalle del curso */}
-      {open && selectedCourse && (
-        <InfoModal
-          open={open}
-          handleClose={handleClose}
-          title={selectedCourse.name}
-          subtitle="Cursadas y eventos"
-          type="event"
-          onSubscribe={handleSubscribe}
-          onReserveClassroom={handleReserveClassroom}
-        >
-          <section className="class-info-container">
-            <Typography variant="h6" fontWeight="medium" px="1rem">
-              {selectedCourse?.programs?.map((program) => program).join(', ')}
-            </Typography>
-            <EventTabs events={selectedCourse.events} />
-          </section>
-
-          {/* Botón flotante "+" para admin: navegar a agregar evento */}
-          {isAuthenticated && isAdmin && (
-            <Tooltip title="Agregar evento" arrow placement="top">
-              <Plus
-                className="floating-button modal"
-                onClick={() =>
-                  navigate('/evento/agregar', {
-                    state: { courseID: selectedCourse?.id }
-                  })
-                }
-              />
-            </Tooltip>
-          )}
-        </InfoModal>
-      )}
-
-      {/* Botón flotante "+" para admin: agregar asignatura */}
-      {isAuthenticated && isAdmin && (
-        <Tooltip
-          title="Agregar asignatura"
-          arrow
-          placement="top"
-          enterDelay={500}
-          leaveDelay={200}
-          slotProps={{
-            popper: {
-              modifiers: [{ name: 'offset', options: { offset: [0, -8] } }]
-            }
-          }}
-        >
-          <Plus
-            className="floating-button"
-            onClick={() => navigate('/asignatura/agregar')}
-            role="button"
-            aria-label="Agregar asignatura"
-          />
-        </Tooltip>
-      )}
       </Box>
     </Box>
   )
