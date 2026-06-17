@@ -1,6 +1,6 @@
 import { ServiceInterface } from './ServiceInterface'
 import { Response } from '../domain/Response'
-import { IEventCreate, IEventCreateDto, IEventList } from '../domain/Event'
+import { IEventCreate, IEventCreateDto, IEventList, InstitutionalEventsResponse } from '../domain/Event'
 import axios from 'axios'
 import { API_URL } from '@/config'
 import { format } from 'date-fns'
