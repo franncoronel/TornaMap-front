@@ -259,7 +259,7 @@ export default function Search() {
         <Divider variant="middle" flexItem />
       </Box>
 
-      <Box className="interactive-page" sx={{ paddingTop: '0.75rem !important' }}>
+      <Box className="interactive-page" sx={{ paddingTop: '0.75rem' }}>
       {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
       <TabPanel value={activeTab} index={0}>
         <Grid2
