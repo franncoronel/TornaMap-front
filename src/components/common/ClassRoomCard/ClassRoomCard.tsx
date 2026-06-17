@@ -159,7 +159,7 @@ export default function ClassRoomCard({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        py: 2,
+        py: 1,
         gap: 2
       }}
       className="classroom-card"
