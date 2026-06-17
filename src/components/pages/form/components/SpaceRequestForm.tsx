@@ -17,16 +17,16 @@ import { useLoader } from '@/context/LoaderContext'
 import { useNotification } from '@/context/NotificationContext'
 import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import { FormContext } from '../Form'
-import { periodService } from '@/data/services/PeriodService'
 import { courseService } from '@/data/services/CourseService'
-import { eventService, mapScheduleToBackend } from '@/data/services/EventService'
-import { IPeriod } from '@/data/domain/Period'
+import {
+  eventService,
+  mapScheduleToBackend
+} from '@/data/services/EventService'
 import { ICourseList } from '@/data/domain/Course'
 import { EVENT_TYPES, EventType, IEventCreateDto } from '@/data/domain/Event'
-import { IClassroom } from '@/data/domain/Classroom'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { TimePicker } from '@mui/x-date-pickers'
-import { weekDayES, weekDayShort, toMins } from '@/utils/helpers'
+import { toMins } from '@/utils/helpers'
 import { OccupiedInterval } from '@/data/domain/Schedule'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
@@ -37,23 +37,19 @@ type FormValues = {
   name: string
   type: EventType
   details: string
-  periodID: string
   courseID: string
   date: Date | null
-  weekDay: string
   startTime: string
   endTime: string
 }
 
-const isExamType = (type: EventType | '') => type === 'FINAL' || type === 'PARCIAL'
-const needsCourse = (type: EventType | '') => type === 'CURSADA' || isExamType(type)
-const needsPeriod = (type: EventType | '') => type === 'CURSADA'
+const isExamType = (type: EventType | '') =>
+  type === 'FINAL' || type === 'PARCIAL'
 
 export default function SpaceRequestForm() {
   const location = useLocation()
   const state = (location.state ?? {}) as IPossibleReservation
 
-  const [periods, setPeriods] = useState<IPeriod[]>([])
   const [courses, setCourses] = useState<ICourseList[]>([])
 
   const { setLoader } = useLoader()
@@ -72,21 +68,22 @@ export default function SpaceRequestForm() {
       name: '',
       type: 'CHARLA',
       details: '',
-      periodID: '',
       courseID: '',
       date: state.date ? parseISO(state.date) : new Date(),
-      weekDay: '',
       startTime: '',
       endTime: ''
     }
   })
 
   const eventType = watch('type')
-  const isCursada = eventType === 'CURSADA'
   const startTimeStr = watch('startTime')
   const endTimeStr = watch('endTime')
-  const parsedStartTime = startTimeStr ? parse(startTimeStr, 'HH:mm', new Date()) : null
-  const parsedEndTime = endTimeStr ? parse(endTimeStr, 'HH:mm', new Date()) : null
+  const parsedStartTime = startTimeStr
+    ? parse(startTimeStr, 'HH:mm', new Date())
+    : null
+  const parsedEndTime = endTimeStr
+    ? parse(endTimeStr, 'HH:mm', new Date())
+    : null
 
   const occupiedIntervals: OccupiedInterval[] = state.occupiedIntervals ?? []
 
@@ -94,8 +91,8 @@ export default function SpaceRequestForm() {
   const endTimeMaxTime: Date = (() => {
     const startMins = startTimeStr ? toMins(startTimeStr) : 0
     const nextBlock = occupiedIntervals
-      .map(i => toMins(i.startTime))
-      .filter(s => s > startMins)
+      .map((i) => toMins(i.startTime))
+      .filter((s) => s > startMins)
       .sort((a, b) => a - b)[0]
     const limitMins = nextBlock ?? 22 * 60
     const d = new Date()
@@ -107,7 +104,7 @@ export default function SpaceRequestForm() {
   const disabledTime = (time: Date) => {
     const totalMins = time.getHours() * 60 + time.getMinutes()
     if (totalMins < 6 * 60 || totalMins >= 22 * 60) return true
-    return occupiedIntervals.some(i => {
+    return occupiedIntervals.some((i) => {
       const start = toMins(i.startTime)
       const end = toMins(i.endTime)
       return totalMins >= start && totalMins < end
@@ -120,11 +117,7 @@ export default function SpaceRequestForm() {
 
     const fetchData = async () => {
       setLoader(true)
-      const [{ data: periodList }, { data: courseList }] = await Promise.all([
-        periodService.getAll(),
-        courseService.getAll()
-      ])
-      setPeriods(periodList)
+      const { data: courseList } = await courseService.getAll()
       setCourses(courseList)
       setLoader(false)
     }
@@ -137,30 +130,12 @@ export default function SpaceRequestForm() {
     if (endTimeStr && endTimeStr <= startTimeStr) setValue('endTime', '')
   }, [startTimeStr])
 
+  // Al salir de Final/Parcial, limpiamos la asignatura
   useEffect(() => {
-    if (isCursada) {
-      // No limpiamos date: el submit ya la ignora para CURSADA,
-      // y así no se pierde al volver a un tipo con fecha puntual
-    } else if (isExamType(eventType)) {
-      setValue('periodID', '')
-      setValue('weekDay', '')
-    } else {
-      setValue('periodID', '')
-      setValue('courseID', '')
-      setValue('weekDay', '')
-    }
+    if (!isExamType(eventType)) setValue('courseID', '')
   }, [eventType, setValue])
 
   const submit: SubmitHandler<FormValues> = async (data) => {
-    if (isCursada && (!data.periodID || !data.courseID)) {
-      setNotificationState({
-        title: 'Error',
-        description: 'Periodo y Asignatura son obligatorios para Cursada',
-        type: 'error'
-      })
-      return
-    }
-
     if (isExamType(data.type) && !data.courseID) {
       setNotificationState({
         title: 'Error',
@@ -170,16 +145,7 @@ export default function SpaceRequestForm() {
       return
     }
 
-    if (isCursada && !data.weekDay) {
-      setNotificationState({
-        title: 'Error',
-        description: 'Seleccione el día de la semana',
-        type: 'error'
-      })
-      return
-    }
-
-    if (!isCursada && !data.date) {
+    if (!data.date) {
       setNotificationState({
         title: 'Error',
         description: 'Seleccione una fecha para la reserva',
@@ -199,11 +165,14 @@ export default function SpaceRequestForm() {
 
     const reqStart = toMins(data.startTime)
     const reqEnd = toMins(data.endTime)
-    const overlaps = occupiedIntervals.some(i => reqStart < toMins(i.endTime) && reqEnd > toMins(i.startTime))
+    const overlaps = occupiedIntervals.some(
+      (i) => reqStart < toMins(i.endTime) && reqEnd > toMins(i.startTime)
+    )
     if (overlaps) {
       setNotificationState({
         title: 'Error',
-        description: 'El horario seleccionado se superpone con un evento ya existente',
+        description:
+          'El horario seleccionado se superpone con un evento ya existente',
         type: 'error'
       })
       return
@@ -213,8 +182,8 @@ export default function SpaceRequestForm() {
       setLoader(true)
 
       const schedule = mapScheduleToBackend({
-        weekDay: isCursada ? data.weekDay : '',
-        date: !isCursada ? data.date : null,
+        weekDay: '',
+        date: data.date,
         startTime: data.startTime,
         endTime: data.endTime,
         isVirtual: false,
@@ -227,9 +196,9 @@ export default function SpaceRequestForm() {
         isApproved: false,
         isCancelled: false,
         type: data.type,
-        details: !isCursada ? data.details : '',
-        periodID: needsPeriod(data.type) ? data.periodID : '',
-        courseID: needsCourse(data.type) ? data.courseID : '',
+        details: data.details,
+        periodID: '',
+        courseID: isExamType(data.type) ? data.courseID : '',
         customPeriodStart: null,
         customPeriodEnd: null,
         schedules: [schedule]
@@ -239,7 +208,8 @@ export default function SpaceRequestForm() {
       navigate('/buscar')
       setNotificationState({
         title: 'Solicitud enviada',
-        description: 'Tu solicitud de reserva fue enviada y está pendiente de aprobación',
+        description:
+          'Tu solicitud de reserva fue enviada y está pendiente de aprobación',
         type: 'success'
       })
     } catch {
@@ -270,7 +240,9 @@ export default function SpaceRequestForm() {
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {state.classroom?.building.name}
-            {state.classroom?.capacity ? ` · Capacidad: ${state.classroom.capacity} personas` : ''}
+            {state.classroom?.capacity
+              ? ` · Capacidad: ${state.classroom.capacity} personas`
+              : ''}
           </Typography>
         </Box>
 
@@ -299,7 +271,7 @@ export default function SpaceRequestForm() {
             <FormControl fullWidth error={!!errors.type}>
               <InputLabel id="type-lbl">Tipo de evento</InputLabel>
               <Select labelId="type-lbl" label="Tipo de evento" {...field}>
-                {EVENT_TYPES.map((t) => (
+                {EVENT_TYPES.filter((t) => t.value !== 'CURSADA').map((t) => (
                   <MenuItem key={t.value} value={t.value}>
                     {t.label}
                   </MenuItem>
@@ -308,56 +280,6 @@ export default function SpaceRequestForm() {
             </FormControl>
           )}
         />
-
-        {/* CURSADA: Periodo + Asignatura */}
-        {isCursada && (
-          <>
-            <Controller
-              name="periodID"
-              control={control}
-              rules={{ required: isCursada }}
-              render={({ field }) => (
-                <Autocomplete
-                  options={periods}
-                  getOptionLabel={(p) => p.title}
-                  isOptionEqualToValue={(o, v) => o.id === v.id}
-                  value={periods.find((p) => p.id === field.value) ?? null}
-                  onChange={(_, val) => field.onChange(val ? val.id : '')}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Periodo"
-                      error={!!errors.periodID}
-                      helperText={errors.periodID && 'Obligatorio'}
-                    />
-                  )}
-                />
-              )}
-            />
-            <Controller
-              name="courseID"
-              control={control}
-              rules={{ required: isCursada }}
-              render={({ field }) => (
-                <Autocomplete
-                  options={courses}
-                  getOptionLabel={(c) => c.name}
-                  isOptionEqualToValue={(o, v) => o.id === v.id}
-                  value={courses.find((c) => c.id === field.value) ?? null}
-                  onChange={(_, v) => field.onChange(v ? v.id : '')}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Asignatura"
-                      error={!!errors.courseID}
-                      helperText={errors.courseID && 'Obligatorio'}
-                    />
-                  )}
-                />
-              )}
-            />
-          </>
-        )}
 
         {/* FINAL / PARCIAL: solo Asignatura */}
         {isExamType(eventType) && (
@@ -385,79 +307,47 @@ export default function SpaceRequestForm() {
           />
         )}
 
-        {/* Descripción (no-CURSADA) */}
-        {!isCursada && (
-          <Controller
-            name="details"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                label="Descripción / motivo de la reserva"
-                fullWidth
-                multiline
-                minRows={3}
-              />
-            )}
-          />
-        )}
+        {/* Descripción */}
+        <Controller
+          name="details"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Descripción / motivo de la reserva"
+              fullWidth
+              multiline
+              minRows={3}
+            />
+          )}
+        />
 
         <Typography variant="subtitle1" fontWeight="bold">
           Horario
         </Typography>
 
-        {/* Día de la semana (solo CURSADA) */}
-        {isCursada && (
-          <Controller
-            name="weekDay"
-            control={control}
-            rules={{ required: isCursada }}
-            render={({ field }) => (
-              <FormControl fullWidth error={!!errors.weekDay}>
-                <InputLabel id="weekday-lbl">Día de la semana</InputLabel>
-                <Select
-                  labelId="weekday-lbl"
-                  label="Día de la semana"
-                  {...field}
-                >
-                  <MenuItem value="">
-                    <em>---</em>
-                  </MenuItem>
-                  {weekDayES.map((d) => (
-                    <MenuItem key={d} value={d}>
-                      {weekDayShort[d]}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-          />
-        )}
-
-        {/* Fecha (no-CURSADA) */}
-        {!isCursada && (
-          <Controller
-            name="date"
-            control={control}
-            rules={{ required: !isCursada }}
-            render={({ field }) => (
-              <DatePicker
-                label="Fecha"
-                disablePast
-                value={field.value}
-                onChange={(val) => field.onChange(val)}
-                slotProps={{
-                  textField: {
-                    fullWidth: true,
-                    error: !!errors.date,
-                    helperText: errors.date ? 'Obligatorio' : undefined
-                  },
-                  actionBar: { actions: ['cancel', 'clear', 'accept'] }
-                }}
-              />
-            )}
-          />
-        )}
+        {/* Fecha */}
+        <Controller
+          name="date"
+          control={control}
+          rules={{ required: 'Obligatorio' }}
+          render={({ field }) => (
+            <DatePicker
+              label="Fecha"
+              disablePast
+              value={field.value}
+              onChange={(val) => field.onChange(val)}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                  error: !!errors.date,
+                  helperText: errors.date ? 'Obligatorio' : undefined
+                },
+                actionBar: { actions: ['cancel', 'clear', 'accept'] }
+              }}
+            />
+          )}
+        />
 
         {/* Hora inicio / fin */}
         <Stack direction="row" spacing={2}>
