@@ -91,13 +91,13 @@ export default function CourseEventsPanel({ events }: CourseEventsPanelProps) {
 
   const academicEvents = events.filter((e) => ACADEMIC_TYPES.includes(e.type))
 
-  // Group: Cursadas y Eventos (parciales + finales juntos)
+  // Group: Cursadas y Exámenes (parciales + finales juntos)
   const cursadas = academicEvents.filter((e) => e.type === 'CURSADA')
-  const eventos  = academicEvents.filter((e) => e.type === 'PARCIAL' || e.type === 'FINAL')
+  const examenes = academicEvents.filter((e) => e.type === 'PARCIAL' || e.type === 'FINAL')
 
   const grouped = [
     { groupLabel: 'Cursadas', color: 'primary' as const, events: cursadas },
-    { groupLabel: 'Eventos',  color: 'warning' as const, events: eventos },
+    { groupLabel: 'Exámenes', color: 'warning' as const, events: examenes },
   ].filter((g) => g.events.length > 0)
 
   const toggleExpand = (eventId: string) => {

@@ -9,8 +9,7 @@ import {
   useTheme,
   Tooltip
 } from '@mui/material'
-import { ReactNode, useRef, useCallback, useEffect } from 'react'
-import { useState } from 'react'
+import { ReactNode, useRef, useCallback, useEffect, useState } from 'react'
 import { Bell, X, BookBookmark, CalendarPlus } from '@phosphor-icons/react'
 import { useAuth } from '@/context/AuthContext'
 import NewsletterPopover from './NewsletterPopover'
@@ -41,13 +40,13 @@ export default function InfoModal({
   type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
+  onReserveClassroom = () => {},
   possibleReservationData
 }: InfoModalProps) {
   const navigate = useNavigate()
   const { isAuthenticated, user } = useAuth()
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null)
 
-  // Scroll shadow state
   const [hasScrolled, setHasScrolled] = useState(false)
   const [canScrollMore, setCanScrollMore] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -72,10 +71,10 @@ export default function InfoModal({
 
   useEffect(() => {
     if (!open) return
-    // Small delay to let content render
     const timer = setTimeout(updateScrollShadows, 100)
     return () => clearTimeout(timer)
   }, [open, updateScrollShadows])
+
   const isStudent = user?.role === 'STUDENT'
   const isProfessor = user?.role === 'PROFESSOR'
 
@@ -98,19 +97,14 @@ export default function InfoModal({
       <Fade in={open} timeout={250}>
         <Box
           sx={{
-            // ─── Responsive sizing ───
             width: isMobile ? '95vw' : '80vw',
             maxWidth: 960,
             maxHeight: '85vh',
             minHeight: isMobile ? '70vh' : 'auto',
-
-            // ─── Positioning ───
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-
-            // ─── Appearance ───
             bgcolor: 'background.paper',
             borderRadius: isMobile ? '16px' : '20px',
             boxShadow:
@@ -118,8 +112,6 @@ export default function InfoModal({
             overflow: 'hidden',
             display: 'flex',
             flexDirection: 'column',
-
-            // ─── Focus outline ───
             outline: 'none'
           }}
         >
@@ -131,7 +123,6 @@ export default function InfoModal({
               pb: 2,
               flexShrink: 0,
               position: 'relative',
-              // Shadow que aparece al scrollear, indica que hay contenido arriba
               '&::after': {
                 content: '""',
                 position: 'absolute',
@@ -145,7 +136,7 @@ export default function InfoModal({
               }
             }}
           >
-            {/* Close button — siempre arriba a la derecha */}
+            {/* Botón cerrar — único, arriba a la derecha */}
             <IconButton
               aria-label="Cerrar"
               onClick={handleClose}
@@ -157,30 +148,24 @@ export default function InfoModal({
                 width: 36,
                 height: 36,
                 zIndex: 10,
-                '&:hover': {
-                  bgcolor: 'action.selected'
-                }
+                '&:hover': { bgcolor: 'action.selected' }
               }}
             >
               <X size={18} weight="bold" />
             </IconButton>
 
-            {/* Title block */}
+            {/* Título */}
             <Box sx={{ pr: 5 }}>
               <Typography
                 id="modal-modal-title"
                 variant={isMobile ? 'h6' : 'h5'}
                 component="h2"
                 fontWeight={700}
-                sx={{
-                  lineHeight: 1.3,
-                  letterSpacing: '-0.01em'
-                }}
+                sx={{ lineHeight: 1.3, letterSpacing: '-0.01em' }}
               >
                 {title}
               </Typography>
 
-              {/* Subtitle + capacity row */}
               {(subtitle || capacity) && (
                 <Box
                   sx={{
@@ -192,23 +177,12 @@ export default function InfoModal({
                   }}
                 >
                   {subtitle && (
-                    <Typography
-                      variant="body2"
-                      color="text.secondary"
-                      sx={{ fontWeight: 500 }}
-                    >
+                    <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
                       {subtitle}
                     </Typography>
                   )}
                   {subtitle && capacity && (
-                    <Box
-                      sx={{
-                        width: 4,
-                        height: 4,
-                        borderRadius: '50%',
-                        bgcolor: 'text.disabled'
-                      }}
-                    />
+                    <Box sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: 'text.disabled' }} />
                   )}
                   {capacity && (
                     <Typography variant="body2" color="text.secondary">
@@ -261,14 +235,15 @@ export default function InfoModal({
                 </Button>
               )}
 
-              {/* Newsletter — no logueados */}
-              {!isAuthenticated && (
-                <>
+              {/* Profesor logueado: reservar aula */}
+              {isAuthenticated && isProfessor && type === 'schedule' && (
+                <Tooltip title="Crear un evento en esta aula" arrow>
                   <Button
-                    variant="outlined"
+                    variant="contained"
                     size="small"
-                    onClick={handleBellClick}
-                    startIcon={<Bell size={18} />}
+                    color="secondary"
+                    onClick={onReserveClassroom}
+                    startIcon={<CalendarPlus size={18} />}
                     sx={{
                       borderRadius: '10px',
                       textTransform: 'none',
@@ -278,12 +253,7 @@ export default function InfoModal({
                   >
                     Newsletter
                   </Button>
-                  <NewsletterPopover
-                    anchorEl={anchorEl}
-                    onClose={handlePopoverClose}
-                    onSubmit={onSubscribeNewsletter}
-                  />
-                </>
+                  </Tooltip>
               )}
               {/* Profesor: botón reservar aula, solo en cards de aulas */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
@@ -306,7 +276,32 @@ export default function InfoModal({
                   </Button>
                 </Tooltip>
               )}
+
+              {/* No logueado: newsletter */}
+              {!isAuthenticated && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={handleBellClick}
+                  startIcon={<Bell size={18} />}
+                  sx={{
+                    borderRadius: '10px',
+                    textTransform: 'none',
+                    fontWeight: 600,
+                    px: 2
+                  }}
+                >
+                  Newsletter
+                </Button>
+              )}
             </Box>
+
+            {/* Newsletter popover — único, fuera de los condicionales */}
+            <NewsletterPopover
+              anchorEl={anchorEl}
+              onClose={handlePopoverClose}
+              onSubmit={onSubscribeNewsletter}
+            />
           </Box>
 
           {/* ═══════════════ SCROLLABLE CONTENT ═══════════════ */}
@@ -321,30 +316,20 @@ export default function InfoModal({
               py: 2,
               pb: 4,
               position: 'relative',
-
-              // Smooth scroll
               scrollBehavior: 'smooth',
-
-              // Scrollbar styling
-              '&::-webkit-scrollbar': {
-                width: 6
-              },
-              '&::-webkit-scrollbar-track': {
-                background: 'transparent'
-              },
+              '&::-webkit-scrollbar': { width: 6 },
+              '&::-webkit-scrollbar-track': { background: 'transparent' },
               '&::-webkit-scrollbar-thumb': {
                 background: 'rgba(0,0,0,0.15)',
                 borderRadius: 3,
-                '&:hover': {
-                  background: 'rgba(0,0,0,0.25)'
-                }
+                '&:hover': { background: 'rgba(0,0,0,0.25)' }
               }
             }}
           >
             {children}
           </Box>
 
-          {/* ═══════════ BOTTOM FADE — indica que hay más contenido ═══════════ */}
+          {/* ═══════════ BOTTOM FADE ═══════════ */}
           <Box
             sx={{
               position: 'absolute',
