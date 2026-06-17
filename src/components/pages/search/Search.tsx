@@ -24,6 +24,7 @@ import InfoModal from '@/components/common/InfoModal'
 import CourseModalContent from '@/components/common/CourseModalContent'
 import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
 import { ChipEventType } from '@/components/common/ChipEventType'
+import EventTabs from '@/components/common/EventTabs'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -227,13 +228,14 @@ export default function Search() {
   const isAdmin = user?.role === 'ADMIN'
 
   return (
-    <Box className="interactive-page">
-      <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      {/* Header fijo fuera del contenedor scrolleable */}
+      <Box sx={{ backgroundColor: 'background.paper', pt: '0.75rem', pb: '0.25rem', px: { xs: '1rem', sm: '2rem' }, zIndex: 10 }}>
         <Tabs
           value={activeTab}
           onChange={(_, newValue) => setActiveTab(newValue)}
           variant="fullWidth"
-          sx={{ mb: 1 }}
+          sx={{ mb: 2 }}
         >
           <Tab label="Cursos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
           <Tab label="Eventos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
@@ -257,6 +259,7 @@ export default function Search() {
         <Divider variant="middle" flexItem />
       </Box>
 
+      <Box className="interactive-page">
       {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
       <TabPanel value={activeTab} index={0}>
         <Grid2
@@ -347,7 +350,7 @@ export default function Search() {
           {institutionalEvents.length > 0 &&
             institutionalEvents.map((event: IEventList) => (
               <Grid2 size={1} key={event.id}>
-                <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer' }}>
+                <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer', py: 1 }}>
                   <InstitutionalEventCard
                     event={{
                       id: event.id ?? '',
@@ -452,7 +455,7 @@ export default function Search() {
           </Tooltip>
         )}
       </TabPanel>
-      </Grid2>
+
 
       {/* Modal detalle del curso */}
       {open && selectedCourse && (
@@ -510,6 +513,7 @@ export default function Search() {
           />
         </Tooltip>
       )}
+      </Box>
     </Box>
   )
 }
