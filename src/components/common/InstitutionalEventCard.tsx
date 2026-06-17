@@ -1,4 +1,4 @@
-import { Card, CardContent, Stack, Typography } from '@mui/material'
+import { Card, CardContent, Stack, Tooltip, Typography } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
 import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
 import { ChipEventType } from './ChipEventType'
@@ -28,10 +28,11 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
           </Stack>
 
           {/* Nombre */}
-          <Typography variant="h6" component="h2" sx={{ fontWeight: 600 }} >
-            {event.name}
-          </Typography>
-
+          <Tooltip title={event.name} arrow placement="top">
+            <Typography variant="h6" component="h2" noWrap sx={{ fontWeight: 600 }} >
+              {event.name}
+            </Typography>
+          </Tooltip>
           {/* Locacion */}
           <Stack direction="row"  spacing={1} alignItems="center"
               sx={{  minHeight: 24, color: 'text.secondary' }} >
