@@ -234,7 +234,7 @@ export default function InfoModal({
               />
 
               {/* Estudiante: botón suscribirse activo */}
-              {isAuthenticated && isStudent && type === 'event' &&(
+              {isAuthenticated && isStudent && type === 'course' &&(
                 <Button
                   variant="contained"
                   size="small"
@@ -291,14 +291,6 @@ export default function InfoModal({
                   </Button>
                 </Tooltip>
               )}
-
-              <IconButton
-                aria-label="Cerrar Ventana"
-                onClick={handleClose}
-                edge="end"
-              >
-                <X weight="bold" />
-              </IconButton>
             </Box>
           </Box>
 
