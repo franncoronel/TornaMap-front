@@ -86,7 +86,7 @@ export default function CourseEventsPanel({ events }: CourseEventsPanelProps) {
   const [currentEventId, setCurrentEventId] = useState('')
 
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
   const { setNotificationState } = useNotification()
 
   const academicEvents = events.filter((e) => ACADEMIC_TYPES.includes(e.type))
@@ -247,7 +247,7 @@ export default function CourseEventsPanel({ events }: CourseEventsPanelProps) {
 
                       {/* Right: actions + caret */}
                       <Stack direction="row" alignItems="center" spacing={0.5}>
-                        {isAuthenticated && (
+                        {isAuthenticated && user?.role === 'ADMIN' && (
                           <Tooltip title="Editar" arrow>
                             <IconButton
                               size="small"
