@@ -228,8 +228,9 @@ export default function Search() {
   const isAdmin = user?.role === 'ADMIN'
 
   return (
-    <Box className="interactive-page">
-      <Box position="sticky" top="0" zIndex="10" bgcolor="background.paper" py="0.75rem">
+    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      {/* Header fijo fuera del contenedor scrolleable */}
+      <Box sx={{ backgroundColor: 'background.paper', py: '0.75rem', px: { xs: '1rem', sm: '2rem' }, zIndex: 10 }}>
         <Tabs
           value={activeTab}
           onChange={(_, newValue) => setActiveTab(newValue)}
@@ -258,6 +259,7 @@ export default function Search() {
         <Divider variant="middle" flexItem />
       </Box>
 
+      <Box className="interactive-page" sx={{ paddingTop: '0.75rem !important' }}>
       {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
       <TabPanel value={activeTab} index={0}>
         <Grid2
@@ -511,6 +513,7 @@ export default function Search() {
           />
         </Tooltip>
       )}
+      </Box>
     </Box>
   )
 }
