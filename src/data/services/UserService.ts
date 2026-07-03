@@ -4,6 +4,7 @@ import { API_URL } from '@/config'
 
 import axios from 'axios'
 import { Response } from '@/data/domain/Response'
+import { IReservationCreate } from '@/data/domain/ClassroomReservation'
 export const userService = {
   getProfile: async (): Promise<Response<Response<User>>> =>
     axios.get(`${API_URL}/users/profile`, { withCredentials: true }),
@@ -27,6 +28,11 @@ export const userService = {
     axios.delete(`${API_URL}/users/me/courses/${id}`, { withCredentials: true }),
 
   // Para Profile PROFESSOR
+  createReservation: async (payload: IReservationCreate) =>
+    axios.post(`${API_URL}/users/me/reservations`, payload, {
+      withCredentials: true
+    }),
+
   getMyReservations: async () =>
     axios.get(`${API_URL}/users/me/reservations`, { withCredentials: true }),
 
