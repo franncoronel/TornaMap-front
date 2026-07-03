@@ -18,12 +18,9 @@ import { useNotification } from '@/context/NotificationContext'
 import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import { FormContext } from '../Form'
 import { courseService } from '@/data/services/CourseService'
-import {
-  eventService,
-  mapScheduleToBackend
-} from '@/data/services/EventService'
+import { userService } from '@/data/services/UserService'
 import { ICourseList } from '@/data/domain/Course'
-import { EVENT_TYPES, EventType, IEventCreateDto } from '@/data/domain/Event'
+import { EVENT_TYPES, EventType } from '@/data/domain/Event'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { TimePicker } from '@mui/x-date-pickers'
 import { toMins } from '@/utils/helpers'
@@ -31,7 +28,10 @@ import { OccupiedInterval } from '@/data/domain/Schedule'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
 import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
-import { IPossibleReservation } from '@/data/domain/ClassroomReservation'
+import {
+  IPossibleReservation,
+  IReservationCreate
+} from '@/data/domain/ClassroomReservation'
 
 type FormValues = {
   name: string
@@ -181,30 +181,18 @@ export default function SpaceRequestForm() {
     try {
       setLoader(true)
 
-      const schedule = mapScheduleToBackend({
-        weekDay: '',
-        date: data.date,
+      const payload: IReservationCreate = {
+        classroomId: state.classroom.id,
+        title: data.name,
+        date: format(data.date, 'yyyy-MM-dd'),
         startTime: data.startTime,
         endTime: data.endTime,
-        isVirtual: false,
-        professors: [],
-        classroomId: state.classroom.id
-      })
-
-      const payload: IEventCreateDto = {
-        name: data.name,
-        isApproved: false,
-        isCancelled: false,
-        type: data.type,
+        eventType: data.type,
         details: data.details,
-        periodID: '',
-        courseID: isExamType(data.type) ? data.courseID : '',
-        customPeriodStart: null,
-        customPeriodEnd: null,
-        schedules: [schedule]
+        courseID: isExamType(data.type) ? data.courseID : null
       }
 
-      await eventService.create(payload)
+      await userService.createReservation(payload)
       navigate('/buscar')
       setNotificationState({
         title: 'Solicitud enviada',
