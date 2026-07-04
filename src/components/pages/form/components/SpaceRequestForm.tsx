@@ -342,7 +342,7 @@ export default function SpaceRequestForm() {
           <Controller
             name="startTime"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: 'Obligatorio' }}
             render={({ field }) => (
               <TimePicker
                 label="Hora inicio"
@@ -354,14 +354,20 @@ export default function SpaceRequestForm() {
                 }
                 maxTime={parsedEndTime ?? undefined}
                 shouldDisableTime={disabledTime}
-                slotProps={{ textField: { fullWidth: true } }}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    error: !!errors.startTime,
+                    helperText: errors.startTime?.message
+                  }
+                }}
               />
             )}
           />
           <Controller
             name="endTime"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: 'Obligatorio' }}
             render={({ field }) => (
               <TimePicker
                 label="Hora fin"
@@ -375,7 +381,13 @@ export default function SpaceRequestForm() {
                 minTime={parsedStartTime ?? undefined}
                 maxTime={endTimeMaxTime}
                 shouldDisableTime={disabledTime}
-                slotProps={{ textField: { fullWidth: true } }}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    error: !!errors.endTime,
+                    helperText: errors.endTime?.message
+                  }
+                }}
               />
             )}
           />
