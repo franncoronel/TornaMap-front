@@ -26,7 +26,6 @@ type InfoModalProps = {
   type: 'course' | 'event' | 'schedule'
   onSubscribe?: () => void
   onSubscribeNewsletter?: (email: string) => void
-  onReserveClassroom?: () => void
   possibleReservationData?: IPossibleReservation
 }
 
@@ -40,7 +39,6 @@ export default function InfoModal({
   type,
   onSubscribe = () => {},
   onSubscribeNewsletter = () => {},
-  onReserveClassroom = () => {},
   possibleReservationData
 }: InfoModalProps) {
   const navigate = useNavigate()
@@ -235,33 +233,6 @@ export default function InfoModal({
                 </Button>
               )}
 
-              {/* Profesor logueado: reservar aula */}
-              {isAuthenticated && isProfessor && type === 'schedule' && (
-                <>
-                <Tooltip title="Suscribirse al newsleter" arrow>
-                  <Button
-                    variant="contained"
-                    size="small"
-                    color="secondary"
-                    onClick={onReserveClassroom}
-                    startIcon={<CalendarPlus size={18} />}
-                    sx={{
-                      borderRadius: '10px',
-                      textTransform: 'none',
-                      fontWeight: 600,
-                      px: 2
-                    }}
-                  >
-                    Newsletter
-                  </Button>
-                  </Tooltip>
-                  <NewsletterPopover
-                    anchorEl={anchorEl}
-                    onClose={handlePopoverClose}
-                    onSubmit={onSubscribeNewsletter}
-                  />
-                </>
-              )}
               {/* Profesor: botón reservar aula, solo en cards de aulas */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
                 <Tooltip title="Crear un evento en esta aula" arrow>

@@ -175,27 +175,6 @@ export default function Search() {
     }
   }
 
-  const getFirstClassroomId = (): string | undefined => {
-    if (!selectedCourse?.events) return undefined
-    for (const event of selectedCourse.events) {
-      for (const schedule of event.schedules) {
-        if (schedule.classroom?.id) return schedule.classroom.id
-      }
-    }
-    return undefined
-  }
-
-  const handleReserveClassroom = () => {
-    const classroomId = getFirstClassroomId()
-    navigate('/evento/agregar', {
-      state: {
-        courseID: selectedCourse?.id,
-        preselectedClassroomId: classroomId
-      }
-    })
-    handleClose()
-  }
-
   // ─── Modal evento institucional ───────────────
   const handleEventOpen = async (eventId: string) => {
     try {
@@ -349,7 +328,6 @@ export default function Search() {
             title={selectedCourse.name}
             type="event"
             onSubscribe={handleSubscribe}
-            onReserveClassroom={handleReserveClassroom}
           >
             <section className="class-info-container">
               <Typography variant="h6" fontWeight="medium" px="1rem">
