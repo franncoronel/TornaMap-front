@@ -195,7 +195,7 @@ export default function ClassRoomCard({
                 }}}>
           <CardActionArea onClick={onClick}>
             <CardContent sx={{ p: 3, flexGrow: 1 }}>
-              {courseName() && (
+              {(courseName() || event?.name) &&(
                 <>
                   <Box
                     sx={{
@@ -238,7 +238,6 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
-                    {}
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
