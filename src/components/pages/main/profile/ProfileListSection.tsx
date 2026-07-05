@@ -17,9 +17,9 @@ interface ProfileListSectionProps {
   items: ProfileListEntry[]
   onRemove: (id: string | number) => void
   removeLabel: string
-  tabLabels: string[]
-  activeTab: number
-  onTabChange: (index: number) => void
+  tabLabels?: string[]
+  activeTab?: number
+  onTabChange?: (index: number) => void
 }
 
 export function ProfileListSection({
@@ -40,7 +40,7 @@ export function ProfileListSection({
   }
 
   const handleTabChange = (_: SyntheticEvent, newValue: number) => {
-    onTabChange(newValue)
+    onTabChange?.(newValue)
   }
 
   return (
@@ -57,11 +57,13 @@ export function ProfileListSection({
         {heading}
       </Typography>
 
-      <Tabs value={activeTab} onChange={handleTabChange} variant="fullWidth" sx={{ mb: 2 }}>
-        {tabLabels.map((label) => (
-          <Tab key={label} label={label} />
-        ))}
-      </Tabs>
+      {tabLabels && tabLabels.length > 0 && (
+        <Tabs value={activeTab ?? 0} onChange={handleTabChange} variant="fullWidth" sx={{ mb: 2 }}>
+          {tabLabels.map((label) => (
+            <Tab key={label} label={label} />
+          ))}
+        </Tabs>
+      )}
 
       {items.length === 0 ? (
         <Typography color="secondary">{emptyMessage}</Typography>
