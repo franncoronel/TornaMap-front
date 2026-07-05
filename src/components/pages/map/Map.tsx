@@ -235,7 +235,6 @@ export default function Map() {
   const occupiedIntervals: OccupiedInterval[] = events.flatMap((e) =>
     e.schedules.map((s) => ({ startTime: s.startTime, endTime: s.endTime }))
   )
-  const canReserve = classroom !== null && hasAvailableSlot(occupiedIntervals)
 
   return (
     <main className={`interactive-page${!isCampus ? ' map-page' : ''}`}>
