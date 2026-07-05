@@ -22,10 +22,16 @@ export const userService = {
     axios.get(`${API_URL}/users/me/courses`, { withCredentials: true }),
 
   subscribeCourse: async (id: string | number) =>
-    axios.post(`${API_URL}/users/me/courses/${id}`, {}, { withCredentials: true }),
+    axios.post(
+      `${API_URL}/users/me/courses/${id}`,
+      {},
+      { withCredentials: true }
+    ),
 
   unsubscribeCourse: async (id: string | number) =>
-    axios.delete(`${API_URL}/users/me/courses/${id}`, { withCredentials: true }),
+    axios.delete(`${API_URL}/users/me/courses/${id}`, {
+      withCredentials: true
+    }),
 
   // Para Profile PROFESSOR
   createReservation: async (payload: IReservationCreate) =>
@@ -33,10 +39,14 @@ export const userService = {
       withCredentials: true
     }),
 
-  getMyReservations: async () =>
-    axios.get(`${API_URL}/users/me/reservations`, { withCredentials: true }),
+  getMyReservations: async (isApproved?: boolean) =>
+    axios.get(`${API_URL}/users/me/reservations`, {
+      params: { isApproved },
+      withCredentials: true
+    }),
 
   cancelReservation: async (id: string | number) =>
-    axios.delete(`${API_URL}/users/me/reservations/${id}`, { withCredentials: true })
-
+    axios.delete(`${API_URL}/users/me/reservations/${id}`, {
+      withCredentials: true
+    })
 }
