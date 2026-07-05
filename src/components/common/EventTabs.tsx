@@ -16,7 +16,7 @@ import { Share } from '@phosphor-icons/react'
 
 // Interfaces
 import { ISchedule } from '@/data/domain/Schedule'
-import { IEvent, ACADEMIC_TYPES } from '@/data/domain/Event'
+import { IEventCreate, ACADEMIC_TYPES } from '@/data/domain/Event'
 
 // Styles
 import '../pages/search/search.css'
@@ -58,7 +58,7 @@ const TYPE_COLORS: Record<string, 'default' | 'primary' | 'error' | 'warning'> =
   FINAL: 'error'
 }
 
-export default function EventTabs({ events }: { events: IEvent[] }) {
+export default function EventTabs({ events }: { events: IEventCreate[] }) {
   const [tabStates, setTabStates] = useState<{ [eventId: string]: number }>({})
   const [shareModalOpen, setShareModalOpen] = useState(false)
   const [currentEventId, setCurrentEventId] = useState<string>('')
@@ -166,7 +166,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
             <Tooltip title="Compartir" arrow>
               <IconButton
                 onClick={() => {
-                  setCurrentEventId(event.id ?? '')
+                  setCurrentEventId(String(event.id ?? ''))
                   setShareModalOpen(true)
                 }}
                 sx={{
@@ -185,7 +185,7 @@ export default function EventTabs({ events }: { events: IEvent[] }) {
               <Tabs
                 value={activeTab}
                 onChange={(_, newValue) =>
-                  handleTabChange(event.id ?? '', newValue)
+                  handleTabChange(String(event.id ?? ''), newValue)
                 }
                 variant="fullWidth"
               >

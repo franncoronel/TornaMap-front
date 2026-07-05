@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Box, Typography, CircularProgress } from '@mui/material'
 import { EventService } from '@/data/services/EventService'
-import { IEvent } from '@/data/domain/Event'
+import { IEventCreate } from '@/data/domain/Event'
 import EventTabs from '@/components/common/EventTabs'
 
 export default function EventDetail() {
   const { id } = useParams<{ id: string }>()
-  const [event, setEvent] = useState<IEvent | null>(null)
+  const [event, setEvent] = useState<IEventCreate | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -16,7 +16,7 @@ export default function EventDetail() {
       if (!id) return
       try {
         const response = await new EventService().getDetailById(id)
-        if (response.success && response.data) {
+        if (response.data) {
           setEvent(response.data)
         } else {
           setError('Evento no encontrado')
