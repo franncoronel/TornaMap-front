@@ -16,8 +16,7 @@ import {
   Box,
   Typography,
   Divider,
-  Paper,
-  Button
+  Paper
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
