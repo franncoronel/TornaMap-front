@@ -9,11 +9,13 @@ export function ProfessorContent() {
   const [reservedRooms, setReservedRooms] = useState<IReservation[]>([])
   const { setLoader } = useLoader()
   const { setNotificationState } = useNotification()
+  const [activeTab, setActiveTab] = useState(0)
 
   const fetchReservations = async () => {
     try {
       setLoader(true)
-      const res = await userService.getMyReservations()
+      const isApproved = activeTab === 1
+      const res = await userService.getMyReservations(isApproved)
       setReservedRooms(res.data.data)
     } catch (error) {
       console.error(error)
@@ -24,7 +26,7 @@ export function ProfessorContent() {
 
   useEffect(() => {
     fetchReservations()
-  }, [])
+  }, [activeTab])
 
   const handleCancel = async (id: string | number) => {
     try {
@@ -36,7 +38,10 @@ export function ProfessorContent() {
       })
       fetchReservations() // Recargamos la lista
     } catch (error) {
-      setNotificationState({ title: 'Error al cancelar la reserva', type: 'error' })
+      setNotificationState({
+        title: 'Error al cancelar la reserva',
+        type: 'error'
+      })
       console.error(error)
     } finally {
       setLoader(false)
@@ -54,10 +59,13 @@ export function ProfessorContent() {
   return (
     <ProfileListSection
       heading="Mis reservas"
-      emptyMessage="Aún no reservaste ningún espacio."
+      emptyMessage={activeTab === 0 ? 'No tenés reservas pendientes de aprobación.' : 'No tenés reservas aprobadas.'}
       items={items}
       onRemove={handleCancel}
       removeLabel="esta reserva"
+      tabLabels={['Pendientes', 'Aprobadas']}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
     />
   )
 }
