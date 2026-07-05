@@ -5,11 +5,11 @@ import { useEffect, useState } from 'react'
 import { useNotification } from '@/context/NotificationContext'
 import { userService } from '@/data/services/UserService'
 
-
 export function StudentContent() {
   const [subscribedCourses, setSubscribedCourses] = useState<ICourseList[]>([])
   const { setLoader } = useLoader()
   const { setNotificationState } = useNotification()
+  const [activeTab, setActiveTab] = useState(0)
 
   const fetchCourses = async () => {
     try {
@@ -27,12 +27,14 @@ export function StudentContent() {
     fetchCourses()
   }, [])
 
-
   const handleUnsubscribe = async (id: string | number) => {
     try {
       setLoader(true)
       await userService.unsubscribeCourse(id)
-      setNotificationState({ title: 'Te desuscribiste exitosamente', type: 'success' })
+      setNotificationState({
+        title: 'Te desuscribiste exitosamente',
+        type: 'success'
+      })
       fetchCourses() // Recargamos la lista
     } catch (error) {
       setNotificationState({ title: 'Error al desuscribirse', type: 'error' })
@@ -40,7 +42,6 @@ export function StudentContent() {
     } finally {
       setLoader(false)
     }
-
   }
 
   const items: ProfileListEntry[] = subscribedCourses
@@ -55,11 +56,14 @@ export function StudentContent() {
 
   return (
     <ProfileListSection
-      heading="Mis materias"
+      heading="Mis suscripciones"
       emptyMessage="No estás suscripto a ninguna materia."
       items={items}
       onRemove={handleUnsubscribe}
       removeLabel="esta suscripción"
+      tabLabels={['Materias']}
+      activeTab={activeTab}
+      onTabChange={setActiveTab}
     />
   )
 }
