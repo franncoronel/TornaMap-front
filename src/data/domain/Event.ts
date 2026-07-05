@@ -43,6 +43,17 @@ export interface IEventList extends IEvent {
   course: string
 }
 
+// Evento al que un alumno está suscripto (StudentEventDto del back)
+export interface IStudentEvent {
+  id: string
+  name: string
+  type: EventType
+  course: string
+  programs: string
+  modality: string
+  schedules: string
+}
+
 // ─── Categorías de tipo ───────────────────────────
 export const ACADEMIC_TYPES: EventType[] = ['CURSADA', 'PARCIAL', 'FINAL']
 export const INSTITUTIONAL_TYPES: EventType[] = ['CHARLA', 'SEMINARIO', 'CONFERENCIA']
