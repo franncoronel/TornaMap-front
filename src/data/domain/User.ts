@@ -1,13 +1,16 @@
 import { Entity } from './Entity'
 
+export type Role = 'ADMIN' | 'STUDENT' | 'PROFESSOR'
+
 export class User implements Entity {
   constructor(
     public email: string,
-    public id: number,
+    public id: string,
     public image: string,
-    public isAdmin: boolean,
     public lastName: string,
     public name: string,
+    public isAdmin: boolean = false,
+    public role?: Role,
     public password?: string
   ) {}
 }
@@ -21,7 +24,6 @@ export class LoginRequest {
 
 export class LoggedIn {
   constructor(
-    public id: number
-    /* */
+    public id: string
   ) {}
 }

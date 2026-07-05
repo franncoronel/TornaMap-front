@@ -9,26 +9,8 @@ import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
 
 // MUI
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-  Card,
-  Box,
-  Divider,
-  Tooltip,
-  IconButton
-} from '@mui/material'
-import {
-  MapPin,
-  Clock,
-  User,
-  BookOpenText,
-  Building,
-  Laptop,
-  ArrowsClockwise,
-  PencilSimple
-} from '@phosphor-icons/react'
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip, IconButton } from '@mui/material'
+import { MapPin, Clock, User, BookOpenText, Building, Laptop, ArrowsClockwise, PencilSimple } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 
 interface ClassRoomCardProps {
@@ -47,7 +29,8 @@ export default function ClassRoomCard({
   event
 }: ClassRoomCardProps) {
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const isAdmin = user?.role === 'ADMIN'
   const handleEdit = (e: React.MouseEvent) => {
     // NEW
     e.stopPropagation() // evita disparar onClick del Card
@@ -123,6 +106,16 @@ export default function ClassRoomCard({
     }
   }
 
+  const hasProfessors = () => {
+    if (course) {
+      return course.professors.length > 0
+    }else if (schedule) {
+      return (schedule.professors?.length ?? 0) > 0
+    }else{
+      return (event?.schedules[0]?.professors?.length ?? 0) > 0
+    }
+  }
+
   const programs = () => {
     if (course) {
       return course?.programs
@@ -158,13 +151,13 @@ export default function ClassRoomCard({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'column',
-        py: 2,
+        py: 1,
         gap: 2
       }}
       className="classroom-card"
     >
       <Box sx={{ position: 'relative', width: '100%' }}>
-        {isAuthenticated && viewType == 'standard' && (
+        {isAuthenticated && isAdmin && viewType == 'standard' && (
           <IconButton /* NEW */
             onClick={handleEdit}
             sx={{
@@ -172,7 +165,7 @@ export default function ClassRoomCard({
               top: 8,
               right: 8,
               zIndex: 2,
-              color: '#666',
+              color: 'text.secondary',
               transition: 'all 0.3s ease',
               '&:hover': {
                 color: 'primary.main',
@@ -187,19 +180,22 @@ export default function ClassRoomCard({
             <PencilSimple size={24} />
           </IconButton>
         )}
-        <Card
-          sx={{
-            width: '100%',
-            flexGrow: 1,
-            borderRadius: 3,
-            boxShadow: 1,
-            border: '1px solid #e0e0e0',
-            '@Media (min-width: 1201px)': { width: '95%' }
-          }}
-        >
+        <Card variant="outlined"
+              sx={{
+                height: '100%',
+                width: '100%',
+                flexGrow: 1,
+                borderRadius: 2,
+                transition: '0.2s',
+                display: 'flex',
+                flexDirection: 'column',
+                '&:hover': { 
+                  boxShadow: 3,
+                  borderColor: 'primary.light' // Feedback visual sutil al hacer hover
+                }}}>
           <CardActionArea onClick={onClick}>
-            <CardContent sx={{ backgroundColor: '#f5f5f5', borderRadius: 3 }}>
-              {courseName() && (
+            <CardContent sx={{ p: 3, flexGrow: 1 }}>
+              {(courseName() || event?.name) &&(
                 <>
                   <Box
                     sx={{
@@ -214,13 +210,8 @@ export default function ClassRoomCard({
                     <Tooltip title={courseName()} arrow placement="top">
                       <Typography
                         variant="h3"
-                        sx={{
-                          fontWeight: 'bold',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '90%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ fontWeight: 'bold', maxWidth: '90%' }}
                       >
                         {courseName()}
                       </Typography>
@@ -229,14 +220,8 @@ export default function ClassRoomCard({
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
                           variant="h4"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           {course?.events}
                         </Typography>
@@ -245,21 +230,14 @@ export default function ClassRoomCard({
                     {course && !hasEvents() && (
                       <Tooltip title={course?.events} arrow placement="bottom">
                         <Typography
-                          variant="h2"
-                          sx={{
-                            fontWeight: 'bold',
-                            whiteSpace: 'nowrap',
-                            maxWidth: '90%',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            color: '#666'
-                          }}
+                          variant="h4"
+                          noWrap
+                          sx={{ fontWeight: 'bold', maxWidth: '90%', color: 'text.secondary' }}
                         >
                           Sin eventos
                         </Typography>
                       </Tooltip>
                     )}
-                    {}
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
@@ -273,7 +251,7 @@ export default function ClassRoomCard({
                       </Tooltip>
                     )}
                   </Box>
-                  <Divider sx={{ mb: 0.5 }} />
+                  <Divider sx={{ mb: 1.5 }} />
                 </>
               )}
 
@@ -299,7 +277,7 @@ export default function ClassRoomCard({
                         alignItems: 'center'
                       }}
                     >
-                      <MapPin size={24} color="#1976d2" />
+                      <MapPin size={24} color="var(--info-color-dark)" />
                     </Box>
                     <Box
                       sx={{
@@ -311,22 +289,16 @@ export default function ClassRoomCard({
                     >
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: '#666',
-                          display: 'block',
-                          textAlign: 'left',
-                          whiteSpace: 'nowrap',
-                          maxWidth: '100%',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Aula: {classroom()}
                       </Typography>
                       <Typography
                         variant="body2"
                         sx={{
-                          color: '#666',
+                          color: 'text.secondary',
+                          fontWeight: 500,
                           display: 'flex',
                           textAlign: 'left'
                         }}
@@ -338,21 +310,15 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Profesor */}
-                {hasEvents() && (
+                {hasEvents() && hasProfessors() && (
                   <>
-                    <User size={24} color="#1976d2" />
+                    <User size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={professors()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: '#666',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Profesor: {professors()}
                         </Typography>
@@ -363,19 +329,19 @@ export default function ClassRoomCard({
 
                 {/* Modalidad */}
                 {hasEvents() && isPresential() && !isVirtual() && (
-                  <Building size={24} color="#1976d2" />
+                  <Building size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isVirtual() && !isPresential() && (
-                  <Laptop size={24} color="#1976d2" />
+                  <Laptop size={24} color="var(--info-color-dark)" />
                 )}
                 {hasEvents() && isHybrid() && (
-                  <ArrowsClockwise color="#1976d2" size={24} />
+                  <ArrowsClockwise color="var(--info-color-dark)" size={24} />
                 )}
 
                 {hasEvents() && (
                   <Typography
                     variant="body2"
-                    sx={{ color: '#666', display: 'flex', textAlign: 'left' }}
+                    sx={{ color: 'text.secondary', fontWeight: 500, display: 'flex', textAlign: 'left' }}
                   >
                     Modalidad: {isVirtual() ? 'Virtual' : ''}{' '}
                     {isHybrid() ? 'Virtual - Presencial' : ''}{' '}
@@ -384,20 +350,14 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Horario */}
-                {hasEvents() && <Clock size={24} color="#1976d2" />}
+                {hasEvents() && <Clock size={24} color="var(--info-color-dark)" />}
                 {hasEvents() && (
                   <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                     <Tooltip title={timeSchedule()} arrow>
                       <Typography
                         variant="body2"
-                        sx={{
-                          color: '#666',
-                          whiteSpace: 'nowrap',
-                          overflow: 'hidden',
-                          textOverflow: 'ellipsis',
-                          display: 'block',
-                          textAlign: 'left'
-                        }}
+                        noWrap
+                        sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                       >
                         Horario: {timeSchedule()}
                       </Typography>
@@ -408,19 +368,13 @@ export default function ClassRoomCard({
                 {/* Carreras */}
                 {programs() && (
                   <>
-                    <BookOpenText size={24} color="#1976d2" />
+                    <BookOpenText size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
                       <Tooltip title={programs()} arrow>
                         <Typography
                           variant="body2"
-                          sx={{
-                            color: '#1976d2',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            display: 'block',
-                            textAlign: 'left'
-                          }}
+                          noWrap
+                          sx={{ color: 'text.secondary', fontWeight: 500, textAlign: 'left' }}
                         >
                           Carreras: {programs()}
                         </Typography>

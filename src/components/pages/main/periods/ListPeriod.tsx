@@ -1,3 +1,5 @@
+import '@/styles/interactive-page.css'
+
 import CustomCard from '@/components/common/CustomCard'
 import { Typography, Box, Grid2, Stack } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'
@@ -45,7 +47,7 @@ export default function ListPeriod() {
   )
 
   return (
-    <Box sx={{ mt:1.5, px: 3, overflowY: 'auto', pb: 1 }} width="100%">
+    <Box className="interactive-page" sx={{ pb: 1 }}>
       <header className="interactive-page-header">
         <BackButton />
         <Typography variant="h1" gutterBottom>

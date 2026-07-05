@@ -1,5 +1,5 @@
 import { Box, Typography } from '@mui/material'
-import '../interactive-page.css'
+import '@/styles/interactive-page.css'
 import { Outlet, useLocation,} from 'react-router-dom'
 import { useState } from 'react'
 import BackButton from '@/components/common/BackButton'

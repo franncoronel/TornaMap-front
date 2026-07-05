@@ -1,0 +1,94 @@
+/* Clase base para todas las páginas interactivas (Form, ListPrograms, ListPeriod, etc.).
+   Centraliza el padding responsivo y el scroll para no repetirlo en cada componente. */
+
+.interactive-page {
+  padding-top: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+/* Header de página: BackButton + título.
+   En mobile va en columna (botón arriba, título abajo).
+   En tablet/desktop pasa a row con el botón absolute a la izquierda
+   para que el título quede centrado respecto al ancho total, no al espacio restante. */
+.interactive-page-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.interactive-page-header > svg {
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+/* Escala tipográfica para MUI Typography renderizado como h1–h6.
+   El color lo define text.primary del tema, no se sobreescribe acá. */
+h1.MuiTypography-root { font-size: 2rem;   font-weight: 600; }
+h2.MuiTypography-root { font-size: 1.5rem; font-weight: 400; }
+h3.MuiTypography-root { font-size: 1.25rem; font-weight: 400; }
+h4.MuiTypography-root,
+h5.MuiTypography-root,
+h6.MuiTypography-root { font-size: 1rem;  font-weight: 400; }
+
+/* Botones y typographies centran ícono + texto.
+   Typography dentro de cards se excluye para no pisar su propio layout. */
+.interactive-page .MuiButtonBase-root,
+.interactive-page .MuiTypography-root:not(.MuiCard-root .MuiTypography-root) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.interactive-page p.MuiTypography-root {
+  justify-content: flex-start;
+}
+
+/* MuiCardContent no tiene width 100% por defecto, esto lo corrige. */
+.MuiCardContent-root {
+  width: 100%;
+}
+
+/* Tablet (≥ 601px) */
+@media (min-width: 601px) {
+  .interactive-page {
+    padding-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .interactive-page-header {
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* position: relative en el header + absolute acá = botón anclado a la izquierda
+     sin sacar al título del centro. */
+  .interactive-page-header > button {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  h1.MuiTypography-root { font-size: 2.3rem; }
+  h2.MuiTypography-root { font-size: 2rem; }
+  h3.MuiTypography-root { font-size: 1.5rem; }
+  h4.MuiTypography-root,
+  h5.MuiTypography-root,
+  h6.MuiTypography-root { font-size: 1.2rem; }
+}
+
+/* Desktop grande (≥ 1201px) */
+@media (min-width: 1201px) {
+  .interactive-page {
+    padding-top: 2rem;
+  }
+}

@@ -4,6 +4,7 @@ import { RouteObject } from 'react-router-dom'
 
 import { ProtectedRoute } from './components/common/ProtectedRoute'
 import EventForm from './components/pages/form/components/EventForm'
+import Register from './components/pages/register/Register'
 
 // Lazy Components
 // const Register = lazy(() => import('@/components/pages/register/Register'))
@@ -15,18 +16,38 @@ const Profile = lazy(() => import('@/components/pages/main/profile/Profile'))
 const Search = lazy(() => import('@/components/pages/search/Search'))
 const Welcome = lazy(() => import('@/components/pages/welcome/Welcome'))
 const Form = lazy(() => import('@/components/pages/form/Form'))
-const CourseForm = lazy(() => import('@/components/pages/form/components/CourseForm'))
-const Programs = lazy(() => import('@/components/pages/main/programs/ListPrograms'))
+const CourseForm = lazy(
+  () => import('@/components/pages/form/components/CourseForm')
+)
+const Programs = lazy(
+  () => import('@/components/pages/main/programs/ListPrograms')
+)
 const Periods = lazy(() => import('@/components/pages/main/periods/ListPeriod'))
+const EventRequestList = lazy(
+  () => import('@/components/pages/main/event/EventRequestList')
+)
+const EventDetail = lazy(() => import('@/components/pages/event/EventDetail'))
+const QrFlyers = lazy(() => import('@/components/pages/main/qr/QrFlyers'))
+const AiAssistant = lazy(() => import('@/components/pages/main/ai/AiAssistant'))
+const ActiveEvents = lazy(
+  () => import('@/components/pages/main/event/ActiveEvents')
+)
+const SpaceRequestForm = lazy(
+  () => import('./components/pages/form/components/SpaceRequestForm')
+)
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Welcome /> },
   { path: '/ingresar', element: <Login /> },
-  /* { path: '/registrar', element: <Register /> }, */
+  { path: '/registrar', element: <Register /> },
   { path: '/buscar', element: <Search /> },
   {
     path: '/mapa/:building/:level',
     element: <Map />
+  },
+  {
+    path: '/evento/:id',
+    element: <EventDetail />
   },
   {
     path: '/',
@@ -69,6 +90,14 @@ export const routes: RouteObject[] = [
         ]
       },
       {
+        path: 'solicitudes',
+        element: <EventRequestList />
+      },
+      {
+        path: 'eventos-activos',
+        element: <ActiveEvents />
+      },
+      {
         path: 'horario',
         element: <Form />,
         children: [
@@ -79,6 +108,16 @@ export const routes: RouteObject[] = [
           {
             path: 'editar/:id',
             element: <EventForm />
+          }
+        ]
+      },
+      {
+        path: 'reserva',
+        element: <Form />,
+        children: [
+          {
+            path: 'agregar',
+            element: <SpaceRequestForm />
           }
         ]
       },
@@ -98,14 +137,25 @@ export const routes: RouteObject[] = [
       // }
       {
         path: 'programas',
-        element: <Programs />,
+        element: <Programs />
       },
       {
         path: 'periodos',
-        element: <Periods />,
+        element: <Periods />
+      },
+      {
+        path: '/qr',
+        element: (
+          <ProtectedRoute>
+            <QrFlyers />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: 'asistente-ia',
+        element: <AiAssistant />
       }
-    ],
-
+    ]
   },
   { path: '*', element: <NotFound /> }
 ]

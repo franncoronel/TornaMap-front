@@ -1,8 +1,16 @@
+/* === PÁGINA DE PERFIL ===
+   Centra el contenido horizontalmente (align-items: center).
+   justify-content: flex-start + padding evitan que el contenido quede
+   clipado al hacer scroll cuando el viewport es pequeño (ej. 125% zoom). */
+
 .profile-page {
   display: flex;
   flex-direction: column;
   width: 100%;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
   gap: 1rem;
+  overflow-y: auto;
 }

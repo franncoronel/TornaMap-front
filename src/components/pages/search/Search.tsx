@@ -1,5 +1,5 @@
 import './search.css'
-import '../interactive-page.css'
+import '@/styles/interactive-page.css'
 
 import { useEffect, useState } from 'react'
 import { useNotification } from '@/context/NotificationContext'
@@ -8,34 +8,66 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
 
 import { courseService } from '@/data/services/CourseService'
+import { eventService } from '@/data/services/EventService'
+import { userService } from '@/data/services/UserService'
 
 import { ICourse, ICourseList } from '@/data/domain/Course'
+import { IEventCreate, IEventList } from '@/data/domain/Event'
+import { ISchedule } from '@/data/domain/Schedule'
 
-import { WarningCircle, Plus } from '@phosphor-icons/react'
-import { Box, Divider, Grid2, Tooltip, Typography } from '@mui/material'
-import SearchBar from '@/components/common/SearchBar'
+import { WarningCircle, Plus, MapPin } from '@phosphor-icons/react'
+import { Box, Divider, Grid2, Tooltip, Typography, Tabs, Tab, Stack } from '@mui/material'
+import { Laptop } from '@phosphor-icons/react/dist/icons/Laptop'
+import SearchTagsInput from '@/components/common/SearchTagsInput'
 import ClassRoomCard from '@/components/common/ClassRoomCard/ClassRoomCard'
+import MapSelector from '@/components/common/map/MapSelector'
 import InfoModal from '@/components/common/InfoModal'
-import EventTabs from '@/components/common/EventTabs'
+import CourseModalContent from '@/components/common/CourseModalContent'
+import { InstitutionalEventCard } from '@/components/common/InstitutionalEventCard'
+import { ChipEventType } from '@/components/common/ChipEventType'
+
+interface TabPanelProps {
+  children?: React.ReactNode
+  index: number
+  value: number
+}
+
+function TabPanel({ children, value, index }: TabPanelProps) {
+  return (
+    <div role="tabpanel" hidden={value !== index}>
+      {value === index && <Box>{children}</Box>}
+    </div>
+  )
+}
 
 export default function Search() {
+  const [activeTab, setActiveTab] = useState(0)
+
   const [selectedCourse, setSelectedCourse] = useState<ICourse | null>(null)
+  const [selectedCourseListId, setSelectedCourseListId] = useState<string | number | null>(null)
   const [open, setOpen] = useState(false)
   const [courses, setCourses] = useState<ICourseList[]>([])
+  const [courseSearchTags, setCourseSearchTags] = useState<string[]>([])
+
+  const [institutionalEvents, setInstitutionalEvents] = useState<IEventList[]>([])
+  const [eventSearchTags, setEventSearchTags] = useState<string[]>([])
+
+  const [selectedEvent, setSelectedEvent] = useState<IEventCreate | null>(null)
+  const [eventOpen, setEventOpen] = useState(false)
 
   const { setNotificationState } = useNotification()
   const { setLoader } = useLoader()
   const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
-  const fetchCourses = async (query?: string) => {
+  const { isAuthenticated, user } = useAuth()
+  const isAdmin = user?.role === 'ADMIN'
+
+  // ─── Fetch ────────────────────────────────────
+  const fetchCourses = async (query: string[] = []) => {
     setLoader(true)
     try {
-      const courses = await courseService.getAll(query)
-      setLoader(false)
-      const coursesData = courses.data
-      setCourses(coursesData)
-      if (coursesData.length === 0) {
-        // Notificar que no se encontraron resultados
+      const response = await courseService.getAll(query)
+      setCourses(response.data)
+      if (response.data.length === 0) {
         setNotificationState({
           title: 'No se encontraron resultados',
           type: 'info',
@@ -44,7 +76,6 @@ export default function Search() {
         })
       }
     } catch (error) {
-      setLoader(false)
       console.error('Error fetching courses:', error)
       setNotificationState({
         title: 'Error al obtener cursos',
@@ -52,13 +83,41 @@ export default function Search() {
         description: 'Ocurrió un error al cargar los cursos',
         action: () => {}
       })
+    } finally {
+      setLoader(false)
     }
   }
 
+  const fetchInstitutionalEvents = async (query?: string) => {
+    setLoader(true)
+    try {
+      const response = await eventService.getInstitutionalEvents(query)
+      setInstitutionalEvents(response.data)
+      if (response.data.length === 0) {
+        setNotificationState({
+          title: 'No se encontraron eventos',
+          type: 'info',
+          description: 'No hay eventos institucionales disponibles',
+          action: () => {}
+        })
+      }
+    } catch (error) {
+      console.error('Error fetching institutional events:', error)
+      setNotificationState({
+        title: 'Error al obtener eventos',
+        type: 'error',
+        description: 'Ocurrió un error al cargar los eventos',
+        action: () => {}
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
+
+  // ─── Modal curso ──────────────────────────────
   const handleOpen = async (course: ICourseList) => {
     try {
       if (!course?.id) {
-        console.error('Course ID is undefined')
         setNotificationState({
           title: 'Error: ID indefinido',
           type: 'error',
@@ -68,12 +127,11 @@ export default function Search() {
         return
       }
       setLoader(true)
+      setSelectedCourseListId(course.id)
       const response = await courseService.getById(course.id)
-      setLoader(false)
       setSelectedCourse(response.data)
       setOpen(true)
     } catch (error) {
-      setLoader(false)
       console.error('Error fetching course details:', error)
       setNotificationState({
         title: 'Error al cargar curso',
@@ -81,124 +139,358 @@ export default function Search() {
         description: 'No se pudo obtener la información del curso',
         action: () => {}
       })
+    } finally {
+      setLoader(false)
     }
   }
 
   const handleClose = () => {
     setSelectedCourse(null)
+    setSelectedCourseListId(null)
     setOpen(false)
   }
 
-  const search = (query: string) => {
-    fetchCourses(query)
+  const handleSubscribe = async () => {
+    if (!selectedCourseListId) return
+    try {
+      setLoader(true)
+      await userService.subscribeCourse(selectedCourseListId)
+      setNotificationState({
+        title: 'Suscripción',
+        description: 'Te suscribiste a la materia correctamente',
+        type: 'success'
+      })
+      handleClose()
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { status?: number; data?: { message?: string } } }
+      console.error('Subscribe error:', axiosErr?.response)
+      const msg = axiosErr?.response?.data?.message ?? 'No se pudo completar la suscripción'
+      setNotificationState({
+        title: 'Error al suscribirse',
+        description: msg,
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
   }
 
+  // ─── Modal evento institucional ───────────────
+  const handleEventOpen = async (eventId: string) => {
+    try {
+      setLoader(true)
+      const response = await eventService.getDetailById(eventId)
+      setSelectedEvent(response.data)
+      setEventOpen(true)
+    } catch (error) {
+      console.error('Error fetching event details:', error)
+      setNotificationState({
+        title: 'Error al cargar evento',
+        type: 'error',
+        description: 'No se pudo obtener la información del evento',
+        action: () => {}
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
+
+  const handleEventClose = () => {
+    setSelectedEvent(null)
+    setEventOpen(false)
+  }
+
+  const handleEventSubscribe = async () => {
+    if (!selectedEvent?.id) return
+    try {
+      setLoader(true)
+      await userService.subscribeEvent(selectedEvent.id)
+      setNotificationState({
+        title: 'Suscripción',
+        description: 'Te suscribiste al evento correctamente',
+        type: 'success'
+      })
+      handleEventClose()
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { status?: number; data?: { message?: string } } }
+      console.error('Subscribe event error:', axiosErr?.response)
+      const msg = axiosErr?.response?.data?.message ?? 'No se pudo completar la suscripción'
+      setNotificationState({
+        title: 'Error al suscribirse',
+        description: msg,
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
+
+  // ─── Búsquedas ────────────────────────────────
+  const handleCourseSearch = (tags: string[]) => {
+    setCourseSearchTags(tags)
+    fetchCourses(tags)
+  }
+
+  const handleEventSearch = (tags: string[]) => {
+    setEventSearchTags(tags)
+    const query = tags.length > 0 ? tags.join(' ') : undefined
+    fetchInstitutionalEvents(query)
+  }
+
+  // ─── Carga inicial ────────────────────────────
   useEffect(() => {
-    fetchCourses()
+    if (activeTab === 0 && courses.length === 0) {
+      fetchCourses([])
+    }
+    if (activeTab === 1 && institutionalEvents.length === 0) {
+      fetchInstitutionalEvents()
+    }
+  }, [activeTab])
+
+  useEffect(() => {
+    fetchCourses([])
   }, [])
 
+  // ─── Render ───────────────────────────────────
   return (
-    // Contenedor principal que organiza la disposición de los elementos
-    <Box className="interactive-page">
-      {/* Barra de búsqueda fija */}
-      <Box position="sticky" top="0" zIndex="10">
-        <SearchBar
-          onSearch={search}
-          options={courses.map((course) => course.name)}
-        />
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0 }}>
+      {/* Header fijo */}
+      <Box sx={{ backgroundColor: 'background.paper', pt: '0.75rem', pb: '0.25rem', px: { xs: '1rem', sm: '2rem' }, zIndex: 10 }}>
+        <Tabs
+          value={activeTab}
+          onChange={(_, newValue) => setActiveTab(newValue)}
+          variant="fullWidth"
+          sx={{ mb: 2 }}
+        >
+          <Tab label="Cursos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
+          <Tab label="Eventos" sx={{ textTransform: 'none', fontWeight: 'bold' }} />
+        </Tabs>
+
+        {activeTab === 0 && (
+          <SearchTagsInput
+            onSearch={handleCourseSearch}
+            value={courseSearchTags}
+            options={courses.map((c) => c.name)}
+          />
+        )}
+        {activeTab === 1 && (
+          <SearchTagsInput
+            onSearch={handleEventSearch}
+            value={eventSearchTags}
+            options={institutionalEvents.map((e) => e.name)}
+          />
+        )}
+
         <Divider variant="middle" flexItem />
       </Box>
 
-      {/* Grilla para organizar las tarjetas de las aulas de manera responsive */}
-      <Grid2
-        container
-        rowSpacing="1rem"
-        columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
-        columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
-        height="100%"
-        sx={{ overflowY: 'auto' }}
-      >
-        {courses &&
-          courses.length > 0 &&
-          courses.map((course: ICourseList) => (
-            <Grid2 size={1} key={course.id}>
-              <ClassRoomCard
-                course={course}
-                viewType="standard"
-                onClick={() => handleOpen(course)}
-              />
-            </Grid2>
-          ))}
-        {courses.length === 0 && (
-          <Box
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              height: '100%',
-              width: '100%',
-              gap: '1rem'
-            }}
+      <Box className="interactive-page" sx={{ flexGrow: 1, minHeight: 0 }}>
+        {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
+        <TabPanel value={activeTab} index={0}>
+          <Grid2
+            container
+            rowSpacing="1rem"
+            columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
+            columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
           >
-            <WarningCircle size={32} color="#FFB74D" />
-            <Typography
-              variant="h6"
-              sx={{
-                color: '#333',
-                display: 'flex',
-                gap: '1rem',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              No se encontraron resultados
-            </Typography>
-          </Box>
-        )}
-      </Grid2>
+            {courses.length > 0 &&
+              courses.map((course: ICourseList) => (
+                <Grid2 size={1} key={course.id}>
+                  <ClassRoomCard
+                    course={course}
+                    viewType="standard"
+                    onClick={() => handleOpen(course)}
+                  />
+                </Grid2>
+              ))}
+          </Grid2>
 
-      {/* Modal que muestra detalles de la clase seleccionada y un mapa */}
-      {open && selectedCourse && (
-        <InfoModal
-          open={open}
-          handleClose={handleClose}
-          title={selectedCourse.name}
-          subtitle="Cursadas y eventos"
-          type="event"
-        >
-          <section className="class-info-container">
-            <Typography variant="h6" fontWeight="medium" px="1rem">
-              {selectedCourse?.programs?.map((program) => program).join(', ')}
-            </Typography>
-            <EventTabs events={selectedCourse.events} />
-          </section>
-          {isAuthenticated && (
-            <Tooltip title={`Agregar evento`} arrow placement="top">
-              <Plus
-                className="floating-button modal"
-                onClick={() =>
-                  // suponiendo que tu ruta para crear evento es '/evento/nuevo'
-                  navigate('/evento/agregar', {
-                    state: { courseID: selectedCourse?.id }
-                  })
-                }
-              />
-            </Tooltip>
+          {courses.length === 0 && (
+            <EmptyState message="No se encontraron cursos" />
           )}
-        </InfoModal>
-      )}
+        </TabPanel>
 
-      {isAuthenticated && (
-        <Tooltip title='Agregar asignatura' arrow placement="top" enterDelay={500} leaveDelay={200}
-                 slotProps={{popper: {modifiers: [{name: 'offset',options: {offset: [0,-8],},},],},}}>
-          <Plus
-            className="floating-button"
-            onClick={() => navigate('/asignatura/agregar')}
-            role="button"
-            aria-label="Agregar asignatura"
-          />
-        </Tooltip>
-      )}
+        {/* ═══════════════ SOLAPA EVENTOS ═══════════════ */}
+        <TabPanel value={activeTab} index={1}>
+          <Grid2
+            container
+            rowSpacing="1rem"
+            columnSpacing={{ xs: '2rem', sm: '1.5rem' }}
+            columns={{ xs: 1, sm: 2, lg: 3, xl: 4 }}
+          >
+            {institutionalEvents.length > 0 &&
+              institutionalEvents.map((event: IEventList) => (
+                <Grid2 size={1} key={event.id}>
+                  <Box onClick={() => handleEventOpen(event.id ?? '')} sx={{ cursor: 'pointer', py: 1 }}>
+                    <InstitutionalEventCard
+                      event={{
+                        id: event.id ?? '',
+                        name: event.name,
+                        type: event.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA',
+                        details: '',
+                        startDate: event.schedules?.[0]?.date?.toString(),
+                        startTime: event.schedules?.[0]?.startTime,
+                        endTime: event.schedules?.[0]?.endTime,
+                        location: event.schedules?.[0]?.classroom?.name,
+                        isVirtual: event.schedules?.[0]?.isVirtual ?? false
+                      }}
+                    />
+                  </Box>
+                </Grid2>
+              ))}
+          </Grid2>
+
+          {institutionalEvents.length === 0 && (
+            <EmptyState message="No se encontraron eventos institucionales" />
+          )}
+        </TabPanel>
+
+        {/* ═══════════ MODAL CURSO (único) ═══════════ */}
+        {open && selectedCourse && (
+          <InfoModal
+            open={open}
+            handleClose={handleClose}
+            title={selectedCourse.name}
+            type="event"
+            onSubscribe={handleSubscribe}
+          >
+            <section className="class-info-container">
+              <Typography variant="h6" fontWeight="medium" px="1rem">
+                {selectedCourse?.programs?.map((program) => program).join(', ')}
+              </Typography>
+              <CourseModalContent events={selectedCourse.events} />
+            </section>
+
+            {isAuthenticated && isAdmin && (
+              <Tooltip title="Agregar evento" arrow placement="top">
+                <Plus
+                  className="floating-button modal"
+                  onClick={() =>
+                    navigate('/evento/agregar', {
+                      state: { courseID: selectedCourse?.id }
+                    })
+                  }
+                />
+              </Tooltip>
+            )}
+          </InfoModal>
+        )}
+
+        {/* ═══════════ MODAL EVENTO INSTITUCIONAL (único) ═══════════ */}
+        {eventOpen && selectedEvent && (
+          <InfoModal
+            open={eventOpen}
+            handleClose={handleEventClose}
+            title={selectedEvent.name}
+            type="event"
+            onSubscribe={handleEventSubscribe}
+          >
+            <Stack spacing={2}>
+              <Box>
+                <ChipEventType type={selectedEvent.type as 'CHARLA' | 'SEMINARIO' | 'CONFERENCIA'} />
+              </Box>
+
+              {selectedEvent.details && (
+                <Typography variant="body2" color="text.secondary">
+                  {selectedEvent.details}
+                </Typography>
+              )}
+
+              {selectedEvent.schedules.map((schedule: ISchedule, idx: number) => (
+                <Box key={schedule.id ?? idx}>
+                  {!schedule.isVirtual ? (
+                    <Stack spacing={2}>
+                      <Stack
+                        direction="row" spacing={1} alignItems="center"
+                        sx={{ bgcolor: 'action.hover', borderRadius: '8px', px: 1.5, py: 1 }}
+                      >
+                        <MapPin size={18} />
+                        <Typography variant="body2" sx={{ fontWeight: 500 }}>
+                          {schedule.classroom?.name} · Piso {schedule.classroom?.floor} · {schedule.classroom?.building.name}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary" sx={{ ml: 'auto' }}>
+                          Cap. {schedule.classroom?.capacity}
+                        </Typography>
+                      </Stack>
+                      <MapSelector
+                        building={schedule.classroom?.building.name}
+                        level={schedule.classroom?.floor.toString()}
+                        classRoom={schedule.classroom?.code}
+                      />
+                    </Stack>
+                  ) : (
+                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', py: 2, bgcolor: 'action.hover', borderRadius: '8px' }}>
+                      <Laptop size={64} color="#2e4b7d" weight="duotone" />
+                      <Typography variant="body2" sx={{ mt: 1, fontWeight: 500 }}>
+                        Clase virtual
+                      </Typography>
+                    </Box>
+                  )}
+                  <Box sx={{ mt: 2 }}>
+                    <ClassRoomCard schedule={schedule} viewType="modal" />
+                  </Box>
+                </Box>
+              ))}
+            </Stack>
+          </InfoModal>
+        )}
+
+        {/* ═══════════ BOTONES FLOTANTES ═══════════ */}
+        {isAuthenticated && isAdmin && activeTab === 0 && (
+          <Tooltip title="Agregar asignatura" arrow placement="top" enterDelay={500} leaveDelay={200}
+            slotProps={{ popper: { modifiers: [{ name: 'offset', options: { offset: [0, -8] } }] } }}
+          >
+            <Plus
+              className="floating-button"
+              onClick={() => navigate('/asignatura/agregar')}
+              role="button"
+              aria-label="Agregar asignatura"
+            />
+          </Tooltip>
+        )}
+
+        {isAuthenticated && isAdmin && activeTab === 1 && (
+          <Tooltip title="Agregar evento" arrow placement="top" enterDelay={500} leaveDelay={200}
+            slotProps={{ popper: { modifiers: [{ name: 'offset', options: { offset: [0, -8] } }] } }}
+          >
+            <Plus
+              className="floating-button"
+              onClick={() => navigate('/evento/agregar', { state: { defaultType: 'CHARLA' } })}
+              role="button"
+              aria-label="Agregar evento"
+            />
+          </Tooltip>
+        )}
+      </Box>
+    </Box>
+  )
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <Box
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100%',
+        width: '100%',
+        gap: '1rem',
+        py: 4
+      }}
+    >
+      <WarningCircle size={32} color="#FFB74D" />
+      <Typography
+        variant="h6"
+        sx={{
+          color: '#333',
+          display: 'flex',
+          gap: '1rem',
+          alignItems: 'center'
+        }}
+      >
+        {message}
+      </Typography>
     </Box>
   )
 }

@@ -1,0 +1,63 @@
+import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { InstitutionalEvent } from '@/data/domain/Event'
+import { CalendarBlank, Clock, Laptop, MapPinLine} from '@phosphor-icons/react'
+import { ChipEventType } from './ChipEventType'
+import { formatDateFromBackend } from '@/data/utils/dateUtils'
+
+interface InstitutionalEventCardProps {
+  event: InstitutionalEvent
+}
+
+export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  return (
+    <Card variant="outlined"
+      sx={{ height: '100%', borderRadius: 2, transition: '0.2s', 
+            '&:hover': { boxShadow: 3 } }} >
+      <CardContent>
+        <Stack spacing={2}>
+          {/* Header */}
+          <Stack direction="row" justifyContent="space-between" alignItems="center" >
+            <ChipEventType type={event.type} />
+            
+            <Stack direction="row" spacing={0.5} alignItems="center" >
+              <Clock size={20}/>
+              <Typography variant="body2">
+                {event.startTime} - {event.endTime}
+              </Typography>
+            </Stack>
+          </Stack>
+
+          {/* Nombre */}
+          <Tooltip title={event.name} arrow placement="top">
+            <Typography variant="h6" component="h2" noWrap={!isMobile} sx={{ fontWeight: 600 }} >
+              {event.name}
+            </Typography>
+          </Tooltip>
+          {/* Locacion */}
+          <Stack direction="row"  spacing={1} alignItems="center"
+              sx={{  minHeight: 24, color: 'text.secondary' }} >
+              {event.isVirtual ? (
+                <Laptop size={20}/>
+              ) : (
+                <MapPinLine size={20} />
+              )}
+              <Typography variant="body2">
+                {event.isVirtual ? 'Virtual' : event.location}
+              </Typography>
+          </Stack>
+
+          {/* Fecha */}
+          <Stack  direction="row" spacing={1} alignItems="center" >
+            <CalendarBlank size={20} />
+            <Typography variant="body2">
+              {formatDateFromBackend(event.startDate ?? '')}
+            </Typography>
+          </Stack>
+        </Stack>
+      </CardContent>
+    </Card>
+  )
+}

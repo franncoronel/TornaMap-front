@@ -3,15 +3,9 @@ import { styled } from '@mui/material/styles'
 import './nav.css'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/context/AuthContext'
-import {
-  HouseSimple,
-  MagnifyingGlass,
-  MapTrifold,
-  SignIn,
-  UserCircle
-} from '@phosphor-icons/react'
+import { HouseSimple, MagnifyingGlass, MapTrifold, SignIn, UserCircle } from '@phosphor-icons/react'
 import logo from '@/assets/logos/logo-unsam-negro-crop.png'
-import { buildingData } from '@/data/mock/BuildingData'
+
 
 const StyledTypography = styled(Typography)(({ theme }) => ({
   variant: 'body2',
@@ -25,6 +19,8 @@ export default function Nav() {
   const location = useLocation()
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'))
+  const iconSize = isMobile ? 30 : isDesktop ? 26 : 22
 
   const isActive = (paths: string | string[]) => {
     if (typeof paths === 'string') {
@@ -54,7 +50,7 @@ export default function Nav() {
               className={`${isActive('/') ? 'active' : ''} logo-container home-icon`}
               aria-label="Ir al inicio"
             >
-              <HouseSimple size={32} alt="Inicio" className="mobile-logo" />
+              <HouseSimple size={iconSize} alt="Inicio" className="mobile-logo" />
             </IconButton>
           )
         ) : (
@@ -67,7 +63,7 @@ export default function Nav() {
             <Box
               component="img"
               sx={{
-                height: '3rem',
+                height: { sm: '2.5rem', md: '3rem' },
                 width: 'auto'
               }}
               alt="Logo de la UNSAM"
@@ -83,19 +79,15 @@ export default function Nav() {
           className={`${isActive('/buscar') ? 'active' : ''} logo-container nav-icon`}
           aria-label="Ir a búsqueda de materias"
         >
-          <MagnifyingGlass size={32} alt="Buscar" />
+          <MagnifyingGlass size={iconSize} alt="Buscar" />
           <StyledTypography className="logo-label">BUSCAR</StyledTypography>
         </IconButton>
         <IconButton
-          onClick={() =>
-            navigate(
-              `/mapa/${buildingData[0].path}/${buildingData[0].levels[0].path}`
-            )
-          }
+          onClick={() => navigate('/mapa/tornavias/planta-baja')}
           className={`${isActive('/mapa') ? 'active' : ''} logo-container nav-icon`}
           aria-label="Ir al mapa interactivo"
         >
-          <MapTrifold size={32} alt="Mapa" />
+          <MapTrifold size={iconSize} alt="Mapa" />
           <StyledTypography className="logo-label">MAPA</StyledTypography>
         </IconButton>
         <IconButton
@@ -105,13 +97,13 @@ export default function Nav() {
         >
           {isAuthenticated && (
             <>
-              <UserCircle size={32} alt="Perfil" />
+              <UserCircle size={iconSize} alt="Perfil" />
               <StyledTypography className="logo-label">PERFIL</StyledTypography>
             </>
           )}
           {!isAuthenticated && (
             <>
-              <SignIn size={32} alt="Iniciar Sesión" />
+              <SignIn size={iconSize} alt="Iniciar Sesión" />
               <StyledTypography className="logo-label">
                 INGRESAR
               </StyledTypography>

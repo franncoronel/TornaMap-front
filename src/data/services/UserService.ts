@@ -4,6 +4,7 @@ import { API_URL } from '@/config'
 
 import axios from 'axios'
 import { Response } from '@/data/domain/Response'
+import { IReservationCreate } from '@/data/domain/ClassroomReservation'
 export const userService = {
   getProfile: async (): Promise<Response<Response<User>>> =>
     axios.get(`${API_URL}/users/profile`, { withCredentials: true }),
@@ -14,5 +15,47 @@ export const userService = {
       { withCredentials: true }
     ),
   logout: async () =>
-    await axios.post('users/logout', {}, { withCredentials: true })
+    await axios.post('users/logout', {}, { withCredentials: true }),
+
+  //Para Profile STUDENT
+  getMyCourses: async () =>
+    axios.get(`${API_URL}/users/me/courses`, { withCredentials: true }),
+
+  subscribeCourse: async (id: string | number) =>
+    axios.post(
+      `${API_URL}/users/me/courses/${id}`,
+      {},
+      { withCredentials: true }
+    ),
+
+  unsubscribeCourse: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/courses/${id}`, {
+      withCredentials: true
+    }),
+
+  getMyEvents: async () =>
+    axios.get(`${API_URL}/users/me/events`, { withCredentials: true }),
+
+  subscribeEvent: async (id: string | number) =>
+    axios.post(`${API_URL}/users/me/events/${id}`, {}, { withCredentials: true }),
+
+  unsubscribeEvent: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/events/${id}`, { withCredentials: true }),
+
+  // Para Profile PROFESSOR
+  createReservation: async (payload: IReservationCreate) =>
+    axios.post(`${API_URL}/users/me/reservations`, payload, {
+      withCredentials: true
+    }),
+
+  getMyReservations: async (isApproved?: boolean) =>
+    axios.get(`${API_URL}/users/me/reservations`, {
+      params: { isApproved },
+      withCredentials: true
+    }),
+
+  cancelReservation: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/reservations/${id}`, {
+      withCredentials: true
+    })
 }

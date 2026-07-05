@@ -29,3 +29,8 @@ export const weekDayShort: Record<(typeof weekDayES)[number], string> = {
   SÁBADO: 'Sáb',
   DOMINGO: 'Dom'
 }
+
+export function toMins(time: string): number {
+  const [h, m] = time.split(':').map(Number)
+  return h * 60 + m
+}

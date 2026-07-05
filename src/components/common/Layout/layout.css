@@ -1,0 +1,26 @@
+/* Contenedor raíz. El Nav viene después del contenido en el DOM (Layout.tsx), por eso column lo deja abajo en mobile sin necesidad de reordenar nada. */
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Área de páginas. Ocupa el espacio restante después del Nav.
+   min-height: 0 es necesario: sin esto el flex item crece infinito y los hijos no scrollean.
+   overscroll-behavior: contain evita que el scroll se propague al body. */
+.page-structure {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* column-reverse sube el Nav visualmente sin tocar el DOM. */
+@media (min-width: 601px) {
+  .layout-container {
+    flex-direction: column-reverse;
+  }
+}
