@@ -200,6 +200,31 @@ export default function Search() {
     setEventOpen(false)
   }
 
+  const handleEventSubscribe = async () => {
+    if (!selectedEvent?.id) return
+    try {
+      setLoader(true)
+      await userService.subscribeEvent(selectedEvent.id)
+      setNotificationState({
+        title: 'Suscripción',
+        description: 'Te suscribiste al evento correctamente',
+        type: 'success'
+      })
+      handleEventClose()
+    } catch (err: unknown) {
+      const axiosErr = err as { response?: { status?: number; data?: { message?: string } } }
+      console.error('Subscribe event error:', axiosErr?.response)
+      const msg = axiosErr?.response?.data?.message ?? 'No se pudo completar la suscripción'
+      setNotificationState({
+        title: 'Error al suscribirse',
+        description: msg,
+        type: 'error'
+      })
+    } finally {
+      setLoader(false)
+    }
+  }
+
   // ─── Búsquedas ────────────────────────────────
   const handleCourseSearch = (tags: string[]) => {
     setCourseSearchTags(tags)
@@ -358,6 +383,7 @@ export default function Search() {
             handleClose={handleEventClose}
             title={selectedEvent.name}
             type="event"
+            onSubscribe={handleEventSubscribe}
           >
             <Stack spacing={2}>
               <Box>

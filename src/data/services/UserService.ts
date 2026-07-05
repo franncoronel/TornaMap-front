@@ -33,6 +33,15 @@ export const userService = {
       withCredentials: true
     }),
 
+  getMyEvents: async () =>
+    axios.get(`${API_URL}/users/me/events`, { withCredentials: true }),
+
+  subscribeEvent: async (id: string | number) =>
+    axios.post(`${API_URL}/users/me/events/${id}`, {}, { withCredentials: true }),
+
+  unsubscribeEvent: async (id: string | number) =>
+    axios.delete(`${API_URL}/users/me/events/${id}`, { withCredentials: true }),
+
   // Para Profile PROFESSOR
   createReservation: async (payload: IReservationCreate) =>
     axios.post(`${API_URL}/users/me/reservations`, payload, {
