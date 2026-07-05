@@ -175,27 +175,6 @@ export default function Search() {
     }
   }
 
-  const getFirstClassroomId = (): string | undefined => {
-    if (!selectedCourse?.events) return undefined
-    for (const event of selectedCourse.events) {
-      for (const schedule of event.schedules) {
-        if (schedule.classroom?.id) return schedule.classroom.id
-      }
-    }
-    return undefined
-  }
-
-  const handleReserveClassroom = () => {
-    const classroomId = getFirstClassroomId()
-    navigate('/evento/agregar', {
-      state: {
-        courseID: selectedCourse?.id,
-        preselectedClassroomId: classroomId
-      }
-    })
-    handleClose()
-  }
-
   // ─── Modal evento institucional ───────────────
   const handleEventOpen = async (eventId: string) => {
     try {
@@ -249,7 +228,7 @@ export default function Search() {
 
   // ─── Render ───────────────────────────────────
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%', minWidth: 0 }}>
       {/* Header fijo */}
       <Box sx={{ backgroundColor: 'background.paper', pt: '0.75rem', pb: '0.25rem', px: { xs: '1rem', sm: '2rem' }, zIndex: 10 }}>
         <Tabs
@@ -280,7 +259,7 @@ export default function Search() {
         <Divider variant="middle" flexItem />
       </Box>
 
-      <Box className="interactive-page">
+      <Box className="interactive-page" sx={{ flexGrow: 1, minHeight: 0 }}>
         {/* ═══════════════ SOLAPA CURSOS ═══════════════ */}
         <TabPanel value={activeTab} index={0}>
           <Grid2
@@ -349,7 +328,6 @@ export default function Search() {
             title={selectedCourse.name}
             type="event"
             onSubscribe={handleSubscribe}
-            onReserveClassroom={handleReserveClassroom}
           >
             <section className="class-info-container">
               <Typography variant="h6" fontWeight="medium" px="1rem">

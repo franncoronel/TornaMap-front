@@ -1,4 +1,6 @@
-import { Box, Button, Typography, useTheme, Divider, Dialog, DialogContent, IconButton } from '@mui/material'
+import '@/styles/interactive-page.css'
+
+import { Box, Button, Typography, Divider, Dialog, DialogContent, IconButton } from '@mui/material'
 import { DownloadSimple, QrCode, Eye, X } from '@phosphor-icons/react'
 import { useRef, useState, useEffect } from 'react'
 import campusPhoto from '@/assets/fondos/fondo-tornavias.jpg'
@@ -125,7 +127,6 @@ function FlyerContent({ innerRef }: { innerRef?: React.RefObject<HTMLDivElement>
 // ─── Componente principal ────────────────────────────────────────────────────
 
 export default function QrFlyers() {
-  const theme = useTheme()
   const flyerRef = useRef<HTMLDivElement>(null)
   const [previewOpen, setPreviewOpen] = useState(false)
   const [modalScale, setModalScale] = useState(1)
@@ -160,119 +161,116 @@ export default function QrFlyers() {
   }
 
   return (
-    <Box sx={{ p: { xs: 3, sm: 4 }, maxWidth: 900, mx: 'auto' }}>
-
-      <Box sx={{ display: { xs: 'flex', sm: 'block' }, justifyContent: { xs: 'center', sm: 'flex-start' } }}>
-        <BackButton />
-      </Box>
-
-      {/* Header */}
-      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' }, gap: 2, mb: 1, mt: { xs: 1, sm: 0 } }}>
-        <QrCode size={36} color={theme.palette.primary.main} />
-        <Typography variant="h4" fontWeight={700} sx={{ fontSize: { xs: 28, sm: 32 } }}>
-          QR y Flyers
-        </Typography>
-      </Box>
-      <Typography variant="body2" color="text.secondary" mb={3} sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
-        Descargá el flyer oficial de TornaMap para imprimir y pegar en carteleras del campus.
-      </Typography>
-
-      <Divider sx={{ mb: 2 }} />
-
-      {/* Acciones */}
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { xs: 'stretch', sm: 'flex-start' } }}>
-        <Button
-          variant="contained"
-          size="large"
-          startIcon={<DownloadSimple size={22} />}
-          onClick={handleDownloadPDF}
-          sx={{ borderRadius: 2, px: 4, width: { xs: '100%', sm: 'auto' } }}
-        >
-          Descargar flyer A4 (PDF)
-        </Button>
-        <Button
-          variant="outlined"
-          size="large"
-          startIcon={<Eye size={22} />}
-          onClick={() => setPreviewOpen(true)}
-          sx={{ borderRadius: 2, px: 4, width: { xs: '100%', sm: 'auto' } }}
-        >
-          Ver vista previa
-        </Button>
-      </Box>
-
-      {/* Flyer oculto para captura PDF — fuera de pantalla */}
-      <Box sx={{ position: 'absolute', left: -9999, top: -9999, pointerEvents: 'none' }}>
-        <FlyerContent innerRef={flyerRef} />
-      </Box>
-
-      {/* Modal de vista previa */}
-      <Dialog
-        open={previewOpen}
-        onClose={() => setPreviewOpen(false)}
-        maxWidth={false}
-        PaperProps={{
-          sx: {
-            background: '#111',
-            m: 2,
-            maxHeight: '95vh',
-            maxWidth: '95vw',
-            borderRadius: 3,
-            overflow: 'hidden',
-          }
-        }}
-      >
-        {/* Header del modal */}
-        <Box sx={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          px: 3, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.1)'
-        }}>
-          <Typography variant="subtitle1" fontWeight={600} color="white">
-            Vista previa — Flyer A4
+    <Box className="interactive-page" style={{ overflowY: 'auto' }}>
+      <Box sx={{ maxWidth: 900, mx: 'auto' }}>
+        <Box className="interactive-page-header">
+          <BackButton />
+          <Typography variant="h1" gutterBottom>
+            <QrCode size={32} style={{ marginRight: 8 }} />
+            QR y Flyers
           </Typography>
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Button
-              variant="contained"
-              size="small"
-              startIcon={<DownloadSimple size={16} />}
-              onClick={() => { handleDownloadPDF(); setPreviewOpen(false) }}
-              sx={{ borderRadius: 2 }}
-            >
-              Descargar PDF
-            </Button>
-            <IconButton onClick={() => setPreviewOpen(false)} sx={{ color: 'white' }}>
-              <X size={20} />
-            </IconButton>
-          </Box>
+        </Box>
+        <Typography variant="body2" color="text.secondary" mb={3}>
+          Descargá el flyer oficial de TornaMap para imprimir y pegar en carteleras del campus.
+        </Typography>
+
+        <Divider sx={{ mb: 2 }} />
+
+        {/* Acciones */}
+        <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, alignItems: { xs: 'stretch', sm: 'center' }, justifyContent: 'center' }}>
+          <Button
+            variant="contained"
+            size="large"
+            startIcon={<DownloadSimple size={22} />}
+            onClick={handleDownloadPDF}
+            sx={{ borderRadius: 2, px: 4, width: { xs: '100%', sm: 'auto' } }}
+          >
+            Descargar flyer A4 (PDF)
+          </Button>
+          <Button
+            variant="outlined"
+            size="large"
+            startIcon={<Eye size={22} />}
+            onClick={() => setPreviewOpen(true)}
+            sx={{ borderRadius: 2, px: 4, width: { xs: '100%', sm: 'auto' } }}
+          >
+            Ver vista previa
+          </Button>
         </Box>
 
-        {/* Flyer escalado para entrar en el modal */}
-        <DialogContent sx={{ p: 3, overflow: 'auto', display: 'flex', justifyContent: 'center' }}>
-          {/* Wrapper exactamente del tamaño del flyer escalado */}
-          <Box
-            sx={{
-              width: FLYER_W * modalScale,
-              height: FLYER_H * modalScale,
-              position: 'relative',
+        {/* Flyer oculto para captura PDF — fuera de pantalla */}
+        <Box sx={{ position: 'absolute', left: -9999, top: -9999, pointerEvents: 'none' }}>
+          <FlyerContent innerRef={flyerRef} />
+        </Box>
+
+        {/* Modal de vista previa */}
+        <Dialog
+          open={previewOpen}
+          onClose={() => setPreviewOpen(false)}
+          maxWidth={false}
+          PaperProps={{
+            sx: {
+              background: '#111',
+              m: 2,
+              maxHeight: '95vh',
+              maxWidth: '95vw',
+              borderRadius: 3,
               overflow: 'hidden',
-              borderRadius: 1,
-              flexShrink: 0,
-            }}
-          >
-            <Box sx={{
-              position: 'absolute', top: 0, left: 0,
-              width: FLYER_W, height: FLYER_H,
-              transformOrigin: 'top left',
-              transform: `scale(${modalScale})`,
-            }}>
-              <FlyerContent />
+            }
+          }}
+        >
+          {/* Header del modal */}
+          <Box sx={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            px: 3, py: 1.5, borderBottom: '1px solid rgba(255,255,255,0.1)'
+          }}>
+            <Typography variant="subtitle1" fontWeight={600} color="white">
+              Vista previa — Flyer A4
+            </Typography>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Button
+                variant="contained"
+                size="small"
+                startIcon={<DownloadSimple size={16} />}
+                onClick={() => { handleDownloadPDF(); setPreviewOpen(false) }}
+                sx={{ borderRadius: 2 }}
+              >
+                Descargar PDF
+              </Button>
+              <IconButton onClick={() => setPreviewOpen(false)} sx={{ color: 'white' }}>
+                <X size={20} />
+              </IconButton>
             </Box>
           </Box>
-        </DialogContent>
-      </Dialog>
-      {/* ── Sección QR por aula ── */}
-      <Divider sx={{ my: 2 }} />
-      <QrClassrooms />
+
+          {/* Flyer escalado para entrar en el modal */}
+          <DialogContent sx={{ p: 3, overflow: 'auto', display: 'flex', justifyContent: 'center' }}>
+            {/* Wrapper exactamente del tamaño del flyer escalado */}
+            <Box
+              sx={{
+                width: FLYER_W * modalScale,
+                height: FLYER_H * modalScale,
+                position: 'relative',
+                overflow: 'hidden',
+                borderRadius: 1,
+                flexShrink: 0,
+              }}
+            >
+              <Box sx={{
+                position: 'absolute', top: 0, left: 0,
+                width: FLYER_W, height: FLYER_H,
+                transformOrigin: 'top left',
+                transform: `scale(${modalScale})`,
+              }}>
+                <FlyerContent />
+              </Box>
+            </Box>
+          </DialogContent>
+        </Dialog>
+        {/* ── Sección QR por aula ── */}
+        <Divider sx={{ my: 2 }} />
+        <QrClassrooms />
+      </Box>
     </Box>
   )
 }

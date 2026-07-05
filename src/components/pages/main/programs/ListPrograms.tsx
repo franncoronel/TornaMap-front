@@ -1,3 +1,5 @@
+import '@/styles/interactive-page.css'
+
 import CustomCard from '@/components/common/CustomCard'
 import { Typography, Box, Grid2 } from '@mui/material'
 import SearchBar from '@/components/common/SearchBar'

@@ -9,26 +9,8 @@ import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
 
 // MUI
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-  Card,
-  Box,
-  Divider,
-  Tooltip,
-  IconButton
-} from '@mui/material'
-import {
-  MapPin,
-  Clock,
-  User,
-  BookOpenText,
-  Building,
-  Laptop,
-  ArrowsClockwise,
-  PencilSimple
-} from '@phosphor-icons/react'
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip, IconButton } from '@mui/material'
+import { MapPin, Clock, User, BookOpenText, Building, Laptop, ArrowsClockwise, PencilSimple } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 
 interface ClassRoomCardProps {
@@ -124,6 +106,16 @@ export default function ClassRoomCard({
     }
   }
 
+  const hasProfessors = () => {
+    if (course) {
+      return course.professors.length > 0
+    }else if (schedule) {
+      return (schedule.professors?.length ?? 0) > 0
+    }else{
+      return (event?.schedules[0]?.professors?.length ?? 0) > 0
+    }
+  }
+
   const programs = () => {
     if (course) {
       return course?.programs
@@ -191,6 +183,8 @@ export default function ClassRoomCard({
         <Card variant="outlined"
               sx={{
                 height: '100%',
+                width: '100%',
+                flexGrow: 1,
                 borderRadius: 2,
                 transition: '0.2s',
                 display: 'flex',
@@ -201,7 +195,7 @@ export default function ClassRoomCard({
                 }}}>
           <CardActionArea onClick={onClick}>
             <CardContent sx={{ p: 3, flexGrow: 1 }}>
-              {courseName() && (
+              {(courseName() || event?.name) &&(
                 <>
                   <Box
                     sx={{
@@ -244,7 +238,6 @@ export default function ClassRoomCard({
                         </Typography>
                       </Tooltip>
                     )}
-                    {}
                     {event?.name && (
                       <Tooltip title={event?.name} arrow placement="bottom">
                         <Typography
@@ -317,7 +310,7 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Profesor */}
-                {hasEvents() && (
+                {hasEvents() && hasProfessors() && (
                   <>
                     <User size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>

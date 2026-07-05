@@ -1,6 +1,6 @@
 import { Card, CardContent, Stack, Tooltip, Typography, useMediaQuery, useTheme } from '@mui/material'
 import { InstitutionalEvent } from '@/data/domain/Event'
-import { CalendarBlank, Clock, MapPinLine} from '@phosphor-icons/react'
+import { CalendarBlank, Clock, Laptop, MapPinLine} from '@phosphor-icons/react'
 import { ChipEventType } from './ChipEventType'
 import { formatDateFromBackend } from '@/data/utils/dateUtils'
 
@@ -39,9 +39,13 @@ export function InstitutionalEventCard({ event }: InstitutionalEventCardProps) {
           {/* Locacion */}
           <Stack direction="row"  spacing={1} alignItems="center"
               sx={{  minHeight: 24, color: 'text.secondary' }} >
-              <MapPinLine size={20} />
+              {event.isVirtual ? (
+                <Laptop size={20}/>
+              ) : (
+                <MapPinLine size={20} />
+              )}
               <Typography variant="body2">
-                {event.location ?? ' '}
+                {event.isVirtual ? 'Virtual' : event.location}
               </Typography>
           </Stack>
 
