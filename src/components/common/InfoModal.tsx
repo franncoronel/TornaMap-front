@@ -238,7 +238,7 @@ export default function InfoModal({
               {/* Profesor logueado: reservar aula */}
               {isAuthenticated && isProfessor && type === 'schedule' && (
                 <>
-                <Tooltip title="Crear un evento en esta aula" arrow>
+                <Tooltip title="Suscribirse al newsleter" arrow>
                   <Button
                     variant="contained"
                     size="small"
