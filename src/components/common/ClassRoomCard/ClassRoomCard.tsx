@@ -191,6 +191,8 @@ export default function ClassRoomCard({
         <Card variant="outlined"
               sx={{
                 height: '100%',
+                width: '100%',
+                flexGrow: 1,
                 borderRadius: 2,
                 transition: '0.2s',
                 display: 'flex',
