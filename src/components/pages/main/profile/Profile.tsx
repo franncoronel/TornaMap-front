@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import { ProfileButton } from './ProfileButton'
 import { useAuth } from '@/context/AuthContext'
 import { useNavigate } from 'react-router-dom'
@@ -82,13 +82,15 @@ export default function Profile() {
       {user?.role == 'STUDENT' && <StudentContent />}
       {user?.role == 'PROFESSOR' && <ProfessorContent />}
 
-      <ProfileButton
-        onClick={() => handleLogout()}
-        centerText={true}
-        endIcon={<SignOut size={32} alt="Cerrar sesión" />}
-      >
-        Cerrar Sesión
-      </ProfileButton>
+      <Box sx={{ mt: 'auto', width: '100%', display: 'flex', justifyContent: 'center' }}>
+        <ProfileButton
+          onClick={() => handleLogout()}
+          centerText={true}
+          endIcon={<SignOut size={32} alt="Cerrar sesión" />}
+        >
+          Cerrar Sesión
+        </ProfileButton>
+      </Box>
     </main>
   )
 }
