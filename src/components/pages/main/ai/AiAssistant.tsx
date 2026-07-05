@@ -29,6 +29,7 @@ import { IPeriod } from '@/data/domain/Period'
 import { jsPDF } from 'jspdf'
 import autoTable from 'jspdf-autotable'
 import BackButton from '@/components/common/BackButton'
+import { Brain } from '@phosphor-icons/react'
 
 export default function AiAssistant() {
   const [periods, setPeriods] = useState<IPeriod[]>([])
@@ -141,131 +142,132 @@ export default function AiAssistant() {
   }
 
   return (
-    <Box
-      className="profile-page"
-      sx={{ p: { xs: 2, md: 4 }, maxWidth: 1100, mx: 'auto' }}
-    >
-      <BackButton />
+    <Box className="interactive-page" style={{ overflowY: 'auto' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: 1160, mx: 'auto' }}>
+        <Box className="interactive-page-header" sx={{ width: '100%' }}>
+          <BackButton />
+          <Typography variant="h1" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Brain size={32} />
+            Asistente de Distribución de Aulas
+          </Typography>
+        </Box>
+        <Typography variant="body1" color="text.secondary" mb={4}>
+          Seleccioná un período y el asistente sugerirá la distribución de
+          materias según la capacidad de las aulas.
+        </Typography>
 
-      <Typography variant="h4" gutterBottom mt={2}>
-        Asistente de Distribución de Aulas
-      </Typography>
-      <Typography variant="body1" color="text.secondary" mb={4}>
-        Seleccioná un período y el asistente sugerirá la distribución de
-        materias según la capacidad de las aulas.
-      </Typography>
-
-      <Box
-        sx={{
-          display: 'flex',
-          gap: 2,
-          alignItems: 'center',
-          mb: 4,
-          flexWrap: 'wrap'
-        }}
-      >
-        <FormControl sx={{ minWidth: 280 }}>
-          <InputLabel>Período</InputLabel>
-          <Select
-            value={selectedPeriodId}
-            label="Período"
-            onChange={(e) => {
-              setSelectedPeriodId(e.target.value)
-              setSuggestions([])
-              setError(null)
-            }}
-            disabled={loadingPeriods}
-          >
-            {periods.map((p) => (
-              <MenuItem key={p.id} value={p.id}>
-                {p.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-
-        <Button
-          variant="contained"
-          onClick={handleGenerate}
-          disabled={!selectedPeriodId || loading}
-          sx={{ height: 56 }}
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 2,
+            alignItems: 'center',
+            mb: 4,
+            flexWrap: 'wrap',
+            justifyContent: 'center'
+          }}
         >
-          {loading ? (
-            <CircularProgress size={24} color="inherit" />
-          ) : (
-            'Generar sugerencia'
-          )}
-        </Button>
+          <FormControl sx={{ minWidth: 280 }}>
+            <InputLabel>Período</InputLabel>
+            <Select
+              value={selectedPeriodId}
+              label="Período"
+              onChange={(e) => {
+                setSelectedPeriodId(e.target.value)
+                setSuggestions([])
+                setError(null)
+              }}
+              disabled={loadingPeriods}
+            >
+              {periods.map((p) => (
+                <MenuItem key={p.id} value={p.id}>
+                  {p.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-        {suggestions.length > 0 && (
           <Button
-            variant="outlined"
-            onClick={handleDownloadPDF}
+            variant="contained"
+            onClick={handleGenerate}
+            disabled={!selectedPeriodId || loading}
             sx={{ height: 56 }}
           >
-            Descargar PDF
+            {loading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              'Generar sugerencia'
+            )}
           </Button>
+
+          {suggestions.length > 0 && (
+            <Button
+              variant="outlined"
+              onClick={handleDownloadPDF}
+              sx={{ height: 56 }}
+            >
+              Descargar PDF
+            </Button>
+          )}
+        </Box>
+
+        {error && (
+          <Alert severity="error" sx={{ mb: 3, width: '100%' }}>
+            {error}
+          </Alert>
         )}
-      </Box>
 
-      {error && (
-        <Alert severity="error" sx={{ mb: 3 }}>
-          {error}
-        </Alert>
-      )}
-
-      {suggestions.length > 0 && (
-        <Paper elevation={2} sx={{ overflowY: 'auto', maxHeight: '75vh' }}>
-          <Table sx={{ minWidth: 700 }}>
-            <TableHead>
-              <TableRow sx={{ backgroundColor: 'primary.main' }}>
-                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Materia
-                </TableCell>
-                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Alumnos
-                </TableCell>
-                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Aula sugerida
-                </TableCell>
-                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Capacidad
-                </TableCell>
-                <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
-                  Justificación
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {suggestions.map((s, i) => (
-                <TableRow key={i} hover>
-                  <TableCell>{s.courseName}</TableCell>
-                  <TableCell>{s.students}</TableCell>
-                  <TableCell>
-                    <Typography variant="body2" fontWeight="bold">
-                      {s.classroomCode}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {s.classroomName}
-                    </Typography>
+        {suggestions.length > 0 && (
+          <Paper elevation={2} sx={{ overflowY: 'auto', maxHeight: '75vh', width: '100%' }}>
+            <Table sx={{ minWidth: 700 }}>
+              <TableHead>
+                <TableRow sx={{ backgroundColor: 'primary.main' }}>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Materia
                   </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={s.capacity}
-                      color={getCapacityColor(s.students, s.capacity)}
-                      size="small"
-                    />
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Alumnos
                   </TableCell>
-                  <TableCell>
-                    <Typography variant="caption">{s.justification}</Typography>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Aula sugerida
+                  </TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Capacidad
+                  </TableCell>
+                  <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>
+                    Justificación
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Paper>
-      )}
-      {/*   CUADRO PARA MOSTRAR AULAS LIBRES - POR AHORA SOLO SE VEN EN EL PDF
+              </TableHead>
+              <TableBody>
+                {suggestions.map((s, i) => (
+                  <TableRow key={i} hover>
+                    <TableCell>{s.courseName}</TableCell>
+                    <TableCell>{s.students}</TableCell>
+                    <TableCell>
+                      <Typography variant="body2" fontWeight="bold">
+                        {s.classroomCode}
+                      </Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {s.classroomName}
+                      </Typography>
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={s.capacity}
+                        color={getCapacityColor(s.students, s.capacity)}
+                        size="small"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Typography variant="caption">{s.justification}</Typography>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </Paper>
+        )}
+        {/*   CUADRO PARA MOSTRAR AULAS LIBRES - POR AHORA SOLO SE VEN EN EL PDF
       {freeClassrooms.length > 0 && (
         <>
           <Typography variant="h6" mt={4} mb={2}>
@@ -300,6 +302,7 @@ export default function AiAssistant() {
         </>
       )}
       */}
+      </Box>
     </Box>
   )
 }
