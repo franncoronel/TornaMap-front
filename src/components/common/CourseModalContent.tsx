@@ -135,7 +135,7 @@ export default function CourseEventsPanel({ events }: CourseEventsPanelProps) {
 
   return (
     <>
-      <Stack spacing={3}>
+      <Stack spacing={3} sx={{ width: '100%', maxWidth: 800 }}>
         {grouped.map(({ groupLabel, color, events: groupEvents }) => (
           <Box key={groupLabel}>
             {/* Group header */}
