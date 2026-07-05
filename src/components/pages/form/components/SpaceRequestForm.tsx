@@ -18,12 +18,9 @@ import { useNotification } from '@/context/NotificationContext'
 import { useLocation, useNavigate, useOutletContext } from 'react-router-dom'
 import { FormContext } from '../Form'
 import { courseService } from '@/data/services/CourseService'
-import {
-  eventService,
-  mapScheduleToBackend
-} from '@/data/services/EventService'
+import { userService } from '@/data/services/UserService'
 import { ICourseList } from '@/data/domain/Course'
-import { EVENT_TYPES, EventType, IEventCreateDto } from '@/data/domain/Event'
+import { EVENT_TYPES, EventType } from '@/data/domain/Event'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
 import { TimePicker } from '@mui/x-date-pickers'
 import { toMins } from '@/utils/helpers'
@@ -31,7 +28,10 @@ import { OccupiedInterval } from '@/data/domain/Schedule'
 import { CalendarStar } from '@phosphor-icons/react/dist/icons/CalendarStar'
 import { XSquare } from '@phosphor-icons/react/dist/icons/XSquare'
 import { FloppyDisk } from '@phosphor-icons/react/dist/icons/FloppyDisk'
-import { IPossibleReservation } from '@/data/domain/ClassroomReservation'
+import {
+  IPossibleReservation,
+  IReservationCreate
+} from '@/data/domain/ClassroomReservation'
 
 type FormValues = {
   name: string
@@ -45,6 +45,26 @@ type FormValues = {
 
 const isExamType = (type: EventType | '') =>
   type === 'FINAL' || type === 'PARCIAL'
+
+const validateStartTime = (
+  value: string,
+  disabledTime: (time: Date) => boolean
+) => {
+  if (!value) return true
+  const t = parse(value, 'HH:mm', new Date())
+  return !disabledTime(t) || 'Fuera del horario permitido'
+}
+
+const validateEndTime = (
+  value: string,
+  startTimeStr: string,
+  disabledTime: (time: Date) => boolean
+) => {
+  if (!value) return true
+  if (value <= startTimeStr) return 'Debe ser posterior al inicio'
+  const t = parse(value, 'HH:mm', new Date())
+  return !disabledTime(t) || 'Fuera del horario permitido'
+}
 
 export default function SpaceRequestForm() {
   const location = useLocation()
@@ -126,8 +146,8 @@ export default function SpaceRequestForm() {
   }, [])
 
   useEffect(() => {
-    if (!startTimeStr) return
-    if (endTimeStr && endTimeStr <= startTimeStr) setValue('endTime', '')
+    if (!endTimeStr) return
+    if (!startTimeStr || endTimeStr <= startTimeStr) setValue('endTime', '')
   }, [startTimeStr])
 
   // Al salir de Final/Parcial, limpiamos la asignatura
@@ -181,30 +201,18 @@ export default function SpaceRequestForm() {
     try {
       setLoader(true)
 
-      const schedule = mapScheduleToBackend({
-        weekDay: '',
-        date: data.date,
+      const payload: IReservationCreate = {
+        classroomId: state.classroom.id,
+        title: data.name,
+        date: format(data.date, 'yyyy-MM-dd'),
         startTime: data.startTime,
         endTime: data.endTime,
-        isVirtual: false,
-        professors: [],
-        classroomId: state.classroom.id
-      })
-
-      const payload: IEventCreateDto = {
-        name: data.name,
-        isApproved: false,
-        isCancelled: false,
-        type: data.type,
+        eventType: data.type,
         details: data.details,
-        periodID: '',
-        courseID: isExamType(data.type) ? data.courseID : '',
-        customPeriodStart: null,
-        customPeriodEnd: null,
-        schedules: [schedule]
+        courseID: isExamType(data.type) ? data.courseID : null
       }
 
-      await eventService.create(payload)
+      await userService.createReservation(payload)
       navigate('/buscar')
       setNotificationState({
         title: 'Solicitud enviada',
@@ -354,7 +362,10 @@ export default function SpaceRequestForm() {
           <Controller
             name="startTime"
             control={control}
-            rules={{ required: true }}
+            rules={{
+              required: 'Obligatorio',
+              validate: (value) => validateStartTime(value, disabledTime)
+            }}
             render={({ field }) => (
               <TimePicker
                 label="Hora inicio"
@@ -366,14 +377,24 @@ export default function SpaceRequestForm() {
                 }
                 maxTime={parsedEndTime ?? undefined}
                 shouldDisableTime={disabledTime}
-                slotProps={{ textField: { fullWidth: true } }}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    error: !!errors.startTime,
+                    helperText: errors.startTime?.message
+                  }
+                }}
               />
             )}
           />
           <Controller
             name="endTime"
             control={control}
-            rules={{ required: true }}
+            rules={{
+              required: 'Obligatorio',
+              validate: (value) =>
+                validateEndTime(value, startTimeStr, disabledTime)
+            }}
             render={({ field }) => (
               <TimePicker
                 label="Hora fin"
@@ -387,7 +408,13 @@ export default function SpaceRequestForm() {
                 minTime={parsedStartTime ?? undefined}
                 maxTime={endTimeMaxTime}
                 shouldDisableTime={disabledTime}
-                slotProps={{ textField: { fullWidth: true } }}
+                slotProps={{
+                  textField: {
+                    fullWidth: true,
+                    error: !!errors.endTime,
+                    helperText: errors.endTime?.message
+                  }
+                }}
               />
             )}
           />

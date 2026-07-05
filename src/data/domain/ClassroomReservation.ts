@@ -1,6 +1,5 @@
 import { IClassroom } from "./Classroom"
 import { OccupiedInterval } from "./Schedule"
-import { IBuilding } from './Building'
 
 export interface IPossibleReservation {
   classroom: IClassroom
@@ -15,4 +14,16 @@ export interface IReservation {
   course?: string
   courseData?: string[]
   schedules?: string
+}
+
+// Payload para crear una reserva de aula (POST /users/me/reservations)
+export interface IReservationCreate {
+  classroomId: string
+  title: string
+  date: string // yyyy-MM-dd
+  startTime: string // HH:mm
+  endTime: string // HH:mm
+  eventType: string
+  details?: string
+  courseID?: string | null
 }

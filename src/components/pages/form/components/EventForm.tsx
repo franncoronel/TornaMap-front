@@ -127,7 +127,7 @@ export default function EventForm() {
   } = useForm<FormValues>({
     defaultValues: {
       name: '',
-      isApproved: false,
+      isApproved: true, // El admin es la autoridad: lo que crea nace aprobado
       isCancelled: false,
       periodID: '',
       courseID: initialCourseID ?? '',
@@ -532,17 +532,8 @@ export default function EventForm() {
           />
 
           {/* ═══════════ Switches ═══════════ */}
+          {/* El switch "Aprobado" se quitó: el admin crea siempre aprobado (isApproved=true por default). */}
           <Stack direction="row" spacing={2}>
-            <Controller
-              name="isApproved"
-              control={control}
-              render={({ field }) => (
-                <FormControlLabel
-                  control={<Switch {...field} checked={field.value} />}
-                  label="Aprobado"
-                />
-              )}
-            />
             <Controller
               name="isCancelled"
               control={control}

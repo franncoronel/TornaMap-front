@@ -1,9 +1,8 @@
-import { useState } from 'react'
-import { Box, Typography, List } from '@mui/material'
+import { useState, SyntheticEvent } from 'react'
+import { Box, Typography, List, Tabs, Tab } from '@mui/material'
 import { SubscriptionItem } from './SubscriptionItem'
 import DeleteModal from '@/components/common/DeleteModal'
 
-// Forma común a la que cada sección normaliza sus datos
 export interface ProfileListEntry {
   id: string | number
   title: string
@@ -17,7 +16,10 @@ interface ProfileListSectionProps {
   emptyMessage: string
   items: ProfileListEntry[]
   onRemove: (id: string | number) => void
-  removeLabel: string // "esta suscripción" / "esta reserva"
+  removeLabel: string
+  tabLabels?: string[]
+  activeTab?: number
+  onTabChange?: (index: number) => void
 }
 
 export function ProfileListSection({
@@ -25,13 +27,20 @@ export function ProfileListSection({
   emptyMessage,
   items,
   onRemove,
-  removeLabel
+  removeLabel,
+  tabLabels,
+  activeTab,
+  onTabChange
 }: ProfileListSectionProps) {
   const [pending, setPending] = useState<ProfileListEntry | null>(null)
 
   const handleConfirm = () => {
     if (pending) onRemove(pending.id)
     setPending(null)
+  }
+
+  const handleTabChange = (_: SyntheticEvent, newValue: number) => {
+    onTabChange?.(newValue)
   }
 
   return (
@@ -47,6 +56,14 @@ export function ProfileListSection({
       <Typography variant="h3" gutterBottom>
         {heading}
       </Typography>
+
+      {tabLabels && tabLabels.length > 0 && (
+        <Tabs value={activeTab ?? 0} onChange={handleTabChange} variant="fullWidth" sx={{ mb: 2 }}>
+          {tabLabels.map((label) => (
+            <Tab key={label} label={label} />
+          ))}
+        </Tabs>
+      )}
 
       {items.length === 0 ? (
         <Typography color="secondary">{emptyMessage}</Typography>
