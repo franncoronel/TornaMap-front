@@ -9,26 +9,8 @@ import { IEventList } from '@/data/domain/Event'
 import { ISchedule } from '@/data/domain/Schedule'
 
 // MUI
-import {
-  CardActionArea,
-  CardContent,
-  Typography,
-  Card,
-  Box,
-  Divider,
-  Tooltip,
-  IconButton
-} from '@mui/material'
-import {
-  MapPin,
-  Clock,
-  User,
-  BookOpenText,
-  Building,
-  Laptop,
-  ArrowsClockwise,
-  PencilSimple
-} from '@phosphor-icons/react'
+import { CardActionArea, CardContent, Typography, Card, Box, Divider, Tooltip, IconButton } from '@mui/material'
+import { MapPin, Clock, User, BookOpenText, Building, Laptop, ArrowsClockwise, PencilSimple } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 
 interface ClassRoomCardProps {
@@ -121,6 +103,16 @@ export default function ClassRoomCard({
       return event?.schedules[0]?.professors
         .map((professor) => professor)
         .join(', ')
+    }
+  }
+
+  const hasProfessors = () => {
+    if (course) {
+      return course.professors.length > 0
+    }else if (schedule) {
+      return (schedule.professors?.length ?? 0) > 0
+    }else{
+      return (event?.schedules[0]?.professors?.length ?? 0) > 0
     }
   }
 
@@ -319,7 +311,7 @@ export default function ClassRoomCard({
                 )}
 
                 {/* Profesor */}
-                {hasEvents() && (
+                {hasEvents() && hasProfessors() && (
                   <>
                     <User size={24} color="var(--info-color-dark)" />
                     <Box sx={{ maxWidth: '100%', overflow: 'hidden' }}>
