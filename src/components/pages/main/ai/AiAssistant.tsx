@@ -1,3 +1,5 @@
+import '@/styles/interactive-page.css'
+
 import { useEffect, useState } from 'react'
 import {
   Box,

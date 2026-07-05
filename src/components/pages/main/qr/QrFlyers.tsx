@@ -1,3 +1,5 @@
+import '@/styles/interactive-page.css'
+
 import { Box, Button, Typography, Divider, Dialog, DialogContent, IconButton } from '@mui/material'
 import { DownloadSimple, QrCode, Eye, X } from '@phosphor-icons/react'
 import { useRef, useState, useEffect } from 'react'
