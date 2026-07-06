@@ -16,8 +16,7 @@ import {
   Box,
   Typography,
   Divider,
-  Paper,
-  Button
+  Paper
 } from '@mui/material'
 import { DatePicker } from '@mui/x-date-pickers'
 import InfoModal from '@/components/common/InfoModal'
@@ -49,7 +48,6 @@ import {
 } from '@/data/mapper/buildingMapper'
 import { pathToFloor, floorToPath } from '@/data/mapper/levelMapper'
 import Campus from '@/components/common/map/campus/Campus'
-import { toMins } from '@/utils/helpers'
 import { OccupiedInterval } from '@/data/domain/Schedule'
 
 export default function Map() {
@@ -218,25 +216,9 @@ export default function Map() {
     }
   }, [searchParams, handleOpen])
 
-  function hasAvailableSlot(occupied: OccupiedInterval[]): boolean {
-    const DAY_START = 6 * 60
-    const DAY_END = 22 * 60
-    const MIN_SLOT = 30
-    const sorted = [...occupied]
-      .map((o) => ({ start: toMins(o.startTime), end: toMins(o.endTime) }))
-      .sort((a, b) => a.start - b.start)
-    let cursor = DAY_START
-    for (const { start, end } of sorted) {
-      if (start - cursor >= MIN_SLOT) return true
-      cursor = Math.max(cursor, end)
-    }
-    return DAY_END - cursor >= MIN_SLOT
-  }
-
   const occupiedIntervals: OccupiedInterval[] = events.flatMap((e) =>
     e.schedules.map((s) => ({ startTime: s.startTime, endTime: s.endTime }))
   )
-  const canReserve = classroom !== null && hasAvailableSlot(occupiedIntervals)
 
   return (
     <main className={`interactive-page${!isCampus ? ' map-page' : ''}`}>
